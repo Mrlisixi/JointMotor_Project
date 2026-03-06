@@ -1,0 +1,413 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_adc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_adc.c"
+  20              		.section	.text.wk_adc1_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_adc1_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_adc1_init:
+  28              	.LFB137:
+   1:project/src/wk_adc.c **** /* add user code begin Header */
+   2:project/src/wk_adc.c **** /**
+   3:project/src/wk_adc.c ****   **************************************************************************
+   4:project/src/wk_adc.c ****   * @file     wk_adc.c
+   5:project/src/wk_adc.c ****   * @brief    work bench config program
+   6:project/src/wk_adc.c ****   **************************************************************************
+   7:project/src/wk_adc.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_adc.c ****   *
+   9:project/src/wk_adc.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_adc.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_adc.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_adc.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_adc.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_adc.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_adc.c ****   *
+  16:project/src/wk_adc.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_adc.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_adc.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_adc.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_adc.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_adc.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_adc.c ****   *
+  23:project/src/wk_adc.c ****   **************************************************************************
+  24:project/src/wk_adc.c ****   */
+  25:project/src/wk_adc.c **** /* add user code end Header */
+  26:project/src/wk_adc.c **** 
+  27:project/src/wk_adc.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_adc.c **** #include "wk_adc.h"
+  29:project/src/wk_adc.c **** 
+  30:project/src/wk_adc.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 2
+
+
+  31:project/src/wk_adc.c **** 
+  32:project/src/wk_adc.c **** /* add user code end 0 */
+  33:project/src/wk_adc.c **** 
+  34:project/src/wk_adc.c **** /**
+  35:project/src/wk_adc.c ****   * @brief  init adc1 function.
+  36:project/src/wk_adc.c ****   * @param  none
+  37:project/src/wk_adc.c ****   * @retval none
+  38:project/src/wk_adc.c ****   */
+  39:project/src/wk_adc.c **** void wk_adc1_init(void)
+  40:project/src/wk_adc.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 32
+  36              		.cfi_offset 4, -32
+  37              		.cfi_offset 5, -28
+  38              		.cfi_offset 6, -24
+  39              		.cfi_offset 7, -20
+  40              		.cfi_offset 8, -16
+  41              		.cfi_offset 9, -12
+  42              		.cfi_offset 10, -8
+  43              		.cfi_offset 14, -4
+  44 0004 84B0     		sub	sp, sp, #16
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 48
+  41:project/src/wk_adc.c ****   /* add user code begin adc1_init 0 */
+  42:project/src/wk_adc.c **** 
+  43:project/src/wk_adc.c ****   /* add user code end adc1_init 0 */
+  44:project/src/wk_adc.c **** 
+  45:project/src/wk_adc.c ****   gpio_init_type gpio_init_struct;
+  47              		.loc 1 45 3 view .LVU1
+  46:project/src/wk_adc.c ****   adc_base_config_type adc_base_struct;
+  48              		.loc 1 46 3 view .LVU2
+  47:project/src/wk_adc.c **** 
+  48:project/src/wk_adc.c ****   gpio_default_para_init(&gpio_init_struct);
+  49              		.loc 1 48 3 view .LVU3
+  50 0006 02AC     		add	r4, sp, #8
+  51 0008 2046     		mov	r0, r4
+  52 000a FFF7FEFF 		bl	gpio_default_para_init
+  53              	.LVL0:
+  49:project/src/wk_adc.c **** 
+  50:project/src/wk_adc.c ****   /* add user code begin adc1_init 1 */
+  51:project/src/wk_adc.c **** 
+  52:project/src/wk_adc.c ****   /* add user code end adc1_init 1 */
+  53:project/src/wk_adc.c **** 
+  54:project/src/wk_adc.c ****   /*gpio--------------------------------------------------------------------*/ 
+  55:project/src/wk_adc.c ****   /* configure the IN0 pin */
+  56:project/src/wk_adc.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
+  54              		.loc 1 56 3 view .LVU4
+  55              		.loc 1 56 30 is_stmt 0 view .LVU5
+  56 000e 0327     		movs	r7, #3
+  57 0010 8DF80E70 		strb	r7, [sp, #14]
+  57:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = CURR_PHASE_A_ADC_CH_PIN;
+  58              		.loc 1 57 3 is_stmt 1 view .LVU6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 3
+
+
+  59              		.loc 1 57 30 is_stmt 0 view .LVU7
+  60 0014 0126     		movs	r6, #1
+  61 0016 0296     		str	r6, [sp, #8]
+  58:project/src/wk_adc.c ****   gpio_init(CURR_PHASE_A_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  62              		.loc 1 58 3 is_stmt 1 view .LVU8
+  63 0018 3F4D     		ldr	r5, .L5
+  64 001a 2146     		mov	r1, r4
+  65 001c 2846     		mov	r0, r5
+  66 001e FFF7FEFF 		bl	gpio_init
+  67              	.LVL1:
+  59:project/src/wk_adc.c **** 
+  60:project/src/wk_adc.c ****   /* configure the IN1 pin */
+  61:project/src/wk_adc.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
+  68              		.loc 1 61 3 view .LVU9
+  69              		.loc 1 61 30 is_stmt 0 view .LVU10
+  70 0022 8DF80E70 		strb	r7, [sp, #14]
+  62:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = CURR_PHASE_B_ADC_CH_PIN;
+  71              		.loc 1 62 3 is_stmt 1 view .LVU11
+  72              		.loc 1 62 30 is_stmt 0 view .LVU12
+  73 0026 4FF00209 		mov	r9, #2
+  74 002a CDF80890 		str	r9, [sp, #8]
+  63:project/src/wk_adc.c ****   gpio_init(CURR_PHASE_B_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  75              		.loc 1 63 3 is_stmt 1 view .LVU13
+  76 002e 2146     		mov	r1, r4
+  77 0030 2846     		mov	r0, r5
+  78 0032 FFF7FEFF 		bl	gpio_init
+  79              	.LVL2:
+  64:project/src/wk_adc.c **** 
+  65:project/src/wk_adc.c ****   /* configure the IN2 pin */
+  66:project/src/wk_adc.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
+  80              		.loc 1 66 3 view .LVU14
+  81              		.loc 1 66 30 is_stmt 0 view .LVU15
+  82 0036 8DF80E70 		strb	r7, [sp, #14]
+  67:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = CURR_PHASE_C_ADC_CH_PIN;
+  83              		.loc 1 67 3 is_stmt 1 view .LVU16
+  84              		.loc 1 67 30 is_stmt 0 view .LVU17
+  85 003a 4FF00408 		mov	r8, #4
+  86 003e CDF80880 		str	r8, [sp, #8]
+  68:project/src/wk_adc.c ****   gpio_init(CURR_PHASE_C_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  87              		.loc 1 68 3 is_stmt 1 view .LVU18
+  88 0042 2146     		mov	r1, r4
+  89 0044 2846     		mov	r0, r5
+  90 0046 FFF7FEFF 		bl	gpio_init
+  91              	.LVL3:
+  69:project/src/wk_adc.c **** 
+  70:project/src/wk_adc.c ****   /* configure the IN3 pin */
+  71:project/src/wk_adc.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
+  92              		.loc 1 71 3 view .LVU19
+  93              		.loc 1 71 30 is_stmt 0 view .LVU20
+  94 004a 8DF80E70 		strb	r7, [sp, #14]
+  72:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = VOLT_BUS_ADC_CH_PIN;
+  95              		.loc 1 72 3 is_stmt 1 view .LVU21
+  96              		.loc 1 72 30 is_stmt 0 view .LVU22
+  97 004e 0823     		movs	r3, #8
+  98 0050 0293     		str	r3, [sp, #8]
+  73:project/src/wk_adc.c ****   gpio_init(VOLT_BUS_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  99              		.loc 1 73 3 is_stmt 1 view .LVU23
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 4
+
+
+ 100 0052 2146     		mov	r1, r4
+ 101 0054 2846     		mov	r0, r5
+ 102 0056 FFF7FEFF 		bl	gpio_init
+ 103              	.LVL4:
+  74:project/src/wk_adc.c **** 
+  75:project/src/wk_adc.c ****   /* configure the IN8 pin */
+  76:project/src/wk_adc.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
+ 104              		.loc 1 76 3 view .LVU24
+ 105              		.loc 1 76 30 is_stmt 0 view .LVU25
+ 106 005a 8DF80E70 		strb	r7, [sp, #14]
+  77:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = MOS_TEMP_ADC_CH_PIN;
+ 107              		.loc 1 77 3 is_stmt 1 view .LVU26
+ 108              		.loc 1 77 30 is_stmt 0 view .LVU27
+ 109 005e 0296     		str	r6, [sp, #8]
+  78:project/src/wk_adc.c ****   gpio_init(MOS_TEMP_ADC_CH_GPIO_PORT, &gpio_init_struct);
+ 110              		.loc 1 78 3 is_stmt 1 view .LVU28
+ 111 0060 2146     		mov	r1, r4
+ 112 0062 2E48     		ldr	r0, .L5+4
+ 113 0064 FFF7FEFF 		bl	gpio_init
+ 114              	.LVL5:
+  79:project/src/wk_adc.c **** 
+  80:project/src/wk_adc.c ****   adc_reset(ADC1);
+ 115              		.loc 1 80 3 view .LVU29
+ 116 0068 2D4C     		ldr	r4, .L5+8
+ 117 006a 2046     		mov	r0, r4
+ 118 006c FFF7FEFF 		bl	adc_reset
+ 119              	.LVL6:
+  81:project/src/wk_adc.c ****   crm_adc_clock_div_set(CRM_ADC_DIV_6);
+ 120              		.loc 1 81 3 view .LVU30
+ 121 0070 4846     		mov	r0, r9
+ 122 0072 FFF7FEFF 		bl	crm_adc_clock_div_set
+ 123              	.LVL7:
+  82:project/src/wk_adc.c **** 
+  83:project/src/wk_adc.c ****   /*adc_common_settings-------------------------------------------------------------*/ 
+  84:project/src/wk_adc.c ****   adc_combine_mode_select(ADC_INDEPENDENT_MODE);
+ 124              		.loc 1 84 3 view .LVU31
+ 125 0076 0020     		movs	r0, #0
+ 126 0078 FFF7FEFF 		bl	adc_combine_mode_select
+ 127              	.LVL8:
+  85:project/src/wk_adc.c **** 
+  86:project/src/wk_adc.c ****   /*adc_settings--------------------------------------------------------------------*/ 
+  87:project/src/wk_adc.c ****   adc_base_default_para_init(&adc_base_struct);
+ 128              		.loc 1 87 3 view .LVU32
+ 129 007c 0DEB080A 		add	r10, sp, r8
+ 130 0080 5046     		mov	r0, r10
+ 131 0082 FFF7FEFF 		bl	adc_base_default_para_init
+ 132              	.LVL9:
+  88:project/src/wk_adc.c ****   adc_base_struct.sequence_mode = TRUE;
+ 133              		.loc 1 88 3 view .LVU33
+ 134              		.loc 1 88 33 is_stmt 0 view .LVU34
+ 135 0086 8DF80460 		strb	r6, [sp, #4]
+  89:project/src/wk_adc.c ****   adc_base_struct.repeat_mode = FALSE;
+ 136              		.loc 1 89 3 is_stmt 1 view .LVU35
+ 137              		.loc 1 89 31 is_stmt 0 view .LVU36
+ 138 008a 0025     		movs	r5, #0
+ 139 008c 8DF80550 		strb	r5, [sp, #5]
+  90:project/src/wk_adc.c ****   adc_base_struct.data_align = ADC_RIGHT_ALIGNMENT;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 5
+
+
+ 140              		.loc 1 90 3 is_stmt 1 view .LVU37
+ 141              		.loc 1 90 30 is_stmt 0 view .LVU38
+ 142 0090 8DF80650 		strb	r5, [sp, #6]
+  91:project/src/wk_adc.c ****   adc_base_struct.ordinary_channel_length = 4;
+ 143              		.loc 1 91 3 is_stmt 1 view .LVU39
+ 144              		.loc 1 91 43 is_stmt 0 view .LVU40
+ 145 0094 8DF80780 		strb	r8, [sp, #7]
+  92:project/src/wk_adc.c ****   adc_base_config(ADC1, &adc_base_struct);
+ 146              		.loc 1 92 3 is_stmt 1 view .LVU41
+ 147 0098 5146     		mov	r1, r10
+ 148 009a 2046     		mov	r0, r4
+ 149 009c FFF7FEFF 		bl	adc_base_config
+ 150              	.LVL10:
+  93:project/src/wk_adc.c **** 
+  94:project/src/wk_adc.c ****   /* adc_ordinary_conversionmode-------------------------------------------- */
+  95:project/src/wk_adc.c ****   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_1, 1, ADC_SAMPLETIME_1_5);
+ 151              		.loc 1 95 3 view .LVU42
+ 152 00a0 2B46     		mov	r3, r5
+ 153 00a2 3246     		mov	r2, r6
+ 154 00a4 3146     		mov	r1, r6
+ 155 00a6 2046     		mov	r0, r4
+ 156 00a8 FFF7FEFF 		bl	adc_ordinary_channel_set
+ 157              	.LVL11:
+  96:project/src/wk_adc.c ****   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_0, 2, ADC_SAMPLETIME_1_5);
+ 158              		.loc 1 96 3 view .LVU43
+ 159 00ac 2B46     		mov	r3, r5
+ 160 00ae 4A46     		mov	r2, r9
+ 161 00b0 2946     		mov	r1, r5
+ 162 00b2 2046     		mov	r0, r4
+ 163 00b4 FFF7FEFF 		bl	adc_ordinary_channel_set
+ 164              	.LVL12:
+  97:project/src/wk_adc.c ****   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_0, 3, ADC_SAMPLETIME_1_5);
+ 165              		.loc 1 97 3 view .LVU44
+ 166 00b8 2B46     		mov	r3, r5
+ 167 00ba 3A46     		mov	r2, r7
+ 168 00bc 2946     		mov	r1, r5
+ 169 00be 2046     		mov	r0, r4
+ 170 00c0 FFF7FEFF 		bl	adc_ordinary_channel_set
+ 171              	.LVL13:
+  98:project/src/wk_adc.c ****   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_0, 4, ADC_SAMPLETIME_1_5);
+ 172              		.loc 1 98 3 view .LVU45
+ 173 00c4 2B46     		mov	r3, r5
+ 174 00c6 4246     		mov	r2, r8
+ 175 00c8 2946     		mov	r1, r5
+ 176 00ca 2046     		mov	r0, r4
+ 177 00cc FFF7FEFF 		bl	adc_ordinary_channel_set
+ 178              	.LVL14:
+  99:project/src/wk_adc.c **** 
+ 100:project/src/wk_adc.c ****   /* When "ADCx_ORDINARY_TRIG_SOFTWARE" is selected, user can only use software trigger. \
+ 101:project/src/wk_adc.c ****   The software trigger function is adc_ordinary_software_trigger_enable(ADCx, TRUE); */
+ 102:project/src/wk_adc.c ****   adc_ordinary_conversion_trigger_set(ADC1, ADC12_ORDINARY_TRIG_SOFTWARE, TRUE);
+ 179              		.loc 1 102 3 view .LVU46
+ 180 00d0 3246     		mov	r2, r6
+ 181 00d2 0721     		movs	r1, #7
+ 182 00d4 2046     		mov	r0, r4
+ 183 00d6 FFF7FEFF 		bl	adc_ordinary_conversion_trigger_set
+ 184              	.LVL15:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 6
+
+
+ 103:project/src/wk_adc.c **** 
+ 104:project/src/wk_adc.c ****   adc_ordinary_part_mode_enable(ADC1, FALSE);
+ 185              		.loc 1 104 3 view .LVU47
+ 186 00da 2946     		mov	r1, r5
+ 187 00dc 2046     		mov	r0, r4
+ 188 00de FFF7FEFF 		bl	adc_ordinary_part_mode_enable
+ 189              	.LVL16:
+ 105:project/src/wk_adc.c **** 
+ 106:project/src/wk_adc.c ****   adc_dma_mode_enable(ADC1, TRUE);
+ 190              		.loc 1 106 3 view .LVU48
+ 191 00e2 3146     		mov	r1, r6
+ 192 00e4 2046     		mov	r0, r4
+ 193 00e6 FFF7FEFF 		bl	adc_dma_mode_enable
+ 194              	.LVL17:
+ 107:project/src/wk_adc.c ****   /* add user code begin adc1_init 2 */
+ 108:project/src/wk_adc.c **** 
+ 109:project/src/wk_adc.c ****   /* add user code end adc1_init 2 */
+ 110:project/src/wk_adc.c ****   
+ 111:project/src/wk_adc.c ****   adc_enable(ADC1, TRUE);
+ 195              		.loc 1 111 3 view .LVU49
+ 196 00ea 3146     		mov	r1, r6
+ 197 00ec 2046     		mov	r0, r4
+ 198 00ee FFF7FEFF 		bl	adc_enable
+ 199              	.LVL18:
+ 112:project/src/wk_adc.c ****   
+ 113:project/src/wk_adc.c ****   /* adc calibration-------------------------------------------------------- */
+ 114:project/src/wk_adc.c ****   adc_calibration_init(ADC1);
+ 200              		.loc 1 114 3 view .LVU50
+ 201 00f2 2046     		mov	r0, r4
+ 202 00f4 FFF7FEFF 		bl	adc_calibration_init
+ 203              	.LVL19:
+ 115:project/src/wk_adc.c ****   while(adc_calibration_init_status_get(ADC1));
+ 204              		.loc 1 115 3 view .LVU51
+ 205              	.L2:
+ 206              		.loc 1 115 9 discriminator 2 view .LVU52
+ 207 00f8 0948     		ldr	r0, .L5+8
+ 208 00fa FFF7FEFF 		bl	adc_calibration_init_status_get
+ 209              	.LVL20:
+ 210 00fe 0028     		cmp	r0, #0
+ 211 0100 FAD1     		bne	.L2
+ 116:project/src/wk_adc.c ****   adc_calibration_start(ADC1);
+ 212              		.loc 1 116 3 view .LVU53
+ 213 0102 0748     		ldr	r0, .L5+8
+ 214 0104 FFF7FEFF 		bl	adc_calibration_start
+ 215              	.LVL21:
+ 117:project/src/wk_adc.c ****   while(adc_calibration_status_get(ADC1));
+ 216              		.loc 1 117 3 view .LVU54
+ 217              	.L3:
+ 218              		.loc 1 117 9 discriminator 2 view .LVU55
+ 219 0108 0548     		ldr	r0, .L5+8
+ 220 010a FFF7FEFF 		bl	adc_calibration_status_get
+ 221              	.LVL22:
+ 222 010e 0028     		cmp	r0, #0
+ 223 0110 FAD1     		bne	.L3
+ 118:project/src/wk_adc.c **** 
+ 119:project/src/wk_adc.c ****   /* add user code begin adc1_init 3 */
+ 120:project/src/wk_adc.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 7
+
+
+ 121:project/src/wk_adc.c ****   /* add user code end adc1_init 3 */
+ 122:project/src/wk_adc.c **** }
+ 224              		.loc 1 122 1 is_stmt 0 view .LVU56
+ 225 0112 04B0     		add	sp, sp, #16
+ 226              	.LCFI2:
+ 227              		.cfi_def_cfa_offset 32
+ 228              		@ sp needed
+ 229 0114 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 230              	.L6:
+ 231              		.align	2
+ 232              	.L5:
+ 233 0118 00080140 		.word	1073809408
+ 234 011c 000C0140 		.word	1073810432
+ 235 0120 00240140 		.word	1073816576
+ 236              		.cfi_endproc
+ 237              	.LFE137:
+ 239              		.text
+ 240              	.Letext0:
+ 241              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 242              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 243              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 244              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
+ 245              		.file 6 "libraries/drivers/inc/at32f403a_407_crm.h"
+ 246              		.file 7 "libraries/drivers/inc/at32f403a_407_gpio.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbHAgog.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_adc.c
+C:\Users\10963\AppData\Local\Temp\ccbHAgog.s:21     .text.wk_adc1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccbHAgog.s:27     .text.wk_adc1_init:00000000 wk_adc1_init
+C:\Users\10963\AppData\Local\Temp\ccbHAgog.s:233    .text.wk_adc1_init:00000118 $d
+
+UNDEFINED SYMBOLS
+gpio_default_para_init
+gpio_init
+adc_reset
+crm_adc_clock_div_set
+adc_combine_mode_select
+adc_base_default_para_init
+adc_base_config
+adc_ordinary_channel_set
+adc_ordinary_conversion_trigger_set
+adc_ordinary_part_mode_enable
+adc_dma_mode_enable
+adc_enable
+adc_calibration_init
+adc_calibration_init_status_get
+adc_calibration_start
+adc_calibration_status_get

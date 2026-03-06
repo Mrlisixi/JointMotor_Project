@@ -1,0 +1,350 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_spi.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_spi.c"
+  20              		.section	.text.wk_spi1_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_spi1_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_spi1_init:
+  28              	.LFB137:
+   1:project/src/wk_spi.c **** /* add user code begin Header */
+   2:project/src/wk_spi.c **** /**
+   3:project/src/wk_spi.c ****   **************************************************************************
+   4:project/src/wk_spi.c ****   * @file     wk_spi.c
+   5:project/src/wk_spi.c ****   * @brief    work bench config program
+   6:project/src/wk_spi.c ****   **************************************************************************
+   7:project/src/wk_spi.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_spi.c ****   *
+   9:project/src/wk_spi.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_spi.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_spi.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_spi.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_spi.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_spi.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_spi.c ****   *
+  16:project/src/wk_spi.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_spi.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_spi.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_spi.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_spi.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_spi.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_spi.c ****   *
+  23:project/src/wk_spi.c ****   **************************************************************************
+  24:project/src/wk_spi.c ****   */
+  25:project/src/wk_spi.c **** /* add user code end Header */
+  26:project/src/wk_spi.c **** 
+  27:project/src/wk_spi.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_spi.c **** #include "wk_spi.h"
+  29:project/src/wk_spi.c **** 
+  30:project/src/wk_spi.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 2
+
+
+  31:project/src/wk_spi.c **** 
+  32:project/src/wk_spi.c **** /* add user code end 0 */
+  33:project/src/wk_spi.c **** 
+  34:project/src/wk_spi.c **** /**
+  35:project/src/wk_spi.c ****   * @brief  init spi1 function
+  36:project/src/wk_spi.c ****   * @param  none
+  37:project/src/wk_spi.c ****   * @retval none
+  38:project/src/wk_spi.c ****   */
+  39:project/src/wk_spi.c **** void wk_spi1_init(void)
+  40:project/src/wk_spi.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 32
+  36              		.cfi_offset 4, -32
+  37              		.cfi_offset 5, -28
+  38              		.cfi_offset 6, -24
+  39              		.cfi_offset 7, -20
+  40              		.cfi_offset 8, -16
+  41              		.cfi_offset 9, -12
+  42              		.cfi_offset 10, -8
+  43              		.cfi_offset 14, -4
+  44 0004 84B0     		sub	sp, sp, #16
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 48
+  41:project/src/wk_spi.c ****   /* add user code begin spi1_init 0 */
+  42:project/src/wk_spi.c **** 
+  43:project/src/wk_spi.c ****   /* add user code end spi1_init 0 */
+  44:project/src/wk_spi.c **** 
+  45:project/src/wk_spi.c ****   gpio_init_type gpio_init_struct;
+  47              		.loc 1 45 3 view .LVU1
+  46:project/src/wk_spi.c ****   spi_init_type spi_init_struct;
+  48              		.loc 1 46 3 view .LVU2
+  47:project/src/wk_spi.c **** 
+  48:project/src/wk_spi.c ****   gpio_default_para_init(&gpio_init_struct);
+  49              		.loc 1 48 3 view .LVU3
+  50 0006 02AD     		add	r5, sp, #8
+  51 0008 2846     		mov	r0, r5
+  52 000a FFF7FEFF 		bl	gpio_default_para_init
+  53              	.LVL0:
+  49:project/src/wk_spi.c ****   spi_default_para_init(&spi_init_struct);
+  54              		.loc 1 49 3 view .LVU4
+  55 000e 6846     		mov	r0, sp
+  56 0010 FFF7FEFF 		bl	spi_default_para_init
+  57              	.LVL1:
+  50:project/src/wk_spi.c **** 
+  51:project/src/wk_spi.c ****   /* add user code begin spi1_init 1 */
+  52:project/src/wk_spi.c **** 
+  53:project/src/wk_spi.c ****   /* add user code end spi1_init 1 */
+  54:project/src/wk_spi.c **** 
+  55:project/src/wk_spi.c ****   /* configure the SCK pin */
+  56:project/src/wk_spi.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  58              		.loc 1 56 3 view .LVU5
+  59              		.loc 1 56 40 is_stmt 0 view .LVU6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 3
+
+
+  60 0014 4FF00208 		mov	r8, #2
+  61 0018 8DF80F80 		strb	r8, [sp, #15]
+  57:project/src/wk_spi.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  62              		.loc 1 57 3 is_stmt 1 view .LVU7
+  63              		.loc 1 57 34 is_stmt 0 view .LVU8
+  64 001c 0024     		movs	r4, #0
+  65 001e 8DF80C40 		strb	r4, [sp, #12]
+  58:project/src/wk_spi.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  66              		.loc 1 58 3 is_stmt 1 view .LVU9
+  67              		.loc 1 58 30 is_stmt 0 view .LVU10
+  68 0022 4FF0080A 		mov	r10, #8
+  69 0026 8DF80EA0 		strb	r10, [sp, #14]
+  59:project/src/wk_spi.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_5;
+  70              		.loc 1 59 3 is_stmt 1 view .LVU11
+  71              		.loc 1 59 30 is_stmt 0 view .LVU12
+  72 002a 2023     		movs	r3, #32
+  73 002c 0293     		str	r3, [sp, #8]
+  60:project/src/wk_spi.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  74              		.loc 1 60 3 is_stmt 1 view .LVU13
+  75              		.loc 1 60 30 is_stmt 0 view .LVU14
+  76 002e 0427     		movs	r7, #4
+  77 0030 8DF80D70 		strb	r7, [sp, #13]
+  61:project/src/wk_spi.c ****   gpio_init(GPIOA, &gpio_init_struct);
+  78              		.loc 1 61 3 is_stmt 1 view .LVU15
+  79 0034 274E     		ldr	r6, .L3
+  80 0036 2946     		mov	r1, r5
+  81 0038 3046     		mov	r0, r6
+  82 003a FFF7FEFF 		bl	gpio_init
+  83              	.LVL2:
+  62:project/src/wk_spi.c **** 
+  63:project/src/wk_spi.c ****   /* configure the MISO pin */
+  64:project/src/wk_spi.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  84              		.loc 1 64 3 view .LVU16
+  85              		.loc 1 64 40 is_stmt 0 view .LVU17
+  86 003e 8DF80F80 		strb	r8, [sp, #15]
+  65:project/src/wk_spi.c ****   gpio_init_struct.gpio_out_type  = GPIO_OUTPUT_PUSH_PULL;
+  87              		.loc 1 65 3 is_stmt 1 view .LVU18
+  88              		.loc 1 65 35 is_stmt 0 view .LVU19
+  89 0042 8DF80C40 		strb	r4, [sp, #12]
+  66:project/src/wk_spi.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
+  90              		.loc 1 66 3 is_stmt 1 view .LVU20
+  91              		.loc 1 66 30 is_stmt 0 view .LVU21
+  92 0046 8DF80E40 		strb	r4, [sp, #14]
+  67:project/src/wk_spi.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_6;
+  93              		.loc 1 67 3 is_stmt 1 view .LVU22
+  94              		.loc 1 67 30 is_stmt 0 view .LVU23
+  95 004a 4023     		movs	r3, #64
+  96 004c 0293     		str	r3, [sp, #8]
+  68:project/src/wk_spi.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  97              		.loc 1 68 3 is_stmt 1 view .LVU24
+  98              		.loc 1 68 30 is_stmt 0 view .LVU25
+  99 004e 8DF80D70 		strb	r7, [sp, #13]
+  69:project/src/wk_spi.c ****   gpio_init(GPIOA, &gpio_init_struct);
+ 100              		.loc 1 69 3 is_stmt 1 view .LVU26
+ 101 0052 2946     		mov	r1, r5
+ 102 0054 3046     		mov	r0, r6
+ 103 0056 FFF7FEFF 		bl	gpio_init
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 4
+
+
+ 104              	.LVL3:
+  70:project/src/wk_spi.c **** 
+  71:project/src/wk_spi.c ****   /* configure the MOSI pin */
+  72:project/src/wk_spi.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+ 105              		.loc 1 72 3 view .LVU27
+ 106              		.loc 1 72 40 is_stmt 0 view .LVU28
+ 107 005a 8DF80F80 		strb	r8, [sp, #15]
+  73:project/src/wk_spi.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+ 108              		.loc 1 73 3 is_stmt 1 view .LVU29
+ 109              		.loc 1 73 34 is_stmt 0 view .LVU30
+ 110 005e 8DF80C40 		strb	r4, [sp, #12]
+  74:project/src/wk_spi.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+ 111              		.loc 1 74 3 is_stmt 1 view .LVU31
+ 112              		.loc 1 74 30 is_stmt 0 view .LVU32
+ 113 0062 8DF80EA0 		strb	r10, [sp, #14]
+  75:project/src/wk_spi.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_7;
+ 114              		.loc 1 75 3 is_stmt 1 view .LVU33
+ 115              		.loc 1 75 30 is_stmt 0 view .LVU34
+ 116 0066 8023     		movs	r3, #128
+ 117 0068 0293     		str	r3, [sp, #8]
+  76:project/src/wk_spi.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+ 118              		.loc 1 76 3 is_stmt 1 view .LVU35
+ 119              		.loc 1 76 30 is_stmt 0 view .LVU36
+ 120 006a 8DF80D70 		strb	r7, [sp, #13]
+  77:project/src/wk_spi.c ****   gpio_init(GPIOA, &gpio_init_struct);
+ 121              		.loc 1 77 3 is_stmt 1 view .LVU37
+ 122 006e 2946     		mov	r1, r5
+ 123 0070 3046     		mov	r0, r6
+ 124 0072 FFF7FEFF 		bl	gpio_init
+ 125              	.LVL4:
+  78:project/src/wk_spi.c **** 
+  79:project/src/wk_spi.c ****   /* configure the CS pin */
+  80:project/src/wk_spi.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+ 126              		.loc 1 80 3 view .LVU38
+ 127              		.loc 1 80 40 is_stmt 0 view .LVU39
+ 128 0076 8DF80F80 		strb	r8, [sp, #15]
+  81:project/src/wk_spi.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+ 129              		.loc 1 81 3 is_stmt 1 view .LVU40
+ 130              		.loc 1 81 34 is_stmt 0 view .LVU41
+ 131 007a 8DF80C40 		strb	r4, [sp, #12]
+  82:project/src/wk_spi.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+ 132              		.loc 1 82 3 is_stmt 1 view .LVU42
+ 133              		.loc 1 82 30 is_stmt 0 view .LVU43
+ 134 007e 8DF80EA0 		strb	r10, [sp, #14]
+  83:project/src/wk_spi.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_4;
+ 135              		.loc 1 83 3 is_stmt 1 view .LVU44
+ 136              		.loc 1 83 30 is_stmt 0 view .LVU45
+ 137 0082 1023     		movs	r3, #16
+ 138 0084 0293     		str	r3, [sp, #8]
+  84:project/src/wk_spi.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+ 139              		.loc 1 84 3 is_stmt 1 view .LVU46
+ 140              		.loc 1 84 30 is_stmt 0 view .LVU47
+ 141 0086 8DF80D70 		strb	r7, [sp, #13]
+  85:project/src/wk_spi.c ****   gpio_init(GPIOA, &gpio_init_struct);
+ 142              		.loc 1 85 3 is_stmt 1 view .LVU48
+ 143 008a 2946     		mov	r1, r5
+ 144 008c 3046     		mov	r0, r6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 5
+
+
+ 145 008e FFF7FEFF 		bl	gpio_init
+ 146              	.LVL5:
+  86:project/src/wk_spi.c **** 
+  87:project/src/wk_spi.c ****   /* configure param */
+  88:project/src/wk_spi.c ****   spi_init_struct.transmission_mode = SPI_TRANSMIT_FULL_DUPLEX;
+ 147              		.loc 1 88 3 view .LVU49
+ 148              		.loc 1 88 37 is_stmt 0 view .LVU50
+ 149 0092 8DF80040 		strb	r4, [sp]
+  89:project/src/wk_spi.c ****   spi_init_struct.master_slave_mode = SPI_MODE_MASTER;
+ 150              		.loc 1 89 3 is_stmt 1 view .LVU51
+ 151              		.loc 1 89 37 is_stmt 0 view .LVU52
+ 152 0096 0125     		movs	r5, #1
+ 153 0098 8DF80150 		strb	r5, [sp, #1]
+  90:project/src/wk_spi.c ****   spi_init_struct.frame_bit_num = SPI_FRAME_8BIT;
+ 154              		.loc 1 90 3 is_stmt 1 view .LVU53
+ 155              		.loc 1 90 33 is_stmt 0 view .LVU54
+ 156 009c 8DF80440 		strb	r4, [sp, #4]
+  91:project/src/wk_spi.c ****   spi_init_struct.first_bit_transmission = SPI_FIRST_BIT_MSB;
+ 157              		.loc 1 91 3 is_stmt 1 view .LVU55
+ 158              		.loc 1 91 42 is_stmt 0 view .LVU56
+ 159 00a0 8DF80340 		strb	r4, [sp, #3]
+  92:project/src/wk_spi.c ****   spi_init_struct.mclk_freq_division = SPI_MCLK_DIV_4;
+ 160              		.loc 1 92 3 is_stmt 1 view .LVU57
+ 161              		.loc 1 92 38 is_stmt 0 view .LVU58
+ 162 00a4 8DF80250 		strb	r5, [sp, #2]
+  93:project/src/wk_spi.c ****   spi_init_struct.clock_polarity = SPI_CLOCK_POLARITY_LOW;
+ 163              		.loc 1 93 3 is_stmt 1 view .LVU59
+ 164              		.loc 1 93 34 is_stmt 0 view .LVU60
+ 165 00a8 8DF80540 		strb	r4, [sp, #5]
+  94:project/src/wk_spi.c ****   spi_init_struct.clock_phase = SPI_CLOCK_PHASE_1EDGE;
+ 166              		.loc 1 94 3 is_stmt 1 view .LVU61
+ 167              		.loc 1 94 31 is_stmt 0 view .LVU62
+ 168 00ac 8DF80640 		strb	r4, [sp, #6]
+  95:project/src/wk_spi.c ****   spi_init_struct.cs_mode_selection = SPI_CS_HARDWARE_MODE;
+ 169              		.loc 1 95 3 is_stmt 1 view .LVU63
+ 170              		.loc 1 95 37 is_stmt 0 view .LVU64
+ 171 00b0 8DF80740 		strb	r4, [sp, #7]
+  96:project/src/wk_spi.c ****   spi_init(SPI1, &spi_init_struct);
+ 172              		.loc 1 96 3 is_stmt 1 view .LVU65
+ 173 00b4 084C     		ldr	r4, .L3+4
+ 174 00b6 6946     		mov	r1, sp
+ 175 00b8 2046     		mov	r0, r4
+ 176 00ba FFF7FEFF 		bl	spi_init
+ 177              	.LVL6:
+  97:project/src/wk_spi.c **** 
+  98:project/src/wk_spi.c ****   /* configure the cs pin output */
+  99:project/src/wk_spi.c ****   spi_hardware_cs_output_enable(SPI1, TRUE);
+ 178              		.loc 1 99 3 view .LVU66
+ 179 00be 2946     		mov	r1, r5
+ 180 00c0 2046     		mov	r0, r4
+ 181 00c2 FFF7FEFF 		bl	spi_hardware_cs_output_enable
+ 182              	.LVL7:
+ 100:project/src/wk_spi.c **** 
+ 101:project/src/wk_spi.c ****   /* add user code begin spi1_init 2 */
+ 102:project/src/wk_spi.c **** 
+ 103:project/src/wk_spi.c ****   /* add user code end spi1_init 2 */
+ 104:project/src/wk_spi.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 6
+
+
+ 105:project/src/wk_spi.c ****   spi_enable(SPI1, TRUE);
+ 183              		.loc 1 105 3 view .LVU67
+ 184 00c6 2946     		mov	r1, r5
+ 185 00c8 2046     		mov	r0, r4
+ 186 00ca FFF7FEFF 		bl	spi_enable
+ 187              	.LVL8:
+ 106:project/src/wk_spi.c **** 
+ 107:project/src/wk_spi.c ****   /* add user code begin spi1_init 3 */
+ 108:project/src/wk_spi.c **** 
+ 109:project/src/wk_spi.c ****   /* add user code end spi1_init 3 */
+ 110:project/src/wk_spi.c **** }
+ 188              		.loc 1 110 1 is_stmt 0 view .LVU68
+ 189 00ce 04B0     		add	sp, sp, #16
+ 190              	.LCFI2:
+ 191              		.cfi_def_cfa_offset 32
+ 192              		@ sp needed
+ 193 00d0 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 194              	.L4:
+ 195              		.align	2
+ 196              	.L3:
+ 197 00d4 00080140 		.word	1073809408
+ 198 00d8 00300140 		.word	1073819648
+ 199              		.cfi_endproc
+ 200              	.LFE137:
+ 202              		.text
+ 203              	.Letext0:
+ 204              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 205              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 206              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 207              		.file 5 "libraries/drivers/inc/at32f403a_407_gpio.h"
+ 208              		.file 6 "libraries/drivers/inc/at32f403a_407_spi.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_spi.c
+C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s:21     .text.wk_spi1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s:27     .text.wk_spi1_init:00000000 wk_spi1_init
+C:\Users\10963\AppData\Local\Temp\ccFl0KBD.s:197    .text.wk_spi1_init:000000d4 $d
+
+UNDEFINED SYMBOLS
+gpio_default_para_init
+spi_default_para_init
+gpio_init
+spi_init
+spi_hardware_cs_output_enable
+spi_enable

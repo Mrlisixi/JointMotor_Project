@@ -1,0 +1,261 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_dma.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_dma.c"
+  20              		.section	.text.wk_dma1_channel1_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_dma1_channel1_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_dma1_channel1_init:
+  28              	.LFB137:
+   1:project/src/wk_dma.c **** /* add user code begin Header */
+   2:project/src/wk_dma.c **** /**
+   3:project/src/wk_dma.c ****   **************************************************************************
+   4:project/src/wk_dma.c ****   * @file     wk_dma.c
+   5:project/src/wk_dma.c ****   * @brief    work bench config program
+   6:project/src/wk_dma.c ****   **************************************************************************
+   7:project/src/wk_dma.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_dma.c ****   *
+   9:project/src/wk_dma.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_dma.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_dma.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_dma.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_dma.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_dma.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_dma.c ****   *
+  16:project/src/wk_dma.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_dma.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_dma.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_dma.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_dma.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_dma.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_dma.c ****   *
+  23:project/src/wk_dma.c ****   **************************************************************************
+  24:project/src/wk_dma.c ****   */
+  25:project/src/wk_dma.c **** /* add user code end Header */
+  26:project/src/wk_dma.c **** 
+  27:project/src/wk_dma.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_dma.c **** #include "wk_dma.h"
+  29:project/src/wk_dma.c **** 
+  30:project/src/wk_dma.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 2
+
+
+  31:project/src/wk_dma.c **** 
+  32:project/src/wk_dma.c **** /* add user code end 0 */
+  33:project/src/wk_dma.c **** 
+  34:project/src/wk_dma.c **** /**
+  35:project/src/wk_dma.c ****   * @brief  init dma1 channel1 for "adc1"
+  36:project/src/wk_dma.c ****   * @param  none
+  37:project/src/wk_dma.c ****   * @retval none
+  38:project/src/wk_dma.c ****   */
+  39:project/src/wk_dma.c **** void wk_dma1_channel1_init(void)
+  40:project/src/wk_dma.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 24
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 70B5     		push	{r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40 0002 86B0     		sub	sp, sp, #24
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_offset 40
+  41:project/src/wk_dma.c ****   /* add user code begin dma1_channel1 0 */
+  42:project/src/wk_dma.c **** 
+  43:project/src/wk_dma.c ****   /* add user code end dma1_channel1 0 */
+  44:project/src/wk_dma.c **** 
+  45:project/src/wk_dma.c ****   dma_init_type dma_init_struct;
+  43              		.loc 1 45 3 view .LVU1
+  46:project/src/wk_dma.c **** 
+  47:project/src/wk_dma.c ****   dma_reset(DMA1_CHANNEL1);
+  44              		.loc 1 47 3 view .LVU2
+  45 0004 144D     		ldr	r5, .L3
+  46 0006 2846     		mov	r0, r5
+  47 0008 FFF7FEFF 		bl	dma_reset
+  48              	.LVL0:
+  48:project/src/wk_dma.c ****   dma_default_para_init(&dma_init_struct);
+  49              		.loc 1 48 3 view .LVU3
+  50 000c 01AE     		add	r6, sp, #4
+  51 000e 3046     		mov	r0, r6
+  52 0010 FFF7FEFF 		bl	dma_default_para_init
+  53              	.LVL1:
+  49:project/src/wk_dma.c ****   dma_init_struct.direction = DMA_DIR_PERIPHERAL_TO_MEMORY;
+  54              		.loc 1 49 3 view .LVU4
+  55              		.loc 1 49 29 is_stmt 0 view .LVU5
+  56 0014 0023     		movs	r3, #0
+  57 0016 ADF80C30 		strh	r3, [sp, #12]	@ movhi
+  50:project/src/wk_dma.c ****   dma_init_struct.memory_data_width = DMA_MEMORY_DATA_WIDTH_HALFWORD;
+  58              		.loc 1 50 3 is_stmt 1 view .LVU6
+  59              		.loc 1 50 37 is_stmt 0 view .LVU7
+  60 001a 0124     		movs	r4, #1
+  61 001c 8DF81340 		strb	r4, [sp, #19]
+  51:project/src/wk_dma.c ****   dma_init_struct.memory_inc_enable = TRUE;
+  62              		.loc 1 51 3 is_stmt 1 view .LVU8
+  63              		.loc 1 51 37 is_stmt 0 view .LVU9
+  64 0020 8DF81140 		strb	r4, [sp, #17]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 3
+
+
+  52:project/src/wk_dma.c ****   dma_init_struct.peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_HALFWORD;
+  65              		.loc 1 52 3 is_stmt 1 view .LVU10
+  66              		.loc 1 52 41 is_stmt 0 view .LVU11
+  67 0024 8DF81240 		strb	r4, [sp, #18]
+  53:project/src/wk_dma.c ****   dma_init_struct.peripheral_inc_enable = FALSE;
+  68              		.loc 1 53 3 is_stmt 1 view .LVU12
+  69              		.loc 1 53 41 is_stmt 0 view .LVU13
+  70 0028 4FF00002 		mov	r2, #0	@ movhi
+  71 002c 8DF81020 		strb	r2, [sp, #16]
+  54:project/src/wk_dma.c ****   dma_init_struct.priority = DMA_PRIORITY_LOW;
+  72              		.loc 1 54 3 is_stmt 1 view .LVU14
+  73              		.loc 1 54 28 is_stmt 0 view .LVU15
+  74 0030 8DF81530 		strb	r3, [sp, #21]
+  55:project/src/wk_dma.c ****   dma_init_struct.loop_mode_enable = TRUE;
+  75              		.loc 1 55 3 is_stmt 1 view .LVU16
+  76              		.loc 1 55 36 is_stmt 0 view .LVU17
+  77 0034 8DF81440 		strb	r4, [sp, #20]
+  56:project/src/wk_dma.c ****   dma_init(DMA1_CHANNEL1, &dma_init_struct);
+  78              		.loc 1 56 3 is_stmt 1 view .LVU18
+  79 0038 3146     		mov	r1, r6
+  80 003a 2846     		mov	r0, r5
+  81 003c FFF7FEFF 		bl	dma_init
+  82              	.LVL2:
+  57:project/src/wk_dma.c **** 
+  58:project/src/wk_dma.c ****   /* flexible function enable */
+  59:project/src/wk_dma.c ****   dma_flexible_config(DMA1, FLEX_CHANNEL1, DMA_FLEXIBLE_ADC1);
+  83              		.loc 1 59 3 view .LVU19
+  84 0040 2246     		mov	r2, r4
+  85 0042 2146     		mov	r1, r4
+  86 0044 0548     		ldr	r0, .L3+4
+  87 0046 FFF7FEFF 		bl	dma_flexible_config
+  88              	.LVL3:
+  60:project/src/wk_dma.c **** 
+  61:project/src/wk_dma.c ****   /* enable dma1 channel1 full data transfer interrupt */
+  62:project/src/wk_dma.c ****   dma_interrupt_enable(DMA1_CHANNEL1, DMA_FDT_INT, TRUE);
+  89              		.loc 1 62 3 view .LVU20
+  90 004a 2246     		mov	r2, r4
+  91 004c 0221     		movs	r1, #2
+  92 004e 2846     		mov	r0, r5
+  93 0050 FFF7FEFF 		bl	dma_interrupt_enable
+  94              	.LVL4:
+  63:project/src/wk_dma.c **** 
+  64:project/src/wk_dma.c ****   /* add user code begin dma1_channel1 1 */
+  65:project/src/wk_dma.c **** 
+  66:project/src/wk_dma.c ****   /* add user code end dma1_channel1 1 */
+  67:project/src/wk_dma.c **** }
+  95              		.loc 1 67 1 is_stmt 0 view .LVU21
+  96 0054 06B0     		add	sp, sp, #24
+  97              	.LCFI2:
+  98              		.cfi_def_cfa_offset 16
+  99              		@ sp needed
+ 100 0056 70BD     		pop	{r4, r5, r6, pc}
+ 101              	.L4:
+ 102              		.align	2
+ 103              	.L3:
+ 104 0058 08000240 		.word	1073872904
+ 105 005c 00000240 		.word	1073872896
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 4
+
+
+ 106              		.cfi_endproc
+ 107              	.LFE137:
+ 109              		.section	.text.wk_dma_channel_config,"ax",%progbits
+ 110              		.align	1
+ 111              		.global	wk_dma_channel_config
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 116              	wk_dma_channel_config:
+ 117              	.LVL5:
+ 118              	.LFB138:
+  68:project/src/wk_dma.c **** 
+  69:project/src/wk_dma.c **** /**
+  70:project/src/wk_dma.c ****   * @brief  config dma channel transfer parameter
+  71:project/src/wk_dma.c ****   * @param  dmax_channely: DMAx_CHANNELy
+  72:project/src/wk_dma.c ****   * @param  peripheral_base_addr: peripheral address.
+  73:project/src/wk_dma.c ****   * @param  memory_base_addr: memory address.
+  74:project/src/wk_dma.c ****   * @param  buffer_size: buffer size.
+  75:project/src/wk_dma.c ****   * @retval none
+  76:project/src/wk_dma.c ****   */
+  77:project/src/wk_dma.c **** void wk_dma_channel_config(dma_channel_type* dmax_channely, uint32_t peripheral_base_addr, uint32_t
+  78:project/src/wk_dma.c **** {
+ 119              		.loc 1 78 1 is_stmt 1 view -0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              		@ link register save eliminated.
+  79:project/src/wk_dma.c ****   /* add user code begin dma_channel_config 0 */
+  80:project/src/wk_dma.c **** 
+  81:project/src/wk_dma.c ****   /* add user code end dma_channel_config 0 */
+  82:project/src/wk_dma.c **** 
+  83:project/src/wk_dma.c ****   dmax_channely->dtcnt = buffer_size;
+ 124              		.loc 1 83 3 view .LVU23
+ 125              		.loc 1 83 24 is_stmt 0 view .LVU24
+ 126 0000 4360     		str	r3, [r0, #4]
+  84:project/src/wk_dma.c ****   dmax_channely->paddr = peripheral_base_addr;
+ 127              		.loc 1 84 3 is_stmt 1 view .LVU25
+ 128              		.loc 1 84 24 is_stmt 0 view .LVU26
+ 129 0002 8160     		str	r1, [r0, #8]
+  85:project/src/wk_dma.c ****   dmax_channely->maddr = memory_base_addr;
+ 130              		.loc 1 85 3 is_stmt 1 view .LVU27
+ 131              		.loc 1 85 24 is_stmt 0 view .LVU28
+ 132 0004 C260     		str	r2, [r0, #12]
+  86:project/src/wk_dma.c **** 
+  87:project/src/wk_dma.c ****   /* add user code begin dma_channel_config 1 */
+  88:project/src/wk_dma.c **** 
+  89:project/src/wk_dma.c ****   /* add user code end dma_channel_config 1 */
+  90:project/src/wk_dma.c **** }
+ 133              		.loc 1 90 1 view .LVU29
+ 134 0006 7047     		bx	lr
+ 135              		.cfi_endproc
+ 136              	.LFE138:
+ 138              		.text
+ 139              	.Letext0:
+ 140              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 141              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 142              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 5
+
+
+ 143              		.file 5 "libraries/drivers/inc/at32f403a_407_dma.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_dma.c
+C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s:21     .text.wk_dma1_channel1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s:27     .text.wk_dma1_channel1_init:00000000 wk_dma1_channel1_init
+C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s:104    .text.wk_dma1_channel1_init:00000058 $d
+C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s:110    .text.wk_dma_channel_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccnd3sxF.s:116    .text.wk_dma_channel_config:00000000 wk_dma_channel_config
+
+UNDEFINED SYMBOLS
+dma_reset
+dma_default_para_init
+dma_init
+dma_flexible_config
+dma_interrupt_enable

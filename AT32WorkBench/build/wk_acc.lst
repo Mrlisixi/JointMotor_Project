@@ -1,0 +1,145 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_acc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_acc.c"
+  20              		.section	.text.wk_acc_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_acc_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_acc_init:
+  28              	.LFB137:
+   1:project/src/wk_acc.c **** /* add user code begin Header */
+   2:project/src/wk_acc.c **** /**
+   3:project/src/wk_acc.c ****   **************************************************************************
+   4:project/src/wk_acc.c ****   * @file     wk_acc.c
+   5:project/src/wk_acc.c ****   * @brief    work bench config program
+   6:project/src/wk_acc.c ****   **************************************************************************
+   7:project/src/wk_acc.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_acc.c ****   *
+   9:project/src/wk_acc.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_acc.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_acc.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_acc.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_acc.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_acc.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_acc.c ****   *
+  16:project/src/wk_acc.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_acc.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_acc.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_acc.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_acc.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_acc.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_acc.c ****   *
+  23:project/src/wk_acc.c ****   **************************************************************************
+  24:project/src/wk_acc.c ****   */
+  25:project/src/wk_acc.c **** /* add user code end Header */
+  26:project/src/wk_acc.c **** 
+  27:project/src/wk_acc.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_acc.c **** #include "wk_acc.h"
+  29:project/src/wk_acc.c **** 
+  30:project/src/wk_acc.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s 			page 2
+
+
+  31:project/src/wk_acc.c **** 
+  32:project/src/wk_acc.c **** /* add user code end 0 */
+  33:project/src/wk_acc.c **** 
+  34:project/src/wk_acc.c **** /**
+  35:project/src/wk_acc.c ****   * @brief  init acc function
+  36:project/src/wk_acc.c ****   * @param  none
+  37:project/src/wk_acc.c ****   * @retval none
+  38:project/src/wk_acc.c ****   */
+  39:project/src/wk_acc.c **** void wk_acc_init(void)
+  40:project/src/wk_acc.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  41:project/src/wk_acc.c ****   /* add user code begin acc_init 0 */
+  42:project/src/wk_acc.c **** 
+  43:project/src/wk_acc.c ****   /* add user code end acc_init 0 */
+  44:project/src/wk_acc.c **** 
+  45:project/src/wk_acc.c ****   /* update the c1\c2\c3 value */
+  46:project/src/wk_acc.c ****   acc_write_c1(7980);
+  38              		.loc 1 46 3 view .LVU1
+  39 0002 41F62C70 		movw	r0, #7980
+  40 0006 FFF7FEFF 		bl	acc_write_c1
+  41              	.LVL0:
+  47:project/src/wk_acc.c ****   acc_write_c2(8000);
+  42              		.loc 1 47 3 view .LVU2
+  43 000a 4FF4FA50 		mov	r0, #8000
+  44 000e FFF7FEFF 		bl	acc_write_c2
+  45              	.LVL1:
+  48:project/src/wk_acc.c ****   acc_write_c3(8020);
+  46              		.loc 1 48 3 view .LVU3
+  47 0012 41F65470 		movw	r0, #8020
+  48 0016 FFF7FEFF 		bl	acc_write_c3
+  49              	.LVL2:
+  49:project/src/wk_acc.c **** 
+  50:project/src/wk_acc.c ****   /* add user code begin acc_init 1 */
+  51:project/src/wk_acc.c **** 
+  52:project/src/wk_acc.c ****   /* add user code end acc_init 1 */
+  53:project/src/wk_acc.c **** 
+  54:project/src/wk_acc.c ****   /* open acc calibration */
+  55:project/src/wk_acc.c ****   acc_calibration_mode_enable(ACC_CAL_HICKTRIM, TRUE);
+  50              		.loc 1 55 3 view .LVU4
+  51 001a 0121     		movs	r1, #1
+  52 001c 0220     		movs	r0, #2
+  53 001e FFF7FEFF 		bl	acc_calibration_mode_enable
+  54              	.LVL3:
+  56:project/src/wk_acc.c **** 
+  57:project/src/wk_acc.c ****   /* add user code begin acc_init 2 */
+  58:project/src/wk_acc.c **** 
+  59:project/src/wk_acc.c ****   /* add user code end acc_init 2 */
+  60:project/src/wk_acc.c **** }
+  55              		.loc 1 60 1 is_stmt 0 view .LVU5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s 			page 3
+
+
+  56 0022 08BD     		pop	{r3, pc}
+  57              		.cfi_endproc
+  58              	.LFE137:
+  60              		.text
+  61              	.Letext0:
+  62              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+  63              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+  64              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+  65              		.file 5 "libraries/drivers/inc/at32f403a_407_acc.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_acc.c
+C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s:21     .text.wk_acc_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccMqvYUq.s:27     .text.wk_acc_init:00000000 wk_acc_init
+
+UNDEFINED SYMBOLS
+acc_write_c1
+acc_write_c2
+acc_write_c3
+acc_calibration_mode_enable

@@ -1,0 +1,1219 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"at32f403a_407_dma.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "libraries/drivers/src/at32f403a_407_dma.c"
+  20              		.section	.text.dma_reset,"ax",%progbits
+  21              		.align	1
+  22              		.global	dma_reset
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	dma_reset:
+  28              	.LVL0:
+  29              	.LFB134:
+   1:libraries/drivers/src/at32f403a_407_dma.c **** /**
+   2:libraries/drivers/src/at32f403a_407_dma.c ****   **************************************************************************
+   3:libraries/drivers/src/at32f403a_407_dma.c ****   * @file     at32f403a_407_dma.c
+   4:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief    contains all the functions for the dma firmware library
+   5:libraries/drivers/src/at32f403a_407_dma.c ****   **************************************************************************
+   6:libraries/drivers/src/at32f403a_407_dma.c ****   *
+   7:libraries/drivers/src/at32f403a_407_dma.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:libraries/drivers/src/at32f403a_407_dma.c ****   *
+   9:libraries/drivers/src/at32f403a_407_dma.c ****   * The software Board Support Package (BSP) that is made available to
+  10:libraries/drivers/src/at32f403a_407_dma.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:libraries/drivers/src/at32f403a_407_dma.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:libraries/drivers/src/at32f403a_407_dma.c ****   * software and its related documentation for the purpose of design and
+  13:libraries/drivers/src/at32f403a_407_dma.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:libraries/drivers/src/at32f403a_407_dma.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:libraries/drivers/src/at32f403a_407_dma.c ****   *
+  16:libraries/drivers/src/at32f403a_407_dma.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:libraries/drivers/src/at32f403a_407_dma.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:libraries/drivers/src/at32f403a_407_dma.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:libraries/drivers/src/at32f403a_407_dma.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:libraries/drivers/src/at32f403a_407_dma.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:libraries/drivers/src/at32f403a_407_dma.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:libraries/drivers/src/at32f403a_407_dma.c ****   *
+  23:libraries/drivers/src/at32f403a_407_dma.c ****   **************************************************************************
+  24:libraries/drivers/src/at32f403a_407_dma.c ****   */
+  25:libraries/drivers/src/at32f403a_407_dma.c **** 
+  26:libraries/drivers/src/at32f403a_407_dma.c **** #include "at32f403a_407_conf.h"
+  27:libraries/drivers/src/at32f403a_407_dma.c **** 
+  28:libraries/drivers/src/at32f403a_407_dma.c **** /** @addtogroup AT32F403A_407_periph_driver
+  29:libraries/drivers/src/at32f403a_407_dma.c ****   * @{
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 2
+
+
+  30:libraries/drivers/src/at32f403a_407_dma.c ****   */
+  31:libraries/drivers/src/at32f403a_407_dma.c **** 
+  32:libraries/drivers/src/at32f403a_407_dma.c **** /** @defgroup DMA
+  33:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief DMA driver modules
+  34:libraries/drivers/src/at32f403a_407_dma.c ****   * @{
+  35:libraries/drivers/src/at32f403a_407_dma.c ****   */
+  36:libraries/drivers/src/at32f403a_407_dma.c **** 
+  37:libraries/drivers/src/at32f403a_407_dma.c **** #ifdef DMA_MODULE_ENABLED
+  38:libraries/drivers/src/at32f403a_407_dma.c **** 
+  39:libraries/drivers/src/at32f403a_407_dma.c **** /** @defgroup DMA_private_functions
+  40:libraries/drivers/src/at32f403a_407_dma.c ****   * @{
+  41:libraries/drivers/src/at32f403a_407_dma.c ****   */
+  42:libraries/drivers/src/at32f403a_407_dma.c **** 
+  43:libraries/drivers/src/at32f403a_407_dma.c **** /**
+  44:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  reset the dmax channely registers.
+  45:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+  46:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+  47:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+  48:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+  49:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+  50:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+  51:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+  52:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+  53:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+  54:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+  55:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+  56:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+  57:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+  58:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+  59:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+  60:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+  61:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+  62:libraries/drivers/src/at32f403a_407_dma.c ****   */
+  63:libraries/drivers/src/at32f403a_407_dma.c **** void dma_reset(dma_channel_type* dmax_channely)
+  64:libraries/drivers/src/at32f403a_407_dma.c **** {
+  30              		.loc 1 64 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  65:libraries/drivers/src/at32f403a_407_dma.c ****   uint32_t temp = 0;
+  35              		.loc 1 65 3 view .LVU1
+  66:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.chen = FALSE;
+  36              		.loc 1 66 3 view .LVU2
+  37              		.loc 1 66 32 is_stmt 0 view .LVU3
+  38 0000 0368     		ldr	r3, [r0]
+  39 0002 23F00103 		bic	r3, r3, #1
+  40 0006 0360     		str	r3, [r0]
+  67:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl = 0;
+  41              		.loc 1 67 3 is_stmt 1 view .LVU4
+  42              		.loc 1 67 23 is_stmt 0 view .LVU5
+  43 0008 0023     		movs	r3, #0
+  44 000a 0360     		str	r3, [r0]
+  68:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->dtcnt = 0;
+  45              		.loc 1 68 3 is_stmt 1 view .LVU6
+  46              		.loc 1 68 24 is_stmt 0 view .LVU7
+  47 000c 4360     		str	r3, [r0, #4]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 3
+
+
+  69:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->paddr = 0;
+  48              		.loc 1 69 3 is_stmt 1 view .LVU8
+  49              		.loc 1 69 24 is_stmt 0 view .LVU9
+  50 000e 8360     		str	r3, [r0, #8]
+  70:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->maddr = 0;
+  51              		.loc 1 70 3 is_stmt 1 view .LVU10
+  52              		.loc 1 70 24 is_stmt 0 view .LVU11
+  53 0010 C360     		str	r3, [r0, #12]
+  71:libraries/drivers/src/at32f403a_407_dma.c **** 
+  72:libraries/drivers/src/at32f403a_407_dma.c ****   temp = (uint32_t)dmax_channely;
+  54              		.loc 1 72 3 is_stmt 1 view .LVU12
+  55              	.LVL1:
+  73:libraries/drivers/src/at32f403a_407_dma.c **** 
+  74:libraries/drivers/src/at32f403a_407_dma.c ****   if((temp & 0x4ff) < 0x408)
+  56              		.loc 1 74 3 view .LVU13
+  57              		.loc 1 74 12 is_stmt 0 view .LVU14
+  58 0012 40F2FF43 		movw	r3, #1279
+  59 0016 0340     		ands	r3, r3, r0
+  60              		.loc 1 74 5 view .LVU15
+  61 0018 B3F5816F 		cmp	r3, #1032
+  62 001c 11D2     		bcs	.L2
+  75:libraries/drivers/src/at32f403a_407_dma.c ****   {
+  76:libraries/drivers/src/at32f403a_407_dma.c ****     /* dma1 channel */
+  77:libraries/drivers/src/at32f403a_407_dma.c ****     DMA1->clr |= (uint32_t)(0x0f << ((((temp & 0xff) - 0x08) / 0x14) * 4));
+  63              		.loc 1 77 5 is_stmt 1 view .LVU16
+  64              		.loc 1 77 9 is_stmt 0 view .LVU17
+  65 001e DFF850C0 		ldr	ip, .L4+4
+  66 0022 DCF80420 		ldr	r2, [ip, #4]
+  67              		.loc 1 77 46 view .LVU18
+  68 0026 C3B2     		uxtb	r3, r0
+  69              		.loc 1 77 54 view .LVU19
+  70 0028 083B     		subs	r3, r3, #8
+  71              		.loc 1 77 62 view .LVU20
+  72 002a 1049     		ldr	r1, .L4
+  73 002c A1FB0313 		umull	r1, r3, r1, r3
+  74 0030 1B09     		lsrs	r3, r3, #4
+  75              		.loc 1 77 70 view .LVU21
+  76 0032 9B00     		lsls	r3, r3, #2
+  77              		.loc 1 77 34 view .LVU22
+  78 0034 0F21     		movs	r1, #15
+  79 0036 01FA03F3 		lsl	r3, r1, r3
+  80              		.loc 1 77 15 view .LVU23
+  81 003a 1343     		orrs	r3, r3, r2
+  82 003c CCF80430 		str	r3, [ip, #4]
+  83 0040 7047     		bx	lr
+  84              	.L2:
+  78:libraries/drivers/src/at32f403a_407_dma.c ****   }
+  79:libraries/drivers/src/at32f403a_407_dma.c ****   else if((temp & 0x4ff) < 0x488)
+  85              		.loc 1 79 8 is_stmt 1 view .LVU24
+  86              		.loc 1 79 10 is_stmt 0 view .LVU25
+  87 0042 B3F5916F 		cmp	r3, #1160
+  88 0046 10D2     		bcs	.L1
+  80:libraries/drivers/src/at32f403a_407_dma.c ****   {
+  81:libraries/drivers/src/at32f403a_407_dma.c ****     /* dma2 channel */
+  82:libraries/drivers/src/at32f403a_407_dma.c ****     DMA2->clr |= (uint32_t)(0x0f << ((((temp & 0xff) - 0x08) / 0x14) * 4));
+  89              		.loc 1 82 5 is_stmt 1 view .LVU26
+  90              		.loc 1 82 9 is_stmt 0 view .LVU27
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 4
+
+
+  91 0048 DFF828C0 		ldr	ip, .L4+8
+  92 004c DCF80420 		ldr	r2, [ip, #4]
+  93              		.loc 1 82 46 view .LVU28
+  94 0050 C3B2     		uxtb	r3, r0
+  95              		.loc 1 82 54 view .LVU29
+  96 0052 083B     		subs	r3, r3, #8
+  97              		.loc 1 82 62 view .LVU30
+  98 0054 0549     		ldr	r1, .L4
+  99 0056 A1FB0313 		umull	r1, r3, r1, r3
+ 100 005a 1B09     		lsrs	r3, r3, #4
+ 101              		.loc 1 82 70 view .LVU31
+ 102 005c 9B00     		lsls	r3, r3, #2
+ 103              		.loc 1 82 34 view .LVU32
+ 104 005e 0F21     		movs	r1, #15
+ 105 0060 01FA03F3 		lsl	r3, r1, r3
+ 106              		.loc 1 82 15 view .LVU33
+ 107 0064 1343     		orrs	r3, r3, r2
+ 108 0066 CCF80430 		str	r3, [ip, #4]
+ 109              	.L1:
+  83:libraries/drivers/src/at32f403a_407_dma.c ****   }
+  84:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 110              		.loc 1 84 1 view .LVU34
+ 111 006a 7047     		bx	lr
+ 112              	.L5:
+ 113              		.align	2
+ 114              	.L4:
+ 115 006c CDCCCCCC 		.word	-858993459
+ 116 0070 00000240 		.word	1073872896
+ 117 0074 00040240 		.word	1073873920
+ 118              		.cfi_endproc
+ 119              	.LFE134:
+ 121              		.section	.text.dma_data_number_set,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	dma_data_number_set
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 128              	dma_data_number_set:
+ 129              	.LVL2:
+ 130              	.LFB135:
+  85:libraries/drivers/src/at32f403a_407_dma.c **** 
+  86:libraries/drivers/src/at32f403a_407_dma.c **** /**
+  87:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  set the number of data to be transferred
+  88:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+  89:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+  90:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+  91:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+  92:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+  93:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+  94:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+  95:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+  96:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+  97:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+  98:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+  99:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+ 100:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+ 101:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 5
+
+
+ 102:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+ 103:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+ 104:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  data_number: the number of data to be transferred(0x0000~0xFFFF)
+ 105:libraries/drivers/src/at32f403a_407_dma.c ****   *         transfer.
+ 106:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none.
+ 107:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 108:libraries/drivers/src/at32f403a_407_dma.c **** void dma_data_number_set(dma_channel_type* dmax_channely, uint16_t data_number)
+ 109:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 131              		.loc 1 109 1 is_stmt 1 view -0
+ 132              		.cfi_startproc
+ 133              		@ args = 0, pretend = 0, frame = 0
+ 134              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135              		@ link register save eliminated.
+ 110:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->dtcnt = data_number;
+ 136              		.loc 1 110 3 view .LVU36
+ 137              		.loc 1 110 24 is_stmt 0 view .LVU37
+ 138 0000 4160     		str	r1, [r0, #4]
+ 111:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 139              		.loc 1 111 1 view .LVU38
+ 140 0002 7047     		bx	lr
+ 141              		.cfi_endproc
+ 142              	.LFE135:
+ 144              		.section	.text.dma_data_number_get,"ax",%progbits
+ 145              		.align	1
+ 146              		.global	dma_data_number_get
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 151              	dma_data_number_get:
+ 152              	.LVL3:
+ 153              	.LFB136:
+ 112:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 113:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 114:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  get number of data from dtcnt register
+ 115:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+ 116:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 117:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+ 118:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+ 119:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+ 120:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+ 121:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+ 122:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+ 123:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+ 124:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+ 125:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+ 126:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+ 127:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+ 128:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+ 129:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+ 130:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+ 131:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval the number of data.
+ 132:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 133:libraries/drivers/src/at32f403a_407_dma.c **** uint16_t dma_data_number_get(dma_channel_type* dmax_channely)
+ 134:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 154              		.loc 1 134 1 is_stmt 1 view -0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 6
+
+
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              		@ link register save eliminated.
+ 135:libraries/drivers/src/at32f403a_407_dma.c ****   return (uint16_t)dmax_channely->dtcnt;
+ 159              		.loc 1 135 3 view .LVU40
+ 160              		.loc 1 135 33 is_stmt 0 view .LVU41
+ 161 0000 4068     		ldr	r0, [r0, #4]
+ 162              	.LVL4:
+ 136:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 163              		.loc 1 136 1 view .LVU42
+ 164 0002 80B2     		uxth	r0, r0
+ 165 0004 7047     		bx	lr
+ 166              		.cfi_endproc
+ 167              	.LFE136:
+ 169              		.section	.text.dma_interrupt_enable,"ax",%progbits
+ 170              		.align	1
+ 171              		.global	dma_interrupt_enable
+ 172              		.syntax unified
+ 173              		.thumb
+ 174              		.thumb_func
+ 176              	dma_interrupt_enable:
+ 177              	.LVL5:
+ 178              	.LFB137:
+ 137:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 138:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 139:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  enable or disable dma interrupt
+ 140:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+ 141:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 142:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+ 143:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+ 144:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+ 145:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+ 146:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+ 147:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+ 148:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+ 149:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+ 150:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+ 151:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+ 152:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+ 153:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+ 154:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+ 155:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+ 156:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dma_int:
+ 157:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be any combination of the following values:
+ 158:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FDT_INT
+ 159:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_HDT_INT
+ 160:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_DTERR_INT
+ 161:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  new_state (TRUE or FALSE)
+ 162:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+ 163:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 164:libraries/drivers/src/at32f403a_407_dma.c **** void dma_interrupt_enable(dma_channel_type* dmax_channely, uint32_t dma_int, confirm_state new_stat
+ 165:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 179              		.loc 1 165 1 is_stmt 1 view -0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+ 166:libraries/drivers/src/at32f403a_407_dma.c ****   if (new_state != FALSE)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 7
+
+
+ 184              		.loc 1 166 3 view .LVU44
+ 185              		.loc 1 166 6 is_stmt 0 view .LVU45
+ 186 0000 1AB1     		cbz	r2, .L9
+ 167:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 168:libraries/drivers/src/at32f403a_407_dma.c ****     dmax_channely->ctrl |= dma_int;
+ 187              		.loc 1 168 5 is_stmt 1 view .LVU46
+ 188              		.loc 1 168 18 is_stmt 0 view .LVU47
+ 189 0002 0368     		ldr	r3, [r0]
+ 190              		.loc 1 168 25 view .LVU48
+ 191 0004 0B43     		orrs	r3, r3, r1
+ 192 0006 0360     		str	r3, [r0]
+ 193 0008 7047     		bx	lr
+ 194              	.L9:
+ 169:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 170:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 171:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 172:libraries/drivers/src/at32f403a_407_dma.c ****     dmax_channely->ctrl &= ~dma_int;
+ 195              		.loc 1 172 5 is_stmt 1 view .LVU49
+ 196              		.loc 1 172 18 is_stmt 0 view .LVU50
+ 197 000a 0368     		ldr	r3, [r0]
+ 198              		.loc 1 172 25 view .LVU51
+ 199 000c 23EA0103 		bic	r3, r3, r1
+ 200 0010 0360     		str	r3, [r0]
+ 173:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 174:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 201              		.loc 1 174 1 view .LVU52
+ 202 0012 7047     		bx	lr
+ 203              		.cfi_endproc
+ 204              	.LFE137:
+ 206              		.section	.text.dma_channel_enable,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	dma_channel_enable
+ 209              		.syntax unified
+ 210              		.thumb
+ 211              		.thumb_func
+ 213              	dma_channel_enable:
+ 214              	.LVL6:
+ 215              	.LFB138:
+ 175:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 176:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 177:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  enable or disable dma channely
+ 178:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+ 179:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 180:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+ 181:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+ 182:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+ 183:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+ 184:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+ 185:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+ 186:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+ 187:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+ 188:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+ 189:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+ 190:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+ 191:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+ 192:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+ 193:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 8
+
+
+ 194:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  new_state (TRUE or FALSE)
+ 195:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval None
+ 196:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 197:libraries/drivers/src/at32f403a_407_dma.c **** void dma_channel_enable(dma_channel_type* dmax_channely, confirm_state new_state)
+ 198:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 216              		.loc 1 198 1 is_stmt 1 view -0
+ 217              		.cfi_startproc
+ 218              		@ args = 0, pretend = 0, frame = 0
+ 219              		@ frame_needed = 0, uses_anonymous_args = 0
+ 220              		@ link register save eliminated.
+ 199:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.chen = new_state;
+ 221              		.loc 1 199 3 view .LVU54
+ 222              		.loc 1 199 32 is_stmt 0 view .LVU55
+ 223 0000 0368     		ldr	r3, [r0]
+ 224 0002 61F30003 		bfi	r3, r1, #0, #1
+ 225 0006 0360     		str	r3, [r0]
+ 200:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 226              		.loc 1 200 1 view .LVU56
+ 227 0008 7047     		bx	lr
+ 228              		.cfi_endproc
+ 229              	.LFE138:
+ 231              		.section	.text.dma_flexible_config,"ax",%progbits
+ 232              		.align	1
+ 233              		.global	dma_flexible_config
+ 234              		.syntax unified
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	dma_flexible_config:
+ 239              	.LVL7:
+ 240              	.LFB139:
+ 201:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 202:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 203:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  initialize the dma_x flexible function according to the specified parameters.
+ 204:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dma_x:
+ 205:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 206:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1
+ 207:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2
+ 208:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  flex_channelx:
+ 209:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 210:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL1
+ 211:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL2
+ 212:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL3
+ 213:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL4
+ 214:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL5
+ 215:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL6
+ 216:libraries/drivers/src/at32f403a_407_dma.c ****   *         - FLEX_CHANNEL7
+ 217:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  flexible_request: every peripheral have specified hardware_id.
+ 218:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 219:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_ADC1         - DMA_FLEXIBLE_ADC3         - DMA_FLEXIBLE_DAC1         - D
+ 220:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_SPI1_RX      - DMA_FLEXIBLE_SPI1_TX      - DMA_FLEXIBLE_SPI2_RX      - D
+ 221:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_SPI3_RX      - DMA_FLEXIBLE_SPI3_TX      - DMA_FLEXIBLE_SPI4_RX      - D
+ 222:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_I2S2EXT_RX   - DMA_FLEXIBLE_I2S2EXT_TX   - DMA_FLEXIBLE_I2S3EXT_RX   - D
+ 223:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_UART1_RX     - DMA_FLEXIBLE_UART1_TX     - DMA_FLEXIBLE_UART2_RX     - D
+ 224:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_UART3_RX     - DMA_FLEXIBLE_UART3_TX     - DMA_FLEXIBLE_UART4_RX     - D
+ 225:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_UART5_RX     - DMA_FLEXIBLE_UART5_TX     - DMA_FLEXIBLE_UART6_RX     - D
+ 226:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_UART7_RX     - DMA_FLEXIBLE_UART7_TX     - DMA_FLEXIBLE_UART8_RX     - D
+ 227:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_I2C1_RX      - DMA_FLEXIBLE_I2C1_TX      - DMA_FLEXIBLE_I2C2_RX      - D
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 9
+
+
+ 228:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_I2C3_RX      - DMA_FLEXIBLE_I2C3_TX      - DMA_FLEXIBLE_SDIO1        - D
+ 229:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR1_TRIG    - DMA_FLEXIBLE_TMR1_HALL    - DMA_FLEXIBLE_TMR1_OVERFLOW- D
+ 230:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR1_CH2     - DMA_FLEXIBLE_TMR1_CH3     - DMA_FLEXIBLE_TMR1_CH4     - D
+ 231:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR2_OVERFLOW- DMA_FLEXIBLE_TMR2_CH1     - DMA_FLEXIBLE_TMR2_CH2     - D
+ 232:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR2_CH4     - DMA_FLEXIBLE_TMR3_TRIG    - DMA_FLEXIBLE_TMR3_OVERFLOW- D
+ 233:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR3_CH2     - DMA_FLEXIBLE_TMR3_CH3     - DMA_FLEXIBLE_TMR3_CH4     - D
+ 234:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR4_OVERFLOW- DMA_FLEXIBLE_TMR4_CH1     - DMA_FLEXIBLE_TMR4_CH2     - D
+ 235:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR4_CH4     - DMA_FLEXIBLE_TMR5_TRIG    - DMA_FLEXIBLE_TMR5_OVERFLOW- D
+ 236:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR5_CH2     - DMA_FLEXIBLE_TMR5_CH3     - DMA_FLEXIBLE_TMR5_CH4     - D
+ 237:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR7_OVERFLOW- DMA_FLEXIBLE_TMR8_TRIG    - DMA_FLEXIBLE_TMR8_HALL    - D
+ 238:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA_FLEXIBLE_TMR8_CH1     - DMA_FLEXIBLE_TMR8_CH2     - DMA_FLEXIBLE_TMR8_CH3     - D
+ 239:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+ 240:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 241:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 242:libraries/drivers/src/at32f403a_407_dma.c **** void dma_flexible_config(dma_type* dma_x, uint8_t flex_channelx, dma_flexible_request_type flexible
+ 243:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 241              		.loc 1 243 1 is_stmt 1 view -0
+ 242              		.cfi_startproc
+ 243              		@ args = 0, pretend = 0, frame = 0
+ 244              		@ frame_needed = 0, uses_anonymous_args = 0
+ 245              		@ link register save eliminated.
+ 244:libraries/drivers/src/at32f403a_407_dma.c ****   if(dma_x->src_sel1_bit.dma_flex_en == RESET)
+ 246              		.loc 1 244 3 view .LVU58
+ 247              		.loc 1 244 25 is_stmt 0 view .LVU59
+ 248 0000 D0F8A430 		ldr	r3, [r0, #164]
+ 249              		.loc 1 244 5 view .LVU60
+ 250 0004 13F0807F 		tst	r3, #16777216
+ 251 0008 05D1     		bne	.L13
+ 245:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 246:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel1_bit.dma_flex_en = TRUE;
+ 252              		.loc 1 246 5 is_stmt 1 view .LVU61
+ 253              		.loc 1 246 37 is_stmt 0 view .LVU62
+ 254 000a D0F8A430 		ldr	r3, [r0, #164]
+ 255 000e 43F08073 		orr	r3, r3, #16777216
+ 256 0012 C0F8A430 		str	r3, [r0, #164]
+ 257              	.L13:
+ 247:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 248:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 249:libraries/drivers/src/at32f403a_407_dma.c ****   if(flex_channelx == FLEX_CHANNEL1)
+ 258              		.loc 1 249 3 is_stmt 1 view .LVU63
+ 259              		.loc 1 249 5 is_stmt 0 view .LVU64
+ 260 0016 0129     		cmp	r1, #1
+ 261 0018 0CD0     		beq	.L21
+ 250:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 251:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel0_bit.ch1_src = flexible_request;
+ 252:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 253:libraries/drivers/src/at32f403a_407_dma.c ****   else if(flex_channelx == FLEX_CHANNEL2)
+ 262              		.loc 1 253 8 is_stmt 1 view .LVU65
+ 263              		.loc 1 253 10 is_stmt 0 view .LVU66
+ 264 001a 0229     		cmp	r1, #2
+ 265 001c 11D0     		beq	.L22
+ 254:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 255:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel0_bit.ch2_src = flexible_request;
+ 256:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 257:libraries/drivers/src/at32f403a_407_dma.c ****   else if(flex_channelx == FLEX_CHANNEL3)
+ 266              		.loc 1 257 8 is_stmt 1 view .LVU67
+ 267              		.loc 1 257 10 is_stmt 0 view .LVU68
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 10
+
+
+ 268 001e 0329     		cmp	r1, #3
+ 269 0020 16D0     		beq	.L23
+ 258:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 259:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel0_bit.ch3_src = flexible_request;
+ 260:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 261:libraries/drivers/src/at32f403a_407_dma.c ****   else if(flex_channelx == FLEX_CHANNEL4)
+ 270              		.loc 1 261 8 is_stmt 1 view .LVU69
+ 271              		.loc 1 261 10 is_stmt 0 view .LVU70
+ 272 0022 0429     		cmp	r1, #4
+ 273 0024 1BD0     		beq	.L24
+ 262:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 263:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel0_bit.ch4_src = flexible_request;
+ 264:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 265:libraries/drivers/src/at32f403a_407_dma.c ****   else if(flex_channelx == FLEX_CHANNEL5)
+ 274              		.loc 1 265 8 is_stmt 1 view .LVU71
+ 275              		.loc 1 265 10 is_stmt 0 view .LVU72
+ 276 0026 0529     		cmp	r1, #5
+ 277 0028 20D0     		beq	.L25
+ 266:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 267:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel1_bit.ch5_src = flexible_request;
+ 268:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 269:libraries/drivers/src/at32f403a_407_dma.c ****   else if(flex_channelx == FLEX_CHANNEL6)
+ 278              		.loc 1 269 8 is_stmt 1 view .LVU73
+ 279              		.loc 1 269 10 is_stmt 0 view .LVU74
+ 280 002a 0629     		cmp	r1, #6
+ 281 002c 25D0     		beq	.L26
+ 270:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 271:libraries/drivers/src/at32f403a_407_dma.c ****     dma_x->src_sel1_bit.ch6_src = flexible_request;
+ 272:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 273:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 274:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 275:libraries/drivers/src/at32f403a_407_dma.c ****     if(flex_channelx == FLEX_CHANNEL7)
+ 282              		.loc 1 275 5 is_stmt 1 view .LVU75
+ 283              		.loc 1 275 7 is_stmt 0 view .LVU76
+ 284 002e 0729     		cmp	r1, #7
+ 285 0030 2AD0     		beq	.L27
+ 286              	.L12:
+ 276:libraries/drivers/src/at32f403a_407_dma.c ****     {
+ 277:libraries/drivers/src/at32f403a_407_dma.c ****       dma_x->src_sel1_bit.ch7_src = flexible_request;
+ 278:libraries/drivers/src/at32f403a_407_dma.c ****     }
+ 279:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 280:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 287              		.loc 1 280 1 view .LVU77
+ 288 0032 7047     		bx	lr
+ 289              	.L21:
+ 251:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 290              		.loc 1 251 5 is_stmt 1 view .LVU78
+ 251:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 291              		.loc 1 251 33 is_stmt 0 view .LVU79
+ 292 0034 D0F8A030 		ldr	r3, [r0, #160]
+ 293              	.LVL8:
+ 251:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 294              		.loc 1 251 33 view .LVU80
+ 295 0038 62F30703 		bfi	r3, r2, #0, #8
+ 296 003c C0F8A030 		str	r3, [r0, #160]
+ 297 0040 7047     		bx	lr
+ 298              	.LVL9:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 11
+
+
+ 299              	.L22:
+ 255:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 300              		.loc 1 255 5 is_stmt 1 view .LVU81
+ 255:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 301              		.loc 1 255 33 is_stmt 0 view .LVU82
+ 302 0042 D0F8A030 		ldr	r3, [r0, #160]
+ 303 0046 62F30F23 		bfi	r3, r2, #8, #8
+ 304 004a C0F8A030 		str	r3, [r0, #160]
+ 305 004e 7047     		bx	lr
+ 306              	.L23:
+ 259:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 307              		.loc 1 259 5 is_stmt 1 view .LVU83
+ 259:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 308              		.loc 1 259 33 is_stmt 0 view .LVU84
+ 309 0050 D0F8A030 		ldr	r3, [r0, #160]
+ 310 0054 62F31743 		bfi	r3, r2, #16, #8
+ 311 0058 C0F8A030 		str	r3, [r0, #160]
+ 312 005c 7047     		bx	lr
+ 313              	.L24:
+ 263:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 314              		.loc 1 263 5 is_stmt 1 view .LVU85
+ 263:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 315              		.loc 1 263 33 is_stmt 0 view .LVU86
+ 316 005e D0F8A030 		ldr	r3, [r0, #160]
+ 317 0062 62F31F63 		bfi	r3, r2, #24, #8
+ 318 0066 C0F8A030 		str	r3, [r0, #160]
+ 319 006a 7047     		bx	lr
+ 320              	.L25:
+ 267:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 321              		.loc 1 267 5 is_stmt 1 view .LVU87
+ 267:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 322              		.loc 1 267 33 is_stmt 0 view .LVU88
+ 323 006c D0F8A430 		ldr	r3, [r0, #164]
+ 324              	.LVL10:
+ 267:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 325              		.loc 1 267 33 view .LVU89
+ 326 0070 62F30703 		bfi	r3, r2, #0, #8
+ 327 0074 C0F8A430 		str	r3, [r0, #164]
+ 328 0078 7047     		bx	lr
+ 329              	.LVL11:
+ 330              	.L26:
+ 271:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 331              		.loc 1 271 5 is_stmt 1 view .LVU90
+ 271:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 332              		.loc 1 271 33 is_stmt 0 view .LVU91
+ 333 007a D0F8A430 		ldr	r3, [r0, #164]
+ 334 007e 62F30F23 		bfi	r3, r2, #8, #8
+ 335 0082 C0F8A430 		str	r3, [r0, #164]
+ 336 0086 7047     		bx	lr
+ 337              	.L27:
+ 277:libraries/drivers/src/at32f403a_407_dma.c ****     }
+ 338              		.loc 1 277 7 is_stmt 1 view .LVU92
+ 277:libraries/drivers/src/at32f403a_407_dma.c ****     }
+ 339              		.loc 1 277 35 is_stmt 0 view .LVU93
+ 340 0088 D0F8A430 		ldr	r3, [r0, #164]
+ 341 008c 62F31743 		bfi	r3, r2, #16, #8
+ 342 0090 C0F8A430 		str	r3, [r0, #164]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 12
+
+
+ 343              		.loc 1 280 1 view .LVU94
+ 344 0094 CDE7     		b	.L12
+ 345              		.cfi_endproc
+ 346              	.LFE139:
+ 348              		.section	.text.dma_interrupt_flag_get,"ax",%progbits
+ 349              		.align	1
+ 350              		.global	dma_interrupt_flag_get
+ 351              		.syntax unified
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	dma_interrupt_flag_get:
+ 356              	.LVL12:
+ 357              	.LFB140:
+ 281:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 282:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 283:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  get dma interrupt flag
+ 284:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_flag
+ 285:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 286:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT1_FLAG        - DMA1_HDT1_FLAG        - DMA1_DTERR1_FLAG
+ 287:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT2_FLAG        - DMA1_HDT2_FLAG        - DMA1_DTERR2_FLAG
+ 288:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT3_FLAG        - DMA1_HDT3_FLAG        - DMA1_DTERR3_FLAG
+ 289:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT4_FLAG        - DMA1_HDT4_FLAG        - DMA1_DTERR4_FLAG
+ 290:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT5_FLAG        - DMA1_HDT5_FLAG        - DMA1_DTERR5_FLAG
+ 291:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT6_FLAG        - DMA1_HDT6_FLAG        - DMA1_DTERR6_FLAG
+ 292:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_FDT7_FLAG        - DMA1_HDT7_FLAG        - DMA1_DTERR7_FLAG
+ 293:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT1_FLAG        - DMA2_HDT1_FLAG        - DMA2_DTERR1_FLAG
+ 294:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT2_FLAG        - DMA2_HDT2_FLAG        - DMA2_DTERR2_FLAG
+ 295:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT3_FLAG        - DMA2_HDT3_FLAG        - DMA2_DTERR3_FLAG
+ 296:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT4_FLAG        - DMA2_HDT4_FLAG        - DMA2_DTERR4_FLAG
+ 297:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT5_FLAG        - DMA2_HDT5_FLAG        - DMA2_DTERR5_FLAG
+ 298:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT6_FLAG        - DMA2_HDT6_FLAG        - DMA2_DTERR6_FLAG
+ 299:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_FDT7_FLAG        - DMA2_HDT7_FLAG        - DMA2_DTERR7_FLAG
+ 300:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval state of dma flag
+ 301:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 302:libraries/drivers/src/at32f403a_407_dma.c **** flag_status dma_interrupt_flag_get(uint32_t dmax_flag)
+ 303:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 358              		.loc 1 303 1 is_stmt 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 304:libraries/drivers/src/at32f403a_407_dma.c ****   flag_status status = RESET;
+ 363              		.loc 1 304 3 view .LVU96
+ 305:libraries/drivers/src/at32f403a_407_dma.c ****   uint32_t temp = 0;
+ 364              		.loc 1 305 3 view .LVU97
+ 306:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 307:libraries/drivers/src/at32f403a_407_dma.c ****   if(dmax_flag > 0x10000000)
+ 365              		.loc 1 307 3 view .LVU98
+ 366              		.loc 1 307 5 is_stmt 0 view .LVU99
+ 367 0000 B0F1805F 		cmp	r0, #268435456
+ 368 0004 05D9     		bls	.L29
+ 308:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 309:libraries/drivers/src/at32f403a_407_dma.c ****     temp = DMA2->sts;
+ 369              		.loc 1 309 5 is_stmt 1 view .LVU100
+ 370              		.loc 1 309 10 is_stmt 0 view .LVU101
+ 371 0006 054B     		ldr	r3, .L33
+ 372 0008 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 13
+
+
+ 373              	.LVL13:
+ 374              	.L30:
+ 310:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 311:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 312:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 313:libraries/drivers/src/at32f403a_407_dma.c ****     temp = DMA1->sts;
+ 314:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 315:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 316:libraries/drivers/src/at32f403a_407_dma.c ****   if ((temp & dmax_flag) != (uint16_t)RESET)
+ 375              		.loc 1 316 3 is_stmt 1 view .LVU102
+ 376              		.loc 1 316 6 is_stmt 0 view .LVU103
+ 377 000a 0342     		tst	r3, r0
+ 378 000c 04D0     		beq	.L32
+ 317:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 318:libraries/drivers/src/at32f403a_407_dma.c ****     status = SET;
+ 379              		.loc 1 318 12 view .LVU104
+ 380 000e 0120     		movs	r0, #1
+ 381              	.LVL14:
+ 382              		.loc 1 318 12 view .LVU105
+ 383 0010 7047     		bx	lr
+ 384              	.LVL15:
+ 385              	.L29:
+ 313:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 386              		.loc 1 313 5 is_stmt 1 view .LVU106
+ 313:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 387              		.loc 1 313 10 is_stmt 0 view .LVU107
+ 388 0012 034B     		ldr	r3, .L33+4
+ 389 0014 1B68     		ldr	r3, [r3]
+ 390              	.LVL16:
+ 313:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 391              		.loc 1 313 10 view .LVU108
+ 392 0016 F8E7     		b	.L30
+ 393              	.LVL17:
+ 394              	.L32:
+ 319:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 320:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 321:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 322:libraries/drivers/src/at32f403a_407_dma.c ****     status = RESET;
+ 395              		.loc 1 322 12 view .LVU109
+ 396 0018 0020     		movs	r0, #0
+ 397              	.LVL18:
+ 323:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 324:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 325:libraries/drivers/src/at32f403a_407_dma.c ****   return status;
+ 398              		.loc 1 325 3 is_stmt 1 view .LVU110
+ 326:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 399              		.loc 1 326 1 is_stmt 0 view .LVU111
+ 400 001a 7047     		bx	lr
+ 401              	.L34:
+ 402              		.align	2
+ 403              	.L33:
+ 404 001c 00040240 		.word	1073873920
+ 405 0020 00000240 		.word	1073872896
+ 406              		.cfi_endproc
+ 407              	.LFE140:
+ 409              		.section	.text.dma_flag_get,"ax",%progbits
+ 410              		.align	1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 14
+
+
+ 411              		.global	dma_flag_get
+ 412              		.syntax unified
+ 413              		.thumb
+ 414              		.thumb_func
+ 416              	dma_flag_get:
+ 417              	.LVL19:
+ 418              	.LFB141:
+ 327:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 328:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 329:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  get dma flag
+ 330:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_flag
+ 331:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 332:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL1_FLAG        - DMA1_FDT1_FLAG        - DMA1_HDT1_FLAG        - DMA1_DTERR1_FL
+ 333:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL2_FLAG        - DMA1_FDT2_FLAG        - DMA1_HDT2_FLAG        - DMA1_DTERR2_FL
+ 334:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL3_FLAG        - DMA1_FDT3_FLAG        - DMA1_HDT3_FLAG        - DMA1_DTERR3_FL
+ 335:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL4_FLAG        - DMA1_FDT4_FLAG        - DMA1_HDT4_FLAG        - DMA1_DTERR4_FL
+ 336:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL5_FLAG        - DMA1_FDT5_FLAG        - DMA1_HDT5_FLAG        - DMA1_DTERR5_FL
+ 337:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL6_FLAG        - DMA1_FDT6_FLAG        - DMA1_HDT6_FLAG        - DMA1_DTERR6_FL
+ 338:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL7_FLAG        - DMA1_FDT7_FLAG        - DMA1_HDT7_FLAG        - DMA1_DTERR7_FL
+ 339:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL1_FLAG        - DMA2_FDT1_FLAG        - DMA2_HDT1_FLAG        - DMA2_DTERR1_FL
+ 340:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL2_FLAG        - DMA2_FDT2_FLAG        - DMA2_HDT2_FLAG        - DMA2_DTERR2_FL
+ 341:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL3_FLAG        - DMA2_FDT3_FLAG        - DMA2_HDT3_FLAG        - DMA2_DTERR3_FL
+ 342:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL4_FLAG        - DMA2_FDT4_FLAG        - DMA2_HDT4_FLAG        - DMA2_DTERR4_FL
+ 343:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL5_FLAG        - DMA2_FDT5_FLAG        - DMA2_HDT5_FLAG        - DMA2_DTERR5_FL
+ 344:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL6_FLAG        - DMA2_FDT6_FLAG        - DMA2_HDT6_FLAG        - DMA2_DTERR6_FL
+ 345:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL7_FLAG        - DMA2_FDT7_FLAG        - DMA2_HDT7_FLAG        - DMA2_DTERR7_FL
+ 346:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval state of dma flag
+ 347:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 348:libraries/drivers/src/at32f403a_407_dma.c **** flag_status dma_flag_get(uint32_t dmax_flag)
+ 349:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 419              		.loc 1 349 1 is_stmt 1 view -0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 0
+ 422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 423              		@ link register save eliminated.
+ 350:libraries/drivers/src/at32f403a_407_dma.c ****   flag_status status = RESET;
+ 424              		.loc 1 350 3 view .LVU113
+ 351:libraries/drivers/src/at32f403a_407_dma.c ****   uint32_t temp = 0;
+ 425              		.loc 1 351 3 view .LVU114
+ 352:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 353:libraries/drivers/src/at32f403a_407_dma.c ****   if(dmax_flag > 0x10000000)
+ 426              		.loc 1 353 3 view .LVU115
+ 427              		.loc 1 353 5 is_stmt 0 view .LVU116
+ 428 0000 B0F1805F 		cmp	r0, #268435456
+ 429 0004 05D9     		bls	.L36
+ 354:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 355:libraries/drivers/src/at32f403a_407_dma.c ****     temp = DMA2->sts;
+ 430              		.loc 1 355 5 is_stmt 1 view .LVU117
+ 431              		.loc 1 355 10 is_stmt 0 view .LVU118
+ 432 0006 054B     		ldr	r3, .L40
+ 433 0008 1B68     		ldr	r3, [r3]
+ 434              	.LVL20:
+ 435              	.L37:
+ 356:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 357:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 358:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 359:libraries/drivers/src/at32f403a_407_dma.c ****     temp = DMA1->sts;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 15
+
+
+ 360:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 361:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 362:libraries/drivers/src/at32f403a_407_dma.c ****   if ((temp & dmax_flag) != (uint16_t)RESET)
+ 436              		.loc 1 362 3 is_stmt 1 view .LVU119
+ 437              		.loc 1 362 6 is_stmt 0 view .LVU120
+ 438 000a 0342     		tst	r3, r0
+ 439 000c 04D0     		beq	.L39
+ 363:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 364:libraries/drivers/src/at32f403a_407_dma.c ****     status = SET;
+ 440              		.loc 1 364 12 view .LVU121
+ 441 000e 0120     		movs	r0, #1
+ 442              	.LVL21:
+ 443              		.loc 1 364 12 view .LVU122
+ 444 0010 7047     		bx	lr
+ 445              	.LVL22:
+ 446              	.L36:
+ 359:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 447              		.loc 1 359 5 is_stmt 1 view .LVU123
+ 359:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 448              		.loc 1 359 10 is_stmt 0 view .LVU124
+ 449 0012 034B     		ldr	r3, .L40+4
+ 450 0014 1B68     		ldr	r3, [r3]
+ 451              	.LVL23:
+ 359:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 452              		.loc 1 359 10 view .LVU125
+ 453 0016 F8E7     		b	.L37
+ 454              	.LVL24:
+ 455              	.L39:
+ 365:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 366:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 367:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 368:libraries/drivers/src/at32f403a_407_dma.c ****     status = RESET;
+ 456              		.loc 1 368 12 view .LVU126
+ 457 0018 0020     		movs	r0, #0
+ 458              	.LVL25:
+ 369:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 370:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 371:libraries/drivers/src/at32f403a_407_dma.c ****   return status;
+ 459              		.loc 1 371 3 is_stmt 1 view .LVU127
+ 372:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 460              		.loc 1 372 1 is_stmt 0 view .LVU128
+ 461 001a 7047     		bx	lr
+ 462              	.L41:
+ 463              		.align	2
+ 464              	.L40:
+ 465 001c 00040240 		.word	1073873920
+ 466 0020 00000240 		.word	1073872896
+ 467              		.cfi_endproc
+ 468              	.LFE141:
+ 470              		.section	.text.dma_flag_clear,"ax",%progbits
+ 471              		.align	1
+ 472              		.global	dma_flag_clear
+ 473              		.syntax unified
+ 474              		.thumb
+ 475              		.thumb_func
+ 477              	dma_flag_clear:
+ 478              	.LVL26:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 16
+
+
+ 479              	.LFB142:
+ 373:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 374:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 375:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  clear dma flag
+ 376:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_flag
+ 377:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 378:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL1_FLAG        - DMA1_FDT1_FLAG        - DMA1_HDT1_FLAG        - DMA1_DTERR1_FL
+ 379:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL2_FLAG        - DMA1_FDT2_FLAG        - DMA1_HDT2_FLAG        - DMA1_DTERR2_FL
+ 380:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL3_FLAG        - DMA1_FDT3_FLAG        - DMA1_HDT3_FLAG        - DMA1_DTERR3_FL
+ 381:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL4_FLAG        - DMA1_FDT4_FLAG        - DMA1_HDT4_FLAG        - DMA1_DTERR4_FL
+ 382:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL5_FLAG        - DMA1_FDT5_FLAG        - DMA1_HDT5_FLAG        - DMA1_DTERR5_FL
+ 383:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL6_FLAG        - DMA1_FDT6_FLAG        - DMA1_HDT6_FLAG        - DMA1_DTERR6_FL
+ 384:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_GL7_FLAG        - DMA1_FDT7_FLAG        - DMA1_HDT7_FLAG        - DMA1_DTERR7_FL
+ 385:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL1_FLAG        - DMA2_FDT1_FLAG        - DMA2_HDT1_FLAG        - DMA2_DTERR1_FL
+ 386:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL2_FLAG        - DMA2_FDT2_FLAG        - DMA2_HDT2_FLAG        - DMA2_DTERR2_FL
+ 387:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL3_FLAG        - DMA2_FDT3_FLAG        - DMA2_HDT3_FLAG        - DMA2_DTERR3_FL
+ 388:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL4_FLAG        - DMA2_FDT4_FLAG        - DMA2_HDT4_FLAG        - DMA2_DTERR4_FL
+ 389:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL5_FLAG        - DMA2_FDT5_FLAG        - DMA2_HDT5_FLAG        - DMA2_DTERR5_FL
+ 390:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL6_FLAG        - DMA2_FDT6_FLAG        - DMA2_HDT6_FLAG        - DMA2_DTERR6_FL
+ 391:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_GL7_FLAG        - DMA2_FDT7_FLAG        - DMA2_HDT7_FLAG        - DMA2_DTERR7_FL
+ 392:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+ 393:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 394:libraries/drivers/src/at32f403a_407_dma.c **** void dma_flag_clear(uint32_t dmax_flag)
+ 395:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 480              		.loc 1 395 1 is_stmt 1 view -0
+ 481              		.cfi_startproc
+ 482              		@ args = 0, pretend = 0, frame = 0
+ 483              		@ frame_needed = 0, uses_anonymous_args = 0
+ 484              		@ link register save eliminated.
+ 396:libraries/drivers/src/at32f403a_407_dma.c ****   if(dmax_flag > 0x10000000)
+ 485              		.loc 1 396 3 view .LVU130
+ 486              		.loc 1 396 5 is_stmt 0 view .LVU131
+ 487 0000 B0F1805F 		cmp	r0, #268435456
+ 488 0004 04D9     		bls	.L43
+ 397:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 398:libraries/drivers/src/at32f403a_407_dma.c ****     DMA2->clr = (uint32_t)(dmax_flag & 0x0FFFFFFF);
+ 489              		.loc 1 398 5 is_stmt 1 view .LVU132
+ 490              		.loc 1 398 17 is_stmt 0 view .LVU133
+ 491 0006 20F07040 		bic	r0, r0, #-268435456
+ 492              	.LVL27:
+ 493              		.loc 1 398 15 view .LVU134
+ 494 000a 034B     		ldr	r3, .L45
+ 495 000c 5860     		str	r0, [r3, #4]
+ 496 000e 7047     		bx	lr
+ 497              	.LVL28:
+ 498              	.L43:
+ 399:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 400:libraries/drivers/src/at32f403a_407_dma.c ****   else
+ 401:libraries/drivers/src/at32f403a_407_dma.c ****   {
+ 402:libraries/drivers/src/at32f403a_407_dma.c ****     DMA1->clr = dmax_flag;
+ 499              		.loc 1 402 5 is_stmt 1 view .LVU135
+ 500              		.loc 1 402 15 is_stmt 0 view .LVU136
+ 501 0010 024B     		ldr	r3, .L45+4
+ 502 0012 5860     		str	r0, [r3, #4]
+ 403:libraries/drivers/src/at32f403a_407_dma.c ****   }
+ 404:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 503              		.loc 1 404 1 view .LVU137
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 17
+
+
+ 504 0014 7047     		bx	lr
+ 505              	.L46:
+ 506 0016 00BF     		.align	2
+ 507              	.L45:
+ 508 0018 00040240 		.word	1073873920
+ 509 001c 00000240 		.word	1073872896
+ 510              		.cfi_endproc
+ 511              	.LFE142:
+ 513              		.section	.text.dma_default_para_init,"ax",%progbits
+ 514              		.align	1
+ 515              		.global	dma_default_para_init
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 520              	dma_default_para_init:
+ 521              	.LVL29:
+ 522              	.LFB143:
+ 405:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 406:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 407:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  dma init config with its default value.
+ 408:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dma_init_struct : pointer to a dma_init_type structure which will
+ 409:libraries/drivers/src/at32f403a_407_dma.c ****   *         be initialized.
+ 410:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+ 411:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 412:libraries/drivers/src/at32f403a_407_dma.c **** void dma_default_para_init(dma_init_type* dma_init_struct)
+ 413:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 523              		.loc 1 413 1 is_stmt 1 view -0
+ 524              		.cfi_startproc
+ 525              		@ args = 0, pretend = 0, frame = 0
+ 526              		@ frame_needed = 0, uses_anonymous_args = 0
+ 527              		@ link register save eliminated.
+ 414:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->peripheral_base_addr = 0x0;
+ 528              		.loc 1 414 3 view .LVU139
+ 529              		.loc 1 414 41 is_stmt 0 view .LVU140
+ 530 0000 0022     		movs	r2, #0
+ 531 0002 0260     		str	r2, [r0]
+ 415:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->memory_base_addr = 0x0;
+ 532              		.loc 1 415 3 is_stmt 1 view .LVU141
+ 533              		.loc 1 415 37 is_stmt 0 view .LVU142
+ 534 0004 4260     		str	r2, [r0, #4]
+ 416:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->direction = DMA_DIR_PERIPHERAL_TO_MEMORY;
+ 535              		.loc 1 416 3 is_stmt 1 view .LVU143
+ 536              		.loc 1 416 30 is_stmt 0 view .LVU144
+ 537 0006 4FF00003 		mov	r3, #0	@ movhi
+ 538 000a 0281     		strh	r2, [r0, #8]	@ movhi
+ 417:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->buffer_size = 0x0;
+ 539              		.loc 1 417 3 is_stmt 1 view .LVU145
+ 540              		.loc 1 417 32 is_stmt 0 view .LVU146
+ 541 000c 4281     		strh	r2, [r0, #10]	@ movhi
+ 418:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->peripheral_inc_enable = FALSE;
+ 542              		.loc 1 418 3 is_stmt 1 view .LVU147
+ 543              		.loc 1 418 42 is_stmt 0 view .LVU148
+ 544 000e 0373     		strb	r3, [r0, #12]
+ 419:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->memory_inc_enable = FALSE;
+ 545              		.loc 1 419 3 is_stmt 1 view .LVU149
+ 546              		.loc 1 419 38 is_stmt 0 view .LVU150
+ 547 0010 4373     		strb	r3, [r0, #13]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 18
+
+
+ 420:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->peripheral_data_width = DMA_PERIPHERAL_DATA_WIDTH_BYTE;
+ 548              		.loc 1 420 3 is_stmt 1 view .LVU151
+ 549              		.loc 1 420 42 is_stmt 0 view .LVU152
+ 550 0012 8373     		strb	r3, [r0, #14]
+ 421:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->memory_data_width = DMA_MEMORY_DATA_WIDTH_BYTE;
+ 551              		.loc 1 421 3 is_stmt 1 view .LVU153
+ 552              		.loc 1 421 38 is_stmt 0 view .LVU154
+ 553 0014 C373     		strb	r3, [r0, #15]
+ 422:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->loop_mode_enable = FALSE;
+ 554              		.loc 1 422 3 is_stmt 1 view .LVU155
+ 555              		.loc 1 422 37 is_stmt 0 view .LVU156
+ 556 0016 0374     		strb	r3, [r0, #16]
+ 423:libraries/drivers/src/at32f403a_407_dma.c ****   dma_init_struct->priority = DMA_PRIORITY_LOW;
+ 557              		.loc 1 423 3 is_stmt 1 view .LVU157
+ 558              		.loc 1 423 29 is_stmt 0 view .LVU158
+ 559 0018 4374     		strb	r3, [r0, #17]
+ 424:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 560              		.loc 1 424 1 view .LVU159
+ 561 001a 7047     		bx	lr
+ 562              		.cfi_endproc
+ 563              	.LFE143:
+ 565              		.section	.text.dma_init,"ax",%progbits
+ 566              		.align	1
+ 567              		.global	dma_init
+ 568              		.syntax unified
+ 569              		.thumb
+ 570              		.thumb_func
+ 572              	dma_init:
+ 573              	.LVL30:
+ 574              	.LFB144:
+ 425:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 426:libraries/drivers/src/at32f403a_407_dma.c **** /**
+ 427:libraries/drivers/src/at32f403a_407_dma.c ****   * @brief  dma init
+ 428:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dmax_channely:
+ 429:libraries/drivers/src/at32f403a_407_dma.c ****   *         this parameter can be one of the following values:
+ 430:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL1
+ 431:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL2
+ 432:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL3
+ 433:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL4
+ 434:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL5
+ 435:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL6
+ 436:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA1_CHANNEL7
+ 437:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL1
+ 438:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL2
+ 439:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL3
+ 440:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL4
+ 441:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL5
+ 442:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL6
+ 443:libraries/drivers/src/at32f403a_407_dma.c ****   *         - DMA2_CHANNEL7
+ 444:libraries/drivers/src/at32f403a_407_dma.c ****   * @param  dma_initstruct : pointer to a dma_init_type structure.
+ 445:libraries/drivers/src/at32f403a_407_dma.c ****   * @retval none
+ 446:libraries/drivers/src/at32f403a_407_dma.c ****   */
+ 447:libraries/drivers/src/at32f403a_407_dma.c **** void dma_init(dma_channel_type* dmax_channely, dma_init_type* dma_init_struct)
+ 448:libraries/drivers/src/at32f403a_407_dma.c **** {
+ 575              		.loc 1 448 1 is_stmt 1 view -0
+ 576              		.cfi_startproc
+ 577              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 19
+
+
+ 578              		@ frame_needed = 0, uses_anonymous_args = 0
+ 579              		@ link register save eliminated.
+ 449:libraries/drivers/src/at32f403a_407_dma.c ****   /* clear ctrl register dtd bit and m2m bit */
+ 450:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl &= 0xbfef;
+ 580              		.loc 1 450 3 view .LVU161
+ 581              		.loc 1 450 16 is_stmt 0 view .LVU162
+ 582 0000 0368     		ldr	r3, [r0]
+ 583              		.loc 1 450 23 view .LVU163
+ 584 0002 23F48043 		bic	r3, r3, #16384
+ 585 0006 23F01003 		bic	r3, r3, #16
+ 586 000a 1B04     		lsls	r3, r3, #16
+ 587 000c 1B0C     		lsrs	r3, r3, #16
+ 588 000e 0360     		str	r3, [r0]
+ 451:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl |= dma_init_struct->direction;
+ 589              		.loc 1 451 3 is_stmt 1 view .LVU164
+ 590              		.loc 1 451 16 is_stmt 0 view .LVU165
+ 591 0010 0368     		ldr	r3, [r0]
+ 592              		.loc 1 451 41 view .LVU166
+ 593 0012 0A89     		ldrh	r2, [r1, #8]
+ 594              		.loc 1 451 23 view .LVU167
+ 595 0014 1343     		orrs	r3, r3, r2
+ 596 0016 0360     		str	r3, [r0]
+ 452:libraries/drivers/src/at32f403a_407_dma.c **** 
+ 453:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.chpl =  dma_init_struct->priority;
+ 597              		.loc 1 453 3 is_stmt 1 view .LVU168
+ 598              		.loc 1 453 50 is_stmt 0 view .LVU169
+ 599 0018 4A7C     		ldrb	r2, [r1, #17]	@ zero_extendqisi2
+ 600              		.loc 1 453 32 view .LVU170
+ 601 001a 0368     		ldr	r3, [r0]
+ 602 001c 62F30D33 		bfi	r3, r2, #12, #2
+ 603 0020 0360     		str	r3, [r0]
+ 454:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.mwidth = dma_init_struct->memory_data_width;
+ 604              		.loc 1 454 3 is_stmt 1 view .LVU171
+ 605              		.loc 1 454 51 is_stmt 0 view .LVU172
+ 606 0022 CA7B     		ldrb	r2, [r1, #15]	@ zero_extendqisi2
+ 607              		.loc 1 454 34 view .LVU173
+ 608 0024 0368     		ldr	r3, [r0]
+ 609 0026 62F38B23 		bfi	r3, r2, #10, #2
+ 610 002a 0360     		str	r3, [r0]
+ 455:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.pwidth = dma_init_struct->peripheral_data_width;
+ 611              		.loc 1 455 3 is_stmt 1 view .LVU174
+ 612              		.loc 1 455 51 is_stmt 0 view .LVU175
+ 613 002c 8A7B     		ldrb	r2, [r1, #14]	@ zero_extendqisi2
+ 614              		.loc 1 455 34 view .LVU176
+ 615 002e 0368     		ldr	r3, [r0]
+ 616 0030 62F30923 		bfi	r3, r2, #8, #2
+ 617 0034 0360     		str	r3, [r0]
+ 456:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.mincm = dma_init_struct->memory_inc_enable;
+ 618              		.loc 1 456 3 is_stmt 1 view .LVU177
+ 619              		.loc 1 456 50 is_stmt 0 view .LVU178
+ 620 0036 4A7B     		ldrb	r2, [r1, #13]	@ zero_extendqisi2
+ 621              		.loc 1 456 33 view .LVU179
+ 622 0038 0368     		ldr	r3, [r0]
+ 623 003a 62F3C713 		bfi	r3, r2, #7, #1
+ 624 003e 0360     		str	r3, [r0]
+ 457:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.pincm = dma_init_struct->peripheral_inc_enable;
+ 625              		.loc 1 457 3 is_stmt 1 view .LVU180
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 20
+
+
+ 626              		.loc 1 457 50 is_stmt 0 view .LVU181
+ 627 0040 0A7B     		ldrb	r2, [r1, #12]	@ zero_extendqisi2
+ 628              		.loc 1 457 33 view .LVU182
+ 629 0042 0368     		ldr	r3, [r0]
+ 630 0044 62F38613 		bfi	r3, r2, #6, #1
+ 631 0048 0360     		str	r3, [r0]
+ 458:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->ctrl_bit.lm = dma_init_struct->loop_mode_enable;
+ 632              		.loc 1 458 3 is_stmt 1 view .LVU183
+ 633              		.loc 1 458 47 is_stmt 0 view .LVU184
+ 634 004a 0A7C     		ldrb	r2, [r1, #16]	@ zero_extendqisi2
+ 635              		.loc 1 458 30 view .LVU185
+ 636 004c 0368     		ldr	r3, [r0]
+ 637 004e 62F34513 		bfi	r3, r2, #5, #1
+ 638 0052 0360     		str	r3, [r0]
+ 459:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->dtcnt = dma_init_struct->buffer_size;
+ 639              		.loc 1 459 3 is_stmt 1 view .LVU186
+ 640              		.loc 1 459 41 is_stmt 0 view .LVU187
+ 641 0054 4B89     		ldrh	r3, [r1, #10]
+ 642              		.loc 1 459 24 view .LVU188
+ 643 0056 4360     		str	r3, [r0, #4]
+ 460:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->paddr = dma_init_struct->peripheral_base_addr;
+ 644              		.loc 1 460 3 is_stmt 1 view .LVU189
+ 645              		.loc 1 460 41 is_stmt 0 view .LVU190
+ 646 0058 0B68     		ldr	r3, [r1]
+ 647              		.loc 1 460 24 view .LVU191
+ 648 005a 8360     		str	r3, [r0, #8]
+ 461:libraries/drivers/src/at32f403a_407_dma.c ****   dmax_channely->maddr = dma_init_struct->memory_base_addr;
+ 649              		.loc 1 461 3 is_stmt 1 view .LVU192
+ 650              		.loc 1 461 41 is_stmt 0 view .LVU193
+ 651 005c 4B68     		ldr	r3, [r1, #4]
+ 652              		.loc 1 461 24 view .LVU194
+ 653 005e C360     		str	r3, [r0, #12]
+ 462:libraries/drivers/src/at32f403a_407_dma.c **** }
+ 654              		.loc 1 462 1 view .LVU195
+ 655 0060 7047     		bx	lr
+ 656              		.cfi_endproc
+ 657              	.LFE144:
+ 659              		.text
+ 660              	.Letext0:
+ 661              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 662              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 663              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 664              		.file 5 "libraries/drivers/inc/at32f403a_407_dma.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 at32f403a_407_dma.c
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:21     .text.dma_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:27     .text.dma_reset:00000000 dma_reset
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:115    .text.dma_reset:0000006c $d
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:122    .text.dma_data_number_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:128    .text.dma_data_number_set:00000000 dma_data_number_set
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:145    .text.dma_data_number_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:151    .text.dma_data_number_get:00000000 dma_data_number_get
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:170    .text.dma_interrupt_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:176    .text.dma_interrupt_enable:00000000 dma_interrupt_enable
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:207    .text.dma_channel_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:213    .text.dma_channel_enable:00000000 dma_channel_enable
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:232    .text.dma_flexible_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:238    .text.dma_flexible_config:00000000 dma_flexible_config
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:349    .text.dma_interrupt_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:355    .text.dma_interrupt_flag_get:00000000 dma_interrupt_flag_get
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:404    .text.dma_interrupt_flag_get:0000001c $d
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:410    .text.dma_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:416    .text.dma_flag_get:00000000 dma_flag_get
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:465    .text.dma_flag_get:0000001c $d
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:471    .text.dma_flag_clear:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:477    .text.dma_flag_clear:00000000 dma_flag_clear
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:508    .text.dma_flag_clear:00000018 $d
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:514    .text.dma_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:520    .text.dma_default_para_init:00000000 dma_default_para_init
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:566    .text.dma_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc6O0NLj.s:572    .text.dma_init:00000000 dma_init
+
+NO UNDEFINED SYMBOLS

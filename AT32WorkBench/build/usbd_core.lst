@@ -1,0 +1,2993 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"usbd_core.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "middlewares/usbd_drivers/src/usbd_core.c"
+  20              		.section	.text.usbd_core_setup_handler,"ax",%progbits
+  21              		.align	1
+  22              		.global	usbd_core_setup_handler
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	usbd_core_setup_handler:
+  28              	.LVL0:
+  29              	.LFB139:
+   1:middlewares/usbd_drivers/src/usbd_core.c **** /**
+   2:middlewares/usbd_drivers/src/usbd_core.c ****   **************************************************************************
+   3:middlewares/usbd_drivers/src/usbd_core.c ****   * @file     usbd_core.c
+   4:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief    usb driver
+   5:middlewares/usbd_drivers/src/usbd_core.c ****   **************************************************************************
+   6:middlewares/usbd_drivers/src/usbd_core.c ****   *
+   7:middlewares/usbd_drivers/src/usbd_core.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:middlewares/usbd_drivers/src/usbd_core.c ****   *
+   9:middlewares/usbd_drivers/src/usbd_core.c ****   * The software Board Support Package (BSP) that is made available to
+  10:middlewares/usbd_drivers/src/usbd_core.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:middlewares/usbd_drivers/src/usbd_core.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:middlewares/usbd_drivers/src/usbd_core.c ****   * software and its related documentation for the purpose of design and
+  13:middlewares/usbd_drivers/src/usbd_core.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:middlewares/usbd_drivers/src/usbd_core.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:middlewares/usbd_drivers/src/usbd_core.c ****   *
+  16:middlewares/usbd_drivers/src/usbd_core.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:middlewares/usbd_drivers/src/usbd_core.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:middlewares/usbd_drivers/src/usbd_core.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:middlewares/usbd_drivers/src/usbd_core.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:middlewares/usbd_drivers/src/usbd_core.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:middlewares/usbd_drivers/src/usbd_core.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:middlewares/usbd_drivers/src/usbd_core.c ****   *
+  23:middlewares/usbd_drivers/src/usbd_core.c ****   **************************************************************************
+  24:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  25:middlewares/usbd_drivers/src/usbd_core.c **** #include "usbd_core.h"
+  26:middlewares/usbd_drivers/src/usbd_core.c **** #include "usbd_sdr.h"
+  27:middlewares/usbd_drivers/src/usbd_core.c **** 
+  28:middlewares/usbd_drivers/src/usbd_core.c **** /** @addtogroup AT32F403A_407_middlewares_usbd_drivers
+  29:middlewares/usbd_drivers/src/usbd_core.c ****   * @{
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 2
+
+
+  30:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  31:middlewares/usbd_drivers/src/usbd_core.c **** 
+  32:middlewares/usbd_drivers/src/usbd_core.c **** /** @defgroup USBD_drivers_core
+  33:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief usb device drivers core
+  34:middlewares/usbd_drivers/src/usbd_core.c ****   * @{
+  35:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  36:middlewares/usbd_drivers/src/usbd_core.c **** 
+  37:middlewares/usbd_drivers/src/usbd_core.c **** /** @defgroup USBD_core_private_functions
+  38:middlewares/usbd_drivers/src/usbd_core.c ****   * @{
+  39:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  40:middlewares/usbd_drivers/src/usbd_core.c **** 
+  41:middlewares/usbd_drivers/src/usbd_core.c **** /**
+  42:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb core in transfer complete handler
+  43:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+  44:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+  45:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+  46:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  47:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_core_in_handler(usbd_core_type *udev, uint8_t ept_addr)
+  48:middlewares/usbd_drivers/src/usbd_core.c **** {
+  49:middlewares/usbd_drivers/src/usbd_core.c ****   /* get endpoint info*/
+  50:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_in[ept_addr & 0x7F];
+  51:middlewares/usbd_drivers/src/usbd_core.c **** 
+  52:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_addr == 0)
+  53:middlewares/usbd_drivers/src/usbd_core.c ****   {
+  54:middlewares/usbd_drivers/src/usbd_core.c ****     if(udev->ept0_sts == USB_EPT0_DATA_IN)
+  55:middlewares/usbd_drivers/src/usbd_core.c ****     {
+  56:middlewares/usbd_drivers/src/usbd_core.c ****       if(ept_info->rem0_len > ept_info->maxpacket)
+  57:middlewares/usbd_drivers/src/usbd_core.c ****       {
+  58:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->rem0_len -= ept_info->maxpacket;
+  59:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, ept_info->trans_buf,
+  60:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+  61:middlewares/usbd_drivers/src/usbd_core.c ****       }
+  62:middlewares/usbd_drivers/src/usbd_core.c ****       /* endpoint 0 */
+  63:middlewares/usbd_drivers/src/usbd_core.c ****       else if(ept_info->last_len == ept_info->maxpacket
+  64:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen >= ept_info->maxpacket
+  65:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen < udev->ept0_wlength)
+  66:middlewares/usbd_drivers/src/usbd_core.c ****       {
+  67:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->last_len = 0;
+  68:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, 0, 0);
+  69:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_recv(udev, ept_addr, 0, 0);
+  70:middlewares/usbd_drivers/src/usbd_core.c ****       }
+  71:middlewares/usbd_drivers/src/usbd_core.c ****       else
+  72:middlewares/usbd_drivers/src/usbd_core.c ****       {
+  73:middlewares/usbd_drivers/src/usbd_core.c **** 
+  74:middlewares/usbd_drivers/src/usbd_core.c ****         if(udev->class_handler->ept0_tx_handler != 0 &&
+  75:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+  76:middlewares/usbd_drivers/src/usbd_core.c ****         {
+  77:middlewares/usbd_drivers/src/usbd_core.c ****           udev->class_handler->ept0_tx_handler(udev);
+  78:middlewares/usbd_drivers/src/usbd_core.c ****         }
+  79:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ctrl_recv_status(udev);
+  80:middlewares/usbd_drivers/src/usbd_core.c **** 
+  81:middlewares/usbd_drivers/src/usbd_core.c ****       }
+  82:middlewares/usbd_drivers/src/usbd_core.c ****     }
+  83:middlewares/usbd_drivers/src/usbd_core.c ****   }
+  84:middlewares/usbd_drivers/src/usbd_core.c ****   else if(udev->class_handler->in_handler != 0 &&
+  85:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+  86:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 3
+
+
+  87:middlewares/usbd_drivers/src/usbd_core.c ****     /* other user define endpoint */
+  88:middlewares/usbd_drivers/src/usbd_core.c ****     udev->class_handler->in_handler(udev, ept_addr);
+  89:middlewares/usbd_drivers/src/usbd_core.c ****   }
+  90:middlewares/usbd_drivers/src/usbd_core.c **** }
+  91:middlewares/usbd_drivers/src/usbd_core.c **** 
+  92:middlewares/usbd_drivers/src/usbd_core.c **** /**
+  93:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb core out transfer complete handler
+  94:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+  95:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+  96:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+  97:middlewares/usbd_drivers/src/usbd_core.c ****   */
+  98:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_core_out_handler(usbd_core_type *udev, uint8_t ept_addr)
+  99:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 100:middlewares/usbd_drivers/src/usbd_core.c ****    /* get endpoint info*/
+ 101:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 102:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 103:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_addr == 0)
+ 104:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 105:middlewares/usbd_drivers/src/usbd_core.c ****     /* endpoint 0 */
+ 106:middlewares/usbd_drivers/src/usbd_core.c ****     if(udev->ept0_sts == USB_EPT0_DATA_OUT)
+ 107:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 108:middlewares/usbd_drivers/src/usbd_core.c ****       if(ept_info->rem0_len > ept_info->maxpacket)
+ 109:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 110:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->rem0_len -= ept_info->maxpacket;
+ 111:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_recv(udev, ept_addr, ept_info->trans_buf,
+ 112:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 113:middlewares/usbd_drivers/src/usbd_core.c ****       }
+ 114:middlewares/usbd_drivers/src/usbd_core.c ****       else
+ 115:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 116:middlewares/usbd_drivers/src/usbd_core.c ****           if(udev->class_handler->ept0_rx_handler != 0)
+ 117:middlewares/usbd_drivers/src/usbd_core.c ****           {
+ 118:middlewares/usbd_drivers/src/usbd_core.c ****             udev->class_handler->ept0_rx_handler(udev);
+ 119:middlewares/usbd_drivers/src/usbd_core.c ****           }
+ 120:middlewares/usbd_drivers/src/usbd_core.c ****           usbd_ctrl_send_status(udev);
+ 121:middlewares/usbd_drivers/src/usbd_core.c ****       }
+ 122:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 123:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****   else if(udev->class_handler->out_handler != 0 &&
+ 125:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 126:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 127:middlewares/usbd_drivers/src/usbd_core.c ****     /* other user define endpoint */
+ 128:middlewares/usbd_drivers/src/usbd_core.c ****     udev->class_handler->out_handler(udev, ept_addr);
+ 129:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 130:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 131:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 132:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 133:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb core setup transfer complete handler
+ 134:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 135:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 136:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 137:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 138:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_core_setup_handler(usbd_core_type *udev, uint8_t ept_num)
+ 139:middlewares/usbd_drivers/src/usbd_core.c **** {
+  30              		.loc 1 139 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 4
+
+
+  34              		.loc 1 139 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0446     		mov	r4, r0
+ 140:middlewares/usbd_drivers/src/usbd_core.c ****   /* setup parse */
+ 141:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_setup_request_parse(&udev->setup, udev->setup_buffer);
+  41              		.loc 1 141 3 is_stmt 1 view .LVU2
+  42 0004 00F50571 		add	r1, r0, #532
+  43              	.LVL1:
+  44              		.loc 1 141 3 is_stmt 0 view .LVU3
+  45 0008 00F50370 		add	r0, r0, #524
+  46              	.LVL2:
+  47              		.loc 1 141 3 view .LVU4
+  48 000c FFF7FEFF 		bl	usbd_setup_request_parse
+  49              	.LVL3:
+ 142:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 143:middlewares/usbd_drivers/src/usbd_core.c ****   /* set ept0 status */
+ 144:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_SETUP;
+  50              		.loc 1 144 3 is_stmt 1 view .LVU5
+  51              		.loc 1 144 18 is_stmt 0 view .LVU6
+  52 0010 0123     		movs	r3, #1
+  53 0012 84F82032 		strb	r3, [r4, #544]
+ 145:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_wlength = udev->setup.wLength;
+  54              		.loc 1 145 3 is_stmt 1 view .LVU7
+  55              		.loc 1 145 35 is_stmt 0 view .LVU8
+  56 0016 B4F81232 		ldrh	r3, [r4, #530]
+  57              		.loc 1 145 22 view .LVU9
+  58 001a A4F82232 		strh	r3, [r4, #546]	@ movhi
+ 146:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 147:middlewares/usbd_drivers/src/usbd_core.c ****   switch(udev->setup.bmRequestType & USB_REQ_RECIPIENT_MASK)
+  59              		.loc 1 147 3 is_stmt 1 view .LVU10
+  60              		.loc 1 147 21 is_stmt 0 view .LVU11
+  61 001e 94F80C32 		ldrb	r3, [r4, #524]	@ zero_extendqisi2
+  62 0022 03F01F03 		and	r3, r3, #31
+  63              		.loc 1 147 3 view .LVU12
+  64 0026 012B     		cmp	r3, #1
+  65 0028 06D0     		beq	.L2
+  66 002a 022B     		cmp	r3, #2
+  67 002c 08D0     		beq	.L3
+  68 002e 13B9     		cbnz	r3, .L1
+ 148:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 149:middlewares/usbd_drivers/src/usbd_core.c ****     case USB_REQ_RECIPIENT_DEVICE:
+ 150:middlewares/usbd_drivers/src/usbd_core.c ****       /* recipient device request */
+ 151:middlewares/usbd_drivers/src/usbd_core.c ****       usbd_device_request(udev);
+  69              		.loc 1 151 7 is_stmt 1 view .LVU13
+  70 0030 2046     		mov	r0, r4
+  71 0032 FFF7FEFF 		bl	usbd_device_request
+  72              	.LVL4:
+ 152:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+  73              		.loc 1 152 7 view .LVU14
+  74              	.L1:
+ 153:middlewares/usbd_drivers/src/usbd_core.c ****     case USB_REQ_RECIPIENT_INTERFACE:
+ 154:middlewares/usbd_drivers/src/usbd_core.c ****       /* recipient interface request */
+ 155:middlewares/usbd_drivers/src/usbd_core.c ****       usbd_interface_request(udev);
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 5
+
+
+ 156:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+ 157:middlewares/usbd_drivers/src/usbd_core.c ****     case USB_REQ_RECIPIENT_ENDPOINT:
+ 158:middlewares/usbd_drivers/src/usbd_core.c ****       /* recipient endpoint request */
+ 159:middlewares/usbd_drivers/src/usbd_core.c ****       usbd_endpoint_request(udev);
+ 160:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+ 161:middlewares/usbd_drivers/src/usbd_core.c ****     default:
+ 162:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+ 163:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 164:middlewares/usbd_drivers/src/usbd_core.c **** }
+  75              		.loc 1 164 1 is_stmt 0 view .LVU15
+  76 0036 10BD     		pop	{r4, pc}
+  77              	.LVL5:
+  78              	.L2:
+ 155:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+  79              		.loc 1 155 7 is_stmt 1 view .LVU16
+  80 0038 2046     		mov	r0, r4
+  81 003a FFF7FEFF 		bl	usbd_interface_request
+  82              	.LVL6:
+ 156:middlewares/usbd_drivers/src/usbd_core.c ****     case USB_REQ_RECIPIENT_ENDPOINT:
+  83              		.loc 1 156 7 view .LVU17
+  84 003e FAE7     		b	.L1
+  85              	.L3:
+ 159:middlewares/usbd_drivers/src/usbd_core.c ****       break;
+  86              		.loc 1 159 7 view .LVU18
+  87 0040 2046     		mov	r0, r4
+  88 0042 FFF7FEFF 		bl	usbd_endpoint_request
+  89              	.LVL7:
+ 160:middlewares/usbd_drivers/src/usbd_core.c ****     default:
+  90              		.loc 1 160 7 view .LVU19
+  91              		.loc 1 164 1 is_stmt 0 view .LVU20
+  92 0046 F6E7     		b	.L1
+  93              		.cfi_endproc
+  94              	.LFE139:
+  96              		.section	.text.usbd_clear_stall,"ax",%progbits
+  97              		.align	1
+  98              		.global	usbd_clear_stall
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 103              	usbd_clear_stall:
+ 104              	.LVL8:
+ 105              	.LFB144:
+ 165:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 166:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 167:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb control endpoint send data
+ 168:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 169:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 170:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  buffer: send data buffer
+ 171:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  len: send data length
+ 172:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 173:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 174:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ctrl_send(usbd_core_type *udev, uint8_t *buffer, uint16_t len)
+ 175:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 176:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_in[0];
+ 177:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 178:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->ept0_slen = len;
+ 179:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 6
+
+
+ 180:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_IN;
+ 181:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 182:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_send(udev, 0, buffer, len);
+ 183:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 184:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 185:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 186:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb control endpoint receive data
+ 187:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 188:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 189:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  buffer: recv data buffer
+ 190:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  len: recv data length
+ 191:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 192:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 193:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ctrl_recv(usbd_core_type *udev, uint8_t *buffer, uint16_t len)
+ 194:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 195:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_out[0];
+ 196:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 197:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->ept0_slen = len;
+ 198:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ 199:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_OUT;
+ 200:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 201:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_recv(udev, 0, buffer, len);
+ 202:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 203:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 204:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 205:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb control endpoint send in status
+ 206:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 207:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 208:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 209:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ctrl_send_status(usbd_core_type *udev)
+ 210:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 211:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_IN;
+ 212:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 213:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_send(udev, 0, 0, 0);
+ 214:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 215:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 216:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 217:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb control endpoint send out status
+ 218:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: usb device core handler type
+ 219:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 220:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 221:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ctrl_recv_status(usbd_core_type *udev)
+ 222:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 223:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_OUT;
+ 224:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 225:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_recv(udev, 0, 0, 0);
+ 226:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 227:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 228:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 229:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  clear endpoint stall
+ 230:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 231:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 232:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 233:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 234:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_clear_stall(usbd_core_type *udev, uint8_t ept_addr)
+ 235:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 106              		.loc 1 235 1 is_stmt 1 view -0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 7
+
+
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              		.loc 1 235 1 is_stmt 0 view .LVU22
+ 111 0000 00B5     		push	{lr}
+ 112              	.LCFI1:
+ 113              		.cfi_def_cfa_offset 4
+ 114              		.cfi_offset 14, -4
+ 236:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 115              		.loc 1 236 3 is_stmt 1 view .LVU23
+ 237:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 238:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_addr & 0x80)
+ 116              		.loc 1 238 3 view .LVU24
+ 117              		.loc 1 238 5 is_stmt 0 view .LVU25
+ 118 0002 11F0800F 		tst	r1, #128
+ 119 0006 27D1     		bne	.L12
+ 239:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 240:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint */
+ 241:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 242:middlewares/usbd_drivers/src/usbd_core.c ****     USB_CLEAR_TXDTS(ept_info->eptn);
+ 243:middlewares/usbd_drivers/src/usbd_core.c ****     if(USB->ept_bit[ept_info->eptn].txsts == USB_TX_STALL)
+ 244:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_TXSTS(ept_info->eptn, USB_TX_NAK);
+ 245:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 246:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 247:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 248:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint */
+ 249:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 120              		.loc 1 249 5 is_stmt 1 view .LVU26
+ 121              		.loc 1 249 40 is_stmt 0 view .LVU27
+ 122 0008 01F07F01 		and	r1, r1, #127
+ 123              	.LVL9:
+ 124              		.loc 1 249 14 view .LVU28
+ 125 000c 4A01     		lsls	r2, r1, #5
+ 126 000e 02F58473 		add	r3, r2, #264
+ 127 0012 0344     		add	r3, r3, r0
+ 128 0014 0433     		adds	r3, r3, #4
+ 129              	.LVL10:
+ 250:middlewares/usbd_drivers/src/usbd_core.c ****     USB_CLEAR_RXDTS(ept_info->eptn);
+ 130              		.loc 1 250 5 is_stmt 1 view .LVU29
+ 131 0016 0244     		add	r2, r2, r0
+ 132 0018 92F80CC1 		ldrb	ip, [r2, #268]	@ zero_extendqisi2
+ 133 001c 214A     		ldr	r2, .L13
+ 134 001e 52F82C20 		ldr	r2, [r2, ip, lsl #2]
+ 135 0022 12F4804F 		tst	r2, #16384
+ 136 0026 0DD0     		beq	.L10
+ 137              		.loc 1 250 5 discriminator 1 view .LVU30
+ 138 0028 DFF878E0 		ldr	lr, .L13
+ 139 002c 5EF82C20 		ldr	r2, [lr, ip, lsl #2]
+ 140 0030 22F0F002 		bic	r2, r2, #240
+ 141 0034 1205     		lsls	r2, r2, #20
+ 142 0036 120D     		lsrs	r2, r2, #20
+ 143 0038 42F44042 		orr	r2, r2, #49152
+ 144 003c 42F08002 		orr	r2, r2, #128
+ 145 0040 4EF82C20 		str	r2, [lr, ip, lsl #2]
+ 146              	.L10:
+ 147              		.loc 1 250 36 view .LVU31
+ 251:middlewares/usbd_drivers/src/usbd_core.c ****     if(USB->ept_bit[ept_info->eptn].rxsts == USB_RX_STALL)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 8
+
+
+ 148              		.loc 1 251 5 view .LVU32
+ 149              		.loc 1 251 29 is_stmt 0 view .LVU33
+ 150 0044 00EB4110 		add	r0, r0, r1, lsl #5
+ 151              	.LVL11:
+ 152              		.loc 1 251 29 view .LVU34
+ 153 0048 90F80C11 		ldrb	r1, [r0, #268]	@ zero_extendqisi2
+ 154              		.loc 1 251 36 view .LVU35
+ 155 004c 154A     		ldr	r2, .L13
+ 156 004e 52F82120 		ldr	r2, [r2, r1, lsl #2]
+ 157              	.L9:
+ 252:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_RXSTS(ept_info->eptn, USB_RX_VALID);
+ 158              		.loc 1 252 50 is_stmt 1 view .LVU36
+ 253:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 254:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->stall = 0;
+ 159              		.loc 1 254 3 view .LVU37
+ 160              		.loc 1 254 19 is_stmt 0 view .LVU38
+ 161 0052 0022     		movs	r2, #0
+ 162 0054 DA72     		strb	r2, [r3, #11]
+ 255:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 163              		.loc 1 255 1 view .LVU39
+ 164 0056 00BD     		pop	{pc}
+ 165              	.LVL12:
+ 166              	.L12:
+ 241:middlewares/usbd_drivers/src/usbd_core.c ****     USB_CLEAR_TXDTS(ept_info->eptn);
+ 167              		.loc 1 241 5 is_stmt 1 view .LVU40
+ 241:middlewares/usbd_drivers/src/usbd_core.c ****     USB_CLEAR_TXDTS(ept_info->eptn);
+ 168              		.loc 1 241 39 is_stmt 0 view .LVU41
+ 169 0058 01F07F01 		and	r1, r1, #127
+ 170              	.LVL13:
+ 241:middlewares/usbd_drivers/src/usbd_core.c ****     USB_CLEAR_TXDTS(ept_info->eptn);
+ 171              		.loc 1 241 14 view .LVU42
+ 172 005c 4A01     		lsls	r2, r1, #5
+ 173 005e 02F10803 		add	r3, r2, #8
+ 174 0062 0344     		add	r3, r3, r0
+ 175 0064 0433     		adds	r3, r3, #4
+ 176              	.LVL14:
+ 242:middlewares/usbd_drivers/src/usbd_core.c ****     if(USB->ept_bit[ept_info->eptn].txsts == USB_TX_STALL)
+ 177              		.loc 1 242 5 is_stmt 1 view .LVU43
+ 178 0066 0244     		add	r2, r2, r0
+ 179 0068 92F80CC0 		ldrb	ip, [r2, #12]	@ zero_extendqisi2
+ 180 006c 0D4A     		ldr	r2, .L13
+ 181 006e 52F82C20 		ldr	r2, [r2, ip, lsl #2]
+ 182 0072 12F0400F 		tst	r2, #64
+ 183 0076 0DD0     		beq	.L8
+ 242:middlewares/usbd_drivers/src/usbd_core.c ****     if(USB->ept_bit[ept_info->eptn].txsts == USB_TX_STALL)
+ 184              		.loc 1 242 5 discriminator 1 view .LVU44
+ 185 0078 DFF828E0 		ldr	lr, .L13
+ 186 007c 5EF82C20 		ldr	r2, [lr, ip, lsl #2]
+ 187 0080 22F0F002 		bic	r2, r2, #240
+ 188 0084 1205     		lsls	r2, r2, #20
+ 189 0086 120D     		lsrs	r2, r2, #20
+ 190 0088 42F40042 		orr	r2, r2, #32768
+ 191 008c 42F0C002 		orr	r2, r2, #192
+ 192 0090 4EF82C20 		str	r2, [lr, ip, lsl #2]
+ 193              	.L8:
+ 242:middlewares/usbd_drivers/src/usbd_core.c ****     if(USB->ept_bit[ept_info->eptn].txsts == USB_TX_STALL)
+ 194              		.loc 1 242 36 view .LVU45
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 9
+
+
+ 243:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_TXSTS(ept_info->eptn, USB_TX_NAK);
+ 195              		.loc 1 243 5 view .LVU46
+ 243:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_TXSTS(ept_info->eptn, USB_TX_NAK);
+ 196              		.loc 1 243 29 is_stmt 0 view .LVU47
+ 197 0094 00EB4111 		add	r1, r0, r1, lsl #5
+ 198 0098 097B     		ldrb	r1, [r1, #12]	@ zero_extendqisi2
+ 243:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_TXSTS(ept_info->eptn, USB_TX_NAK);
+ 199              		.loc 1 243 36 view .LVU48
+ 200 009a 024A     		ldr	r2, .L13
+ 201 009c 52F82120 		ldr	r2, [r2, r1, lsl #2]
+ 244:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 202              		.loc 1 244 48 is_stmt 1 view .LVU49
+ 203 00a0 D7E7     		b	.L9
+ 204              	.L14:
+ 205 00a2 00BF     		.align	2
+ 206              	.L13:
+ 207 00a4 005C0040 		.word	1073765376
+ 208              		.cfi_endproc
+ 209              	.LFE144:
+ 211              		.section	.text.usbd_set_stall,"ax",%progbits
+ 212              		.align	1
+ 213              		.global	usbd_set_stall
+ 214              		.syntax unified
+ 215              		.thumb
+ 216              		.thumb_func
+ 218              	usbd_set_stall:
+ 219              	.LVL15:
+ 220              	.LFB145:
+ 256:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 257:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 258:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb set endpoint to stall.
+ 259:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 260:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 261:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 262:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 263:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_set_stall(usbd_core_type *udev, uint8_t ept_addr)
+ 264:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 221              		.loc 1 264 1 view -0
+ 222              		.cfi_startproc
+ 223              		@ args = 0, pretend = 0, frame = 0
+ 224              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225              		@ link register save eliminated.
+ 265:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 226              		.loc 1 265 3 view .LVU51
+ 266:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 267:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_addr & 0x80)
+ 227              		.loc 1 267 3 view .LVU52
+ 228              		.loc 1 267 5 is_stmt 0 view .LVU53
+ 229 0000 11F0800F 		tst	r1, #128
+ 230 0004 1CD1     		bne	.L18
+ 268:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 269:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint */
+ 270:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_TXSTS(ept_info->eptn, USB_TX_STALL);
+ 272:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 273:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 274:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 10
+
+
+ 275:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint */
+ 276:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 231              		.loc 1 276 5 is_stmt 1 view .LVU54
+ 232              		.loc 1 276 40 is_stmt 0 view .LVU55
+ 233 0006 01F07F01 		and	r1, r1, #127
+ 234              	.LVL16:
+ 235              		.loc 1 276 14 view .LVU56
+ 236 000a 4901     		lsls	r1, r1, #5
+ 237 000c 01F58472 		add	r2, r1, #264
+ 238 0010 0244     		add	r2, r2, r0
+ 239 0012 0432     		adds	r2, r2, #4
+ 240              	.LVL17:
+ 241              	.LBB2:
+ 277:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_RXSTS(ept_info->eptn, USB_RX_STALL)
+ 242              		.loc 1 277 5 is_stmt 1 view .LVU57
+ 243 0014 0844     		add	r0, r0, r1
+ 244              	.LVL18:
+ 245              		.loc 1 277 5 is_stmt 0 view .LVU58
+ 246 0016 90F80C01 		ldrb	r0, [r0, #268]	@ zero_extendqisi2
+ 247 001a 1649     		ldr	r1, .L19
+ 248 001c 51F82030 		ldr	r3, [r1, r0, lsl #2]
+ 249 0020 9BB2     		uxth	r3, r3
+ 250 0022 23F48043 		bic	r3, r3, #16384
+ 251 0026 23F07003 		bic	r3, r3, #112
+ 252              	.LVL19:
+ 253              		.loc 1 277 5 is_stmt 1 view .LVU59
+ 254              		.loc 1 277 5 discriminator 1 view .LVU60
+ 255 002a 83F48053 		eor	r3, r3, #4096
+ 256              	.LVL20:
+ 257              		.loc 1 277 5 discriminator 3 view .LVU61
+ 258              		.loc 1 277 5 discriminator 6 view .LVU62
+ 259 002e 43F40043 		orr	r3, r3, #32768
+ 260              	.LVL21:
+ 261              		.loc 1 277 5 is_stmt 0 discriminator 6 view .LVU63
+ 262 0032 43F08003 		orr	r3, r3, #128
+ 263 0036 41F82030 		str	r3, [r1, r0, lsl #2]
+ 264              	.LVL22:
+ 265              	.L17:
+ 266              		.loc 1 277 5 discriminator 6 view .LVU64
+ 267              	.LBE2:
+ 278:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 279:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 280:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->stall = 1;
+ 268              		.loc 1 280 3 is_stmt 1 view .LVU65
+ 269              		.loc 1 280 19 is_stmt 0 view .LVU66
+ 270 003a 0123     		movs	r3, #1
+ 271 003c D372     		strb	r3, [r2, #11]
+ 281:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 272              		.loc 1 281 1 view .LVU67
+ 273 003e 7047     		bx	lr
+ 274              	.LVL23:
+ 275              	.L18:
+ 270:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_TXSTS(ept_info->eptn, USB_TX_STALL);
+ 276              		.loc 1 270 5 is_stmt 1 view .LVU68
+ 270:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_TXSTS(ept_info->eptn, USB_TX_STALL);
+ 277              		.loc 1 270 39 is_stmt 0 view .LVU69
+ 278 0040 01F07F01 		and	r1, r1, #127
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 11
+
+
+ 279              	.LVL24:
+ 270:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_TXSTS(ept_info->eptn, USB_TX_STALL);
+ 280              		.loc 1 270 14 view .LVU70
+ 281 0044 4901     		lsls	r1, r1, #5
+ 282 0046 01F10802 		add	r2, r1, #8
+ 283 004a 0244     		add	r2, r2, r0
+ 284 004c 0432     		adds	r2, r2, #4
+ 285              	.LVL25:
+ 286              	.LBB3:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 287              		.loc 1 271 5 is_stmt 1 view .LVU71
+ 288 004e 0844     		add	r0, r0, r1
+ 289              	.LVL26:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 290              		.loc 1 271 5 is_stmt 0 view .LVU72
+ 291 0050 007B     		ldrb	r0, [r0, #12]	@ zero_extendqisi2
+ 292 0052 0849     		ldr	r1, .L19
+ 293 0054 51F82030 		ldr	r3, [r1, r0, lsl #2]
+ 294 0058 9BB2     		uxth	r3, r3
+ 295 005a 23F4E043 		bic	r3, r3, #28672
+ 296 005e 23F04003 		bic	r3, r3, #64
+ 297              	.LVL27:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 298              		.loc 1 271 5 is_stmt 1 view .LVU73
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 299              		.loc 1 271 5 discriminator 1 view .LVU74
+ 300 0062 83F01003 		eor	r3, r3, #16
+ 301              	.LVL28:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 302              		.loc 1 271 5 discriminator 3 view .LVU75
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 303              		.loc 1 271 5 discriminator 6 view .LVU76
+ 304 0066 43F40043 		orr	r3, r3, #32768
+ 305              	.LVL29:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 306              		.loc 1 271 5 is_stmt 0 discriminator 6 view .LVU77
+ 307 006a 43F08003 		orr	r3, r3, #128
+ 308 006e 41F82030 		str	r3, [r1, r0, lsl #2]
+ 309              	.LBE3:
+ 271:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 310              		.loc 1 271 48 is_stmt 1 view .LVU78
+ 311 0072 E2E7     		b	.L17
+ 312              	.L20:
+ 313              		.align	2
+ 314              	.L19:
+ 315 0074 005C0040 		.word	1073765376
+ 316              		.cfi_endproc
+ 317              	.LFE145:
+ 319              		.section	.text.usbd_ctrl_unsupport,"ax",%progbits
+ 320              		.align	1
+ 321              		.global	usbd_ctrl_unsupport
+ 322              		.syntax unified
+ 323              		.thumb
+ 324              		.thumb_func
+ 326              	usbd_ctrl_unsupport:
+ 327              	.LVL30:
+ 328              	.LFB146:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 12
+
+
+ 282:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 283:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 284:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  un-support device request
+ 285:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: usb device core handler type
+ 286:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 287:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 288:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ctrl_unsupport(usbd_core_type *udev)
+ 289:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 329              		.loc 1 289 1 view -0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              		.loc 1 289 1 is_stmt 0 view .LVU80
+ 334 0000 10B5     		push	{r4, lr}
+ 335              	.LCFI2:
+ 336              		.cfi_def_cfa_offset 8
+ 337              		.cfi_offset 4, -8
+ 338              		.cfi_offset 14, -4
+ 339 0002 0446     		mov	r4, r0
+ 290:middlewares/usbd_drivers/src/usbd_core.c ****   /* return stall status */
+ 291:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_set_stall(udev, 0x00);
+ 340              		.loc 1 291 3 is_stmt 1 view .LVU81
+ 341 0004 0021     		movs	r1, #0
+ 342 0006 FFF7FEFF 		bl	usbd_set_stall
+ 343              	.LVL31:
+ 292:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_set_stall(udev, 0x80);
+ 344              		.loc 1 292 3 view .LVU82
+ 345 000a 8021     		movs	r1, #128
+ 346 000c 2046     		mov	r0, r4
+ 347 000e FFF7FEFF 		bl	usbd_set_stall
+ 348              	.LVL32:
+ 293:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 349              		.loc 1 293 1 is_stmt 0 view .LVU83
+ 350 0012 10BD     		pop	{r4, pc}
+ 351              		.loc 1 293 1 view .LVU84
+ 352              		.cfi_endproc
+ 353              	.LFE146:
+ 355              		.section	.text.usbd_ept_send,"ax",%progbits
+ 356              		.align	1
+ 357              		.global	usbd_ept_send
+ 358              		.syntax unified
+ 359              		.thumb
+ 360              		.thumb_func
+ 362              	usbd_ept_send:
+ 363              	.LVL33:
+ 364              	.LFB147:
+ 294:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 295:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 296:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb endpoint send data
+ 297:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 298:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 299:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  buffer: send data buffer
+ 300:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  len: send data length
+ 301:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 302:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 303:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_send(usbd_core_type *udev, uint8_t ept_addr, uint8_t *buffer, uint16_t len)
+ 304:middlewares/usbd_drivers/src/usbd_core.c **** {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 13
+
+
+ 365              		.loc 1 304 1 is_stmt 1 view -0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 0
+ 368              		@ frame_needed = 0, uses_anonymous_args = 0
+ 369              		.loc 1 304 1 is_stmt 0 view .LVU86
+ 370 0000 38B5     		push	{r3, r4, r5, lr}
+ 371              	.LCFI3:
+ 372              		.cfi_def_cfa_offset 16
+ 373              		.cfi_offset 3, -16
+ 374              		.cfi_offset 4, -12
+ 375              		.cfi_offset 5, -8
+ 376              		.cfi_offset 14, -4
+ 377 0002 8446     		mov	ip, r0
+ 378 0004 1046     		mov	r0, r2
+ 379              	.LVL34:
+ 305:middlewares/usbd_drivers/src/usbd_core.c ****   /* get endpoint info struct and register */
+ 306:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 380              		.loc 1 306 3 is_stmt 1 view .LVU87
+ 381              		.loc 1 306 51 is_stmt 0 view .LVU88
+ 382 0006 01F07F04 		and	r4, r1, #127
+ 383              	.LVL35:
+ 307:middlewares/usbd_drivers/src/usbd_core.c ****   uint16_t trs_len = 0;
+ 384              		.loc 1 307 3 is_stmt 1 view .LVU89
+ 308:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_type *usbx = udev->usb_reg;
+ 385              		.loc 1 308 3 view .LVU90
+ 386              		.loc 1 308 14 is_stmt 0 view .LVU91
+ 387 000a DCF800E0 		ldr	lr, [ip]
+ 388              	.LVL36:
+ 309:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 310:middlewares/usbd_drivers/src/usbd_core.c ****   /* set send data buffer and length */
+ 311:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->trans_buf = buffer;
+ 389              		.loc 1 311 3 is_stmt 1 view .LVU92
+ 390              		.loc 1 311 23 is_stmt 0 view .LVU93
+ 391 000e 0CEB4411 		add	r1, ip, r4, lsl #5
+ 392              	.LVL37:
+ 393              		.loc 1 311 23 view .LVU94
+ 394 0012 0A62     		str	r2, [r1, #32]
+ 312:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->total_len = len;
+ 395              		.loc 1 312 3 is_stmt 1 view .LVU95
+ 396              		.loc 1 312 23 is_stmt 0 view .LVU96
+ 397 0014 4B83     		strh	r3, [r1, #26]	@ movhi
+ 313:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->trans_len = 0;
+ 398              		.loc 1 313 3 is_stmt 1 view .LVU97
+ 399              		.loc 1 313 23 is_stmt 0 view .LVU98
+ 400 0016 0022     		movs	r2, #0
+ 401              	.LVL38:
+ 402              		.loc 1 313 23 view .LVU99
+ 403 0018 8A83     		strh	r2, [r1, #28]	@ movhi
+ 314:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 315:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_info->total_len > ept_info->maxpacket)
+ 404              		.loc 1 315 3 is_stmt 1 view .LVU100
+ 405              		.loc 1 315 36 is_stmt 0 view .LVU101
+ 406 001a 8D8A     		ldrh	r5, [r1, #20]
+ 407              		.loc 1 315 5 view .LVU102
+ 408 001c 9D42     		cmp	r5, r3
+ 409 001e 3FD2     		bcs	.L24
+ 316:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 14
+
+
+ 317:middlewares/usbd_drivers/src/usbd_core.c ****     trs_len = ept_info->maxpacket;
+ 410              		.loc 1 317 5 is_stmt 1 view .LVU103
+ 411              	.LVL39:
+ 318:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len -= trs_len;
+ 412              		.loc 1 318 5 view .LVU104
+ 413              		.loc 1 318 25 is_stmt 0 view .LVU105
+ 414 0020 5B1B     		subs	r3, r3, r5
+ 415              	.LVL40:
+ 416              		.loc 1 318 25 view .LVU106
+ 417 0022 4B83     		strh	r3, [r1, #26]	@ movhi
+ 418              	.LVL41:
+ 419              	.L25:
+ 319:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 320:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 321:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 322:middlewares/usbd_drivers/src/usbd_core.c ****     trs_len = len;
+ 323:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len = 0;
+ 324:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 325:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 326:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->last_len = trs_len;
+ 420              		.loc 1 326 3 is_stmt 1 view .LVU107
+ 421              		.loc 1 326 22 is_stmt 0 view .LVU108
+ 422 0024 631C     		adds	r3, r4, #1
+ 423 0026 0CEB4313 		add	r3, ip, r3, lsl #5
+ 424 002a 9D80     		strh	r5, [r3, #4]	@ movhi
+ 327:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 328:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_info->is_double_buffer == 0)
+ 425              		.loc 1 328 3 is_stmt 1 view .LVU109
+ 426              		.loc 1 328 14 is_stmt 0 view .LVU110
+ 427 002c 0CEB4413 		add	r3, ip, r4, lsl #5
+ 428 0030 9B7D     		ldrb	r3, [r3, #22]	@ zero_extendqisi2
+ 429              		.loc 1 328 5 view .LVU111
+ 430 0032 002B     		cmp	r3, #0
+ 431 0034 3AD0     		beq	.L31
+ 329:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 330:middlewares/usbd_drivers/src/usbd_core.c ****     /* write data to endpoint buffer */
+ 331:middlewares/usbd_drivers/src/usbd_core.c ****     usb_write_packet(ept_info->trans_buf, ept_info->tx_addr, trs_len);
+ 332:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 333:middlewares/usbd_drivers/src/usbd_core.c ****     /* set send data length */
+ 334:middlewares/usbd_drivers/src/usbd_core.c ****     USB_SET_TXLEN((ept_addr & 0x7F), trs_len);
+ 335:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 336:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 337:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 338:middlewares/usbd_drivers/src/usbd_core.c ****     if(usbx->ept_bit[ept_addr & 0x7F].txdts)
+ 432              		.loc 1 338 5 is_stmt 1 view .LVU112
+ 433              		.loc 1 338 38 is_stmt 0 view .LVU113
+ 434 0036 5EF82430 		ldr	r3, [lr, r4, lsl #2]
+ 435              		.loc 1 338 7 view .LVU114
+ 436 003a 13F0400F 		tst	r3, #64
+ 437 003e 46D0     		beq	.L28
+ 339:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 340:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_EPT_DOUBLE_BUF1_LEN((ept_addr & 0x7F), trs_len, DATA_TRANS_IN);
+ 438              		.loc 1 340 7 is_stmt 1 view .LVU115
+ 439              		.loc 1 340 7 discriminator 2 view .LVU116
+ 440 0040 2C4B     		ldr	r3, .L32
+ 441 0042 1B6D     		ldr	r3, [r3, #80]
+ 442 0044 03EBC403 		add	r3, r3, r4, lsl #3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 15
+
+
+ 443 0048 0633     		adds	r3, r3, #6
+ 444 004a 2B4A     		ldr	r2, .L32+4
+ 445 004c 1268     		ldr	r2, [r2]
+ 446 004e 42F81350 		str	r5, [r2, r3, lsl #1]
+ 447              		.loc 1 340 77 view .LVU117
+ 341:middlewares/usbd_drivers/src/usbd_core.c ****       usb_write_packet(ept_info->trans_buf, ept_info->rx_addr, trs_len);
+ 448              		.loc 1 341 7 view .LVU118
+ 449 0052 0CEB441C 		add	ip, ip, r4, lsl #5
+ 450              	.LVL42:
+ 451              		.loc 1 341 7 is_stmt 0 view .LVU119
+ 452 0056 2A46     		mov	r2, r5
+ 453 0058 BCF81210 		ldrh	r1, [ip, #18]
+ 454 005c DCF82000 		ldr	r0, [ip, #32]
+ 455              	.LVL43:
+ 456              		.loc 1 341 7 view .LVU120
+ 457 0060 FFF7FEFF 		bl	usb_write_packet
+ 458              	.LVL44:
+ 459              	.L29:
+ 342:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 343:middlewares/usbd_drivers/src/usbd_core.c ****     else
+ 344:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 345:middlewares/usbd_drivers/src/usbd_core.c ****       USB_SET_EPT_DOUBLE_BUF0_LEN((ept_addr & 0x7F), trs_len, DATA_TRANS_IN);
+ 346:middlewares/usbd_drivers/src/usbd_core.c ****       usb_write_packet(ept_info->trans_buf, ept_info->tx_addr, trs_len);
+ 347:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 348:middlewares/usbd_drivers/src/usbd_core.c ****     USB_FREE_DB_USER_BUFFER((ept_addr & 0x7F), DATA_TRANS_IN);
+ 460              		.loc 1 348 5 is_stmt 1 view .LVU121
+ 461              		.loc 1 348 5 discriminator 1 view .LVU122
+ 462 0064 234A     		ldr	r2, .L32
+ 463 0066 52F82430 		ldr	r3, [r2, r4, lsl #2]
+ 464 006a 23F0F003 		bic	r3, r3, #240
+ 465 006e 1B05     		lsls	r3, r3, #20
+ 466 0070 1B0D     		lsrs	r3, r3, #20
+ 467 0072 43F44043 		orr	r3, r3, #49152
+ 468 0076 43F08003 		orr	r3, r3, #128
+ 469 007a 42F82430 		str	r3, [r2, r4, lsl #2]
+ 470              	.L27:
+ 471              		.loc 1 348 62 view .LVU123
+ 472              	.LBB4:
+ 349:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 350:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 351:middlewares/usbd_drivers/src/usbd_core.c ****   /* set tx status valid */
+ 352:middlewares/usbd_drivers/src/usbd_core.c ****   USB_SET_TXSTS((ept_addr & 0x7F), USB_TX_VALID);
+ 473              		.loc 1 352 3 view .LVU124
+ 474 007e 1D4A     		ldr	r2, .L32
+ 475 0080 52F82430 		ldr	r3, [r2, r4, lsl #2]
+ 476 0084 9BB2     		uxth	r3, r3
+ 477 0086 23F4E043 		bic	r3, r3, #28672
+ 478 008a 23F04003 		bic	r3, r3, #64
+ 479              		.loc 1 352 3 view .LVU125
+ 480              		.loc 1 352 3 discriminator 1 view .LVU126
+ 481              	.LVL45:
+ 482              		.loc 1 352 3 discriminator 3 view .LVU127
+ 483              		.loc 1 352 3 discriminator 4 view .LVU128
+ 484 008e 83F03003 		eor	r3, r3, #48
+ 485              	.LVL46:
+ 486              		.loc 1 352 3 discriminator 6 view .LVU129
+ 487 0092 43F40043 		orr	r3, r3, #32768
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 16
+
+
+ 488              	.LVL47:
+ 489              		.loc 1 352 3 is_stmt 0 discriminator 6 view .LVU130
+ 490 0096 43F08003 		orr	r3, r3, #128
+ 491 009a 42F82430 		str	r3, [r2, r4, lsl #2]
+ 492              	.LBE4:
+ 493              		.loc 1 352 49 is_stmt 1 view .LVU131
+ 353:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 494              		.loc 1 353 1 is_stmt 0 view .LVU132
+ 495 009e 38BD     		pop	{r3, r4, r5, pc}
+ 496              	.LVL48:
+ 497              	.L24:
+ 322:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len = 0;
+ 498              		.loc 1 322 5 is_stmt 1 view .LVU133
+ 323:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 499              		.loc 1 323 5 view .LVU134
+ 323:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 500              		.loc 1 323 25 is_stmt 0 view .LVU135
+ 501 00a0 0CEB4412 		add	r2, ip, r4, lsl #5
+ 502 00a4 0021     		movs	r1, #0
+ 503 00a6 5183     		strh	r1, [r2, #26]	@ movhi
+ 322:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len = 0;
+ 504              		.loc 1 322 13 view .LVU136
+ 505 00a8 1D46     		mov	r5, r3
+ 506 00aa BBE7     		b	.L25
+ 507              	.LVL49:
+ 508              	.L31:
+ 331:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 509              		.loc 1 331 5 is_stmt 1 view .LVU137
+ 510 00ac 0CEB441C 		add	ip, ip, r4, lsl #5
+ 511              	.LVL50:
+ 331:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 512              		.loc 1 331 5 is_stmt 0 view .LVU138
+ 513 00b0 2A46     		mov	r2, r5
+ 514 00b2 BCF81010 		ldrh	r1, [ip, #16]
+ 515 00b6 FFF7FEFF 		bl	usb_write_packet
+ 516              	.LVL51:
+ 334:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 517              		.loc 1 334 5 is_stmt 1 view .LVU139
+ 518 00ba 0E4B     		ldr	r3, .L32
+ 519 00bc 1B6D     		ldr	r3, [r3, #80]
+ 520 00be 03EBC403 		add	r3, r3, r4, lsl #3
+ 521 00c2 0233     		adds	r3, r3, #2
+ 522 00c4 0C4A     		ldr	r2, .L32+4
+ 523 00c6 1268     		ldr	r2, [r2]
+ 524 00c8 42F81350 		str	r5, [r2, r3, lsl #1]
+ 525 00cc D7E7     		b	.L27
+ 526              	.LVL52:
+ 527              	.L28:
+ 345:middlewares/usbd_drivers/src/usbd_core.c ****       usb_write_packet(ept_info->trans_buf, ept_info->tx_addr, trs_len);
+ 528              		.loc 1 345 7 view .LVU140
+ 345:middlewares/usbd_drivers/src/usbd_core.c ****       usb_write_packet(ept_info->trans_buf, ept_info->tx_addr, trs_len);
+ 529              		.loc 1 345 7 discriminator 2 view .LVU141
+ 530 00ce 094B     		ldr	r3, .L32
+ 531 00d0 1B6D     		ldr	r3, [r3, #80]
+ 532 00d2 03EBC403 		add	r3, r3, r4, lsl #3
+ 533 00d6 0233     		adds	r3, r3, #2
+ 534 00d8 074A     		ldr	r2, .L32+4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 17
+
+
+ 535 00da 1268     		ldr	r2, [r2]
+ 536 00dc 42F81350 		str	r5, [r2, r3, lsl #1]
+ 345:middlewares/usbd_drivers/src/usbd_core.c ****       usb_write_packet(ept_info->trans_buf, ept_info->tx_addr, trs_len);
+ 537              		.loc 1 345 77 view .LVU142
+ 346:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 538              		.loc 1 346 7 view .LVU143
+ 539 00e0 0CEB441C 		add	ip, ip, r4, lsl #5
+ 540              	.LVL53:
+ 346:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 541              		.loc 1 346 7 is_stmt 0 view .LVU144
+ 542 00e4 2A46     		mov	r2, r5
+ 543 00e6 BCF81010 		ldrh	r1, [ip, #16]
+ 544 00ea DCF82000 		ldr	r0, [ip, #32]
+ 545              	.LVL54:
+ 346:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 546              		.loc 1 346 7 view .LVU145
+ 547 00ee FFF7FEFF 		bl	usb_write_packet
+ 548              	.LVL55:
+ 346:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 549              		.loc 1 346 7 view .LVU146
+ 550 00f2 B7E7     		b	.L29
+ 551              	.L33:
+ 552              		.align	2
+ 553              	.L32:
+ 554 00f4 005C0040 		.word	1073765376
+ 555 00f8 00000000 		.word	g_usb_packet_address
+ 556              		.cfi_endproc
+ 557              	.LFE147:
+ 559              		.section	.text.usbd_ctrl_send,"ax",%progbits
+ 560              		.align	1
+ 561              		.global	usbd_ctrl_send
+ 562              		.syntax unified
+ 563              		.thumb
+ 564              		.thumb_func
+ 566              	usbd_ctrl_send:
+ 567              	.LVL56:
+ 568              	.LFB140:
+ 175:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_in[0];
+ 569              		.loc 1 175 1 is_stmt 1 view -0
+ 570              		.cfi_startproc
+ 571              		@ args = 0, pretend = 0, frame = 0
+ 572              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_in[0];
+ 573              		.loc 1 175 1 is_stmt 0 view .LVU148
+ 574 0000 08B5     		push	{r3, lr}
+ 575              	.LCFI4:
+ 576              		.cfi_def_cfa_offset 8
+ 577              		.cfi_offset 3, -8
+ 578              		.cfi_offset 14, -4
+ 579 0002 1346     		mov	r3, r2
+ 176:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 580              		.loc 1 176 3 is_stmt 1 view .LVU149
+ 581              	.LVL57:
+ 178:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ 582              		.loc 1 178 3 view .LVU150
+ 178:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ 583              		.loc 1 178 23 is_stmt 0 view .LVU151
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 18
+
+
+ 584 0004 0285     		strh	r2, [r0, #40]	@ movhi
+ 179:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_IN;
+ 585              		.loc 1 179 3 is_stmt 1 view .LVU152
+ 179:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_IN;
+ 586              		.loc 1 179 22 is_stmt 0 view .LVU153
+ 587 0006 C284     		strh	r2, [r0, #38]	@ movhi
+ 180:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 588              		.loc 1 180 3 is_stmt 1 view .LVU154
+ 180:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 589              		.loc 1 180 18 is_stmt 0 view .LVU155
+ 590 0008 0222     		movs	r2, #2
+ 591              	.LVL58:
+ 180:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 592              		.loc 1 180 18 view .LVU156
+ 593 000a 80F82022 		strb	r2, [r0, #544]
+ 182:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 594              		.loc 1 182 3 is_stmt 1 view .LVU157
+ 595 000e 0A46     		mov	r2, r1
+ 596 0010 0021     		movs	r1, #0
+ 597              	.LVL59:
+ 182:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 598              		.loc 1 182 3 is_stmt 0 view .LVU158
+ 599 0012 FFF7FEFF 		bl	usbd_ept_send
+ 600              	.LVL60:
+ 183:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 601              		.loc 1 183 1 view .LVU159
+ 602 0016 08BD     		pop	{r3, pc}
+ 603              		.cfi_endproc
+ 604              	.LFE140:
+ 606              		.section	.text.usbd_ctrl_send_status,"ax",%progbits
+ 607              		.align	1
+ 608              		.global	usbd_ctrl_send_status
+ 609              		.syntax unified
+ 610              		.thumb
+ 611              		.thumb_func
+ 613              	usbd_ctrl_send_status:
+ 614              	.LVL61:
+ 615              	.LFB142:
+ 210:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_IN;
+ 616              		.loc 1 210 1 is_stmt 1 view -0
+ 617              		.cfi_startproc
+ 618              		@ args = 0, pretend = 0, frame = 0
+ 619              		@ frame_needed = 0, uses_anonymous_args = 0
+ 210:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_IN;
+ 620              		.loc 1 210 1 is_stmt 0 view .LVU161
+ 621 0000 08B5     		push	{r3, lr}
+ 622              	.LCFI5:
+ 623              		.cfi_def_cfa_offset 8
+ 624              		.cfi_offset 3, -8
+ 625              		.cfi_offset 14, -4
+ 211:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 626              		.loc 1 211 3 is_stmt 1 view .LVU162
+ 211:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 627              		.loc 1 211 18 is_stmt 0 view .LVU163
+ 628 0002 0423     		movs	r3, #4
+ 629 0004 80F82032 		strb	r3, [r0, #544]
+ 213:middlewares/usbd_drivers/src/usbd_core.c **** }
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 19
+
+
+ 630              		.loc 1 213 3 is_stmt 1 view .LVU164
+ 631 0008 0023     		movs	r3, #0
+ 632 000a 1A46     		mov	r2, r3
+ 633 000c 1946     		mov	r1, r3
+ 634 000e FFF7FEFF 		bl	usbd_ept_send
+ 635              	.LVL62:
+ 214:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 636              		.loc 1 214 1 is_stmt 0 view .LVU165
+ 637 0012 08BD     		pop	{r3, pc}
+ 638              		.cfi_endproc
+ 639              	.LFE142:
+ 641              		.section	.text.usbd_ept_recv,"ax",%progbits
+ 642              		.align	1
+ 643              		.global	usbd_ept_recv
+ 644              		.syntax unified
+ 645              		.thumb
+ 646              		.thumb_func
+ 648              	usbd_ept_recv:
+ 649              	.LVL63:
+ 650              	.LFB148:
+ 354:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 355:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 356:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb endpoint receive data
+ 357:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 358:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 359:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  buffer: receive data buffer
+ 360:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  len: receive data length
+ 361:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 362:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 363:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_recv(usbd_core_type *udev, uint8_t ept_addr, uint8_t *buffer, uint16_t len)
+ 364:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 651              		.loc 1 364 1 is_stmt 1 view -0
+ 652              		.cfi_startproc
+ 653              		@ args = 0, pretend = 0, frame = 0
+ 654              		@ frame_needed = 0, uses_anonymous_args = 0
+ 655              		@ link register save eliminated.
+ 365:middlewares/usbd_drivers/src/usbd_core.c ****   /* get endpoint info struct and register */
+ 366:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 656              		.loc 1 366 3 view .LVU167
+ 657              		.loc 1 366 52 is_stmt 0 view .LVU168
+ 658 0000 01F07F01 		and	r1, r1, #127
+ 659              	.LVL64:
+ 367:middlewares/usbd_drivers/src/usbd_core.c ****   uint32_t trs_len = 0;
+ 660              		.loc 1 367 3 is_stmt 1 view .LVU169
+ 368:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 369:middlewares/usbd_drivers/src/usbd_core.c ****    /* set receive data buffer and length */
+ 370:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->trans_buf = buffer;
+ 661              		.loc 1 370 3 view .LVU170
+ 662              		.loc 1 370 23 is_stmt 0 view .LVU171
+ 663 0004 00EB411C 		add	ip, r0, r1, lsl #5
+ 664 0008 CCF82021 		str	r2, [ip, #288]
+ 371:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->total_len = len;
+ 665              		.loc 1 371 3 is_stmt 1 view .LVU172
+ 666              		.loc 1 371 23 is_stmt 0 view .LVU173
+ 667 000c ACF81A31 		strh	r3, [ip, #282]	@ movhi
+ 372:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->trans_len = 0;
+ 668              		.loc 1 372 3 is_stmt 1 view .LVU174
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 20
+
+
+ 669              		.loc 1 372 23 is_stmt 0 view .LVU175
+ 670 0010 0022     		movs	r2, #0
+ 671              	.LVL65:
+ 672              		.loc 1 372 23 view .LVU176
+ 673 0012 ACF81C21 		strh	r2, [ip, #284]	@ movhi
+ 373:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 374:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_info->total_len > ept_info->maxpacket)
+ 674              		.loc 1 374 3 is_stmt 1 view .LVU177
+ 675              		.loc 1 374 36 is_stmt 0 view .LVU178
+ 676 0016 BCF81421 		ldrh	r2, [ip, #276]
+ 677              		.loc 1 374 5 view .LVU179
+ 678 001a 9A42     		cmp	r2, r3
+ 679 001c 13D2     		bcs	.L39
+ 375:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 376:middlewares/usbd_drivers/src/usbd_core.c ****     trs_len = ept_info->maxpacket;
+ 680              		.loc 1 376 5 is_stmt 1 view .LVU180
+ 681              	.LVL66:
+ 377:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len -= trs_len;
+ 682              		.loc 1 377 5 view .LVU181
+ 683              		.loc 1 377 25 is_stmt 0 view .LVU182
+ 684 001e 9B1A     		subs	r3, r3, r2
+ 685              	.LVL67:
+ 686              		.loc 1 377 25 view .LVU183
+ 687 0020 ACF81A31 		strh	r3, [ip, #282]	@ movhi
+ 688              	.LVL68:
+ 689              	.L40:
+ 690              	.LBB5:
+ 378:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 379:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 380:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 381:middlewares/usbd_drivers/src/usbd_core.c ****     trs_len = len;
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len = 0;
+ 383:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 384:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 385:middlewares/usbd_drivers/src/usbd_core.c ****   /* set rx status valid */
+ 386:middlewares/usbd_drivers/src/usbd_core.c ****   USB_SET_RXSTS((ept_addr & 0x7F), USB_RX_VALID);
+ 691              		.loc 1 386 3 is_stmt 1 view .LVU184
+ 692 0024 0B4A     		ldr	r2, .L41
+ 693 0026 52F82130 		ldr	r3, [r2, r1, lsl #2]
+ 694 002a 9BB2     		uxth	r3, r3
+ 695 002c 23F48043 		bic	r3, r3, #16384
+ 696 0030 23F07003 		bic	r3, r3, #112
+ 697              		.loc 1 386 3 view .LVU185
+ 698              		.loc 1 386 3 discriminator 1 view .LVU186
+ 699              	.LVL69:
+ 700              		.loc 1 386 3 discriminator 3 view .LVU187
+ 701              		.loc 1 386 3 discriminator 4 view .LVU188
+ 702 0034 83F44053 		eor	r3, r3, #12288
+ 703              	.LVL70:
+ 704              		.loc 1 386 3 discriminator 6 view .LVU189
+ 705 0038 43F40043 		orr	r3, r3, #32768
+ 706              	.LVL71:
+ 707              		.loc 1 386 3 is_stmt 0 discriminator 6 view .LVU190
+ 708 003c 43F08003 		orr	r3, r3, #128
+ 709 0040 42F82130 		str	r3, [r2, r1, lsl #2]
+ 710              	.LBE5:
+ 711              		.loc 1 386 49 is_stmt 1 view .LVU191
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 21
+
+
+ 387:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 712              		.loc 1 387 1 is_stmt 0 view .LVU192
+ 713 0044 7047     		bx	lr
+ 714              	.LVL72:
+ 715              	.L39:
+ 381:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->total_len = 0;
+ 716              		.loc 1 381 5 is_stmt 1 view .LVU193
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 717              		.loc 1 382 5 view .LVU194
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 718              		.loc 1 382 25 is_stmt 0 view .LVU195
+ 719 0046 00EB4110 		add	r0, r0, r1, lsl #5
+ 720              	.LVL73:
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 721              		.loc 1 382 25 view .LVU196
+ 722 004a 0023     		movs	r3, #0
+ 723              	.LVL74:
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 724              		.loc 1 382 25 view .LVU197
+ 725 004c A0F81A31 		strh	r3, [r0, #282]	@ movhi
+ 726              	.LVL75:
+ 382:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 727              		.loc 1 382 25 view .LVU198
+ 728 0050 E8E7     		b	.L40
+ 729              	.L42:
+ 730 0052 00BF     		.align	2
+ 731              	.L41:
+ 732 0054 005C0040 		.word	1073765376
+ 733              		.cfi_endproc
+ 734              	.LFE148:
+ 736              		.section	.text.usbd_core_out_handler,"ax",%progbits
+ 737              		.align	1
+ 738              		.global	usbd_core_out_handler
+ 739              		.syntax unified
+ 740              		.thumb
+ 741              		.thumb_func
+ 743              	usbd_core_out_handler:
+ 744              	.LVL76:
+ 745              	.LFB138:
+  99:middlewares/usbd_drivers/src/usbd_core.c ****    /* get endpoint info*/
+ 746              		.loc 1 99 1 is_stmt 1 view -0
+ 747              		.cfi_startproc
+ 748              		@ args = 0, pretend = 0, frame = 0
+ 749              		@ frame_needed = 0, uses_anonymous_args = 0
+  99:middlewares/usbd_drivers/src/usbd_core.c ****    /* get endpoint info*/
+ 750              		.loc 1 99 1 is_stmt 0 view .LVU200
+ 751 0000 10B5     		push	{r4, lr}
+ 752              	.LCFI6:
+ 753              		.cfi_def_cfa_offset 8
+ 754              		.cfi_offset 4, -8
+ 755              		.cfi_offset 14, -4
+ 756 0002 0446     		mov	r4, r0
+ 101:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 757              		.loc 1 101 3 is_stmt 1 view .LVU201
+ 758              	.LVL77:
+ 103:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 759              		.loc 1 103 3 view .LVU202
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 22
+
+
+ 103:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 760              		.loc 1 103 5 is_stmt 0 view .LVU203
+ 761 0004 69BB     		cbnz	r1, .L44
+ 762 0006 01F07F02 		and	r2, r1, #127
+ 763              	.LVL78:
+ 106:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 764              		.loc 1 106 5 is_stmt 1 view .LVU204
+ 106:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 765              		.loc 1 106 12 is_stmt 0 view .LVU205
+ 766 000a 90F82032 		ldrb	r3, [r0, #544]	@ zero_extendqisi2
+ 106:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 767              		.loc 1 106 7 view .LVU206
+ 768 000e 032B     		cmp	r3, #3
+ 769 0010 00D0     		beq	.L49
+ 770              	.LVL79:
+ 771              	.L43:
+ 130:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 772              		.loc 1 130 1 view .LVU207
+ 773 0012 10BD     		pop	{r4, pc}
+ 774              	.LVL80:
+ 775              	.L49:
+ 108:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 776              		.loc 1 108 7 is_stmt 1 view .LVU208
+ 108:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 777              		.loc 1 108 18 is_stmt 0 view .LVU209
+ 778 0014 02F10903 		add	r3, r2, #9
+ 779 0018 00EB4313 		add	r3, r0, r3, lsl #5
+ 780 001c D888     		ldrh	r0, [r3, #6]
+ 781              	.LVL81:
+ 108:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 782              		.loc 1 108 39 view .LVU210
+ 783 001e 04EB4213 		add	r3, r4, r2, lsl #5
+ 784 0022 B3F81431 		ldrh	r3, [r3, #276]
+ 108:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 785              		.loc 1 108 9 view .LVU211
+ 786 0026 9842     		cmp	r0, r3
+ 787 0028 08D8     		bhi	.L50
+ 116:middlewares/usbd_drivers/src/usbd_core.c ****           {
+ 788              		.loc 1 116 11 is_stmt 1 view .LVU212
+ 116:middlewares/usbd_drivers/src/usbd_core.c ****           {
+ 789              		.loc 1 116 18 is_stmt 0 view .LVU213
+ 790 002a 6368     		ldr	r3, [r4, #4]
+ 116:middlewares/usbd_drivers/src/usbd_core.c ****           {
+ 791              		.loc 1 116 33 view .LVU214
+ 792 002c 1B69     		ldr	r3, [r3, #16]
+ 116:middlewares/usbd_drivers/src/usbd_core.c ****           {
+ 793              		.loc 1 116 13 view .LVU215
+ 794 002e 0BB1     		cbz	r3, .L47
+ 118:middlewares/usbd_drivers/src/usbd_core.c ****           }
+ 795              		.loc 1 118 13 is_stmt 1 view .LVU216
+ 796 0030 2046     		mov	r0, r4
+ 797 0032 9847     		blx	r3
+ 798              	.LVL82:
+ 799              	.L47:
+ 120:middlewares/usbd_drivers/src/usbd_core.c ****       }
+ 800              		.loc 1 120 11 view .LVU217
+ 801 0034 2046     		mov	r0, r4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 23
+
+
+ 802 0036 FFF7FEFF 		bl	usbd_ctrl_send_status
+ 803              	.LVL83:
+ 804 003a EAE7     		b	.L43
+ 805              	.LVL84:
+ 806              	.L50:
+ 110:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_recv(udev, ept_addr, ept_info->trans_buf,
+ 807              		.loc 1 110 9 view .LVU218
+ 110:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_recv(udev, ept_addr, ept_info->trans_buf,
+ 808              		.loc 1 110 28 is_stmt 0 view .LVU219
+ 809 003c C01A     		subs	r0, r0, r3
+ 810 003e 80B2     		uxth	r0, r0
+ 811 0040 02F1090C 		add	ip, r2, #9
+ 812 0044 04EB4C1C 		add	ip, r4, ip, lsl #5
+ 813 0048 ACF80600 		strh	r0, [ip, #6]	@ movhi
+ 111:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 814              		.loc 1 111 9 is_stmt 1 view .LVU220
+ 815 004c 04EB4212 		add	r2, r4, r2, lsl #5
+ 816              	.LVL85:
+ 111:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 817              		.loc 1 111 9 is_stmt 0 view .LVU221
+ 818 0050 8342     		cmp	r3, r0
+ 819 0052 28BF     		it	cs
+ 820 0054 0346     		movcs	r3, r0
+ 821 0056 D2F82021 		ldr	r2, [r2, #288]
+ 822 005a 2046     		mov	r0, r4
+ 823 005c FFF7FEFF 		bl	usbd_ept_recv
+ 824              	.LVL86:
+ 111:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 825              		.loc 1 111 9 view .LVU222
+ 826 0060 D7E7     		b	.L43
+ 827              	.LVL87:
+ 828              	.L44:
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 829              		.loc 1 124 8 is_stmt 1 view .LVU223
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 830              		.loc 1 124 15 is_stmt 0 view .LVU224
+ 831 0062 4368     		ldr	r3, [r0, #4]
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 832              		.loc 1 124 30 view .LVU225
+ 833 0064 9B69     		ldr	r3, [r3, #24]
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 834              		.loc 1 124 10 view .LVU226
+ 835 0066 002B     		cmp	r3, #0
+ 836 0068 D3D0     		beq	.L43
+ 125:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 837              		.loc 1 125 15 view .LVU227
+ 838 006a 90F82422 		ldrb	r2, [r0, #548]	@ zero_extendqisi2
+ 124:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 839              		.loc 1 124 49 discriminator 1 view .LVU228
+ 840 006e 032A     		cmp	r2, #3
+ 841 0070 CFD1     		bne	.L43
+ 128:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 842              		.loc 1 128 5 is_stmt 1 view .LVU229
+ 843 0072 9847     		blx	r3
+ 844              	.LVL88:
+ 130:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 845              		.loc 1 130 1 is_stmt 0 view .LVU230
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 24
+
+
+ 846 0074 CDE7     		b	.L43
+ 847              		.cfi_endproc
+ 848              	.LFE138:
+ 850              		.section	.text.usbd_ctrl_recv,"ax",%progbits
+ 851              		.align	1
+ 852              		.global	usbd_ctrl_recv
+ 853              		.syntax unified
+ 854              		.thumb
+ 855              		.thumb_func
+ 857              	usbd_ctrl_recv:
+ 858              	.LVL89:
+ 859              	.LFB141:
+ 194:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_out[0];
+ 860              		.loc 1 194 1 is_stmt 1 view -0
+ 861              		.cfi_startproc
+ 862              		@ args = 0, pretend = 0, frame = 0
+ 863              		@ frame_needed = 0, uses_anonymous_args = 0
+ 194:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info = &udev->ept_out[0];
+ 864              		.loc 1 194 1 is_stmt 0 view .LVU232
+ 865 0000 08B5     		push	{r3, lr}
+ 866              	.LCFI7:
+ 867              		.cfi_def_cfa_offset 8
+ 868              		.cfi_offset 3, -8
+ 869              		.cfi_offset 14, -4
+ 870 0002 1346     		mov	r3, r2
+ 195:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 871              		.loc 1 195 3 is_stmt 1 view .LVU233
+ 872              	.LVL90:
+ 197:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ 873              		.loc 1 197 3 view .LVU234
+ 197:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->rem0_len = len;
+ 874              		.loc 1 197 23 is_stmt 0 view .LVU235
+ 875 0004 A0F82821 		strh	r2, [r0, #296]	@ movhi
+ 198:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_OUT;
+ 876              		.loc 1 198 3 is_stmt 1 view .LVU236
+ 198:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_DATA_OUT;
+ 877              		.loc 1 198 22 is_stmt 0 view .LVU237
+ 878 0008 A0F82621 		strh	r2, [r0, #294]	@ movhi
+ 199:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 879              		.loc 1 199 3 is_stmt 1 view .LVU238
+ 199:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 880              		.loc 1 199 18 is_stmt 0 view .LVU239
+ 881 000c 0322     		movs	r2, #3
+ 882              	.LVL91:
+ 199:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 883              		.loc 1 199 18 view .LVU240
+ 884 000e 80F82022 		strb	r2, [r0, #544]
+ 201:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 885              		.loc 1 201 3 is_stmt 1 view .LVU241
+ 886 0012 0A46     		mov	r2, r1
+ 887 0014 0021     		movs	r1, #0
+ 888              	.LVL92:
+ 201:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 889              		.loc 1 201 3 is_stmt 0 view .LVU242
+ 890 0016 FFF7FEFF 		bl	usbd_ept_recv
+ 891              	.LVL93:
+ 202:middlewares/usbd_drivers/src/usbd_core.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 25
+
+
+ 892              		.loc 1 202 1 view .LVU243
+ 893 001a 08BD     		pop	{r3, pc}
+ 894              		.cfi_endproc
+ 895              	.LFE141:
+ 897              		.section	.text.usbd_ctrl_recv_status,"ax",%progbits
+ 898              		.align	1
+ 899              		.global	usbd_ctrl_recv_status
+ 900              		.syntax unified
+ 901              		.thumb
+ 902              		.thumb_func
+ 904              	usbd_ctrl_recv_status:
+ 905              	.LVL94:
+ 906              	.LFB143:
+ 222:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_OUT;
+ 907              		.loc 1 222 1 is_stmt 1 view -0
+ 908              		.cfi_startproc
+ 909              		@ args = 0, pretend = 0, frame = 0
+ 910              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222:middlewares/usbd_drivers/src/usbd_core.c ****   udev->ept0_sts = USB_EPT0_STATUS_OUT;
+ 911              		.loc 1 222 1 is_stmt 0 view .LVU245
+ 912 0000 08B5     		push	{r3, lr}
+ 913              	.LCFI8:
+ 914              		.cfi_def_cfa_offset 8
+ 915              		.cfi_offset 3, -8
+ 916              		.cfi_offset 14, -4
+ 223:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 917              		.loc 1 223 3 is_stmt 1 view .LVU246
+ 223:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 918              		.loc 1 223 18 is_stmt 0 view .LVU247
+ 919 0002 0523     		movs	r3, #5
+ 920 0004 80F82032 		strb	r3, [r0, #544]
+ 225:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 921              		.loc 1 225 3 is_stmt 1 view .LVU248
+ 922 0008 0023     		movs	r3, #0
+ 923 000a 1A46     		mov	r2, r3
+ 924 000c 1946     		mov	r1, r3
+ 925 000e FFF7FEFF 		bl	usbd_ept_recv
+ 926              	.LVL95:
+ 226:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 927              		.loc 1 226 1 is_stmt 0 view .LVU249
+ 928 0012 08BD     		pop	{r3, pc}
+ 929              		.cfi_endproc
+ 930              	.LFE143:
+ 932              		.section	.text.usbd_core_in_handler,"ax",%progbits
+ 933              		.align	1
+ 934              		.global	usbd_core_in_handler
+ 935              		.syntax unified
+ 936              		.thumb
+ 937              		.thumb_func
+ 939              	usbd_core_in_handler:
+ 940              	.LVL96:
+ 941              	.LFB137:
+  48:middlewares/usbd_drivers/src/usbd_core.c ****   /* get endpoint info*/
+ 942              		.loc 1 48 1 is_stmt 1 view -0
+ 943              		.cfi_startproc
+ 944              		@ args = 0, pretend = 0, frame = 0
+ 945              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 26
+
+
+  48:middlewares/usbd_drivers/src/usbd_core.c ****   /* get endpoint info*/
+ 946              		.loc 1 48 1 is_stmt 0 view .LVU251
+ 947 0000 38B5     		push	{r3, r4, r5, lr}
+ 948              	.LCFI9:
+ 949              		.cfi_def_cfa_offset 16
+ 950              		.cfi_offset 3, -16
+ 951              		.cfi_offset 4, -12
+ 952              		.cfi_offset 5, -8
+ 953              		.cfi_offset 14, -4
+ 954 0002 0446     		mov	r4, r0
+ 955 0004 0D46     		mov	r5, r1
+  50:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 956              		.loc 1 50 3 is_stmt 1 view .LVU252
+ 957              	.LVL97:
+  52:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 958              		.loc 1 52 3 view .LVU253
+  52:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 959              		.loc 1 52 5 is_stmt 0 view .LVU254
+ 960 0006 0029     		cmp	r1, #0
+ 961 0008 50D1     		bne	.L56
+ 962 000a 01F07F02 		and	r2, r1, #127
+ 963              	.LVL98:
+  54:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 964              		.loc 1 54 5 is_stmt 1 view .LVU255
+  54:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 965              		.loc 1 54 12 is_stmt 0 view .LVU256
+ 966 000e 90F82032 		ldrb	r3, [r0, #544]	@ zero_extendqisi2
+  54:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 967              		.loc 1 54 7 view .LVU257
+ 968 0012 022B     		cmp	r3, #2
+ 969 0014 00D0     		beq	.L62
+ 970              	.LVL99:
+ 971              	.L55:
+  90:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 972              		.loc 1 90 1 view .LVU258
+ 973 0016 38BD     		pop	{r3, r4, r5, pc}
+ 974              	.LVL100:
+ 975              	.L62:
+  56:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 976              		.loc 1 56 7 is_stmt 1 view .LVU259
+  56:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 977              		.loc 1 56 18 is_stmt 0 view .LVU260
+ 978 0018 531C     		adds	r3, r2, #1
+ 979 001a 00EB4313 		add	r3, r0, r3, lsl #5
+ 980 001e D988     		ldrh	r1, [r3, #6]
+ 981              	.LVL101:
+  56:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 982              		.loc 1 56 39 view .LVU261
+ 983 0020 00EB4213 		add	r3, r0, r2, lsl #5
+ 984 0024 9B8A     		ldrh	r3, [r3, #20]
+  56:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 985              		.loc 1 56 9 view .LVU262
+ 986 0026 9942     		cmp	r1, r3
+ 987 0028 10D8     		bhi	.L63
+  63:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen >= ept_info->maxpacket
+ 988              		.loc 1 63 12 is_stmt 1 view .LVU263
+  63:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen >= ept_info->maxpacket
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 27
+
+
+ 989              		.loc 1 63 23 is_stmt 0 view .LVU264
+ 990 002a 511C     		adds	r1, r2, #1
+ 991 002c 00EB4111 		add	r1, r0, r1, lsl #5
+ 992 0030 8988     		ldrh	r1, [r1, #4]
+  63:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen >= ept_info->maxpacket
+ 993              		.loc 1 63 14 view .LVU265
+ 994 0032 8B42     		cmp	r3, r1
+ 995 0034 1BD0     		beq	.L64
+ 996              	.L59:
+  74:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 997              		.loc 1 74 9 is_stmt 1 view .LVU266
+  74:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 998              		.loc 1 74 16 is_stmt 0 view .LVU267
+ 999 0036 6368     		ldr	r3, [r4, #4]
+  74:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1000              		.loc 1 74 31 view .LVU268
+ 1001 0038 DB68     		ldr	r3, [r3, #12]
+  74:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1002              		.loc 1 74 11 view .LVU269
+ 1003 003a 1BB1     		cbz	r3, .L60
+  75:middlewares/usbd_drivers/src/usbd_core.c ****         {
+ 1004              		.loc 1 75 17 view .LVU270
+ 1005 003c 94F82422 		ldrb	r2, [r4, #548]	@ zero_extendqisi2
+ 1006              	.LVL102:
+  74:middlewares/usbd_drivers/src/usbd_core.c ****             udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1007              		.loc 1 74 54 discriminator 1 view .LVU271
+ 1008 0040 032A     		cmp	r2, #3
+ 1009 0042 30D0     		beq	.L65
+ 1010              	.LVL103:
+ 1011              	.L60:
+  79:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 1012              		.loc 1 79 9 is_stmt 1 view .LVU272
+ 1013 0044 2046     		mov	r0, r4
+ 1014 0046 FFF7FEFF 		bl	usbd_ctrl_recv_status
+ 1015              	.LVL104:
+ 1016 004a E4E7     		b	.L55
+ 1017              	.LVL105:
+ 1018              	.L63:
+  58:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, ept_info->trans_buf,
+ 1019              		.loc 1 58 9 view .LVU273
+  58:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, ept_info->trans_buf,
+ 1020              		.loc 1 58 28 is_stmt 0 view .LVU274
+ 1021 004c C91A     		subs	r1, r1, r3
+ 1022 004e 89B2     		uxth	r1, r1
+ 1023 0050 501C     		adds	r0, r2, #1
+ 1024              	.LVL106:
+  58:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, ept_info->trans_buf,
+ 1025              		.loc 1 58 28 view .LVU275
+ 1026 0052 04EB4010 		add	r0, r4, r0, lsl #5
+ 1027 0056 C180     		strh	r1, [r0, #6]	@ movhi
+  59:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 1028              		.loc 1 59 9 is_stmt 1 view .LVU276
+ 1029 0058 04EB4212 		add	r2, r4, r2, lsl #5
+ 1030              	.LVL107:
+  59:middlewares/usbd_drivers/src/usbd_core.c ****                       MIN(ept_info->rem0_len, ept_info->maxpacket));
+ 1031              		.loc 1 59 9 is_stmt 0 view .LVU277
+ 1032 005c 8B42     		cmp	r3, r1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 28
+
+
+ 1033 005e 28BF     		it	cs
+ 1034 0060 0B46     		movcs	r3, r1
+ 1035 0062 126A     		ldr	r2, [r2, #32]
+ 1036 0064 2946     		mov	r1, r5
+ 1037 0066 2046     		mov	r0, r4
+ 1038 0068 FFF7FEFF 		bl	usbd_ept_send
+ 1039              	.LVL108:
+ 1040 006c D3E7     		b	.L55
+ 1041              	.LVL109:
+ 1042              	.L64:
+  64:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen < udev->ept0_wlength)
+ 1043              		.loc 1 64 20 view .LVU278
+ 1044 006e 511C     		adds	r1, r2, #1
+ 1045 0070 00EB4111 		add	r1, r0, r1, lsl #5
+ 1046 0074 0989     		ldrh	r1, [r1, #8]
+  64:middlewares/usbd_drivers/src/usbd_core.c ****         && ept_info->ept0_slen < udev->ept0_wlength)
+ 1047              		.loc 1 64 9 view .LVU279
+ 1048 0076 8B42     		cmp	r3, r1
+ 1049 0078 DDD8     		bhi	.L59
+  65:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 1050              		.loc 1 65 38 view .LVU280
+ 1051 007a B0F82232 		ldrh	r3, [r0, #546]
+  65:middlewares/usbd_drivers/src/usbd_core.c ****       {
+ 1052              		.loc 1 65 9 view .LVU281
+ 1053 007e 9942     		cmp	r1, r3
+ 1054 0080 D9D2     		bcs	.L59
+  67:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, 0, 0);
+ 1055              		.loc 1 67 9 is_stmt 1 view .LVU282
+  67:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, 0, 0);
+ 1056              		.loc 1 67 28 is_stmt 0 view .LVU283
+ 1057 0082 531C     		adds	r3, r2, #1
+ 1058 0084 00EB4313 		add	r3, r0, r3, lsl #5
+ 1059 0088 4FF00002 		mov	r2, #0	@ movhi
+ 1060              	.LVL110:
+  67:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_send(udev, 0, 0, 0);
+ 1061              		.loc 1 67 28 view .LVU284
+ 1062 008c 9A80     		strh	r2, [r3, #4]	@ movhi
+  68:middlewares/usbd_drivers/src/usbd_core.c ****         usbd_ept_recv(udev, ept_addr, 0, 0);
+ 1063              		.loc 1 68 9 is_stmt 1 view .LVU285
+ 1064 008e 0023     		movs	r3, #0
+ 1065 0090 1A46     		mov	r2, r3
+ 1066 0092 1946     		mov	r1, r3
+ 1067 0094 FFF7FEFF 		bl	usbd_ept_send
+ 1068              	.LVL111:
+  69:middlewares/usbd_drivers/src/usbd_core.c ****       }
+ 1069              		.loc 1 69 9 view .LVU286
+ 1070 0098 0023     		movs	r3, #0
+ 1071 009a 1A46     		mov	r2, r3
+ 1072 009c 2946     		mov	r1, r5
+ 1073 009e 2046     		mov	r0, r4
+ 1074 00a0 FFF7FEFF 		bl	usbd_ept_recv
+ 1075              	.LVL112:
+ 1076 00a4 B7E7     		b	.L55
+ 1077              	.LVL113:
+ 1078              	.L65:
+  77:middlewares/usbd_drivers/src/usbd_core.c ****         }
+ 1079              		.loc 1 77 11 view .LVU287
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 29
+
+
+ 1080 00a6 2046     		mov	r0, r4
+ 1081              	.LVL114:
+  77:middlewares/usbd_drivers/src/usbd_core.c ****         }
+ 1082              		.loc 1 77 11 is_stmt 0 view .LVU288
+ 1083 00a8 9847     		blx	r3
+ 1084              	.LVL115:
+ 1085 00aa CBE7     		b	.L60
+ 1086              	.LVL116:
+ 1087              	.L56:
+  84:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1088              		.loc 1 84 8 is_stmt 1 view .LVU289
+  84:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1089              		.loc 1 84 15 is_stmt 0 view .LVU290
+ 1090 00ac 4368     		ldr	r3, [r0, #4]
+  84:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1091              		.loc 1 84 30 view .LVU291
+ 1092 00ae 5B69     		ldr	r3, [r3, #20]
+  84:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1093              		.loc 1 84 10 view .LVU292
+ 1094 00b0 002B     		cmp	r3, #0
+ 1095 00b2 B0D0     		beq	.L55
+  85:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1096              		.loc 1 85 15 view .LVU293
+ 1097 00b4 90F82422 		ldrb	r2, [r0, #548]	@ zero_extendqisi2
+  84:middlewares/usbd_drivers/src/usbd_core.c ****           udev->conn_state == USB_CONN_STATE_CONFIGURED)
+ 1098              		.loc 1 84 48 discriminator 1 view .LVU294
+ 1099 00b8 032A     		cmp	r2, #3
+ 1100 00ba ACD1     		bne	.L55
+  88:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1101              		.loc 1 88 5 is_stmt 1 view .LVU295
+ 1102 00bc 9847     		blx	r3
+ 1103              	.LVL117:
+  90:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 1104              		.loc 1 90 1 is_stmt 0 view .LVU296
+ 1105 00be AAE7     		b	.L55
+ 1106              		.cfi_endproc
+ 1107              	.LFE137:
+ 1109              		.section	.text.usbd_get_recv_len,"ax",%progbits
+ 1110              		.align	1
+ 1111              		.global	usbd_get_recv_len
+ 1112              		.syntax unified
+ 1113              		.thumb
+ 1114              		.thumb_func
+ 1116              	usbd_get_recv_len:
+ 1117              	.LVL118:
+ 1118              	.LFB149:
+ 388:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 389:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 390:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 391:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb endpoint get receive data length
+ 392:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 393:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 394:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 395:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 396:middlewares/usbd_drivers/src/usbd_core.c **** uint32_t usbd_get_recv_len(usbd_core_type *udev, uint8_t ept_addr)
+ 397:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1119              		.loc 1 397 1 is_stmt 1 view -0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 30
+
+
+ 1120              		.cfi_startproc
+ 1121              		@ args = 0, pretend = 0, frame = 0
+ 1122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1123              		@ link register save eliminated.
+ 398:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept = &udev->ept_out[ept_addr & 0x7F];
+ 1124              		.loc 1 398 3 view .LVU298
+ 1125              		.loc 1 398 47 is_stmt 0 view .LVU299
+ 1126 0000 01F07F01 		and	r1, r1, #127
+ 1127              	.LVL119:
+ 399:middlewares/usbd_drivers/src/usbd_core.c ****   return ept->trans_len;
+ 1128              		.loc 1 399 3 is_stmt 1 view .LVU300
+ 1129              		.loc 1 399 13 is_stmt 0 view .LVU301
+ 1130 0004 00EB4110 		add	r0, r0, r1, lsl #5
+ 1131              	.LVL120:
+ 400:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1132              		.loc 1 400 1 view .LVU302
+ 1133 0008 B0F81C01 		ldrh	r0, [r0, #284]
+ 1134 000c 7047     		bx	lr
+ 1135              		.cfi_endproc
+ 1136              	.LFE149:
+ 1138              		.section	.text.usbd_ept_dbuffer_enable,"ax",%progbits
+ 1139              		.align	1
+ 1140              		.global	usbd_ept_dbuffer_enable
+ 1141              		.syntax unified
+ 1142              		.thumb
+ 1143              		.thumb_func
+ 1145              	usbd_ept_dbuffer_enable:
+ 1146              	.LVL121:
+ 1147              	.LFB150:
+ 401:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 402:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 403:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  enable endpoint double buffer.
+ 404:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 405:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 406:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 407:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 408:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_dbuffer_enable(usbd_core_type *udev, uint8_t ept_addr)
+ 409:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1148              		.loc 1 409 1 is_stmt 1 view -0
+ 1149              		.cfi_startproc
+ 1150              		@ args = 0, pretend = 0, frame = 0
+ 1151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1152              		@ link register save eliminated.
+ 410:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 1153              		.loc 1 410 3 view .LVU304
+ 411:middlewares/usbd_drivers/src/usbd_core.c ****   if((ept_addr & 0x80) == 0)
+ 1154              		.loc 1 411 3 view .LVU305
+ 1155              		.loc 1 411 5 is_stmt 0 view .LVU306
+ 1156 0000 11F0800F 		tst	r1, #128
+ 1157 0004 09D1     		bne	.L68
+ 412:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 413:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint info */
+ 414:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 1158              		.loc 1 414 5 is_stmt 1 view .LVU307
+ 1159              		.loc 1 414 40 is_stmt 0 view .LVU308
+ 1160 0006 01F07F01 		and	r1, r1, #127
+ 1161              	.LVL122:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 31
+
+
+ 1162              		.loc 1 414 14 view .LVU309
+ 1163 000a 4901     		lsls	r1, r1, #5
+ 1164 000c 01F58471 		add	r1, r1, #264
+ 1165 0010 0844     		add	r0, r0, r1
+ 1166              	.LVL123:
+ 1167              		.loc 1 414 14 view .LVU310
+ 1168 0012 0430     		adds	r0, r0, #4
+ 1169              	.LVL124:
+ 1170              	.L69:
+ 415:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 416:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 417:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 418:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint info */
+ 419:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 420:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 421:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->is_double_buffer = TRUE;
+ 1171              		.loc 1 421 3 is_stmt 1 view .LVU311
+ 1172              		.loc 1 421 30 is_stmt 0 view .LVU312
+ 1173 0014 0123     		movs	r3, #1
+ 1174 0016 8372     		strb	r3, [r0, #10]
+ 422:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1175              		.loc 1 422 1 view .LVU313
+ 1176 0018 7047     		bx	lr
+ 1177              	.LVL125:
+ 1178              	.L68:
+ 419:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1179              		.loc 1 419 5 is_stmt 1 view .LVU314
+ 419:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1180              		.loc 1 419 39 is_stmt 0 view .LVU315
+ 1181 001a 01F07F01 		and	r1, r1, #127
+ 1182              	.LVL126:
+ 419:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1183              		.loc 1 419 14 view .LVU316
+ 1184 001e 4901     		lsls	r1, r1, #5
+ 1185 0020 0831     		adds	r1, r1, #8
+ 1186 0022 0844     		add	r0, r0, r1
+ 1187              	.LVL127:
+ 419:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1188              		.loc 1 419 14 view .LVU317
+ 1189 0024 0430     		adds	r0, r0, #4
+ 1190 0026 F5E7     		b	.L69
+ 1191              		.cfi_endproc
+ 1192              	.LFE150:
+ 1194              		.section	.text.usbd_ept_buf_auto_define,"ax",%progbits
+ 1195              		.align	1
+ 1196              		.global	usbd_ept_buf_auto_define
+ 1197              		.syntax unified
+ 1198              		.thumb
+ 1199              		.thumb_func
+ 1201              	usbd_ept_buf_auto_define:
+ 1202              	.LVL128:
+ 1203              	.LFB151:
+ 423:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 424:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 425:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb auto define endpoint buffer
+ 426:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  usb_ept_info: endpoint information
+ 427:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 32
+
+
+ 428:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 429:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_buf_auto_define(usb_ept_info *ept_info)
+ 430:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1204              		.loc 1 430 1 is_stmt 1 view -0
+ 1205              		.cfi_startproc
+ 1206              		@ args = 0, pretend = 0, frame = 0
+ 1207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1208              		.loc 1 430 1 is_stmt 0 view .LVU319
+ 1209 0000 10B5     		push	{r4, lr}
+ 1210              	.LCFI10:
+ 1211              		.cfi_def_cfa_offset 8
+ 1212              		.cfi_offset 4, -8
+ 1213              		.cfi_offset 14, -4
+ 1214 0002 0446     		mov	r4, r0
+ 431:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_info->is_double_buffer == 0)
+ 1215              		.loc 1 431 3 is_stmt 1 view .LVU320
+ 1216              		.loc 1 431 14 is_stmt 0 view .LVU321
+ 1217 0004 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 1218              		.loc 1 431 5 view .LVU322
+ 1219 0006 83B9     		cbnz	r3, .L71
+ 432:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 433:middlewares/usbd_drivers/src/usbd_core.c ****     if( ept_info->inout == DATA_TRANS_IN )
+ 1220              		.loc 1 433 5 is_stmt 1 view .LVU323
+ 1221              		.loc 1 433 17 is_stmt 0 view .LVU324
+ 1222 0008 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 1223              		.loc 1 433 7 view .LVU325
+ 1224 000a 012B     		cmp	r3, #1
+ 1225 000c 06D0     		beq	.L76
+ 434:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 435:middlewares/usbd_drivers/src/usbd_core.c ****       if(ept_info->tx_addr == 0)
+ 436:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 437:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 438:middlewares/usbd_drivers/src/usbd_core.c ****     else
+ 439:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 440:middlewares/usbd_drivers/src/usbd_core.c ****       if(ept_info->rx_addr == 0)
+ 1226              		.loc 1 440 7 is_stmt 1 view .LVU326
+ 1227              		.loc 1 440 18 is_stmt 0 view .LVU327
+ 1228 000e C388     		ldrh	r3, [r0, #6]
+ 1229              		.loc 1 440 9 view .LVU328
+ 1230 0010 7BB9     		cbnz	r3, .L70
+ 441:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->rx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1231              		.loc 1 441 9 is_stmt 1 view .LVU329
+ 1232              		.loc 1 441 29 is_stmt 0 view .LVU330
+ 1233 0012 0089     		ldrh	r0, [r0, #8]
+ 1234              	.LVL129:
+ 1235              		.loc 1 441 29 view .LVU331
+ 1236 0014 FFF7FEFF 		bl	usb_buffer_malloc
+ 1237              	.LVL130:
+ 1238              		.loc 1 441 27 discriminator 1 view .LVU332
+ 1239 0018 E080     		strh	r0, [r4, #6]	@ movhi
+ 1240 001a 0AE0     		b	.L70
+ 1241              	.LVL131:
+ 1242              	.L76:
+ 435:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1243              		.loc 1 435 7 is_stmt 1 view .LVU333
+ 435:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1244              		.loc 1 435 18 is_stmt 0 view .LVU334
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 33
+
+
+ 1245 001c 8388     		ldrh	r3, [r0, #4]
+ 435:middlewares/usbd_drivers/src/usbd_core.c ****         ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1246              		.loc 1 435 9 view .LVU335
+ 1247 001e 43B9     		cbnz	r3, .L70
+ 436:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1248              		.loc 1 436 9 is_stmt 1 view .LVU336
+ 436:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1249              		.loc 1 436 29 is_stmt 0 view .LVU337
+ 1250 0020 0089     		ldrh	r0, [r0, #8]
+ 1251              	.LVL132:
+ 436:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1252              		.loc 1 436 29 view .LVU338
+ 1253 0022 FFF7FEFF 		bl	usb_buffer_malloc
+ 1254              	.LVL133:
+ 436:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1255              		.loc 1 436 27 discriminator 1 view .LVU339
+ 1256 0026 A080     		strh	r0, [r4, #4]	@ movhi
+ 1257 0028 03E0     		b	.L70
+ 1258              	.LVL134:
+ 1259              	.L71:
+ 442:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 443:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 444:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 445:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 446:middlewares/usbd_drivers/src/usbd_core.c ****     /* double buffer auto define */
+ 447:middlewares/usbd_drivers/src/usbd_core.c ****     if(ept_info->tx_addr == 0)
+ 1260              		.loc 1 447 5 is_stmt 1 view .LVU340
+ 1261              		.loc 1 447 16 is_stmt 0 view .LVU341
+ 1262 002a 8388     		ldrh	r3, [r0, #4]
+ 1263              		.loc 1 447 7 view .LVU342
+ 1264 002c 13B1     		cbz	r3, .L77
+ 1265              	.LVL135:
+ 1266              	.L74:
+ 448:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 449:middlewares/usbd_drivers/src/usbd_core.c ****     if(ept_info->rx_addr == 0)
+ 1267              		.loc 1 449 5 is_stmt 1 view .LVU343
+ 1268              		.loc 1 449 16 is_stmt 0 view .LVU344
+ 1269 002e E388     		ldrh	r3, [r4, #6]
+ 1270              		.loc 1 449 7 view .LVU345
+ 1271 0030 2BB1     		cbz	r3, .L78
+ 1272              	.L70:
+ 450:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->rx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 451:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 452:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1273              		.loc 1 452 1 view .LVU346
+ 1274 0032 10BD     		pop	{r4, pc}
+ 1275              	.LVL136:
+ 1276              	.L77:
+ 448:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1277              		.loc 1 448 7 is_stmt 1 view .LVU347
+ 448:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1278              		.loc 1 448 27 is_stmt 0 view .LVU348
+ 1279 0034 0089     		ldrh	r0, [r0, #8]
+ 1280              	.LVL137:
+ 448:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1281              		.loc 1 448 27 view .LVU349
+ 1282 0036 FFF7FEFF 		bl	usb_buffer_malloc
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 34
+
+
+ 1283              	.LVL138:
+ 448:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1284              		.loc 1 448 25 discriminator 1 view .LVU350
+ 1285 003a A080     		strh	r0, [r4, #4]	@ movhi
+ 1286 003c F7E7     		b	.L74
+ 1287              	.L78:
+ 450:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->rx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1288              		.loc 1 450 7 is_stmt 1 view .LVU351
+ 450:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->rx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1289              		.loc 1 450 27 is_stmt 0 view .LVU352
+ 1290 003e 2089     		ldrh	r0, [r4, #8]
+ 1291 0040 FFF7FEFF 		bl	usb_buffer_malloc
+ 1292              	.LVL139:
+ 450:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->rx_addr = usb_buffer_malloc(ept_info->maxpacket);
+ 1293              		.loc 1 450 25 discriminator 1 view .LVU353
+ 1294 0044 E080     		strh	r0, [r4, #6]	@ movhi
+ 1295              		.loc 1 452 1 view .LVU354
+ 1296 0046 F4E7     		b	.L70
+ 1297              		.cfi_endproc
+ 1298              	.LFE151:
+ 1300              		.section	.text.usbd_ept_buf_custom_define,"ax",%progbits
+ 1301              		.align	1
+ 1302              		.global	usbd_ept_buf_custom_define
+ 1303              		.syntax unified
+ 1304              		.thumb
+ 1305              		.thumb_func
+ 1307              	usbd_ept_buf_custom_define:
+ 1308              	.LVL140:
+ 1309              	.LFB152:
+ 453:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 454:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 455:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 456:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 457:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb custom define endpoint buffer
+ 458:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 459:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 460:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  addr: usb fifo offset address
+ 461:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 462:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 463:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_buf_custom_define(usbd_core_type *udev, uint8_t ept_addr,
+ 464:middlewares/usbd_drivers/src/usbd_core.c ****                                 uint32_t addr)
+ 465:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1310              		.loc 1 465 1 is_stmt 1 view -0
+ 1311              		.cfi_startproc
+ 1312              		@ args = 0, pretend = 0, frame = 0
+ 1313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1314              		@ link register save eliminated.
+ 466:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 1315              		.loc 1 466 3 view .LVU356
+ 467:middlewares/usbd_drivers/src/usbd_core.c ****   if((ept_addr & 0x80) == 0)
+ 1316              		.loc 1 467 3 view .LVU357
+ 1317              		.loc 1 467 5 is_stmt 0 view .LVU358
+ 1318 0000 11F0800F 		tst	r1, #128
+ 1319 0004 0DD1     		bne	.L80
+ 468:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 469:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint info */
+ 470:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 35
+
+
+ 1320              		.loc 1 470 5 is_stmt 1 view .LVU359
+ 1321              		.loc 1 470 40 is_stmt 0 view .LVU360
+ 1322 0006 01F07F01 		and	r1, r1, #127
+ 1323              	.LVL141:
+ 1324              		.loc 1 470 14 view .LVU361
+ 1325 000a 4901     		lsls	r1, r1, #5
+ 1326 000c 01F58471 		add	r1, r1, #264
+ 1327 0010 0844     		add	r0, r0, r1
+ 1328              	.LVL142:
+ 1329              		.loc 1 470 14 view .LVU362
+ 1330 0012 0430     		adds	r0, r0, #4
+ 1331              	.LVL143:
+ 1332              	.L81:
+ 471:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 472:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 473:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 474:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint info */
+ 475:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 476:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 477:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 478:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_info->is_double_buffer == 0)
+ 1333              		.loc 1 478 3 is_stmt 1 view .LVU363
+ 1334              		.loc 1 478 14 is_stmt 0 view .LVU364
+ 1335 0014 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 1336              		.loc 1 478 5 view .LVU365
+ 1337 0016 6BB9     		cbnz	r3, .L82
+ 479:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 480:middlewares/usbd_drivers/src/usbd_core.c ****     if( ept_info->inout == DATA_TRANS_IN )
+ 1338              		.loc 1 480 5 is_stmt 1 view .LVU366
+ 1339              		.loc 1 480 17 is_stmt 0 view .LVU367
+ 1340 0018 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 1341              		.loc 1 480 7 view .LVU368
+ 1342 001a 012B     		cmp	r3, #1
+ 1343 001c 08D0     		beq	.L85
+ 481:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 482:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->tx_addr = addr;
+ 483:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 484:middlewares/usbd_drivers/src/usbd_core.c ****     else
+ 485:middlewares/usbd_drivers/src/usbd_core.c ****     {
+ 486:middlewares/usbd_drivers/src/usbd_core.c ****       ept_info->rx_addr = addr;
+ 1344              		.loc 1 486 7 is_stmt 1 view .LVU369
+ 1345              		.loc 1 486 25 is_stmt 0 view .LVU370
+ 1346 001e C280     		strh	r2, [r0, #6]	@ movhi
+ 1347 0020 7047     		bx	lr
+ 1348              	.LVL144:
+ 1349              	.L80:
+ 475:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1350              		.loc 1 475 5 is_stmt 1 view .LVU371
+ 475:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1351              		.loc 1 475 39 is_stmt 0 view .LVU372
+ 1352 0022 01F07F01 		and	r1, r1, #127
+ 1353              	.LVL145:
+ 475:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1354              		.loc 1 475 14 view .LVU373
+ 1355 0026 4901     		lsls	r1, r1, #5
+ 1356 0028 0831     		adds	r1, r1, #8
+ 1357 002a 0844     		add	r0, r0, r1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 36
+
+
+ 1358              	.LVL146:
+ 475:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1359              		.loc 1 475 14 view .LVU374
+ 1360 002c 0430     		adds	r0, r0, #4
+ 1361 002e F1E7     		b	.L81
+ 1362              	.LVL147:
+ 1363              	.L85:
+ 482:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1364              		.loc 1 482 7 is_stmt 1 view .LVU375
+ 482:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 1365              		.loc 1 482 25 is_stmt 0 view .LVU376
+ 1366 0030 8280     		strh	r2, [r0, #4]	@ movhi
+ 1367 0032 7047     		bx	lr
+ 1368              	.L82:
+ 487:middlewares/usbd_drivers/src/usbd_core.c ****     }
+ 488:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 489:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 490:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 491:middlewares/usbd_drivers/src/usbd_core.c ****     /* double buffer malloc */
+ 492:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->tx_addr = addr & 0xFFFF;
+ 1369              		.loc 1 492 5 is_stmt 1 view .LVU377
+ 1370              		.loc 1 492 23 is_stmt 0 view .LVU378
+ 1371 0034 8280     		strh	r2, [r0, #4]	@ movhi
+ 493:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->rx_addr = (addr >> 16) & 0xFFFF;
+ 1372              		.loc 1 493 5 is_stmt 1 view .LVU379
+ 1373              		.loc 1 493 31 is_stmt 0 view .LVU380
+ 1374 0036 120C     		lsrs	r2, r2, #16
+ 1375              	.LVL148:
+ 1376              		.loc 1 493 23 view .LVU381
+ 1377 0038 C280     		strh	r2, [r0, #6]	@ movhi
+ 494:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 495:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1378              		.loc 1 495 1 view .LVU382
+ 1379 003a 7047     		bx	lr
+ 1380              		.cfi_endproc
+ 1381              	.LFE152:
+ 1383              		.section	.text.usbd_ept_open,"ax",%progbits
+ 1384              		.align	1
+ 1385              		.global	usbd_ept_open
+ 1386              		.syntax unified
+ 1387              		.thumb
+ 1388              		.thumb_func
+ 1390              	usbd_ept_open:
+ 1391              	.LVL149:
+ 1392              	.LFB153:
+ 496:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 497:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 498:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb open endpoint
+ 499:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 500:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 501:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_type: endpoint type
+ 502:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  maxpacket: endpoint support max buffer size
+ 503:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 504:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 505:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_open(usbd_core_type *udev, uint8_t ept_addr, uint8_t ept_type, uint16_t maxpacket)
+ 506:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1393              		.loc 1 506 1 is_stmt 1 view -0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 37
+
+
+ 1394              		.cfi_startproc
+ 1395              		@ args = 0, pretend = 0, frame = 0
+ 1396              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1397              		.loc 1 506 1 is_stmt 0 view .LVU384
+ 1398 0000 38B5     		push	{r3, r4, r5, lr}
+ 1399              	.LCFI11:
+ 1400              		.cfi_def_cfa_offset 16
+ 1401              		.cfi_offset 3, -16
+ 1402              		.cfi_offset 4, -12
+ 1403              		.cfi_offset 5, -8
+ 1404              		.cfi_offset 14, -4
+ 507:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_type *usbx = udev->usb_reg;
+ 1405              		.loc 1 507 3 is_stmt 1 view .LVU385
+ 1406              		.loc 1 507 14 is_stmt 0 view .LVU386
+ 1407 0002 0468     		ldr	r4, [r0]
+ 1408 0004 2546     		mov	r5, r4
+ 1409              	.LVL150:
+ 508:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 1410              		.loc 1 508 3 is_stmt 1 view .LVU387
+ 509:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 510:middlewares/usbd_drivers/src/usbd_core.c ****   if((ept_addr & 0x80) == 0)
+ 1411              		.loc 1 510 3 view .LVU388
+ 1412              		.loc 1 510 5 is_stmt 0 view .LVU389
+ 1413 0006 11F0800F 		tst	r1, #128
+ 1414 000a 18D1     		bne	.L87
+ 511:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 512:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint info */
+ 513:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 1415              		.loc 1 513 5 is_stmt 1 view .LVU390
+ 1416              		.loc 1 513 40 is_stmt 0 view .LVU391
+ 1417 000c 01F07F01 		and	r1, r1, #127
+ 1418              	.LVL151:
+ 1419              		.loc 1 513 14 view .LVU392
+ 1420 0010 4901     		lsls	r1, r1, #5
+ 1421 0012 01F58474 		add	r4, r1, #264
+ 1422              	.LVL152:
+ 1423              		.loc 1 513 14 view .LVU393
+ 1424 0016 0444     		add	r4, r4, r0
+ 1425 0018 0434     		adds	r4, r4, #4
+ 1426              	.LVL153:
+ 514:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_OUT;
+ 1427              		.loc 1 514 5 is_stmt 1 view .LVU394
+ 1428              		.loc 1 514 21 is_stmt 0 view .LVU395
+ 1429 001a 0144     		add	r1, r1, r0
+ 1430 001c 0020     		movs	r0, #0
+ 1431              	.LVL154:
+ 1432              		.loc 1 514 21 view .LVU396
+ 1433 001e 81F80E01 		strb	r0, [r1, #270]
+ 1434              	.L88:
+ 515:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 516:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 517:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 518:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint info */
+ 519:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 520:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_IN;
+ 521:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 522:middlewares/usbd_drivers/src/usbd_core.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 38
+
+
+ 523:middlewares/usbd_drivers/src/usbd_core.c ****   /* set endpoint maxpacket and type */
+ 524:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->maxpacket = (maxpacket + 1) & 0xFFFE;
+ 1435              		.loc 1 524 3 is_stmt 1 view .LVU397
+ 1436              		.loc 1 524 36 is_stmt 0 view .LVU398
+ 1437 0022 0133     		adds	r3, r3, #1
+ 1438              	.LVL155:
+ 1439              		.loc 1 524 36 view .LVU399
+ 1440 0024 9BB2     		uxth	r3, r3
+ 1441              		.loc 1 524 41 view .LVU400
+ 1442 0026 23F00103 		bic	r3, r3, #1
+ 1443              		.loc 1 524 23 view .LVU401
+ 1444 002a 2381     		strh	r3, [r4, #8]	@ movhi
+ 525:middlewares/usbd_drivers/src/usbd_core.c ****   ept_info->trans_type = ept_type;
+ 1445              		.loc 1 525 3 is_stmt 1 view .LVU402
+ 1446              		.loc 1 525 24 is_stmt 0 view .LVU403
+ 1447 002c E270     		strb	r2, [r4, #3]
+ 526:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 527:middlewares/usbd_drivers/src/usbd_core.c **** #ifdef USB_EPT_AUTO_MALLOC_BUFFER
+ 528:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_buf_auto_define(ept_info);
+ 1448              		.loc 1 528 3 is_stmt 1 view .LVU404
+ 1449 002e 2046     		mov	r0, r4
+ 1450 0030 FFF7FEFF 		bl	usbd_ept_buf_auto_define
+ 1451              	.LVL156:
+ 529:middlewares/usbd_drivers/src/usbd_core.c **** #endif
+ 530:middlewares/usbd_drivers/src/usbd_core.c ****   /* open endpoint */
+ 531:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_open(usbx, ept_info);
+ 1452              		.loc 1 531 3 view .LVU405
+ 1453 0034 2146     		mov	r1, r4
+ 1454 0036 2846     		mov	r0, r5
+ 1455 0038 FFF7FEFF 		bl	usb_ept_open
+ 1456              	.LVL157:
+ 532:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1457              		.loc 1 532 1 is_stmt 0 view .LVU406
+ 1458 003c 38BD     		pop	{r3, r4, r5, pc}
+ 1459              	.LVL158:
+ 1460              	.L87:
+ 519:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_IN;
+ 1461              		.loc 1 519 5 is_stmt 1 view .LVU407
+ 519:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_IN;
+ 1462              		.loc 1 519 39 is_stmt 0 view .LVU408
+ 1463 003e 01F07F01 		and	r1, r1, #127
+ 1464              	.LVL159:
+ 519:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_IN;
+ 1465              		.loc 1 519 14 view .LVU409
+ 1466 0042 4901     		lsls	r1, r1, #5
+ 1467 0044 01F10804 		add	r4, r1, #8
+ 1468              	.LVL160:
+ 519:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info->inout = DATA_TRANS_IN;
+ 1469              		.loc 1 519 14 view .LVU410
+ 1470 0048 0444     		add	r4, r4, r0
+ 1471 004a 0434     		adds	r4, r4, #4
+ 1472              	.LVL161:
+ 520:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1473              		.loc 1 520 5 is_stmt 1 view .LVU411
+ 520:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1474              		.loc 1 520 21 is_stmt 0 view .LVU412
+ 1475 004c 0844     		add	r0, r0, r1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 39
+
+
+ 1476              	.LVL162:
+ 520:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1477              		.loc 1 520 21 view .LVU413
+ 1478 004e 0121     		movs	r1, #1
+ 1479 0050 8173     		strb	r1, [r0, #14]
+ 1480 0052 E6E7     		b	.L88
+ 1481              		.cfi_endproc
+ 1482              	.LFE153:
+ 1484              		.section	.text.usbd_ept_close,"ax",%progbits
+ 1485              		.align	1
+ 1486              		.global	usbd_ept_close
+ 1487              		.syntax unified
+ 1488              		.thumb
+ 1489              		.thumb_func
+ 1491              	usbd_ept_close:
+ 1492              	.LVL163:
+ 1493              	.LFB154:
+ 533:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 534:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 535:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb close endpoint
+ 536:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 537:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  ept_addr: endpoint number
+ 538:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 539:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 540:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_close(usbd_core_type *udev, uint8_t ept_addr)
+ 541:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1494              		.loc 1 541 1 is_stmt 1 view -0
+ 1495              		.cfi_startproc
+ 1496              		@ args = 0, pretend = 0, frame = 0
+ 1497              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1498              		.loc 1 541 1 is_stmt 0 view .LVU415
+ 1499 0000 08B5     		push	{r3, lr}
+ 1500              	.LCFI12:
+ 1501              		.cfi_def_cfa_offset 8
+ 1502              		.cfi_offset 3, -8
+ 1503              		.cfi_offset 14, -4
+ 542:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_info *ept_info;
+ 1504              		.loc 1 542 3 is_stmt 1 view .LVU416
+ 543:middlewares/usbd_drivers/src/usbd_core.c ****   if(ept_addr & 0x80)
+ 1505              		.loc 1 543 3 view .LVU417
+ 1506              		.loc 1 543 5 is_stmt 0 view .LVU418
+ 1507 0002 11F0800F 		tst	r1, #128
+ 1508 0006 0AD1     		bne	.L94
+ 544:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 545:middlewares/usbd_drivers/src/usbd_core.c ****     /* in endpoint */
+ 546:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_in[ept_addr & 0x7F];
+ 547:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 548:middlewares/usbd_drivers/src/usbd_core.c ****   else
+ 549:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 550:middlewares/usbd_drivers/src/usbd_core.c ****     /* out endpoint */
+ 551:middlewares/usbd_drivers/src/usbd_core.c ****     ept_info = &udev->ept_out[ept_addr & 0x7F];
+ 1509              		.loc 1 551 5 is_stmt 1 view .LVU419
+ 1510              		.loc 1 551 40 is_stmt 0 view .LVU420
+ 1511 0008 01F07F01 		and	r1, r1, #127
+ 1512              	.LVL164:
+ 1513              		.loc 1 551 14 view .LVU421
+ 1514 000c 4901     		lsls	r1, r1, #5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 40
+
+
+ 1515 000e 01F58471 		add	r1, r1, #264
+ 1516 0012 0144     		add	r1, r1, r0
+ 1517 0014 0431     		adds	r1, r1, #4
+ 1518              	.L92:
+ 1519              	.LVL165:
+ 552:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 553:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 554:middlewares/usbd_drivers/src/usbd_core.c ****   /* close endpoint */
+ 555:middlewares/usbd_drivers/src/usbd_core.c ****   usb_ept_close(udev->usb_reg, ept_info);
+ 1520              		.loc 1 555 3 is_stmt 1 view .LVU422
+ 1521 0016 0068     		ldr	r0, [r0]
+ 1522              	.LVL166:
+ 1523              		.loc 1 555 3 is_stmt 0 view .LVU423
+ 1524 0018 FFF7FEFF 		bl	usb_ept_close
+ 1525              	.LVL167:
+ 556:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1526              		.loc 1 556 1 view .LVU424
+ 1527 001c 08BD     		pop	{r3, pc}
+ 1528              	.LVL168:
+ 1529              	.L94:
+ 546:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1530              		.loc 1 546 5 is_stmt 1 view .LVU425
+ 546:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1531              		.loc 1 546 39 is_stmt 0 view .LVU426
+ 1532 001e 01F07F01 		and	r1, r1, #127
+ 1533              	.LVL169:
+ 546:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1534              		.loc 1 546 14 view .LVU427
+ 1535 0022 4901     		lsls	r1, r1, #5
+ 1536 0024 0831     		adds	r1, r1, #8
+ 1537 0026 0144     		add	r1, r1, r0
+ 1538 0028 0431     		adds	r1, r1, #4
+ 1539              	.LVL170:
+ 546:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 1540              		.loc 1 546 14 view .LVU428
+ 1541 002a F4E7     		b	.L92
+ 1542              		.cfi_endproc
+ 1543              	.LFE154:
+ 1545              		.section	.text.usbd_connect,"ax",%progbits
+ 1546              		.align	1
+ 1547              		.global	usbd_connect
+ 1548              		.syntax unified
+ 1549              		.thumb
+ 1550              		.thumb_func
+ 1552              	usbd_connect:
+ 1553              	.LVL171:
+ 1554              	.LFB155:
+ 557:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 558:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 559:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb device connect to host
+ 560:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 561:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 562:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 563:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_connect(usbd_core_type *udev)
+ 564:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1555              		.loc 1 564 1 is_stmt 1 view -0
+ 1556              		.cfi_startproc
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 41
+
+
+ 1557              		@ args = 0, pretend = 0, frame = 0
+ 1558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1559              		.loc 1 564 1 is_stmt 0 view .LVU430
+ 1560 0000 08B5     		push	{r3, lr}
+ 1561              	.LCFI13:
+ 1562              		.cfi_def_cfa_offset 8
+ 1563              		.cfi_offset 3, -8
+ 1564              		.cfi_offset 14, -4
+ 565:middlewares/usbd_drivers/src/usbd_core.c ****   usb_connect(udev->usb_reg);
+ 1565              		.loc 1 565 3 is_stmt 1 view .LVU431
+ 1566 0002 0068     		ldr	r0, [r0]
+ 1567              	.LVL172:
+ 1568              		.loc 1 565 3 is_stmt 0 view .LVU432
+ 1569 0004 FFF7FEFF 		bl	usb_connect
+ 1570              	.LVL173:
+ 566:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1571              		.loc 1 566 1 view .LVU433
+ 1572 0008 08BD     		pop	{r3, pc}
+ 1573              		.cfi_endproc
+ 1574              	.LFE155:
+ 1576              		.section	.text.usbd_disconnect,"ax",%progbits
+ 1577              		.align	1
+ 1578              		.global	usbd_disconnect
+ 1579              		.syntax unified
+ 1580              		.thumb
+ 1581              		.thumb_func
+ 1583              	usbd_disconnect:
+ 1584              	.LVL174:
+ 1585              	.LFB156:
+ 567:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 568:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 569:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb device disconnect to host
+ 570:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 571:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 572:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 573:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_disconnect(usbd_core_type *udev)
+ 574:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1586              		.loc 1 574 1 is_stmt 1 view -0
+ 1587              		.cfi_startproc
+ 1588              		@ args = 0, pretend = 0, frame = 0
+ 1589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1590              		.loc 1 574 1 is_stmt 0 view .LVU435
+ 1591 0000 08B5     		push	{r3, lr}
+ 1592              	.LCFI14:
+ 1593              		.cfi_def_cfa_offset 8
+ 1594              		.cfi_offset 3, -8
+ 1595              		.cfi_offset 14, -4
+ 575:middlewares/usbd_drivers/src/usbd_core.c ****   usb_disconnect(udev->usb_reg);
+ 1596              		.loc 1 575 3 is_stmt 1 view .LVU436
+ 1597 0002 0068     		ldr	r0, [r0]
+ 1598              	.LVL175:
+ 1599              		.loc 1 575 3 is_stmt 0 view .LVU437
+ 1600 0004 FFF7FEFF 		bl	usb_disconnect
+ 1601              	.LVL176:
+ 576:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1602              		.loc 1 576 1 view .LVU438
+ 1603 0008 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 42
+
+
+ 1604              		.cfi_endproc
+ 1605              	.LFE156:
+ 1607              		.section	.text.usbd_set_device_addr,"ax",%progbits
+ 1608              		.align	1
+ 1609              		.global	usbd_set_device_addr
+ 1610              		.syntax unified
+ 1611              		.thumb
+ 1612              		.thumb_func
+ 1614              	usbd_set_device_addr:
+ 1615              	.LVL177:
+ 1616              	.LFB157:
+ 577:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 578:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 579:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb device set device address.
+ 580:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 581:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  address: host assignment address
+ 582:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 583:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 584:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_set_device_addr(usbd_core_type *udev, uint8_t address)
+ 585:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1617              		.loc 1 585 1 is_stmt 1 view -0
+ 1618              		.cfi_startproc
+ 1619              		@ args = 0, pretend = 0, frame = 0
+ 1620              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1621              		.loc 1 585 1 is_stmt 0 view .LVU440
+ 1622 0000 08B5     		push	{r3, lr}
+ 1623              	.LCFI15:
+ 1624              		.cfi_def_cfa_offset 8
+ 1625              		.cfi_offset 3, -8
+ 1626              		.cfi_offset 14, -4
+ 586:middlewares/usbd_drivers/src/usbd_core.c ****   usb_set_address(udev->usb_reg, address);
+ 1627              		.loc 1 586 3 is_stmt 1 view .LVU441
+ 1628 0002 0068     		ldr	r0, [r0]
+ 1629              	.LVL178:
+ 1630              		.loc 1 586 3 is_stmt 0 view .LVU442
+ 1631 0004 FFF7FEFF 		bl	usb_set_address
+ 1632              	.LVL179:
+ 587:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1633              		.loc 1 587 1 view .LVU443
+ 1634 0008 08BD     		pop	{r3, pc}
+ 1635              		.cfi_endproc
+ 1636              	.LFE157:
+ 1638              		.section	.text.usbd_connect_state_get,"ax",%progbits
+ 1639              		.align	1
+ 1640              		.global	usbd_connect_state_get
+ 1641              		.syntax unified
+ 1642              		.thumb
+ 1643              		.thumb_func
+ 1645              	usbd_connect_state_get:
+ 1646              	.LVL180:
+ 1647              	.LFB158:
+ 588:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 589:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 590:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  get usb connect state
+ 591:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 592:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval usb connect state
+ 593:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 43
+
+
+ 594:middlewares/usbd_drivers/src/usbd_core.c **** usbd_conn_state usbd_connect_state_get(usbd_core_type *udev)
+ 595:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1648              		.loc 1 595 1 is_stmt 1 view -0
+ 1649              		.cfi_startproc
+ 1650              		@ args = 0, pretend = 0, frame = 0
+ 1651              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1652              		@ link register save eliminated.
+ 596:middlewares/usbd_drivers/src/usbd_core.c ****   return udev->conn_state;
+ 1653              		.loc 1 596 3 view .LVU445
+ 597:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1654              		.loc 1 597 1 is_stmt 0 view .LVU446
+ 1655 0000 90F82402 		ldrb	r0, [r0, #548]	@ zero_extendqisi2
+ 1656              	.LVL181:
+ 1657              		.loc 1 597 1 view .LVU447
+ 1658 0004 7047     		bx	lr
+ 1659              		.cfi_endproc
+ 1660              	.LFE158:
+ 1662              		.section	.text.usbd_remote_wakeup,"ax",%progbits
+ 1663              		.align	1
+ 1664              		.global	usbd_remote_wakeup
+ 1665              		.syntax unified
+ 1666              		.thumb
+ 1667              		.thumb_func
+ 1669              	usbd_remote_wakeup:
+ 1670              	.LVL182:
+ 1671              	.LFB159:
+ 598:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 599:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 600:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb device remote wakeup
+ 601:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 602:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 603:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 604:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_remote_wakeup(usbd_core_type *udev)
+ 605:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1672              		.loc 1 605 1 is_stmt 1 view -0
+ 1673              		.cfi_startproc
+ 1674              		@ args = 0, pretend = 0, frame = 0
+ 1675              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1676              		.loc 1 605 1 is_stmt 0 view .LVU449
+ 1677 0000 10B5     		push	{r4, lr}
+ 1678              	.LCFI16:
+ 1679              		.cfi_def_cfa_offset 8
+ 1680              		.cfi_offset 4, -8
+ 1681              		.cfi_offset 14, -4
+ 1682 0002 0446     		mov	r4, r0
+ 606:middlewares/usbd_drivers/src/usbd_core.c ****   /* set connect state */
+ 607:middlewares/usbd_drivers/src/usbd_core.c ****   udev->conn_state = udev->old_conn_state;
+ 1683              		.loc 1 607 3 is_stmt 1 view .LVU450
+ 1684              		.loc 1 607 26 is_stmt 0 view .LVU451
+ 1685 0004 90F82532 		ldrb	r3, [r0, #549]	@ zero_extendqisi2
+ 1686              		.loc 1 607 20 view .LVU452
+ 1687 0008 80F82432 		strb	r3, [r0, #548]
+ 608:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 609:middlewares/usbd_drivers/src/usbd_core.c ****   usb_exit_suspend(udev->usb_reg);
+ 1688              		.loc 1 609 3 is_stmt 1 view .LVU453
+ 1689 000c 0068     		ldr	r0, [r0]
+ 1690              	.LVL183:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 44
+
+
+ 1691              		.loc 1 609 3 is_stmt 0 view .LVU454
+ 1692 000e FFF7FEFF 		bl	usb_exit_suspend
+ 1693              	.LVL184:
+ 610:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 611:middlewares/usbd_drivers/src/usbd_core.c ****   usb_remote_wkup_set(udev->usb_reg);
+ 1694              		.loc 1 611 3 is_stmt 1 view .LVU455
+ 1695 0012 2068     		ldr	r0, [r4]
+ 1696 0014 FFF7FEFF 		bl	usb_remote_wkup_set
+ 1697              	.LVL185:
+ 612:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 613:middlewares/usbd_drivers/src/usbd_core.c ****   usb_delay_ms(10);
+ 1698              		.loc 1 613 3 view .LVU456
+ 1699 0018 0A20     		movs	r0, #10
+ 1700 001a FFF7FEFF 		bl	usb_delay_ms
+ 1701              	.LVL186:
+ 614:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 615:middlewares/usbd_drivers/src/usbd_core.c ****   usb_remote_wkup_clear(udev->usb_reg);
+ 1702              		.loc 1 615 3 view .LVU457
+ 1703 001e 2068     		ldr	r0, [r4]
+ 1704 0020 FFF7FEFF 		bl	usb_remote_wkup_clear
+ 1705              	.LVL187:
+ 616:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 617:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1706              		.loc 1 617 1 is_stmt 0 view .LVU458
+ 1707 0024 10BD     		pop	{r4, pc}
+ 1708              		.loc 1 617 1 view .LVU459
+ 1709              		.cfi_endproc
+ 1710              	.LFE159:
+ 1712              		.section	.text.usbd_enter_suspend,"ax",%progbits
+ 1713              		.align	1
+ 1714              		.global	usbd_enter_suspend
+ 1715              		.syntax unified
+ 1716              		.thumb
+ 1717              		.thumb_func
+ 1719              	usbd_enter_suspend:
+ 1720              	.LVL188:
+ 1721              	.LFB160:
+ 618:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 619:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 620:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb device enter suspend mode
+ 621:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 622:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 623:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 624:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_enter_suspend(usbd_core_type *udev)
+ 625:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1722              		.loc 1 625 1 is_stmt 1 view -0
+ 1723              		.cfi_startproc
+ 1724              		@ args = 0, pretend = 0, frame = 0
+ 1725              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1726              		.loc 1 625 1 is_stmt 0 view .LVU461
+ 1727 0000 08B5     		push	{r3, lr}
+ 1728              	.LCFI17:
+ 1729              		.cfi_def_cfa_offset 8
+ 1730              		.cfi_offset 3, -8
+ 1731              		.cfi_offset 14, -4
+ 626:middlewares/usbd_drivers/src/usbd_core.c ****   usb_enter_suspend(udev->usb_reg);
+ 1732              		.loc 1 626 3 is_stmt 1 view .LVU462
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 45
+
+
+ 1733 0002 0068     		ldr	r0, [r0]
+ 1734              	.LVL189:
+ 1735              		.loc 1 626 3 is_stmt 0 view .LVU463
+ 1736 0004 FFF7FEFF 		bl	usb_enter_suspend
+ 1737              	.LVL190:
+ 627:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1738              		.loc 1 627 1 view .LVU464
+ 1739 0008 08BD     		pop	{r3, pc}
+ 1740              		.cfi_endproc
+ 1741              	.LFE160:
+ 1743              		.section	.text.usbd_ept_defaut_init,"ax",%progbits
+ 1744              		.align	1
+ 1745              		.global	usbd_ept_defaut_init
+ 1746              		.syntax unified
+ 1747              		.thumb
+ 1748              		.thumb_func
+ 1750              	usbd_ept_defaut_init:
+ 1751              	.LVL191:
+ 1752              	.LFB161:
+ 628:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 629:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 630:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  usb endpoint structure initialization
+ 631:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ 632:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 633:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 634:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_ept_defaut_init(usbd_core_type *udev)
+ 635:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1753              		.loc 1 635 1 is_stmt 1 view -0
+ 1754              		.cfi_startproc
+ 1755              		@ args = 0, pretend = 0, frame = 0
+ 1756              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1757              		@ link register save eliminated.
+ 636:middlewares/usbd_drivers/src/usbd_core.c ****   uint8_t i_index = 0;
+ 1758              		.loc 1 636 3 view .LVU466
+ 637:middlewares/usbd_drivers/src/usbd_core.c ****   /* init in endpoint info structure */
+ 638:middlewares/usbd_drivers/src/usbd_core.c ****   for(i_index = 0; i_index < USB_EPT_MAX_NUM; i_index ++)
+ 1759              		.loc 1 638 3 view .LVU467
+ 1760              		.loc 1 638 15 is_stmt 0 view .LVU468
+ 1761 0000 0022     		movs	r2, #0
+ 1762              		.loc 1 638 3 view .LVU469
+ 1763 0002 0DE0     		b	.L107
+ 1764              	.LVL192:
+ 1765              	.L108:
+ 639:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 640:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].eptn        = i_index;
+ 1766              		.loc 1 640 5 is_stmt 1 view .LVU470
+ 1767              		.loc 1 640 39 is_stmt 0 view .LVU471
+ 1768 0004 00EB4213 		add	r3, r0, r2, lsl #5
+ 1769 0008 1A73     		strb	r2, [r3, #12]
+ 641:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].ept_address = i_index;
+ 1770              		.loc 1 641 5 is_stmt 1 view .LVU472
+ 1771              		.loc 1 641 39 is_stmt 0 view .LVU473
+ 1772 000a 5A73     		strb	r2, [r3, #13]
+ 642:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].inout         = DATA_TRANS_IN;
+ 1773              		.loc 1 642 5 is_stmt 1 view .LVU474
+ 1774              		.loc 1 642 41 is_stmt 0 view .LVU475
+ 1775 000c 0121     		movs	r1, #1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 46
+
+
+ 1776 000e 9973     		strb	r1, [r3, #14]
+ 643:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].maxpacket   = 0;
+ 1777              		.loc 1 643 5 is_stmt 1 view .LVU476
+ 1778              		.loc 1 643 39 is_stmt 0 view .LVU477
+ 1779 0010 0021     		movs	r1, #0
+ 1780 0012 9982     		strh	r1, [r3, #20]	@ movhi
+ 644:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].trans_buf   = 0;
+ 1781              		.loc 1 644 5 is_stmt 1 view .LVU478
+ 1782              		.loc 1 644 39 is_stmt 0 view .LVU479
+ 1783 0014 1962     		str	r1, [r3, #32]
+ 645:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].total_len   = 0;
+ 1784              		.loc 1 645 5 is_stmt 1 view .LVU480
+ 1785              		.loc 1 645 39 is_stmt 0 view .LVU481
+ 1786 0016 5983     		strh	r1, [r3, #26]	@ movhi
+ 646:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].tx_addr     = 0;
+ 1787              		.loc 1 646 5 is_stmt 1 view .LVU482
+ 1788              		.loc 1 646 39 is_stmt 0 view .LVU483
+ 1789 0018 1982     		strh	r1, [r3, #16]	@ movhi
+ 647:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_in[i_index].rx_addr     = 0;
+ 1790              		.loc 1 647 5 is_stmt 1 view .LVU484
+ 1791              		.loc 1 647 39 is_stmt 0 view .LVU485
+ 1792 001a 5982     		strh	r1, [r3, #18]	@ movhi
+ 638:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1793              		.loc 1 638 55 is_stmt 1 discriminator 3 view .LVU486
+ 1794 001c 0132     		adds	r2, r2, #1
+ 1795              	.LVL193:
+ 638:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1796              		.loc 1 638 55 is_stmt 0 discriminator 3 view .LVU487
+ 1797 001e D2B2     		uxtb	r2, r2
+ 1798              	.LVL194:
+ 1799              	.L107:
+ 638:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1800              		.loc 1 638 28 is_stmt 1 discriminator 1 view .LVU488
+ 1801 0020 072A     		cmp	r2, #7
+ 1802 0022 EFD9     		bls	.L108
+ 648:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 649:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 650:middlewares/usbd_drivers/src/usbd_core.c ****   /* init out endpoint info structure */
+ 651:middlewares/usbd_drivers/src/usbd_core.c ****   for(i_index = 0; i_index < USB_EPT_MAX_NUM; i_index ++)
+ 1803              		.loc 1 651 15 is_stmt 0 view .LVU489
+ 1804 0024 0022     		movs	r2, #0
+ 1805              	.LVL195:
+ 1806              		.loc 1 651 15 view .LVU490
+ 1807 0026 14E0     		b	.L109
+ 1808              	.LVL196:
+ 1809              	.L110:
+ 652:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 653:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].eptn        = i_index;
+ 1810              		.loc 1 653 5 is_stmt 1 view .LVU491
+ 1811              		.loc 1 653 40 is_stmt 0 view .LVU492
+ 1812 0028 00EB4213 		add	r3, r0, r2, lsl #5
+ 1813 002c 83F80C21 		strb	r2, [r3, #268]
+ 654:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].ept_address = i_index;
+ 1814              		.loc 1 654 5 is_stmt 1 view .LVU493
+ 1815              		.loc 1 654 40 is_stmt 0 view .LVU494
+ 1816 0030 83F80D21 		strb	r2, [r3, #269]
+ 655:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].inout         = DATA_TRANS_OUT;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 47
+
+
+ 1817              		.loc 1 655 5 is_stmt 1 view .LVU495
+ 1818              		.loc 1 655 42 is_stmt 0 view .LVU496
+ 1819 0034 0021     		movs	r1, #0
+ 1820 0036 83F80E11 		strb	r1, [r3, #270]
+ 656:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].maxpacket   = 0;
+ 1821              		.loc 1 656 5 is_stmt 1 view .LVU497
+ 1822              		.loc 1 656 40 is_stmt 0 view .LVU498
+ 1823 003a A3F81411 		strh	r1, [r3, #276]	@ movhi
+ 657:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].trans_buf   = 0;
+ 1824              		.loc 1 657 5 is_stmt 1 view .LVU499
+ 1825              		.loc 1 657 40 is_stmt 0 view .LVU500
+ 1826 003e C3F82011 		str	r1, [r3, #288]
+ 658:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].total_len   = 0;
+ 1827              		.loc 1 658 5 is_stmt 1 view .LVU501
+ 1828              		.loc 1 658 40 is_stmt 0 view .LVU502
+ 1829 0042 A3F81A11 		strh	r1, [r3, #282]	@ movhi
+ 659:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].rx_addr     = 0;
+ 1830              		.loc 1 659 5 is_stmt 1 view .LVU503
+ 1831              		.loc 1 659 40 is_stmt 0 view .LVU504
+ 1832 0046 A3F81211 		strh	r1, [r3, #274]	@ movhi
+ 660:middlewares/usbd_drivers/src/usbd_core.c ****     udev->ept_out[i_index].tx_addr     = 0;
+ 1833              		.loc 1 660 5 is_stmt 1 view .LVU505
+ 1834              		.loc 1 660 40 is_stmt 0 view .LVU506
+ 1835 004a A3F81011 		strh	r1, [r3, #272]	@ movhi
+ 651:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1836              		.loc 1 651 55 is_stmt 1 discriminator 3 view .LVU507
+ 1837 004e 0132     		adds	r2, r2, #1
+ 1838              	.LVL197:
+ 651:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1839              		.loc 1 651 55 is_stmt 0 discriminator 3 view .LVU508
+ 1840 0050 D2B2     		uxtb	r2, r2
+ 1841              	.LVL198:
+ 1842              	.L109:
+ 651:middlewares/usbd_drivers/src/usbd_core.c ****   {
+ 1843              		.loc 1 651 28 is_stmt 1 discriminator 1 view .LVU509
+ 1844 0052 072A     		cmp	r2, #7
+ 1845 0054 E8D9     		bls	.L110
+ 661:middlewares/usbd_drivers/src/usbd_core.c ****   }
+ 662:middlewares/usbd_drivers/src/usbd_core.c ****   return;
+ 663:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1846              		.loc 1 663 1 is_stmt 0 view .LVU510
+ 1847 0056 7047     		bx	lr
+ 1848              		.cfi_endproc
+ 1849              	.LFE161:
+ 1851              		.section	.text.usbd_core_init,"ax",%progbits
+ 1852              		.align	1
+ 1853              		.global	usbd_core_init
+ 1854              		.syntax unified
+ 1855              		.thumb
+ 1856              		.thumb_func
+ 1858              	usbd_core_init:
+ 1859              	.LVL199:
+ 1860              	.LFB162:
+ 664:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 665:middlewares/usbd_drivers/src/usbd_core.c **** /**
+ 666:middlewares/usbd_drivers/src/usbd_core.c ****   * @brief  initializes the usb core
+ 667:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  udev: to the structure of usbd_core_type
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 48
+
+
+ 668:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  usb_reg: usb register pointer (USB)
+ 669:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  class_handler: usb class handler
+ 670:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  desc_handler: device config handler
+ 671:middlewares/usbd_drivers/src/usbd_core.c ****   * @param  core_id: usb core id number
+ 672:middlewares/usbd_drivers/src/usbd_core.c ****   * @retval none
+ 673:middlewares/usbd_drivers/src/usbd_core.c ****   */
+ 674:middlewares/usbd_drivers/src/usbd_core.c **** void usbd_core_init(usbd_core_type *udev,
+ 675:middlewares/usbd_drivers/src/usbd_core.c ****                     usb_reg_type *usb_reg,
+ 676:middlewares/usbd_drivers/src/usbd_core.c ****                     usbd_class_handler *class_handler,
+ 677:middlewares/usbd_drivers/src/usbd_core.c ****                     usbd_desc_handler *desc_handler,
+ 678:middlewares/usbd_drivers/src/usbd_core.c ****                     uint8_t core_id)
+ 679:middlewares/usbd_drivers/src/usbd_core.c **** {
+ 1861              		.loc 1 679 1 is_stmt 1 view -0
+ 1862              		.cfi_startproc
+ 1863              		@ args = 4, pretend = 0, frame = 0
+ 1864              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1865              		.loc 1 679 1 is_stmt 0 view .LVU512
+ 1866 0000 10B5     		push	{r4, lr}
+ 1867              	.LCFI18:
+ 1868              		.cfi_def_cfa_offset 8
+ 1869              		.cfi_offset 4, -8
+ 1870              		.cfi_offset 14, -4
+ 1871 0002 0446     		mov	r4, r0
+ 680:middlewares/usbd_drivers/src/usbd_core.c ****   /* usb class handler */
+ 681:middlewares/usbd_drivers/src/usbd_core.c ****   udev->class_handler = class_handler;
+ 1872              		.loc 1 681 3 is_stmt 1 view .LVU513
+ 1873              		.loc 1 681 23 is_stmt 0 view .LVU514
+ 1874 0004 4260     		str	r2, [r0, #4]
+ 682:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 683:middlewares/usbd_drivers/src/usbd_core.c ****   /* usb description handler */
+ 684:middlewares/usbd_drivers/src/usbd_core.c ****   udev->desc_handler = desc_handler;
+ 1875              		.loc 1 684 3 is_stmt 1 view .LVU515
+ 1876              		.loc 1 684 22 is_stmt 0 view .LVU516
+ 1877 0006 8360     		str	r3, [r0, #8]
+ 685:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 686:middlewares/usbd_drivers/src/usbd_core.c ****   /* set usb register type */
+ 687:middlewares/usbd_drivers/src/usbd_core.c ****   udev->usb_reg = usb_reg;
+ 1878              		.loc 1 687 3 is_stmt 1 view .LVU517
+ 1879              		.loc 1 687 17 is_stmt 0 view .LVU518
+ 1880 0008 0160     		str	r1, [r0]
+ 688:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 689:middlewares/usbd_drivers/src/usbd_core.c ****   /* set usb connect state to default */
+ 690:middlewares/usbd_drivers/src/usbd_core.c ****   udev->conn_state = USB_CONN_STATE_DEFAULT;
+ 1881              		.loc 1 690 3 is_stmt 1 view .LVU519
+ 1882              		.loc 1 690 20 is_stmt 0 view .LVU520
+ 1883 000a 0123     		movs	r3, #1
+ 1884              	.LVL200:
+ 1885              		.loc 1 690 20 view .LVU521
+ 1886 000c 80F82432 		strb	r3, [r0, #548]
+ 691:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 692:middlewares/usbd_drivers/src/usbd_core.c ****   /* init in endpoint info structure */
+ 693:middlewares/usbd_drivers/src/usbd_core.c ****   usbd_ept_defaut_init(udev);
+ 1887              		.loc 1 693 3 is_stmt 1 view .LVU522
+ 1888 0010 FFF7FEFF 		bl	usbd_ept_defaut_init
+ 1889              	.LVL201:
+ 694:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 695:middlewares/usbd_drivers/src/usbd_core.c **** #ifdef USB_BUFFER_SIZE_EX
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 49
+
+
+ 696:middlewares/usbd_drivers/src/usbd_core.c ****   /* usb buffer size extend 768-1280 byte */
+ 697:middlewares/usbd_drivers/src/usbd_core.c ****   usb_usbbufs_enable(usb_reg, TRUE);
+ 698:middlewares/usbd_drivers/src/usbd_core.c **** #endif
+ 699:middlewares/usbd_drivers/src/usbd_core.c **** 
+ 700:middlewares/usbd_drivers/src/usbd_core.c ****   /*usb register config */
+ 701:middlewares/usbd_drivers/src/usbd_core.c ****   usb_dev_init(udev->usb_reg);
+ 1890              		.loc 1 701 3 view .LVU523
+ 1891 0014 2068     		ldr	r0, [r4]
+ 1892 0016 FFF7FEFF 		bl	usb_dev_init
+ 1893              	.LVL202:
+ 702:middlewares/usbd_drivers/src/usbd_core.c **** }
+ 1894              		.loc 1 702 1 is_stmt 0 view .LVU524
+ 1895 001a 10BD     		pop	{r4, pc}
+ 1896              		.loc 1 702 1 view .LVU525
+ 1897              		.cfi_endproc
+ 1898              	.LFE162:
+ 1900              		.text
+ 1901              	.Letext0:
+ 1902              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1903              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1904              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 1905              		.file 5 "libraries/drivers/inc/at32f403a_407_usb.h"
+ 1906              		.file 6 "middlewares/usbd_drivers/inc/usb_std.h"
+ 1907              		.file 7 "middlewares/usbd_drivers/inc/usbd_core.h"
+ 1908              		.file 8 "project/inc/usb_conf.h"
+ 1909              		.file 9 "middlewares/usbd_drivers/inc/usbd_sdr.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 50
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usbd_core.c
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:21     .text.usbd_core_setup_handler:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:27     .text.usbd_core_setup_handler:00000000 usbd_core_setup_handler
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:97     .text.usbd_clear_stall:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:103    .text.usbd_clear_stall:00000000 usbd_clear_stall
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:207    .text.usbd_clear_stall:000000a4 $d
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:212    .text.usbd_set_stall:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:218    .text.usbd_set_stall:00000000 usbd_set_stall
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:315    .text.usbd_set_stall:00000074 $d
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:320    .text.usbd_ctrl_unsupport:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:326    .text.usbd_ctrl_unsupport:00000000 usbd_ctrl_unsupport
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:356    .text.usbd_ept_send:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:362    .text.usbd_ept_send:00000000 usbd_ept_send
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:554    .text.usbd_ept_send:000000f4 $d
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:560    .text.usbd_ctrl_send:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:566    .text.usbd_ctrl_send:00000000 usbd_ctrl_send
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:607    .text.usbd_ctrl_send_status:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:613    .text.usbd_ctrl_send_status:00000000 usbd_ctrl_send_status
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:642    .text.usbd_ept_recv:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:648    .text.usbd_ept_recv:00000000 usbd_ept_recv
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:732    .text.usbd_ept_recv:00000054 $d
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:737    .text.usbd_core_out_handler:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:743    .text.usbd_core_out_handler:00000000 usbd_core_out_handler
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:851    .text.usbd_ctrl_recv:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:857    .text.usbd_ctrl_recv:00000000 usbd_ctrl_recv
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:898    .text.usbd_ctrl_recv_status:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:904    .text.usbd_ctrl_recv_status:00000000 usbd_ctrl_recv_status
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:933    .text.usbd_core_in_handler:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:939    .text.usbd_core_in_handler:00000000 usbd_core_in_handler
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1110   .text.usbd_get_recv_len:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1116   .text.usbd_get_recv_len:00000000 usbd_get_recv_len
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1139   .text.usbd_ept_dbuffer_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1145   .text.usbd_ept_dbuffer_enable:00000000 usbd_ept_dbuffer_enable
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1195   .text.usbd_ept_buf_auto_define:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1201   .text.usbd_ept_buf_auto_define:00000000 usbd_ept_buf_auto_define
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1301   .text.usbd_ept_buf_custom_define:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1307   .text.usbd_ept_buf_custom_define:00000000 usbd_ept_buf_custom_define
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1384   .text.usbd_ept_open:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1390   .text.usbd_ept_open:00000000 usbd_ept_open
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1485   .text.usbd_ept_close:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1491   .text.usbd_ept_close:00000000 usbd_ept_close
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1546   .text.usbd_connect:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1552   .text.usbd_connect:00000000 usbd_connect
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1577   .text.usbd_disconnect:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1583   .text.usbd_disconnect:00000000 usbd_disconnect
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1608   .text.usbd_set_device_addr:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1614   .text.usbd_set_device_addr:00000000 usbd_set_device_addr
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1639   .text.usbd_connect_state_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1645   .text.usbd_connect_state_get:00000000 usbd_connect_state_get
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1663   .text.usbd_remote_wakeup:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1669   .text.usbd_remote_wakeup:00000000 usbd_remote_wakeup
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1713   .text.usbd_enter_suspend:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1719   .text.usbd_enter_suspend:00000000 usbd_enter_suspend
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1744   .text.usbd_ept_defaut_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1750   .text.usbd_ept_defaut_init:00000000 usbd_ept_defaut_init
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1852   .text.usbd_core_init:00000000 $t
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s 			page 51
+
+
+C:\Users\10963\AppData\Local\Temp\cc2WdTB4.s:1858   .text.usbd_core_init:00000000 usbd_core_init
+
+UNDEFINED SYMBOLS
+usbd_setup_request_parse
+usbd_device_request
+usbd_interface_request
+usbd_endpoint_request
+usb_write_packet
+g_usb_packet_address
+usb_buffer_malloc
+usb_ept_open
+usb_ept_close
+usb_connect
+usb_disconnect
+usb_set_address
+usb_exit_suspend
+usb_remote_wkup_set
+usb_delay_ms
+usb_remote_wkup_clear
+usb_enter_suspend
+usb_dev_init

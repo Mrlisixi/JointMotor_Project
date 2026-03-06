@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+    <WorkBenchVersion>
+        <Version>V1.2.03</Version>
+    </WorkBenchVersion>
+    <MCUInfo>
+        <MCUSerials>AT32F403A</MCUSerials>
+        <MCUName>AT32F403ACGT7</MCUName>
+        <MCUPackage>LQFP48</MCUPackage>
+    </MCUInfo>
+    <ACC>
+        <Mode>
+            <ModeSub name="ACC_State" value="TRUE"/>
+        </Mode>
+    </ACC>
+    <ADC1>
+        <Mode>
+            <ModeSub name="IN0" value="TRUE"/>
+            <ModeSub name="IN1" value="TRUE"/>
+            <ModeSub name="IN2" value="TRUE"/>
+            <ModeSub name="IN3" value="TRUE"/>
+            <ModeSub name="IN8" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="OrdinaryTriggerSource" value="ADC12_ORDINARY_TRIG_SOFTWARE"/>
+            <ParametersSub name="NbrOfOrdinarySequence" value="4"/>
+            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_1"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_1" value="1.429"/>
+            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_2" value="1.429"/>
+            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_3" value="1.429"/>
+            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_4" value="1.429"/>
+        </Parameters>
+    </ADC1>
+    <CAN1>
+        <Mode>
+            <ModeSub name="CAN_Activate" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="BaudRate" value="500"/>
+            <ParametersSub name="Sample_Point" value="87.5"/>
+            <ParametersSub name="BaudRate_Division" value="30"/>
+            <ParametersSub name="BTS1" value="CAN_BTS1_6TQ"/>
+            <ParametersSub name="BTS2" value="CAN_BTS2_1TQ"/>
+            <ParametersSub name="RSAW" value="CAN_RSAW_1TQ"/>
+        </Parameters>
+    </CAN1>
+    <CRM>
+        <Mode>
+            <ModeSub name="HEXT" value="HEXT-External-Oscillator"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="HEXT" value="HEXT_CRYSTAL"/>
+        </Parameters>
+    </CRM>
+    <DEBUG>
+        <Mode>
+            <ModeSub name="Debug interface" value="SWD"/>
+        </Mode>
+    </DEBUG>
+    <SPI1>
+        <Mode>
+            <ModeSub name="Mode" value="Full_Duplex_Master"/>
+            <ModeSub name="CS_Signal" value="CS_Signal_Hard_Output"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="TransmissionMode" value="SPI_TRANSMIT_FULL_DUPLEX"/>
+            <ParametersSub name="Mode" value="SPI_MODE_MASTER"/>
+            <ParametersSub name="FirstBit" value="SPI_FIRST_BIT_MSB"/>
+            <ParametersSub name="ClockFrequency" value="30000000"/>
+            <ParametersSub name="VirtualCS" value="SPI_CS_HARDWARE_MODE"/>
+        </Parameters>
+    </SPI1>
+    <SYSTEM>
+        <Mode>
+            <ModeSub name="Time_Base" value="TMR2"/>
+        </Mode>
+    </SYSTEM>
+    <TMR1>
+        <Mode>
+            <ModeSub name="Channel1 mode" value="Output_CH1_CH1C"/>
+            <ModeSub name="Channel2 mode" value="Output_CH2_CH2C"/>
+            <ModeSub name="Channel3 mode" value="Output_CH3_CH3C"/>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="DividerValue" value="0x0"/>
+            <ParametersSub name="Period" value="1500"/>
+            <ParametersSub name="RepetitionCounter" value="0x0"/>
+            <ParametersSub name="DeadTime" value="30"/>
+            <ParametersSub name="DeadTimeValue" value="125"/>
+            <ParametersSub name="OCMode_1" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
+            <ParametersSub name="ChannelData_1" value="200"/>
+            <ParametersSub name="OC1ImmediatelyMode_PWM" value="TRUE"/>
+            <ParametersSub name="OCMode_2" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
+            <ParametersSub name="ChannelData_2" value="200"/>
+            <ParametersSub name="OC2ImmediatelyMode_PWM" value="TRUE"/>
+            <ParametersSub name="OCMode_3" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
+            <ParametersSub name="ChannelData_3" value="200"/>
+            <ParametersSub name="OC3ImmediatelyMode_PWM" value="TRUE"/>
+        </Parameters>
+    </TMR1>
+    <USBFS>
+        <Mode>
+            <ModeSub name="Device" value="TRUE"/>
+        </Mode>
+    </USBFS>
+    <FREERTOS>
+        <Mode>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="MCU_SRAM_SIZE" value="98304"/>
+            <ParametersSub name="configCPU_CLOCK_HZ" value="240000000"/>
+            <ParametersSub name="configUSE_RECURSIVE_MUTEXES" value="1"/>
+        </Parameters>
+        <Tasks>
+            <ParametersGroup>
+                <ParametersSub name="TaskName" value="MC_Task"/>
+                <ParametersSub name="TaskPriority" value="3"/>
+                <ParametersSub name="TaskStackSize" value="512"/>
+                <ParametersSub name="TaskEntryFunction" value="MC_Task_func"/>
+                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
+                <ParametersSub name="TaskParameters" value="NULL"/>
+                <ParametersSub name="TaskAllocation" value="Dynamic"/>
+                <ParametersSub name="TaskStackBuffer" value="NULL"/>
+                <ParametersSub name="TaskBuffer" value="NULL"/>
+            </ParametersGroup>
+            <ParametersGroup>
+                <ParametersSub name="TaskName" value="CANCom_Task"/>
+                <ParametersSub name="TaskPriority" value="2"/>
+                <ParametersSub name="TaskStackSize" value="512"/>
+                <ParametersSub name="TaskEntryFunction" value="CANCom_Task_func"/>
+                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
+                <ParametersSub name="TaskParameters" value="NULL"/>
+                <ParametersSub name="TaskAllocation" value="Dynamic"/>
+                <ParametersSub name="TaskStackBuffer" value="NULL"/>
+                <ParametersSub name="TaskBuffer" value="NULL"/>
+            </ParametersGroup>
+            <ParametersGroup>
+                <ParametersSub name="TaskName" value="Monitor_Task"/>
+                <ParametersSub name="TaskPriority" value="1"/>
+                <ParametersSub name="TaskStackSize" value="512"/>
+                <ParametersSub name="TaskEntryFunction" value="Monitor_Task_func"/>
+                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
+                <ParametersSub name="TaskParameters" value="NULL"/>
+                <ParametersSub name="TaskAllocation" value="Dynamic"/>
+                <ParametersSub name="TaskStackBuffer" value="NULL"/>
+                <ParametersSub name="TaskBuffer" value="NULL"/>
+            </ParametersGroup>
+            <ParametersGroup>
+                <ParametersSub name="TaskName" value="Debug_Task"/>
+                <ParametersSub name="TaskPriority" value="0"/>
+                <ParametersSub name="TaskStackSize" value="512"/>
+                <ParametersSub name="TaskEntryFunction" value="Debug_Task_func"/>
+                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
+                <ParametersSub name="TaskParameters" value="NULL"/>
+                <ParametersSub name="TaskAllocation" value="Dynamic"/>
+                <ParametersSub name="TaskStackBuffer" value="NULL"/>
+                <ParametersSub name="TaskBuffer" value="NULL"/>
+            </ParametersGroup>
+        </Tasks>
+    </FREERTOS>
+    <USB_DEVICE>
+        <Mode>
+            <ModeSub name="FS_Device" value="CDC"/>
+        </Mode>
+    </USB_DEVICE>
+    <DMA>
+        <ADC1>
+            <ParametersSub name="Instance" value="DMA1_Channel1"/>
+            <ParametersSub name="Interrupt_FDT" value="ENABLE"/>
+        </ADC1>
+    </DMA>
+    <NVIC>
+        <PendSV_Handler>1;15;0;1;0</PendSV_Handler>
+        <SysTick_Handler>1;15;0;1;0</SysTick_Handler>
+        <FLASH_IRQHandler>0;5;0;1;0</FLASH_IRQHandler>
+        <CRM_IRQHandler>0;5;0;1;0</CRM_IRQHandler>
+        <DMA1_Channel1_IRQHandler>1;5;0;1;0</DMA1_Channel1_IRQHandler>
+        <ADC1_2_IRQHandler>0;5;0;1;0</ADC1_2_IRQHandler>
+        <USBFS_H_CAN1_TX_IRQHandler>0;5;0;1;0</USBFS_H_CAN1_TX_IRQHandler>
+        <USBFS_L_CAN1_RX0_IRQHandler>0;5;0;1;0</USBFS_L_CAN1_RX0_IRQHandler>
+        <CAN1_RX1_IRQHandler>0;5;0;1;0</CAN1_RX1_IRQHandler>
+        <CAN1_SE_IRQHandler>0;5;0;1;0</CAN1_SE_IRQHandler>
+        <TMR1_BRK_TMR9_IRQHandler>1;5;0;1;0</TMR1_BRK_TMR9_IRQHandler>
+        <TMR1_OVF_TMR10_IRQHandler>1;5;0;1;0</TMR1_OVF_TMR10_IRQHandler>
+        <TMR1_TRG_HALL_TMR11_IRQHandler>1;5;0;1;0</TMR1_TRG_HALL_TMR11_IRQHandler>
+        <TMR1_CH_IRQHandler>0;5;0;1;0</TMR1_CH_IRQHandler>
+        <SPI1_IRQHandler>1;5;0;1;0</SPI1_IRQHandler>
+        <USBFSWakeUp_IRQHandler>0;5;0;1;0</USBFSWakeUp_IRQHandler>
+        <ACC_IRQHandler>0;5;0;1;0</ACC_IRQHandler>
+        <USBFS_MAPH_IRQHandler>0;5;0;1;0</USBFS_MAPH_IRQHandler>
+        <USBFS_MAPL_IRQHandler>1;5;0;1;0</USBFS_MAPL_IRQHandler>
+    </NVIC>
+    <GPIO>
+        <Signal SignalName="GPIO_Output" PinName="PC13">
+            <Parameters name="Label" value="LED"/>
+        </Signal>
+        <Signal SignalName="ADC1_IN0" PinName="PA0">
+            <Parameters name="Label" value="CURR_PHASE_A_ADC_CH"/>
+        </Signal>
+        <Signal SignalName="ADC1_IN1" PinName="PA1">
+            <Parameters name="Label" value="CURR_PHASE_B_ADC_CH"/>
+        </Signal>
+        <Signal SignalName="ADC1_IN2" PinName="PA2">
+            <Parameters name="Label" value="CURR_PHASE_C_ADC_CH"/>
+        </Signal>
+        <Signal SignalName="ADC1_IN3" PinName="PA3">
+            <Parameters name="Label" value="VOLT_BUS_ADC_CH"/>
+        </Signal>
+        <Signal SignalName="ADC1_IN8" PinName="PB0">
+            <Parameters name="Label" value="MOS_TEMP_ADC_CH"/>
+        </Signal>
+    </GPIO>
+    <ClockConfiguration>
+        <rtcsel>0</rtcsel>
+        <hext>16.000000</hext>
+        <hextdiv>2</hextdiv>
+        <pllhextdiv>0</pllhextdiv>
+        <pllrcs>0</pllrcs>
+        <pllmult>15</pllmult>
+        <sclkselect>1</sclkselect>
+        <ahbdiv>1</ahbdiv>
+        <apb1div>2</apb1div>
+        <apb2div>2</apb2div>
+        <usbdiv>4.0</usbdiv>
+        <hicktousb>1</hicktousb>
+        <hicktosclk>0</hicktosclk>
+        <clkout>0</clkout>
+        <clkoutdiv>1</clkoutdiv>
+        <adcdiv>6</adcdiv>
+        <systicsel>1</systicsel>
+    </ClockConfiguration>
+    <PINInfo>
+        <PinSub pinname="PC13" signalname="GPIO_Output" signaltype="3"/>
+        <PinSub pinname="PD0/HEXT_IN" signalname="CRM_HEXT_IN" signaltype="2"/>
+        <PinSub pinname="PD1/HEXT_OUT" signalname="CRM_HEXT_OUT" signaltype="2"/>
+        <PinSub pinname="PA0" signalname="ADC1_IN0" signaltype="3"/>
+        <PinSub pinname="PA1" signalname="ADC1_IN1" signaltype="3"/>
+        <PinSub pinname="PA2" signalname="ADC1_IN2" signaltype="3"/>
+        <PinSub pinname="PA3" signalname="ADC1_IN3" signaltype="3"/>
+        <PinSub pinname="PA4" signalname="SPI1_CS" signaltype="2"/>
+        <PinSub pinname="PA5" signalname="SPI1_SCK" signaltype="2"/>
+        <PinSub pinname="PA6" signalname="SPI1_MISO" signaltype="2"/>
+        <PinSub pinname="PA7" signalname="SPI1_MOSI" signaltype="2"/>
+        <PinSub pinname="PB0" signalname="ADC1_IN8" signaltype="3"/>
+        <PinSub pinname="PB13" signalname="TMR1_CH1C" signaltype="2"/>
+        <PinSub pinname="PB14" signalname="TMR1_CH2C" signaltype="2"/>
+        <PinSub pinname="PB15" signalname="TMR1_CH3C" signaltype="2"/>
+        <PinSub pinname="PA8" signalname="TMR1_CH1" signaltype="3"/>
+        <PinSub pinname="PA9" signalname="TMR1_CH2" signaltype="2"/>
+        <PinSub pinname="PA10" signalname="TMR1_CH3" signaltype="2"/>
+        <PinSub pinname="PA11" signalname="USBFS_D-" signaltype="2"/>
+        <PinSub pinname="PA12" signalname="USBFS_D+" signaltype="2"/>
+        <PinSub pinname="PA13" signalname="DEBUG_JTMS_SWDIO" signaltype="2"/>
+        <PinSub pinname="PA14" signalname="DEBUG_JTCK_SWCLK" signaltype="2"/>
+        <PinSub pinname="PB8" signalname="CAN1_RX" signaltype="2"/>
+        <PinSub pinname="PB9" signalname="CAN1_TX" signaltype="2"/>
+    </PINInfo>
+    <ProjectInfomation>
+        <ProjectName>AT32WorkBench</ProjectName>
+        <ProjectLocation>C:/Users/10963/Documents/ATCode/JointMotor_Project</ProjectLocation>
+        <ToolchainIDE>Makefile</ToolchainIDE>
+        <ARMCompiler>0</ARMCompiler>
+        <BackupCode>true</BackupCode>
+        <KeepUserCode>true</KeepUserCode>
+        <NotUsedPinAnalog>false</NotUsedPinAnalog>
+        <CodeSplitIP>true</CodeSplitIP>
+        <AddNecessaryFileFlag>true</AddNecessaryFileFlag>
+        <MinHeapSize>0x200</MinHeapSize>
+        <MinStackSize>0x400</MinStackSize>
+        <UseFirmware>true</UseFirmware>
+        <PackageVersion>V2.2.2</PackageVersion>
+    </ProjectInfomation>
+</Root>

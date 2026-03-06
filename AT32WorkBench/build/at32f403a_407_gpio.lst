@@ -1,0 +1,1905 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"at32f403a_407_gpio.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "libraries/drivers/src/at32f403a_407_gpio.c"
+  20              		.section	.text.gpio_reset,"ax",%progbits
+  21              		.align	1
+  22              		.global	gpio_reset
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	gpio_reset:
+  28              	.LVL0:
+  29              	.LFB134:
+   1:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+   2:libraries/drivers/src/at32f403a_407_gpio.c ****   **************************************************************************
+   3:libraries/drivers/src/at32f403a_407_gpio.c ****   * @file     at32f403a_407_gpio.c
+   4:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief    contains all the functions for the gpio firmware library
+   5:libraries/drivers/src/at32f403a_407_gpio.c ****   **************************************************************************
+   6:libraries/drivers/src/at32f403a_407_gpio.c ****   *
+   7:libraries/drivers/src/at32f403a_407_gpio.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:libraries/drivers/src/at32f403a_407_gpio.c ****   *
+   9:libraries/drivers/src/at32f403a_407_gpio.c ****   * The software Board Support Package (BSP) that is made available to
+  10:libraries/drivers/src/at32f403a_407_gpio.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:libraries/drivers/src/at32f403a_407_gpio.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:libraries/drivers/src/at32f403a_407_gpio.c ****   * software and its related documentation for the purpose of design and
+  13:libraries/drivers/src/at32f403a_407_gpio.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:libraries/drivers/src/at32f403a_407_gpio.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:libraries/drivers/src/at32f403a_407_gpio.c ****   *
+  16:libraries/drivers/src/at32f403a_407_gpio.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:libraries/drivers/src/at32f403a_407_gpio.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:libraries/drivers/src/at32f403a_407_gpio.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:libraries/drivers/src/at32f403a_407_gpio.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:libraries/drivers/src/at32f403a_407_gpio.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:libraries/drivers/src/at32f403a_407_gpio.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:libraries/drivers/src/at32f403a_407_gpio.c ****   *
+  23:libraries/drivers/src/at32f403a_407_gpio.c ****   **************************************************************************
+  24:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  25:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  26:libraries/drivers/src/at32f403a_407_gpio.c **** #include "at32f403a_407_conf.h"
+  27:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  28:libraries/drivers/src/at32f403a_407_gpio.c **** /** @addtogroup AT32F403A_407_periph_driver
+  29:libraries/drivers/src/at32f403a_407_gpio.c ****   * @{
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 2
+
+
+  30:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  31:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  32:libraries/drivers/src/at32f403a_407_gpio.c **** /** @defgroup GPIO
+  33:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief GPIO driver modules
+  34:libraries/drivers/src/at32f403a_407_gpio.c ****   * @{
+  35:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  36:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  37:libraries/drivers/src/at32f403a_407_gpio.c **** #ifdef GPIO_MODULE_ENABLED
+  38:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  39:libraries/drivers/src/at32f403a_407_gpio.c **** /** @defgroup GPIO_private_functions
+  40:libraries/drivers/src/at32f403a_407_gpio.c ****   * @{
+  41:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  42:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  43:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+  44:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  reset the gpio register
+  45:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+  46:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+  47:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+  48:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+  49:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  50:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_reset(gpio_type *gpio_x)
+  51:libraries/drivers/src/at32f403a_407_gpio.c **** {
+  30              		.loc 1 51 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 51 1 is_stmt 0 view .LVU1
+  35 0000 08B5     		push	{r3, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 3, -8
+  39              		.cfi_offset 14, -4
+  52:libraries/drivers/src/at32f403a_407_gpio.c ****   if(gpio_x == GPIOA)
+  40              		.loc 1 52 3 is_stmt 1 view .LVU2
+  41              		.loc 1 52 5 is_stmt 0 view .LVU3
+  42 0002 1E4B     		ldr	r3, .L13
+  43 0004 9842     		cmp	r0, r3
+  44 0006 0CD0     		beq	.L8
+  53:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+  54:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOA_PERIPH_RESET, TRUE);
+  55:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOA_PERIPH_RESET, FALSE);
+  56:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  57:libraries/drivers/src/at32f403a_407_gpio.c ****   else if(gpio_x == GPIOB)
+  45              		.loc 1 57 8 is_stmt 1 view .LVU4
+  46              		.loc 1 57 10 is_stmt 0 view .LVU5
+  47 0008 1D4B     		ldr	r3, .L13+4
+  48 000a 9842     		cmp	r0, r3
+  49 000c 12D0     		beq	.L9
+  58:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+  59:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOB_PERIPH_RESET, TRUE);
+  60:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOB_PERIPH_RESET, FALSE);
+  61:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  62:libraries/drivers/src/at32f403a_407_gpio.c ****   else if(gpio_x == GPIOC)
+  50              		.loc 1 62 8 is_stmt 1 view .LVU6
+  51              		.loc 1 62 10 is_stmt 0 view .LVU7
+  52 000e 1D4B     		ldr	r3, .L13+8
+  53 0010 9842     		cmp	r0, r3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 3
+
+
+  54 0012 18D0     		beq	.L10
+  63:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+  64:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOC_PERIPH_RESET, TRUE);
+  65:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOC_PERIPH_RESET, FALSE);
+  66:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  67:libraries/drivers/src/at32f403a_407_gpio.c ****   else if(gpio_x == GPIOD)
+  55              		.loc 1 67 8 is_stmt 1 view .LVU8
+  56              		.loc 1 67 10 is_stmt 0 view .LVU9
+  57 0014 1C4B     		ldr	r3, .L13+12
+  58 0016 9842     		cmp	r0, r3
+  59 0018 1ED0     		beq	.L11
+  68:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+  69:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOD_PERIPH_RESET, TRUE);
+  70:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOD_PERIPH_RESET, FALSE);
+  71:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  72:libraries/drivers/src/at32f403a_407_gpio.c ****   else if(gpio_x == GPIOE)
+  60              		.loc 1 72 8 is_stmt 1 view .LVU10
+  61              		.loc 1 72 10 is_stmt 0 view .LVU11
+  62 001a 1C4B     		ldr	r3, .L13+16
+  63 001c 9842     		cmp	r0, r3
+  64 001e 24D0     		beq	.L12
+  65              	.LVL1:
+  66              	.L1:
+  73:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+  74:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOE_PERIPH_RESET, TRUE);
+  75:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOE_PERIPH_RESET, FALSE);
+  76:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  77:libraries/drivers/src/at32f403a_407_gpio.c **** }
+  67              		.loc 1 77 1 view .LVU12
+  68 0020 08BD     		pop	{r3, pc}
+  69              	.LVL2:
+  70              	.L8:
+  54:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOA_PERIPH_RESET, FALSE);
+  71              		.loc 1 54 5 is_stmt 1 view .LVU13
+  72 0022 0121     		movs	r1, #1
+  73 0024 1A48     		ldr	r0, .L13+20
+  74              	.LVL3:
+  54:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOA_PERIPH_RESET, FALSE);
+  75              		.loc 1 54 5 is_stmt 0 view .LVU14
+  76 0026 FFF7FEFF 		bl	crm_periph_reset
+  77              	.LVL4:
+  55:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  78              		.loc 1 55 5 is_stmt 1 view .LVU15
+  79 002a 0021     		movs	r1, #0
+  80 002c 1848     		ldr	r0, .L13+20
+  81 002e FFF7FEFF 		bl	crm_periph_reset
+  82              	.LVL5:
+  83 0032 F5E7     		b	.L1
+  84              	.LVL6:
+  85              	.L9:
+  59:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOB_PERIPH_RESET, FALSE);
+  86              		.loc 1 59 5 view .LVU16
+  87 0034 0121     		movs	r1, #1
+  88 0036 1748     		ldr	r0, .L13+24
+  89              	.LVL7:
+  59:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOB_PERIPH_RESET, FALSE);
+  90              		.loc 1 59 5 is_stmt 0 view .LVU17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 4
+
+
+  91 0038 FFF7FEFF 		bl	crm_periph_reset
+  92              	.LVL8:
+  60:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+  93              		.loc 1 60 5 is_stmt 1 view .LVU18
+  94 003c 0021     		movs	r1, #0
+  95 003e 1548     		ldr	r0, .L13+24
+  96 0040 FFF7FEFF 		bl	crm_periph_reset
+  97              	.LVL9:
+  98 0044 ECE7     		b	.L1
+  99              	.LVL10:
+ 100              	.L10:
+  64:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOC_PERIPH_RESET, FALSE);
+ 101              		.loc 1 64 5 view .LVU19
+ 102 0046 0121     		movs	r1, #1
+ 103 0048 1348     		ldr	r0, .L13+28
+ 104              	.LVL11:
+  64:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOC_PERIPH_RESET, FALSE);
+ 105              		.loc 1 64 5 is_stmt 0 view .LVU20
+ 106 004a FFF7FEFF 		bl	crm_periph_reset
+ 107              	.LVL12:
+  65:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 108              		.loc 1 65 5 is_stmt 1 view .LVU21
+ 109 004e 0021     		movs	r1, #0
+ 110 0050 1148     		ldr	r0, .L13+28
+ 111 0052 FFF7FEFF 		bl	crm_periph_reset
+ 112              	.LVL13:
+ 113 0056 E3E7     		b	.L1
+ 114              	.LVL14:
+ 115              	.L11:
+  69:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOD_PERIPH_RESET, FALSE);
+ 116              		.loc 1 69 5 view .LVU22
+ 117 0058 0121     		movs	r1, #1
+ 118 005a 1048     		ldr	r0, .L13+32
+ 119              	.LVL15:
+  69:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOD_PERIPH_RESET, FALSE);
+ 120              		.loc 1 69 5 is_stmt 0 view .LVU23
+ 121 005c FFF7FEFF 		bl	crm_periph_reset
+ 122              	.LVL16:
+  70:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 123              		.loc 1 70 5 is_stmt 1 view .LVU24
+ 124 0060 0021     		movs	r1, #0
+ 125 0062 0E48     		ldr	r0, .L13+32
+ 126 0064 FFF7FEFF 		bl	crm_periph_reset
+ 127              	.LVL17:
+ 128 0068 DAE7     		b	.L1
+ 129              	.LVL18:
+ 130              	.L12:
+  74:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOE_PERIPH_RESET, FALSE);
+ 131              		.loc 1 74 5 view .LVU25
+ 132 006a 0121     		movs	r1, #1
+ 133 006c 0C48     		ldr	r0, .L13+36
+ 134              	.LVL19:
+  74:libraries/drivers/src/at32f403a_407_gpio.c ****     crm_periph_reset(CRM_GPIOE_PERIPH_RESET, FALSE);
+ 135              		.loc 1 74 5 is_stmt 0 view .LVU26
+ 136 006e FFF7FEFF 		bl	crm_periph_reset
+ 137              	.LVL20:
+  75:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 5
+
+
+ 138              		.loc 1 75 5 is_stmt 1 view .LVU27
+ 139 0072 0021     		movs	r1, #0
+ 140 0074 0A48     		ldr	r0, .L13+36
+ 141 0076 FFF7FEFF 		bl	crm_periph_reset
+ 142              	.LVL21:
+ 143              		.loc 1 77 1 is_stmt 0 view .LVU28
+ 144 007a D1E7     		b	.L1
+ 145              	.L14:
+ 146              		.align	2
+ 147              	.L13:
+ 148 007c 00080140 		.word	1073809408
+ 149 0080 000C0140 		.word	1073810432
+ 150 0084 00100140 		.word	1073811456
+ 151 0088 00140140 		.word	1073812480
+ 152 008c 00180140 		.word	1073813504
+ 153 0090 02000C00 		.word	786434
+ 154 0094 03000C00 		.word	786435
+ 155 0098 04000C00 		.word	786436
+ 156 009c 05000C00 		.word	786437
+ 157 00a0 06000C00 		.word	786438
+ 158              		.cfi_endproc
+ 159              	.LFE134:
+ 161              		.section	.text.gpio_iomux_reset,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	gpio_iomux_reset
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	gpio_iomux_reset:
+ 169              	.LFB135:
+  78:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  79:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+  80:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  reset the mux functions (remap, event control
+  81:libraries/drivers/src/at32f403a_407_gpio.c ****             and exint configuration) registers to their default values.
+  82:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  none
+  83:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+  84:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  85:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_iomux_reset(void)
+  86:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 170              		.loc 1 86 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174 0000 08B5     		push	{r3, lr}
+ 175              	.LCFI1:
+ 176              		.cfi_def_cfa_offset 8
+ 177              		.cfi_offset 3, -8
+ 178              		.cfi_offset 14, -4
+  87:libraries/drivers/src/at32f403a_407_gpio.c ****   crm_periph_reset(CRM_IOMUX_PERIPH_RESET, TRUE);
+ 179              		.loc 1 87 3 view .LVU30
+ 180 0002 0121     		movs	r1, #1
+ 181 0004 4FF44020 		mov	r0, #786432
+ 182 0008 FFF7FEFF 		bl	crm_periph_reset
+ 183              	.LVL22:
+  88:libraries/drivers/src/at32f403a_407_gpio.c ****   crm_periph_reset(CRM_IOMUX_PERIPH_RESET, FALSE);
+ 184              		.loc 1 88 3 view .LVU31
+ 185 000c 0021     		movs	r1, #0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 6
+
+
+ 186 000e 4FF44020 		mov	r0, #786432
+ 187 0012 FFF7FEFF 		bl	crm_periph_reset
+ 188              	.LVL23:
+  89:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 189              		.loc 1 89 1 is_stmt 0 view .LVU32
+ 190 0016 08BD     		pop	{r3, pc}
+ 191              		.cfi_endproc
+ 192              	.LFE135:
+ 194              		.section	.text.gpio_init,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	gpio_init
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	gpio_init:
+ 202              	.LVL24:
+ 203              	.LFB136:
+  90:libraries/drivers/src/at32f403a_407_gpio.c **** 
+  91:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+  92:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  initialize the gpio peripheral.
+  93:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+  94:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+  95:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+  96:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_init_struct: pointer to gpio init structure.
+  97:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+  98:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+  99:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_init(gpio_type *gpio_x, gpio_init_type *gpio_init_struct)
+ 100:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 204              		.loc 1 100 1 is_stmt 1 view -0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 0
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208              		.loc 1 100 1 is_stmt 0 view .LVU34
+ 209 0000 30B5     		push	{r4, r5, lr}
+ 210              	.LCFI2:
+ 211              		.cfi_def_cfa_offset 12
+ 212              		.cfi_offset 4, -12
+ 213              		.cfi_offset 5, -8
+ 214              		.cfi_offset 14, -4
+ 101:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t temp;
+ 215              		.loc 1 101 3 is_stmt 1 view .LVU35
+ 102:libraries/drivers/src/at32f403a_407_gpio.c ****   uint16_t pinx_value, pin_index;
+ 216              		.loc 1 102 3 view .LVU36
+ 103:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 104:libraries/drivers/src/at32f403a_407_gpio.c ****   pin_index = (uint16_t)gpio_init_struct->gpio_pins;
+ 217              		.loc 1 104 3 view .LVU37
+ 218              		.loc 1 104 41 is_stmt 0 view .LVU38
+ 219 0002 0C68     		ldr	r4, [r1]
+ 220              		.loc 1 104 13 view .LVU39
+ 221 0004 A5B2     		uxth	r5, r4
+ 222              	.LVL25:
+ 105:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 106:libraries/drivers/src/at32f403a_407_gpio.c ****   /* pinx_value indecate pin grounp bit[3:0] from modey[1:0] confy[1:0] */
+ 107:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 108:libraries/drivers/src/at32f403a_407_gpio.c ****   /* pin input analog config */
+ 109:libraries/drivers/src/at32f403a_407_gpio.c ****   if(gpio_init_struct->gpio_mode == GPIO_MODE_ANALOG)
+ 223              		.loc 1 109 3 is_stmt 1 view .LVU40
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 7
+
+
+ 224              		.loc 1 109 22 is_stmt 0 view .LVU41
+ 225 0006 8B79     		ldrb	r3, [r1, #6]	@ zero_extendqisi2
+ 226              		.loc 1 109 5 view .LVU42
+ 227 0008 032B     		cmp	r3, #3
+ 228 000a 1AD0     		beq	.L29
+ 110:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 111:libraries/drivers/src/at32f403a_407_gpio.c ****     pinx_value = 0x00;
+ 112:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 113:libraries/drivers/src/at32f403a_407_gpio.c ****   /* pin input config */
+ 114:libraries/drivers/src/at32f403a_407_gpio.c ****   else if(gpio_init_struct->gpio_mode == GPIO_MODE_INPUT)
+ 229              		.loc 1 114 8 is_stmt 1 view .LVU43
+ 230              		.loc 1 114 10 is_stmt 0 view .LVU44
+ 231 000c 5BB9     		cbnz	r3, .L19
+ 115:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 116:libraries/drivers/src/at32f403a_407_gpio.c ****     pinx_value = gpio_init_struct->gpio_pull & 0x0F;
+ 232              		.loc 1 116 5 is_stmt 1 view .LVU45
+ 233              		.loc 1 116 34 is_stmt 0 view .LVU46
+ 234 000e 4B79     		ldrb	r3, [r1, #5]	@ zero_extendqisi2
+ 235              		.loc 1 116 16 view .LVU47
+ 236 0010 03F00F0C 		and	ip, r3, #15
+ 237              	.LVL26:
+ 117:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 118:libraries/drivers/src/at32f403a_407_gpio.c ****     if(gpio_init_struct->gpio_pull == GPIO_PULL_UP)
+ 238              		.loc 1 118 5 is_stmt 1 view .LVU48
+ 239              		.loc 1 118 7 is_stmt 0 view .LVU49
+ 240 0014 182B     		cmp	r3, #24
+ 241 0016 04D0     		beq	.L32
+ 119:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 120:libraries/drivers/src/at32f403a_407_gpio.c ****       gpio_x->scr = pin_index;
+ 121:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 122:libraries/drivers/src/at32f403a_407_gpio.c ****     else if(gpio_init_struct->gpio_pull == GPIO_PULL_DOWN)
+ 242              		.loc 1 122 10 is_stmt 1 view .LVU50
+ 243              		.loc 1 122 12 is_stmt 0 view .LVU51
+ 244 0018 282B     		cmp	r3, #40
+ 245 001a 14D1     		bne	.L18
+ 123:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 124:libraries/drivers/src/at32f403a_407_gpio.c ****       gpio_x->clr = pin_index;
+ 246              		.loc 1 124 7 is_stmt 1 view .LVU52
+ 247 001c A3B2     		uxth	r3, r4
+ 248              		.loc 1 124 19 is_stmt 0 view .LVU53
+ 249 001e 4361     		str	r3, [r0, #20]
+ 250 0020 11E0     		b	.L18
+ 251              	.L32:
+ 120:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 252              		.loc 1 120 7 is_stmt 1 view .LVU54
+ 120:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 253              		.loc 1 120 19 is_stmt 0 view .LVU55
+ 254 0022 0561     		str	r5, [r0, #16]
+ 255 0024 0FE0     		b	.L18
+ 256              	.LVL27:
+ 257              	.L19:
+ 125:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 126:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 127:libraries/drivers/src/at32f403a_407_gpio.c ****   else
+ 128:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 129:libraries/drivers/src/at32f403a_407_gpio.c ****     pinx_value = (gpio_init_struct->gpio_mode & 0x08) | (gpio_init_struct->gpio_out_type & 0x04) | 
+ 258              		.loc 1 129 5 is_stmt 1 view .LVU56
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 8
+
+
+ 259              		.loc 1 129 74 is_stmt 0 view .LVU57
+ 260 0026 91F804C0 		ldrb	ip, [r1, #4]	@ zero_extendqisi2
+ 130:libraries/drivers/src/at32f403a_407_gpio.c ****                  (gpio_init_struct->gpio_drive_strength & 0x03);
+ 261              		.loc 1 130 35 view .LVU58
+ 262 002a CA79     		ldrb	r2, [r1, #7]	@ zero_extendqisi2
+ 129:libraries/drivers/src/at32f403a_407_gpio.c ****                  (gpio_init_struct->gpio_drive_strength & 0x03);
+ 263              		.loc 1 129 16 view .LVU59
+ 264 002c 0CF0040C 		and	ip, ip, #4
+ 265 0030 03F00803 		and	r3, r3, #8
+ 266 0034 4CEA030C 		orr	ip, ip, r3
+ 267 0038 02F00303 		and	r3, r2, #3
+ 268 003c 4CEA030C 		orr	ip, ip, r3
+ 269              	.LVL28:
+ 129:libraries/drivers/src/at32f403a_407_gpio.c ****                  (gpio_init_struct->gpio_drive_strength & 0x03);
+ 270              		.loc 1 129 16 view .LVU60
+ 271 0040 01E0     		b	.L18
+ 272              	.LVL29:
+ 273              	.L29:
+ 111:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 274              		.loc 1 111 16 view .LVU61
+ 275 0042 4FF0000C 		mov	ip, #0
+ 276              	.L18:
+ 277              	.LVL30:
+ 131:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 132:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 133:libraries/drivers/src/at32f403a_407_gpio.c ****   /* pin 0~7 config */
+ 134:libraries/drivers/src/at32f403a_407_gpio.c ****   if(((uint32_t)pin_index & ((uint32_t)0x00FF)) != 0x00)
+ 278              		.loc 1 134 3 is_stmt 1 view .LVU62
+ 279              		.loc 1 134 5 is_stmt 0 view .LVU63
+ 280 0046 14F0FF0F 		tst	r4, #255
+ 281 004a 1BD1     		bne	.L30
+ 282              	.LVL31:
+ 283              	.L22:
+ 135:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 136:libraries/drivers/src/at32f403a_407_gpio.c ****     for(temp = 0; temp < 0x08; temp++)
+ 137:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 138:libraries/drivers/src/at32f403a_407_gpio.c ****       if((1 << temp) & pin_index)
+ 139:libraries/drivers/src/at32f403a_407_gpio.c ****       {
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr &= (uint32_t)~(0x0F << (temp * 4));
+ 141:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 142:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 143:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 144:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 145:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 146:libraries/drivers/src/at32f403a_407_gpio.c ****   /* pin 8~15 config */
+ 147:libraries/drivers/src/at32f403a_407_gpio.c ****   if(pin_index > 0x00ff)
+ 284              		.loc 1 147 3 is_stmt 1 view .LVU64
+ 285              		.loc 1 147 5 is_stmt 0 view .LVU65
+ 286 004c FF2D     		cmp	r5, #255
+ 287 004e 32D9     		bls	.L17
+ 148:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 149:libraries/drivers/src/at32f403a_407_gpio.c ****     pin_index = pin_index >> 8;
+ 288              		.loc 1 149 5 is_stmt 1 view .LVU66
+ 289              		.loc 1 149 15 is_stmt 0 view .LVU67
+ 290 0050 2D0A     		lsrs	r5, r5, #8
+ 291              	.LVL32:
+ 150:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 9
+
+
+ 151:libraries/drivers/src/at32f403a_407_gpio.c ****     for(temp = 0; temp < 0x8; temp++)
+ 292              		.loc 1 151 5 is_stmt 1 view .LVU68
+ 293              		.loc 1 151 14 is_stmt 0 view .LVU69
+ 294 0052 0023     		movs	r3, #0
+ 295              		.loc 1 151 5 view .LVU70
+ 296 0054 19E0     		b	.L26
+ 297              	.LVL33:
+ 298              	.L23:
+ 136:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 299              		.loc 1 136 36 is_stmt 1 discriminator 2 view .LVU71
+ 300 0056 0133     		adds	r3, r3, #1
+ 301              	.LVL34:
+ 302              	.L21:
+ 136:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 303              		.loc 1 136 24 discriminator 1 view .LVU72
+ 304 0058 072B     		cmp	r3, #7
+ 305 005a F7D8     		bhi	.L22
+ 138:libraries/drivers/src/at32f403a_407_gpio.c ****       {
+ 306              		.loc 1 138 7 view .LVU73
+ 138:libraries/drivers/src/at32f403a_407_gpio.c ****       {
+ 307              		.loc 1 138 10 is_stmt 0 view .LVU74
+ 308 005c A2B2     		uxth	r2, r4
+ 309 005e 1A41     		asrs	r2, r2, r3
+ 138:libraries/drivers/src/at32f403a_407_gpio.c ****       {
+ 310              		.loc 1 138 9 view .LVU75
+ 311 0060 12F0010F 		tst	r2, #1
+ 312 0064 F7D0     		beq	.L23
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 313              		.loc 1 140 9 is_stmt 1 view .LVU76
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 314              		.loc 1 140 15 is_stmt 0 view .LVU77
+ 315 0066 0168     		ldr	r1, [r0]
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 316              		.loc 1 140 52 view .LVU78
+ 317 0068 9A00     		lsls	r2, r3, #2
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 318              		.loc 1 140 43 view .LVU79
+ 319 006a 4FF00F0E 		mov	lr, #15
+ 320 006e 0EFA02FE 		lsl	lr, lr, r2
+ 140:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfglr |= (uint32_t)(pinx_value << (temp * 4));
+ 321              		.loc 1 140 23 view .LVU80
+ 322 0072 21EA0E01 		bic	r1, r1, lr
+ 323 0076 0160     		str	r1, [r0]
+ 141:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 324              		.loc 1 141 9 is_stmt 1 view .LVU81
+ 141:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 325              		.loc 1 141 15 is_stmt 0 view .LVU82
+ 326 0078 0168     		ldr	r1, [r0]
+ 141:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 327              		.loc 1 141 48 view .LVU83
+ 328 007a 0CFA02F2 		lsl	r2, ip, r2
+ 141:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 329              		.loc 1 141 23 view .LVU84
+ 330 007e 0A43     		orrs	r2, r2, r1
+ 331 0080 0260     		str	r2, [r0]
+ 332 0082 E8E7     		b	.L23
+ 333              	.LVL35:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 10
+
+
+ 334              	.L30:
+ 136:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 335              		.loc 1 136 14 view .LVU85
+ 336 0084 0023     		movs	r3, #0
+ 337 0086 E7E7     		b	.L21
+ 338              	.LVL36:
+ 339              	.L27:
+ 340              		.loc 1 151 35 is_stmt 1 discriminator 2 view .LVU86
+ 341 0088 0133     		adds	r3, r3, #1
+ 342              	.LVL37:
+ 343              	.L26:
+ 344              		.loc 1 151 24 discriminator 1 view .LVU87
+ 345 008a 072B     		cmp	r3, #7
+ 346 008c 13D8     		bhi	.L17
+ 152:libraries/drivers/src/at32f403a_407_gpio.c ****     {
+ 153:libraries/drivers/src/at32f403a_407_gpio.c ****       if((1 << temp) & pin_index)
+ 347              		.loc 1 153 7 view .LVU88
+ 348              		.loc 1 153 10 is_stmt 0 view .LVU89
+ 349 008e 45FA03F2 		asr	r2, r5, r3
+ 350              		.loc 1 153 9 view .LVU90
+ 351 0092 12F0010F 		tst	r2, #1
+ 352 0096 F7D0     		beq	.L27
+ 154:libraries/drivers/src/at32f403a_407_gpio.c ****       {
+ 155:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfghr &= (uint32_t)~(0xf << (temp * 4));
+ 353              		.loc 1 155 9 is_stmt 1 view .LVU91
+ 354              		.loc 1 155 15 is_stmt 0 view .LVU92
+ 355 0098 4168     		ldr	r1, [r0, #4]
+ 356              		.loc 1 155 51 view .LVU93
+ 357 009a 9A00     		lsls	r2, r3, #2
+ 358              		.loc 1 155 42 view .LVU94
+ 359 009c 4FF00F0E 		mov	lr, #15
+ 360 00a0 0EFA02FE 		lsl	lr, lr, r2
+ 361              		.loc 1 155 23 view .LVU95
+ 362 00a4 21EA0E01 		bic	r1, r1, lr
+ 363 00a8 4160     		str	r1, [r0, #4]
+ 156:libraries/drivers/src/at32f403a_407_gpio.c ****         gpio_x->cfghr |= (uint32_t)(pinx_value << (temp * 4));
+ 364              		.loc 1 156 9 is_stmt 1 view .LVU96
+ 365              		.loc 1 156 15 is_stmt 0 view .LVU97
+ 366 00aa 4168     		ldr	r1, [r0, #4]
+ 367              		.loc 1 156 48 view .LVU98
+ 368 00ac 0CFA02F2 		lsl	r2, ip, r2
+ 369              		.loc 1 156 23 view .LVU99
+ 370 00b0 0A43     		orrs	r2, r2, r1
+ 371 00b2 4260     		str	r2, [r0, #4]
+ 372 00b4 E8E7     		b	.L27
+ 373              	.LVL38:
+ 374              	.L17:
+ 157:libraries/drivers/src/at32f403a_407_gpio.c ****       }
+ 158:libraries/drivers/src/at32f403a_407_gpio.c ****     }
+ 159:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 160:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 375              		.loc 1 160 1 view .LVU100
+ 376 00b6 30BD     		pop	{r4, r5, pc}
+ 377              		.loc 1 160 1 view .LVU101
+ 378              		.cfi_endproc
+ 379              	.LFE136:
+ 381              		.section	.text.gpio_default_para_init,"ax",%progbits
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 11
+
+
+ 382              		.align	1
+ 383              		.global	gpio_default_para_init
+ 384              		.syntax unified
+ 385              		.thumb
+ 386              		.thumb_func
+ 388              	gpio_default_para_init:
+ 389              	.LVL39:
+ 390              	.LFB137:
+ 161:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 162:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 163:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  fill each gpio_init_type member with its default value.
+ 164:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_init_struct : pointer to a gpio_init_type structure which will be initialized.
+ 165:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 166:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 167:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_default_para_init(gpio_init_type *gpio_init_struct)
+ 168:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 391              		.loc 1 168 1 is_stmt 1 view -0
+ 392              		.cfi_startproc
+ 393              		@ args = 0, pretend = 0, frame = 0
+ 394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 395              		@ link register save eliminated.
+ 169:libraries/drivers/src/at32f403a_407_gpio.c ****   /* reset gpio init structure parameters values */
+ 170:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_init_struct->gpio_pins  = GPIO_PINS_ALL;
+ 396              		.loc 1 170 3 view .LVU103
+ 397              		.loc 1 170 32 is_stmt 0 view .LVU104
+ 398 0000 4FF6FF73 		movw	r3, #65535
+ 399 0004 0360     		str	r3, [r0]
+ 171:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_init_struct->gpio_mode = GPIO_MODE_INPUT;
+ 400              		.loc 1 171 3 is_stmt 1 view .LVU105
+ 401              		.loc 1 171 31 is_stmt 0 view .LVU106
+ 402 0006 0023     		movs	r3, #0
+ 403 0008 8371     		strb	r3, [r0, #6]
+ 172:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_init_struct->gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+ 404              		.loc 1 172 3 is_stmt 1 view .LVU107
+ 405              		.loc 1 172 35 is_stmt 0 view .LVU108
+ 406 000a 0371     		strb	r3, [r0, #4]
+ 173:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_init_struct->gpio_pull = GPIO_PULL_NONE;
+ 407              		.loc 1 173 3 is_stmt 1 view .LVU109
+ 408              		.loc 1 173 31 is_stmt 0 view .LVU110
+ 409 000c 0423     		movs	r3, #4
+ 410 000e 4371     		strb	r3, [r0, #5]
+ 174:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_init_struct->gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+ 411              		.loc 1 174 3 is_stmt 1 view .LVU111
+ 412              		.loc 1 174 41 is_stmt 0 view .LVU112
+ 413 0010 0123     		movs	r3, #1
+ 414 0012 C371     		strb	r3, [r0, #7]
+ 175:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 415              		.loc 1 175 1 view .LVU113
+ 416 0014 7047     		bx	lr
+ 417              		.cfi_endproc
+ 418              	.LFE137:
+ 420              		.section	.text.gpio_input_data_bit_read,"ax",%progbits
+ 421              		.align	1
+ 422              		.global	gpio_input_data_bit_read
+ 423              		.syntax unified
+ 424              		.thumb
+ 425              		.thumb_func
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 12
+
+
+ 427              	gpio_input_data_bit_read:
+ 428              	.LVL40:
+ 429              	.LFB138:
+ 176:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 177:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 178:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  read the specified input port pin.
+ 179:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 180:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 181:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 182:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 183:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 184:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 185:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 186:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 187:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 188:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 189:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 190:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 191:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 192:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 193:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 194:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 195:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 196:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 197:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 198:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 199:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 200:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval flag_status (SET or RESET)
+ 201:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 202:libraries/drivers/src/at32f403a_407_gpio.c **** flag_status gpio_input_data_bit_read(gpio_type *gpio_x, uint16_t pins)
+ 203:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 430              		.loc 1 203 1 is_stmt 1 view -0
+ 431              		.cfi_startproc
+ 432              		@ args = 0, pretend = 0, frame = 0
+ 433              		@ frame_needed = 0, uses_anonymous_args = 0
+ 434              		@ link register save eliminated.
+ 204:libraries/drivers/src/at32f403a_407_gpio.c ****   flag_status status = RESET;
+ 435              		.loc 1 204 3 view .LVU115
+ 205:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 206:libraries/drivers/src/at32f403a_407_gpio.c ****   if(pins != (pins & gpio_x->idt))
+ 436              		.loc 1 206 3 view .LVU116
+ 437              		.loc 1 206 28 is_stmt 0 view .LVU117
+ 438 0000 8368     		ldr	r3, [r0, #8]
+ 439              		.loc 1 206 5 view .LVU118
+ 440 0002 9943     		bics	r1, r1, r3
+ 441              	.LVL41:
+ 442              		.loc 1 206 5 view .LVU119
+ 443 0004 01D0     		beq	.L36
+ 207:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 208:libraries/drivers/src/at32f403a_407_gpio.c ****     status = RESET;
+ 444              		.loc 1 208 12 view .LVU120
+ 445 0006 0020     		movs	r0, #0
+ 446              	.LVL42:
+ 447              		.loc 1 208 12 view .LVU121
+ 448 0008 7047     		bx	lr
+ 449              	.LVL43:
+ 450              	.L36:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 13
+
+
+ 209:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 210:libraries/drivers/src/at32f403a_407_gpio.c ****   else
+ 211:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 212:libraries/drivers/src/at32f403a_407_gpio.c ****     status = SET;
+ 451              		.loc 1 212 12 view .LVU122
+ 452 000a 0120     		movs	r0, #1
+ 453              	.LVL44:
+ 213:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 214:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 215:libraries/drivers/src/at32f403a_407_gpio.c ****   return status;
+ 454              		.loc 1 215 3 is_stmt 1 view .LVU123
+ 216:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 455              		.loc 1 216 1 is_stmt 0 view .LVU124
+ 456 000c 7047     		bx	lr
+ 457              		.cfi_endproc
+ 458              	.LFE138:
+ 460              		.section	.text.gpio_input_data_read,"ax",%progbits
+ 461              		.align	1
+ 462              		.global	gpio_input_data_read
+ 463              		.syntax unified
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	gpio_input_data_read:
+ 468              	.LVL45:
+ 469              	.LFB139:
+ 217:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 218:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 219:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  read the specified gpio input data port.
+ 220:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 221:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 222:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 223:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval gpio input data port value.
+ 224:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 225:libraries/drivers/src/at32f403a_407_gpio.c **** uint16_t gpio_input_data_read(gpio_type *gpio_x)
+ 226:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 470              		.loc 1 226 1 is_stmt 1 view -0
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 0
+ 473              		@ frame_needed = 0, uses_anonymous_args = 0
+ 474              		@ link register save eliminated.
+ 227:libraries/drivers/src/at32f403a_407_gpio.c ****   return ((uint16_t)(gpio_x->idt));
+ 475              		.loc 1 227 3 view .LVU126
+ 476              		.loc 1 227 28 is_stmt 0 view .LVU127
+ 477 0000 8068     		ldr	r0, [r0, #8]
+ 478              	.LVL46:
+ 228:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 479              		.loc 1 228 1 view .LVU128
+ 480 0002 80B2     		uxth	r0, r0
+ 481 0004 7047     		bx	lr
+ 482              		.cfi_endproc
+ 483              	.LFE139:
+ 485              		.section	.text.gpio_output_data_bit_read,"ax",%progbits
+ 486              		.align	1
+ 487              		.global	gpio_output_data_bit_read
+ 488              		.syntax unified
+ 489              		.thumb
+ 490              		.thumb_func
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 14
+
+
+ 492              	gpio_output_data_bit_read:
+ 493              	.LVL47:
+ 494              	.LFB140:
+ 229:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 230:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 231:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  read the specified output port pin.
+ 232:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 233:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 234:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 235:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 236:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 237:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 238:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 239:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 240:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 241:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 242:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 243:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 244:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 245:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 246:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 247:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 248:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 249:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 250:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 251:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 252:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 253:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval flag_status (SET or RESET)
+ 254:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 255:libraries/drivers/src/at32f403a_407_gpio.c **** flag_status gpio_output_data_bit_read(gpio_type *gpio_x, uint16_t pins)
+ 256:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 495              		.loc 1 256 1 is_stmt 1 view -0
+ 496              		.cfi_startproc
+ 497              		@ args = 0, pretend = 0, frame = 0
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 499              		@ link register save eliminated.
+ 257:libraries/drivers/src/at32f403a_407_gpio.c ****   flag_status status = RESET;
+ 500              		.loc 1 257 3 view .LVU130
+ 258:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 259:libraries/drivers/src/at32f403a_407_gpio.c ****   if((gpio_x->odt & pins) != RESET)
+ 501              		.loc 1 259 3 view .LVU131
+ 502              		.loc 1 259 13 is_stmt 0 view .LVU132
+ 503 0000 C368     		ldr	r3, [r0, #12]
+ 504              		.loc 1 259 5 view .LVU133
+ 505 0002 1942     		tst	r1, r3
+ 506 0004 01D0     		beq	.L40
+ 260:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 261:libraries/drivers/src/at32f403a_407_gpio.c ****     status = SET;
+ 507              		.loc 1 261 12 view .LVU134
+ 508 0006 0120     		movs	r0, #1
+ 509              	.LVL48:
+ 510              		.loc 1 261 12 view .LVU135
+ 511 0008 7047     		bx	lr
+ 512              	.LVL49:
+ 513              	.L40:
+ 262:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 263:libraries/drivers/src/at32f403a_407_gpio.c ****   else
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 15
+
+
+ 264:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 265:libraries/drivers/src/at32f403a_407_gpio.c ****     status = RESET;
+ 514              		.loc 1 265 12 view .LVU136
+ 515 000a 0020     		movs	r0, #0
+ 516              	.LVL50:
+ 266:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 267:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 268:libraries/drivers/src/at32f403a_407_gpio.c ****   return status;
+ 517              		.loc 1 268 3 is_stmt 1 view .LVU137
+ 269:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 518              		.loc 1 269 1 is_stmt 0 view .LVU138
+ 519 000c 7047     		bx	lr
+ 520              		.cfi_endproc
+ 521              	.LFE140:
+ 523              		.section	.text.gpio_output_data_read,"ax",%progbits
+ 524              		.align	1
+ 525              		.global	gpio_output_data_read
+ 526              		.syntax unified
+ 527              		.thumb
+ 528              		.thumb_func
+ 530              	gpio_output_data_read:
+ 531              	.LVL51:
+ 532              	.LFB141:
+ 270:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 271:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 272:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  read the specified gpio ouput data port.
+ 273:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 274:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 275:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 276:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval gpio input data port value.
+ 277:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 278:libraries/drivers/src/at32f403a_407_gpio.c **** uint16_t gpio_output_data_read(gpio_type *gpio_x)
+ 279:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 533              		.loc 1 279 1 is_stmt 1 view -0
+ 534              		.cfi_startproc
+ 535              		@ args = 0, pretend = 0, frame = 0
+ 536              		@ frame_needed = 0, uses_anonymous_args = 0
+ 537              		@ link register save eliminated.
+ 280:libraries/drivers/src/at32f403a_407_gpio.c ****   return ((uint16_t)(gpio_x->odt));
+ 538              		.loc 1 280 3 view .LVU140
+ 539              		.loc 1 280 28 is_stmt 0 view .LVU141
+ 540 0000 C068     		ldr	r0, [r0, #12]
+ 541              	.LVL52:
+ 281:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 542              		.loc 1 281 1 view .LVU142
+ 543 0002 80B2     		uxth	r0, r0
+ 544 0004 7047     		bx	lr
+ 545              		.cfi_endproc
+ 546              	.LFE141:
+ 548              		.section	.text.gpio_bits_set,"ax",%progbits
+ 549              		.align	1
+ 550              		.global	gpio_bits_set
+ 551              		.syntax unified
+ 552              		.thumb
+ 553              		.thumb_func
+ 555              	gpio_bits_set:
+ 556              	.LVL53:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 16
+
+
+ 557              	.LFB142:
+ 282:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 283:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 284:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  set the selected data port bits.
+ 285:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 286:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 287:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 288:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 289:libraries/drivers/src/at32f403a_407_gpio.c ****   *         parameter can be any combination of gpio_pin_x, gpio_pin_x as following values:
+ 290:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 291:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 292:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 293:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 294:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 295:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 296:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 297:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 298:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 299:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 300:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 301:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 302:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 303:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 304:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 305:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 306:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 307:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 308:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 309:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_bits_set(gpio_type *gpio_x, uint16_t pins)
+ 310:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 558              		.loc 1 310 1 is_stmt 1 view -0
+ 559              		.cfi_startproc
+ 560              		@ args = 0, pretend = 0, frame = 0
+ 561              		@ frame_needed = 0, uses_anonymous_args = 0
+ 562              		@ link register save eliminated.
+ 311:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->scr = pins;
+ 563              		.loc 1 311 3 view .LVU144
+ 564              		.loc 1 311 15 is_stmt 0 view .LVU145
+ 565 0000 0161     		str	r1, [r0, #16]
+ 312:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 566              		.loc 1 312 1 view .LVU146
+ 567 0002 7047     		bx	lr
+ 568              		.cfi_endproc
+ 569              	.LFE142:
+ 571              		.section	.text.gpio_bits_reset,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	gpio_bits_reset
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 578              	gpio_bits_reset:
+ 579              	.LVL54:
+ 580              	.LFB143:
+ 313:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 314:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 315:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  clear the selected data port bits.
+ 316:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 17
+
+
+ 317:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 318:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 319:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 320:libraries/drivers/src/at32f403a_407_gpio.c ****   *         parameter can be any combination of gpio_pin_x, gpio_pin_x as following values:
+ 321:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 322:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 323:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 324:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 325:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 326:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 327:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 328:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 329:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 330:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 331:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 332:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 333:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 334:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 335:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 336:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 337:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 338:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 339:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 340:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_bits_reset(gpio_type *gpio_x, uint16_t pins)
+ 341:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 581              		.loc 1 341 1 is_stmt 1 view -0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		@ link register save eliminated.
+ 342:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->clr = pins;
+ 586              		.loc 1 342 3 view .LVU148
+ 587              		.loc 1 342 15 is_stmt 0 view .LVU149
+ 588 0000 4161     		str	r1, [r0, #20]
+ 343:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 589              		.loc 1 343 1 view .LVU150
+ 590 0002 7047     		bx	lr
+ 591              		.cfi_endproc
+ 592              	.LFE143:
+ 594              		.section	.text.gpio_bits_toggle,"ax",%progbits
+ 595              		.align	1
+ 596              		.global	gpio_bits_toggle
+ 597              		.syntax unified
+ 598              		.thumb
+ 599              		.thumb_func
+ 601              	gpio_bits_toggle:
+ 602              	.LVL55:
+ 603              	.LFB144:
+ 344:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 345:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 346:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  toggle the selected data port bits.
+ 347:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 348:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 349:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 350:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 351:libraries/drivers/src/at32f403a_407_gpio.c ****   *         parameter can be any combination of gpio_pin_x, gpio_pin_x as following values:
+ 352:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 18
+
+
+ 353:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 354:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 355:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 356:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 357:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 358:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 359:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 360:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 361:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 362:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 363:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 364:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 365:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 366:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 367:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 368:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 369:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 370:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 371:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_bits_toggle(gpio_type *gpio_x, uint16_t pins)
+ 372:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 604              		.loc 1 372 1 is_stmt 1 view -0
+ 605              		.cfi_startproc
+ 606              		@ args = 0, pretend = 0, frame = 0
+ 607              		@ frame_needed = 0, uses_anonymous_args = 0
+ 608              		@ link register save eliminated.
+ 373:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t odt = gpio_x->odt;
+ 609              		.loc 1 373 3 view .LVU152
+ 610              		.loc 1 373 12 is_stmt 0 view .LVU153
+ 611 0000 C368     		ldr	r3, [r0, #12]
+ 612              	.LVL56:
+ 374:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 375:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->scr = ((odt & pins) << 16) | (~odt & pins);
+ 613              		.loc 1 375 3 is_stmt 1 view .LVU154
+ 614              		.loc 1 375 23 is_stmt 0 view .LVU155
+ 615 0002 01EA0302 		and	r2, r1, r3
+ 616              		.loc 1 375 46 view .LVU156
+ 617 0006 21EA0301 		bic	r1, r1, r3
+ 618              	.LVL57:
+ 619              		.loc 1 375 38 view .LVU157
+ 620 000a 41EA0241 		orr	r1, r1, r2, lsl #16
+ 621              		.loc 1 375 15 view .LVU158
+ 622 000e 0161     		str	r1, [r0, #16]
+ 376:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 623              		.loc 1 376 1 view .LVU159
+ 624 0010 7047     		bx	lr
+ 625              		.cfi_endproc
+ 626              	.LFE144:
+ 628              		.section	.text.gpio_bits_write,"ax",%progbits
+ 629              		.align	1
+ 630              		.global	gpio_bits_write
+ 631              		.syntax unified
+ 632              		.thumb
+ 633              		.thumb_func
+ 635              	gpio_bits_write:
+ 636              	.LVL58:
+ 637              	.LFB145:
+ 377:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 19
+
+
+ 378:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 379:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  set or clear the selected data port bit.
+ 380:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 381:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 382:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 383:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 384:libraries/drivers/src/at32f403a_407_gpio.c ****   *         parameter can be any combination of gpio_pin_x, gpio_pin_x as following values:
+ 385:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 386:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 387:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 388:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 389:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 390:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 391:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 392:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 393:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 394:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 395:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 396:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 397:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 398:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 399:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 400:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 401:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 402:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  bit_state: specifies the value to be written to the selected bit (TRUE or FALSE).
+ 403:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 404:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 405:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_bits_write(gpio_type *gpio_x, uint16_t pins, confirm_state bit_state)
+ 406:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 638              		.loc 1 406 1 is_stmt 1 view -0
+ 639              		.cfi_startproc
+ 640              		@ args = 0, pretend = 0, frame = 0
+ 641              		@ frame_needed = 0, uses_anonymous_args = 0
+ 642              		@ link register save eliminated.
+ 407:libraries/drivers/src/at32f403a_407_gpio.c ****   if(bit_state != FALSE)
+ 643              		.loc 1 407 3 view .LVU161
+ 644              		.loc 1 407 5 is_stmt 0 view .LVU162
+ 645 0000 0AB1     		cbz	r2, .L46
+ 408:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 409:libraries/drivers/src/at32f403a_407_gpio.c ****     gpio_x->scr = pins;
+ 646              		.loc 1 409 5 is_stmt 1 view .LVU163
+ 647              		.loc 1 409 17 is_stmt 0 view .LVU164
+ 648 0002 0161     		str	r1, [r0, #16]
+ 649 0004 7047     		bx	lr
+ 650              	.L46:
+ 410:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 411:libraries/drivers/src/at32f403a_407_gpio.c ****   else
+ 412:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 413:libraries/drivers/src/at32f403a_407_gpio.c ****     gpio_x->clr = pins;
+ 651              		.loc 1 413 5 is_stmt 1 view .LVU165
+ 652              		.loc 1 413 17 is_stmt 0 view .LVU166
+ 653 0006 4161     		str	r1, [r0, #20]
+ 414:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 415:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 654              		.loc 1 415 1 view .LVU167
+ 655 0008 7047     		bx	lr
+ 656              		.cfi_endproc
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 20
+
+
+ 657              	.LFE145:
+ 659              		.section	.text.gpio_port_write,"ax",%progbits
+ 660              		.align	1
+ 661              		.global	gpio_port_write
+ 662              		.syntax unified
+ 663              		.thumb
+ 664              		.thumb_func
+ 666              	gpio_port_write:
+ 667              	.LVL59:
+ 668              	.LFB146:
+ 416:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 417:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 418:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  write data to the specified gpio data port.
+ 419:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 420:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 421:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 422:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  port_value: specifies the value to be written to the port output data register.
+ 423:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 424:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 425:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_port_write(gpio_type *gpio_x, uint16_t port_value)
+ 426:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 669              		.loc 1 426 1 is_stmt 1 view -0
+ 670              		.cfi_startproc
+ 671              		@ args = 0, pretend = 0, frame = 0
+ 672              		@ frame_needed = 0, uses_anonymous_args = 0
+ 673              		@ link register save eliminated.
+ 427:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->odt = port_value;
+ 674              		.loc 1 427 3 view .LVU169
+ 675              		.loc 1 427 15 is_stmt 0 view .LVU170
+ 676 0000 C160     		str	r1, [r0, #12]
+ 428:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 677              		.loc 1 428 1 view .LVU171
+ 678 0002 7047     		bx	lr
+ 679              		.cfi_endproc
+ 680              	.LFE146:
+ 682              		.section	.text.gpio_pin_wp_config,"ax",%progbits
+ 683              		.align	1
+ 684              		.global	gpio_pin_wp_config
+ 685              		.syntax unified
+ 686              		.thumb
+ 687              		.thumb_func
+ 689              	gpio_pin_wp_config:
+ 690              	.LVL60:
+ 691              	.LFB147:
+ 429:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 430:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 431:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  write protect gpio pins configuration registers.
+ 432:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 433:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 434:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 435:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 436:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be any combination of the following:
+ 437:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 438:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 439:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 440:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 441:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 21
+
+
+ 442:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 443:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 444:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 445:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 446:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 447:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 448:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 449:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 450:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 451:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 452:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 453:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 454:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 455:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 456:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_pin_wp_config(gpio_type *gpio_x, uint16_t pins)
+ 457:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 692              		.loc 1 457 1 is_stmt 1 view -0
+ 693              		.cfi_startproc
+ 694              		@ args = 0, pretend = 0, frame = 0
+ 695              		@ frame_needed = 0, uses_anonymous_args = 0
+ 696              		@ link register save eliminated.
+ 458:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t temp = 0x00010000;
+ 697              		.loc 1 458 3 view .LVU173
+ 459:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 460:libraries/drivers/src/at32f403a_407_gpio.c ****   temp |= pins;
+ 698              		.loc 1 460 3 view .LVU174
+ 699              		.loc 1 460 8 is_stmt 0 view .LVU175
+ 700 0000 41F48033 		orr	r3, r1, #65536
+ 701              	.LVL61:
+ 461:libraries/drivers/src/at32f403a_407_gpio.c ****   /* set wpen bit */
+ 462:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->wpr = temp;
+ 702              		.loc 1 462 3 is_stmt 1 view .LVU176
+ 703              		.loc 1 462 15 is_stmt 0 view .LVU177
+ 704 0004 8361     		str	r3, [r0, #24]
+ 463:libraries/drivers/src/at32f403a_407_gpio.c ****   /* reset wpen bit */
+ 464:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->wpr =  pins;
+ 705              		.loc 1 464 3 is_stmt 1 view .LVU178
+ 706              		.loc 1 464 15 is_stmt 0 view .LVU179
+ 707 0006 8161     		str	r1, [r0, #24]
+ 465:libraries/drivers/src/at32f403a_407_gpio.c ****   /* set wpen bit */
+ 466:libraries/drivers/src/at32f403a_407_gpio.c ****   gpio_x->wpr = temp;
+ 708              		.loc 1 466 3 is_stmt 1 view .LVU180
+ 709              		.loc 1 466 15 is_stmt 0 view .LVU181
+ 710 0008 8361     		str	r3, [r0, #24]
+ 467:libraries/drivers/src/at32f403a_407_gpio.c ****   /* read wpen bit*/
+ 468:libraries/drivers/src/at32f403a_407_gpio.c ****   temp = gpio_x->wpr;
+ 711              		.loc 1 468 3 is_stmt 1 view .LVU182
+ 712              		.loc 1 468 8 is_stmt 0 view .LVU183
+ 713 000a 8369     		ldr	r3, [r0, #24]
+ 714              	.LVL62:
+ 469:libraries/drivers/src/at32f403a_407_gpio.c ****   /* read wpen bit*/
+ 470:libraries/drivers/src/at32f403a_407_gpio.c ****   temp = gpio_x->wpr;
+ 715              		.loc 1 470 3 is_stmt 1 view .LVU184
+ 716              		.loc 1 470 8 is_stmt 0 view .LVU185
+ 717 000c 8369     		ldr	r3, [r0, #24]
+ 471:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 718              		.loc 1 471 1 view .LVU186
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 22
+
+
+ 719 000e 7047     		bx	lr
+ 720              		.cfi_endproc
+ 721              	.LFE147:
+ 723              		.section	.text.gpio_pins_huge_driven_config,"ax",%progbits
+ 724              		.align	1
+ 725              		.global	gpio_pins_huge_driven_config
+ 726              		.syntax unified
+ 727              		.thumb
+ 728              		.thumb_func
+ 730              	gpio_pins_huge_driven_config:
+ 731              	.LVL63:
+ 732              	.LFB148:
+ 472:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 473:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 474:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  enable or disable gpio pins huge driven.
+ 475:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_x: to select the gpio peripheral.
+ 476:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 477:libraries/drivers/src/at32f403a_407_gpio.c ****   *         GPIOA, GPIOB, GPIOC, GPIOD, GPIOE.
+ 478:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  pins: gpio pin number
+ 479:libraries/drivers/src/at32f403a_407_gpio.c ****   *         parameter can be any combination of gpio_pin_x, gpio_pin_x as following values:
+ 480:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_0
+ 481:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_1
+ 482:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_2
+ 483:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_3
+ 484:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_4
+ 485:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_5
+ 486:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_6
+ 487:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_7
+ 488:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_8
+ 489:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_9
+ 490:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_10
+ 491:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_11
+ 492:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_12
+ 493:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_13
+ 494:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_14
+ 495:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_15
+ 496:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_ALL
+ 497:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  new_state: new state of the slew rate.
+ 498:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be: true or false.
+ 499:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 500:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 501:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_pins_huge_driven_config(gpio_type *gpio_x, uint16_t pins, confirm_state new_state)
+ 502:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 733              		.loc 1 502 1 is_stmt 1 view -0
+ 734              		.cfi_startproc
+ 735              		@ args = 0, pretend = 0, frame = 0
+ 736              		@ frame_needed = 0, uses_anonymous_args = 0
+ 737              		@ link register save eliminated.
+ 503:libraries/drivers/src/at32f403a_407_gpio.c ****   if(new_state != FALSE)
+ 738              		.loc 1 503 3 view .LVU188
+ 739              		.loc 1 503 5 is_stmt 0 view .LVU189
+ 740 0000 1AB1     		cbz	r2, .L51
+ 504:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 505:libraries/drivers/src/at32f403a_407_gpio.c ****     gpio_x->hdrv |= pins;
+ 741              		.loc 1 505 5 is_stmt 1 view .LVU190
+ 742              		.loc 1 505 11 is_stmt 0 view .LVU191
+ 743 0002 C36B     		ldr	r3, [r0, #60]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 23
+
+
+ 744              		.loc 1 505 18 view .LVU192
+ 745 0004 1943     		orrs	r1, r1, r3
+ 746              	.LVL64:
+ 747              		.loc 1 505 18 view .LVU193
+ 748 0006 C163     		str	r1, [r0, #60]
+ 749 0008 7047     		bx	lr
+ 750              	.LVL65:
+ 751              	.L51:
+ 506:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 507:libraries/drivers/src/at32f403a_407_gpio.c ****   else
+ 508:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 509:libraries/drivers/src/at32f403a_407_gpio.c ****     gpio_x->hdrv &= ~pins;
+ 752              		.loc 1 509 5 is_stmt 1 view .LVU194
+ 753              		.loc 1 509 11 is_stmt 0 view .LVU195
+ 754 000a C36B     		ldr	r3, [r0, #60]
+ 755              		.loc 1 509 18 view .LVU196
+ 756 000c 23EA0103 		bic	r3, r3, r1
+ 757 0010 C363     		str	r3, [r0, #60]
+ 510:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 511:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 758              		.loc 1 511 1 view .LVU197
+ 759 0012 7047     		bx	lr
+ 760              		.cfi_endproc
+ 761              	.LFE148:
+ 763              		.section	.text.gpio_event_output_config,"ax",%progbits
+ 764              		.align	1
+ 765              		.global	gpio_event_output_config
+ 766              		.syntax unified
+ 767              		.thumb
+ 768              		.thumb_func
+ 770              	gpio_event_output_config:
+ 771              	.LVL66:
+ 772              	.LFB149:
+ 512:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 513:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 514:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  select the gpio pin used as event output.
+ 515:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_port_source: select the gpio port to be used as source
+ 516:libraries/drivers/src/at32f403a_407_gpio.c ****   *         for event output.
+ 517:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 518:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOA
+ 519:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOB
+ 520:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOC
+ 521:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOD
+ 522:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOE
+ 523:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_pin_source: specifies the pin for the event output.
+ 524:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 525:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE0
+ 526:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE1
+ 527:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE2
+ 528:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE3
+ 529:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE4
+ 530:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE5
+ 531:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE6
+ 532:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE7
+ 533:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE8
+ 534:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE9
+ 535:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 24
+
+
+ 536:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE11
+ 537:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE12
+ 538:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE13
+ 539:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE14
+ 540:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE15
+ 541:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 542:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 543:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_event_output_config(gpio_port_source_type gpio_port_source, gpio_pins_source_type gpio_pi
+ 544:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 773              		.loc 1 544 1 is_stmt 1 view -0
+ 774              		.cfi_startproc
+ 775              		@ args = 0, pretend = 0, frame = 0
+ 776              		@ frame_needed = 0, uses_anonymous_args = 0
+ 777              		@ link register save eliminated.
+ 545:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t tmpreg = 0x00;
+ 778              		.loc 1 545 3 view .LVU199
+ 546:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 547:libraries/drivers/src/at32f403a_407_gpio.c ****   tmpreg = IOMUX->evtout;
+ 779              		.loc 1 547 3 view .LVU200
+ 780              		.loc 1 547 10 is_stmt 0 view .LVU201
+ 781 0000 044A     		ldr	r2, .L54
+ 782 0002 1368     		ldr	r3, [r2]
+ 783              	.LVL67:
+ 548:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 549:libraries/drivers/src/at32f403a_407_gpio.c ****   /* clear the port[6:4] and pin[3:0] bits */
+ 550:libraries/drivers/src/at32f403a_407_gpio.c ****   tmpreg &= 0x80;
+ 784              		.loc 1 550 3 is_stmt 1 view .LVU202
+ 785              		.loc 1 550 10 is_stmt 0 view .LVU203
+ 786 0004 03F08003 		and	r3, r3, #128
+ 787              	.LVL68:
+ 551:libraries/drivers/src/at32f403a_407_gpio.c ****   tmpreg |= (uint32_t)gpio_port_source << 0x04;
+ 788              		.loc 1 551 3 is_stmt 1 view .LVU204
+ 789              		.loc 1 551 10 is_stmt 0 view .LVU205
+ 790 0008 43EA0013 		orr	r3, r3, r0, lsl #4
+ 791              	.LVL69:
+ 552:libraries/drivers/src/at32f403a_407_gpio.c ****   tmpreg |= gpio_pin_source;
+ 792              		.loc 1 552 3 is_stmt 1 view .LVU206
+ 793              		.loc 1 552 10 is_stmt 0 view .LVU207
+ 794 000c 1943     		orrs	r1, r1, r3
+ 795              	.LVL70:
+ 553:libraries/drivers/src/at32f403a_407_gpio.c ****   IOMUX->evtout = tmpreg;
+ 796              		.loc 1 553 3 is_stmt 1 view .LVU208
+ 797              		.loc 1 553 17 is_stmt 0 view .LVU209
+ 798 000e 1160     		str	r1, [r2]
+ 554:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 799              		.loc 1 554 1 view .LVU210
+ 800 0010 7047     		bx	lr
+ 801              	.L55:
+ 802 0012 00BF     		.align	2
+ 803              	.L54:
+ 804 0014 00000140 		.word	1073807360
+ 805              		.cfi_endproc
+ 806              	.LFE149:
+ 808              		.section	.text.gpio_event_output_enable,"ax",%progbits
+ 809              		.align	1
+ 810              		.global	gpio_event_output_enable
+ 811              		.syntax unified
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 25
+
+
+ 812              		.thumb
+ 813              		.thumb_func
+ 815              	gpio_event_output_enable:
+ 816              	.LVL71:
+ 817              	.LFB150:
+ 555:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 556:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 557:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  enable or disable the event output.
+ 558:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  confirm_state: new state of the event output.
+ 559:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be: TRUE or FALSE.
+ 560:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 561:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 562:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_event_output_enable(confirm_state new_state)
+ 563:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 818              		.loc 1 563 1 is_stmt 1 view -0
+ 819              		.cfi_startproc
+ 820              		@ args = 0, pretend = 0, frame = 0
+ 821              		@ frame_needed = 0, uses_anonymous_args = 0
+ 822              		@ link register save eliminated.
+ 564:libraries/drivers/src/at32f403a_407_gpio.c ****   IOMUX->evtout_bit.evoen = new_state;
+ 823              		.loc 1 564 3 view .LVU212
+ 824              		.loc 1 564 27 is_stmt 0 view .LVU213
+ 825 0000 024B     		ldr	r3, .L57
+ 826 0002 1A68     		ldr	r2, [r3]
+ 827 0004 60F3C712 		bfi	r2, r0, #7, #1
+ 828 0008 1A60     		str	r2, [r3]
+ 565:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 829              		.loc 1 565 1 view .LVU214
+ 830 000a 7047     		bx	lr
+ 831              	.L58:
+ 832              		.align	2
+ 833              	.L57:
+ 834 000c 00000140 		.word	1073807360
+ 835              		.cfi_endproc
+ 836              	.LFE150:
+ 838              		.section	.text.gpio_pin_remap_config,"ax",%progbits
+ 839              		.align	1
+ 840              		.global	gpio_pin_remap_config
+ 841              		.syntax unified
+ 842              		.thumb
+ 843              		.thumb_func
+ 845              	gpio_pin_remap_config:
+ 846              	.LVL72:
+ 847              	.LFB151:
+ 566:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 567:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 568:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  iomux remap and debug i/o configuration.
+ 569:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_remap: select the pin to remap.
+ 570:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 571:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SPI1_MUX_01                   - SPI1_MUX_10                   - SPI1_MUX_11          
+ 572:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - USART1_MUX                    - USART2_MUX                    - USART3_MUX_01        
+ 573:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - TMR1_MUX_01                   - TMR1_MUX_11                   - TMR2_MUX_01          
+ 574:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - TMR2_MUX_11                   - TMR3_MUX_10                   - TMR3_MUX_11          
+ 575:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - CAN_MUX_10                    - CAN_MUX_11                    - PD01_MUX             
+ 576:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - ADC1_EXTRGPRE_MUX             - ADC1_EXTRGORD_MUX             - ADC2_EXTRGPRE_MUX    
+ 577:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - EMAC_MUX                      - CAN2_MUX                      - MII_RMII_SEL_MUX     
+ 578:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SWJTAG_MUX_010                - SWJTAG_MUX_100                - SPI3_MUX             
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 26
+
+
+ 579:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - PTP_PPS_MUX                   - TMR9_MUX                      - XMC_NADV_MUX         
+ 580:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - I2C3_MUX                      - SDIO2_MUX01                   - SDIO2_MUX10          
+ 581:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - EXT_SPIM_EN_MUX               - TMR9_GMUX                     - TMR1_GMUX_0001       
+ 582:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - TMR2_GMUX_01                  - TMR2_GMUX_10                  - TMR2_GMUX_11         
+ 583:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - TMR2ITR1_GMUX_11              - TMR3_GMUX_0010                - TMR3_GMUX_0011       
+ 584:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - TMR5CH4_GMUX                  - UART5_GMUX_0001               - I2C1_GMUX_0001       
+ 585:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SPI1_GMUX_0001                - SPI1_GMUX_0010                - SPI1_GMUX_0011       
+ 586:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SPI2_GMUX_0010                - SPI3_GMUX_0001                - SPI3_GMUX_0010       
+ 587:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SPI4_GMUX_0001                - SPI4_GMUX_0010                - SPI4_GMUX_0011       
+ 588:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - CAN1_GMUX_0011                - CAN2_GMUX_0001                - SDIO2_GMUX_0001      
+ 589:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SDIO2_GMUX_0011               - USART1_GMUX_0001              - USART2_GMUX_0001     
+ 590:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - USART3_GMUX_0011              - UART4_GMUX_0010               - EXT_SPIM_GMUX_1000   
+ 591:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - ADC1_ETP_GMUX                 - ADC1_ETO_GMUX                 - ADC2_ETP_GMUX        
+ 592:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - SWJTAG_GMUX_001               - SWJTAG_GMUX_010               - SWJTAG_GMUX_100      
+ 593:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - XMC_GMUX_001                  - XMC_GMUX_010                  - XMC_NADV_GMUX        
+ 594:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - MII_RMII_SEL_GMUX             - PTP_PPS_GMUX                  - USART6_GMUX          
+ 595:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - UART8_GMUX
+ 596:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  new_state: (TRUE or FALSE)
+ 597:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 598:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 599:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_pin_remap_config(uint32_t gpio_remap, confirm_state new_state)
+ 600:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 848              		.loc 1 600 1 is_stmt 1 view -0
+ 849              		.cfi_startproc
+ 850              		@ args = 0, pretend = 0, frame = 0
+ 851              		@ frame_needed = 0, uses_anonymous_args = 0
+ 852              		.loc 1 600 1 is_stmt 0 view .LVU216
+ 853 0000 00B5     		push	{lr}
+ 854              	.LCFI3:
+ 855              		.cfi_def_cfa_offset 4
+ 856              		.cfi_offset 14, -4
+ 601:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t reg_addr, remap_mask;
+ 857              		.loc 1 601 3 is_stmt 1 view .LVU217
+ 602:libraries/drivers/src/at32f403a_407_gpio.c ****   uint8_t bit_offset, bit_num, bit_val;
+ 858              		.loc 1 602 3 view .LVU218
+ 603:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 604:libraries/drivers/src/at32f403a_407_gpio.c ****   /* get register address, bit offset, bit number and remap value */
+ 605:libraries/drivers/src/at32f403a_407_gpio.c ****   reg_addr = IOMUX_BASE + (gpio_remap >> 24);
+ 859              		.loc 1 605 3 view .LVU219
+ 860              		.loc 1 605 39 is_stmt 0 view .LVU220
+ 861 0002 4FEA106C 		lsr	ip, r0, #24
+ 862              		.loc 1 605 12 view .LVU221
+ 863 0006 0CF1804C 		add	ip, ip, #1073741824
+ 864 000a 0CF5803C 		add	ip, ip, #65536
+ 865              	.LVL73:
+ 606:libraries/drivers/src/at32f403a_407_gpio.c ****   bit_offset = (gpio_remap >> 16) & 0xFF;
+ 866              		.loc 1 606 3 is_stmt 1 view .LVU222
+ 607:libraries/drivers/src/at32f403a_407_gpio.c ****   bit_num = (gpio_remap >> 8) & 0xFF;
+ 867              		.loc 1 607 3 view .LVU223
+ 608:libraries/drivers/src/at32f403a_407_gpio.c ****   bit_val = gpio_remap & 0xFF;
+ 868              		.loc 1 608 3 view .LVU224
+ 609:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 610:libraries/drivers/src/at32f403a_407_gpio.c ****   /* get remap mask value */
+ 611:libraries/drivers/src/at32f403a_407_gpio.c ****   remap_mask = 0xFFFFFFFF << (32 - bit_num - bit_offset);
+ 869              		.loc 1 611 3 view .LVU225
+ 870              		.loc 1 611 34 is_stmt 0 view .LVU226
+ 871 000e C0F30722 		ubfx	r2, r0, #8, #8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 27
+
+
+ 872 0012 C2F12002 		rsb	r2, r2, #32
+ 873              		.loc 1 611 44 view .LVU227
+ 874 0016 C0F3074E 		ubfx	lr, r0, #16, #8
+ 875 001a A2EB0E02 		sub	r2, r2, lr
+ 876              		.loc 1 611 14 view .LVU228
+ 877 001e 4FF0FF33 		mov	r3, #-1
+ 878 0022 9340     		lsls	r3, r3, r2
+ 879              	.LVL74:
+ 612:libraries/drivers/src/at32f403a_407_gpio.c ****   remap_mask = remap_mask >> (32 - bit_num - bit_offset);
+ 880              		.loc 1 612 3 is_stmt 1 view .LVU229
+ 881              		.loc 1 612 14 is_stmt 0 view .LVU230
+ 882 0024 D340     		lsrs	r3, r3, r2
+ 883              	.LVL75:
+ 613:libraries/drivers/src/at32f403a_407_gpio.c ****   remap_mask = remap_mask >> bit_offset;
+ 884              		.loc 1 613 3 is_stmt 1 view .LVU231
+ 885              		.loc 1 613 14 is_stmt 0 view .LVU232
+ 886 0026 23FA0EF3 		lsr	r3, r3, lr
+ 887              	.LVL76:
+ 614:libraries/drivers/src/at32f403a_407_gpio.c ****   remap_mask = remap_mask << bit_offset;
+ 888              		.loc 1 614 3 is_stmt 1 view .LVU233
+ 889              		.loc 1 614 14 is_stmt 0 view .LVU234
+ 890 002a 03FA0EF3 		lsl	r3, r3, lr
+ 891              	.LVL77:
+ 615:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 616:libraries/drivers/src/at32f403a_407_gpio.c ****   /* clear remap value */
+ 617:libraries/drivers/src/at32f403a_407_gpio.c ****   *(uint32_t*)reg_addr &= ~remap_mask;
+ 892              		.loc 1 617 3 is_stmt 1 view .LVU235
+ 893 002e DCF80020 		ldr	r2, [ip]
+ 894              		.loc 1 617 24 is_stmt 0 view .LVU236
+ 895 0032 22EA0303 		bic	r3, r2, r3
+ 896              	.LVL78:
+ 897              		.loc 1 617 24 view .LVU237
+ 898 0036 CCF80030 		str	r3, [ip]
+ 618:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 619:libraries/drivers/src/at32f403a_407_gpio.c ****   if(new_state != FALSE)
+ 899              		.loc 1 619 3 is_stmt 1 view .LVU238
+ 900              		.loc 1 619 5 is_stmt 0 view .LVU239
+ 901 003a 29B1     		cbz	r1, .L59
+ 620:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 621:libraries/drivers/src/at32f403a_407_gpio.c ****     /* set remap value */
+ 622:libraries/drivers/src/at32f403a_407_gpio.c ****     *(uint32_t*)reg_addr |= (uint32_t)(bit_val << bit_offset);
+ 902              		.loc 1 622 5 is_stmt 1 view .LVU240
+ 903              		.loc 1 622 48 is_stmt 0 view .LVU241
+ 904 003c C0B2     		uxtb	r0, r0
+ 905              	.LVL79:
+ 906              		.loc 1 622 48 view .LVU242
+ 907 003e 00FA0EF0 		lsl	r0, r0, lr
+ 908              	.LVL80:
+ 909              		.loc 1 622 26 view .LVU243
+ 910 0042 0343     		orrs	r3, r3, r0
+ 911 0044 CCF80030 		str	r3, [ip]
+ 912              	.L59:
+ 623:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 624:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 913              		.loc 1 624 1 view .LVU244
+ 914 0048 00BD     		pop	{pc}
+ 915              		.cfi_endproc
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 28
+
+
+ 916              	.LFE151:
+ 918              		.section	.text.gpio_exint_line_config,"ax",%progbits
+ 919              		.align	1
+ 920              		.global	gpio_exint_line_config
+ 921              		.syntax unified
+ 922              		.thumb
+ 923              		.thumb_func
+ 925              	gpio_exint_line_config:
+ 926              	.LVL81:
+ 927              	.LFB152:
+ 625:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 626:libraries/drivers/src/at32f403a_407_gpio.c **** /**
+ 627:libraries/drivers/src/at32f403a_407_gpio.c ****   * @brief  select the gpio pin used as exint line.
+ 628:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_port_source: select the gpio port to be used as source for exint.
+ 629:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 630:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOA
+ 631:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOB
+ 632:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOC
+ 633:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOD
+ 634:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOE
+ 635:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOF
+ 636:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PORT_SOURCE_GPIOG
+ 637:libraries/drivers/src/at32f403a_407_gpio.c ****   * @param  gpio_pin_source: specifies the pin for the event output.
+ 638:libraries/drivers/src/at32f403a_407_gpio.c ****   *         this parameter can be one of the following values:
+ 639:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE0
+ 640:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE1
+ 641:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE2
+ 642:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE3
+ 643:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE4
+ 644:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE5
+ 645:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE6
+ 646:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE7
+ 647:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE8
+ 648:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE9
+ 649:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE10
+ 650:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE11
+ 651:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE12
+ 652:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE13
+ 653:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE14
+ 654:libraries/drivers/src/at32f403a_407_gpio.c ****   *         - GPIO_PINS_SOURCE15
+ 655:libraries/drivers/src/at32f403a_407_gpio.c ****   * @retval none
+ 656:libraries/drivers/src/at32f403a_407_gpio.c ****   */
+ 657:libraries/drivers/src/at32f403a_407_gpio.c **** void gpio_exint_line_config(gpio_port_source_type gpio_port_source, gpio_pins_source_type gpio_pin_
+ 658:libraries/drivers/src/at32f403a_407_gpio.c **** {
+ 928              		.loc 1 658 1 is_stmt 1 view -0
+ 929              		.cfi_startproc
+ 930              		@ args = 0, pretend = 0, frame = 0
+ 931              		@ frame_needed = 0, uses_anonymous_args = 0
+ 932              		@ link register save eliminated.
+ 659:libraries/drivers/src/at32f403a_407_gpio.c ****   uint32_t tmp = 0x00;
+ 933              		.loc 1 659 3 view .LVU246
+ 660:libraries/drivers/src/at32f403a_407_gpio.c ****   tmp = ((uint32_t)0x0F) << (0x04 * (gpio_pin_source & (uint8_t)0x03));
+ 934              		.loc 1 660 3 view .LVU247
+ 935              		.loc 1 660 54 is_stmt 0 view .LVU248
+ 936 0000 01F00303 		and	r3, r1, #3
+ 937              		.loc 1 660 35 view .LVU249
+ 938 0004 9B00     		lsls	r3, r3, #2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 29
+
+
+ 939              		.loc 1 660 7 view .LVU250
+ 940 0006 0F22     		movs	r2, #15
+ 941 0008 9A40     		lsls	r2, r2, r3
+ 942              	.LVL82:
+ 661:libraries/drivers/src/at32f403a_407_gpio.c **** 
+ 662:libraries/drivers/src/at32f403a_407_gpio.c ****   switch (gpio_pin_source >> 0x02)
+ 943              		.loc 1 662 3 is_stmt 1 view .LVU251
+ 944              		.loc 1 662 27 is_stmt 0 view .LVU252
+ 945 000a 8908     		lsrs	r1, r1, #2
+ 946              	.LVL83:
+ 947              		.loc 1 662 3 view .LVU253
+ 948 000c 0229     		cmp	r1, #2
+ 949 000e 2AD0     		beq	.L63
+ 950 0010 0FD8     		bhi	.L64
+ 951 0012 E1B1     		cbz	r1, .L65
+ 952 0014 0129     		cmp	r1, #1
+ 953 0016 0BD1     		bne	.L69
+ 663:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 664:libraries/drivers/src/at32f403a_407_gpio.c ****     case 0:
+ 665:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 &= ~tmp;
+ 666:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 667:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 668:libraries/drivers/src/at32f403a_407_gpio.c ****     case 1:
+ 669:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc2 &= ~tmp;
+ 954              		.loc 1 669 7 is_stmt 1 view .LVU254
+ 955              		.loc 1 669 12 is_stmt 0 view .LVU255
+ 956 0018 1949     		ldr	r1, .L71
+ 957 001a D1F80CC0 		ldr	ip, [r1, #12]
+ 958              		.loc 1 669 22 view .LVU256
+ 959 001e 2CEA0202 		bic	r2, ip, r2
+ 960              	.LVL84:
+ 961              		.loc 1 669 22 view .LVU257
+ 962 0022 CA60     		str	r2, [r1, #12]
+ 670:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc2 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 963              		.loc 1 670 7 is_stmt 1 view .LVU258
+ 964              		.loc 1 670 12 is_stmt 0 view .LVU259
+ 965 0024 CA68     		ldr	r2, [r1, #12]
+ 966              		.loc 1 670 55 view .LVU260
+ 967 0026 00FA03F3 		lsl	r3, r0, r3
+ 968              	.LVL85:
+ 969              		.loc 1 670 22 view .LVU261
+ 970 002a 1343     		orrs	r3, r3, r2
+ 971 002c CB60     		str	r3, [r1, #12]
+ 671:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 972              		.loc 1 671 7 is_stmt 1 view .LVU262
+ 973 002e 7047     		bx	lr
+ 974              	.LVL86:
+ 975              	.L69:
+ 976              		.loc 1 671 7 is_stmt 0 view .LVU263
+ 977 0030 7047     		bx	lr
+ 978              	.L64:
+ 662:libraries/drivers/src/at32f403a_407_gpio.c ****   {
+ 979              		.loc 1 662 3 view .LVU264
+ 980 0032 0329     		cmp	r1, #3
+ 981 0034 0AD1     		bne	.L70
+ 672:libraries/drivers/src/at32f403a_407_gpio.c ****     case 2:
+ 673:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 &= ~tmp;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 30
+
+
+ 674:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 675:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 676:libraries/drivers/src/at32f403a_407_gpio.c ****     case 3:
+ 677:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc4 &= ~tmp;
+ 982              		.loc 1 677 7 is_stmt 1 view .LVU265
+ 983              		.loc 1 677 12 is_stmt 0 view .LVU266
+ 984 0036 1249     		ldr	r1, .L71
+ 985 0038 D1F814C0 		ldr	ip, [r1, #20]
+ 986              		.loc 1 677 22 view .LVU267
+ 987 003c 2CEA0202 		bic	r2, ip, r2
+ 988              	.LVL87:
+ 989              		.loc 1 677 22 view .LVU268
+ 990 0040 4A61     		str	r2, [r1, #20]
+ 678:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc4 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 991              		.loc 1 678 7 is_stmt 1 view .LVU269
+ 992              		.loc 1 678 12 is_stmt 0 view .LVU270
+ 993 0042 4A69     		ldr	r2, [r1, #20]
+ 994              		.loc 1 678 55 view .LVU271
+ 995 0044 9840     		lsls	r0, r0, r3
+ 996              	.LVL88:
+ 997              		.loc 1 678 22 view .LVU272
+ 998 0046 0243     		orrs	r2, r2, r0
+ 999 0048 4A61     		str	r2, [r1, #20]
+ 679:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1000              		.loc 1 679 7 is_stmt 1 view .LVU273
+ 680:libraries/drivers/src/at32f403a_407_gpio.c ****     default:
+ 681:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 682:libraries/drivers/src/at32f403a_407_gpio.c ****   }
+ 683:libraries/drivers/src/at32f403a_407_gpio.c **** }
+ 1001              		.loc 1 683 1 is_stmt 0 view .LVU274
+ 1002 004a 7047     		bx	lr
+ 1003              	.LVL89:
+ 1004              	.L70:
+ 1005              		.loc 1 683 1 view .LVU275
+ 1006 004c 7047     		bx	lr
+ 1007              	.L65:
+ 665:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1008              		.loc 1 665 7 is_stmt 1 view .LVU276
+ 665:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1009              		.loc 1 665 12 is_stmt 0 view .LVU277
+ 1010 004e 0C49     		ldr	r1, .L71
+ 1011 0050 D1F808C0 		ldr	ip, [r1, #8]
+ 665:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1012              		.loc 1 665 22 view .LVU278
+ 1013 0054 2CEA0202 		bic	r2, ip, r2
+ 1014              	.LVL90:
+ 665:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc1 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1015              		.loc 1 665 22 view .LVU279
+ 1016 0058 8A60     		str	r2, [r1, #8]
+ 666:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1017              		.loc 1 666 7 is_stmt 1 view .LVU280
+ 666:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1018              		.loc 1 666 12 is_stmt 0 view .LVU281
+ 1019 005a 8A68     		ldr	r2, [r1, #8]
+ 666:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1020              		.loc 1 666 55 view .LVU282
+ 1021 005c 00FA03F3 		lsl	r3, r0, r3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 31
+
+
+ 1022              	.LVL91:
+ 666:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1023              		.loc 1 666 22 view .LVU283
+ 1024 0060 1343     		orrs	r3, r3, r2
+ 1025 0062 8B60     		str	r3, [r1, #8]
+ 667:libraries/drivers/src/at32f403a_407_gpio.c ****     case 1:
+ 1026              		.loc 1 667 7 is_stmt 1 view .LVU284
+ 1027 0064 7047     		bx	lr
+ 1028              	.LVL92:
+ 1029              	.L63:
+ 673:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1030              		.loc 1 673 7 view .LVU285
+ 673:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1031              		.loc 1 673 12 is_stmt 0 view .LVU286
+ 1032 0066 0649     		ldr	r1, .L71
+ 1033 0068 D1F810C0 		ldr	ip, [r1, #16]
+ 673:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1034              		.loc 1 673 22 view .LVU287
+ 1035 006c 2CEA0202 		bic	r2, ip, r2
+ 1036              	.LVL93:
+ 673:libraries/drivers/src/at32f403a_407_gpio.c ****       IOMUX->exintc3 |= (((uint32_t)gpio_port_source) << (0x04 * (gpio_pin_source & (uint8_t)0x03))
+ 1037              		.loc 1 673 22 view .LVU288
+ 1038 0070 0A61     		str	r2, [r1, #16]
+ 674:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1039              		.loc 1 674 7 is_stmt 1 view .LVU289
+ 674:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1040              		.loc 1 674 12 is_stmt 0 view .LVU290
+ 1041 0072 0A69     		ldr	r2, [r1, #16]
+ 674:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1042              		.loc 1 674 55 view .LVU291
+ 1043 0074 00FA03F3 		lsl	r3, r0, r3
+ 1044              	.LVL94:
+ 674:libraries/drivers/src/at32f403a_407_gpio.c ****       break;
+ 1045              		.loc 1 674 22 view .LVU292
+ 1046 0078 1343     		orrs	r3, r3, r2
+ 1047 007a 0B61     		str	r3, [r1, #16]
+ 675:libraries/drivers/src/at32f403a_407_gpio.c ****     case 3:
+ 1048              		.loc 1 675 7 is_stmt 1 view .LVU293
+ 1049 007c 7047     		bx	lr
+ 1050              	.L72:
+ 1051 007e 00BF     		.align	2
+ 1052              	.L71:
+ 1053 0080 00000140 		.word	1073807360
+ 1054              		.cfi_endproc
+ 1055              	.LFE152:
+ 1057              		.text
+ 1058              	.Letext0:
+ 1059              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1060              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1061              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 1062              		.file 5 "libraries/drivers/inc/at32f403a_407_crm.h"
+ 1063              		.file 6 "libraries/drivers/inc/at32f403a_407_gpio.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrENp0q.s 			page 32
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 at32f403a_407_gpio.c
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:21     .text.gpio_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:27     .text.gpio_reset:00000000 gpio_reset
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:148    .text.gpio_reset:0000007c $d
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:162    .text.gpio_iomux_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:168    .text.gpio_iomux_reset:00000000 gpio_iomux_reset
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:195    .text.gpio_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:201    .text.gpio_init:00000000 gpio_init
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:382    .text.gpio_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:388    .text.gpio_default_para_init:00000000 gpio_default_para_init
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:421    .text.gpio_input_data_bit_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:427    .text.gpio_input_data_bit_read:00000000 gpio_input_data_bit_read
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:461    .text.gpio_input_data_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:467    .text.gpio_input_data_read:00000000 gpio_input_data_read
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:486    .text.gpio_output_data_bit_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:492    .text.gpio_output_data_bit_read:00000000 gpio_output_data_bit_read
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:524    .text.gpio_output_data_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:530    .text.gpio_output_data_read:00000000 gpio_output_data_read
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:549    .text.gpio_bits_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:555    .text.gpio_bits_set:00000000 gpio_bits_set
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:572    .text.gpio_bits_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:578    .text.gpio_bits_reset:00000000 gpio_bits_reset
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:595    .text.gpio_bits_toggle:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:601    .text.gpio_bits_toggle:00000000 gpio_bits_toggle
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:629    .text.gpio_bits_write:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:635    .text.gpio_bits_write:00000000 gpio_bits_write
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:660    .text.gpio_port_write:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:666    .text.gpio_port_write:00000000 gpio_port_write
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:683    .text.gpio_pin_wp_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:689    .text.gpio_pin_wp_config:00000000 gpio_pin_wp_config
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:724    .text.gpio_pins_huge_driven_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:730    .text.gpio_pins_huge_driven_config:00000000 gpio_pins_huge_driven_config
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:764    .text.gpio_event_output_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:770    .text.gpio_event_output_config:00000000 gpio_event_output_config
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:804    .text.gpio_event_output_config:00000014 $d
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:809    .text.gpio_event_output_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:815    .text.gpio_event_output_enable:00000000 gpio_event_output_enable
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:834    .text.gpio_event_output_enable:0000000c $d
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:839    .text.gpio_pin_remap_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:845    .text.gpio_pin_remap_config:00000000 gpio_pin_remap_config
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:919    .text.gpio_exint_line_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:925    .text.gpio_exint_line_config:00000000 gpio_exint_line_config
+C:\Users\10963\AppData\Local\Temp\ccrENp0q.s:1053   .text.gpio_exint_line_config:00000080 $d
+
+UNDEFINED SYMBOLS
+crm_periph_reset

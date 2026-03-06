@@ -1,0 +1,123 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccISrk43.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_usbfs.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_usbfs.c"
+  20              		.section	.text.wk_usbfs_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_usbfs_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_usbfs_init:
+  28              	.LFB137:
+   1:project/src/wk_usbfs.c **** /* add user code begin Header */
+   2:project/src/wk_usbfs.c **** /**
+   3:project/src/wk_usbfs.c ****   **************************************************************************
+   4:project/src/wk_usbfs.c ****   * @file     wk_usbfs.c
+   5:project/src/wk_usbfs.c ****   * @brief    work bench config program
+   6:project/src/wk_usbfs.c ****   **************************************************************************
+   7:project/src/wk_usbfs.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_usbfs.c ****   *
+   9:project/src/wk_usbfs.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_usbfs.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_usbfs.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_usbfs.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_usbfs.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_usbfs.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_usbfs.c ****   *
+  16:project/src/wk_usbfs.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_usbfs.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_usbfs.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_usbfs.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_usbfs.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_usbfs.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_usbfs.c ****   *
+  23:project/src/wk_usbfs.c ****   **************************************************************************
+  24:project/src/wk_usbfs.c ****   */
+  25:project/src/wk_usbfs.c **** /* add user code end Header */
+  26:project/src/wk_usbfs.c **** 
+  27:project/src/wk_usbfs.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_usbfs.c **** #include "wk_usbfs.h"
+  29:project/src/wk_usbfs.c **** 
+  30:project/src/wk_usbfs.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccISrk43.s 			page 2
+
+
+  31:project/src/wk_usbfs.c **** 
+  32:project/src/wk_usbfs.c **** /* add user code end 0 */
+  33:project/src/wk_usbfs.c **** 
+  34:project/src/wk_usbfs.c **** /**
+  35:project/src/wk_usbfs.c ****   * @brief  init usbfs function
+  36:project/src/wk_usbfs.c ****   * @param  none
+  37:project/src/wk_usbfs.c ****   * @retval none
+  38:project/src/wk_usbfs.c ****   */
+  39:project/src/wk_usbfs.c **** void wk_usbfs_init(void)
+  40:project/src/wk_usbfs.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  41:project/src/wk_usbfs.c ****   /* add user code begin usbfs_init 0 */
+  42:project/src/wk_usbfs.c **** 
+  43:project/src/wk_usbfs.c ****   /* add user code end usbfs_init 0 */
+  44:project/src/wk_usbfs.c ****   /* add user code begin usbfs_init 1 */
+  45:project/src/wk_usbfs.c **** 
+  46:project/src/wk_usbfs.c ****   /* add user code end usbfs_init 1 */
+  47:project/src/wk_usbfs.c **** 
+  48:project/src/wk_usbfs.c ****   crm_usb_interrupt_remapping_set(CRM_USB_INT73_INT74);
+  38              		.loc 1 48 3 view .LVU1
+  39 0002 0120     		movs	r0, #1
+  40 0004 FFF7FEFF 		bl	crm_usb_interrupt_remapping_set
+  41              	.LVL0:
+  49:project/src/wk_usbfs.c **** 
+  50:project/src/wk_usbfs.c ****   crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_HICK);
+  42              		.loc 1 50 3 view .LVU2
+  43 0008 0120     		movs	r0, #1
+  44 000a FFF7FEFF 		bl	crm_usb_clock_source_select
+  45              	.LVL1:
+  51:project/src/wk_usbfs.c **** 
+  52:project/src/wk_usbfs.c ****   /* add user code begin usbfs_init 2 */
+  53:project/src/wk_usbfs.c **** 
+  54:project/src/wk_usbfs.c ****   /* add user code end usbfs_init 2 */
+  55:project/src/wk_usbfs.c **** }
+  46              		.loc 1 55 1 is_stmt 0 view .LVU3
+  47 000e 08BD     		pop	{r3, pc}
+  48              		.cfi_endproc
+  49              	.LFE137:
+  51              		.text
+  52              	.Letext0:
+  53              		.file 2 "libraries/drivers/inc/at32f403a_407_crm.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccISrk43.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_usbfs.c
+C:\Users\10963\AppData\Local\Temp\ccISrk43.s:21     .text.wk_usbfs_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccISrk43.s:27     .text.wk_usbfs_init:00000000 wk_usbfs_init
+
+UNDEFINED SYMBOLS
+crm_usb_interrupt_remapping_set
+crm_usb_clock_source_select

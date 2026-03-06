@@ -1,0 +1,800 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"freertos_app.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/freertos_app.c"
+  20              		.section	.text.MC_Task_func,"ax",%progbits
+  21              		.align	1
+  22              		.global	MC_Task_func
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	MC_Task_func:
+  28              	.LFB142:
+   1:project/src/freertos_app.c **** /* add user code begin Header */
+   2:project/src/freertos_app.c **** /**
+   3:project/src/freertos_app.c ****   ******************************************************************************
+   4:project/src/freertos_app.c ****   * File Name          : freertos_app.c
+   5:project/src/freertos_app.c ****   * Description        : Code for freertos applications
+   6:project/src/freertos_app.c ****   */
+   7:project/src/freertos_app.c **** /* add user code end Header */
+   8:project/src/freertos_app.c **** 
+   9:project/src/freertos_app.c **** /* Includes ------------------------------------------------------------------*/
+  10:project/src/freertos_app.c **** #include "freertos_app.h"
+  11:project/src/freertos_app.c **** #include "usb_app.h"
+  12:project/src/freertos_app.c **** 
+  13:project/src/freertos_app.c **** /* private includes ----------------------------------------------------------*/
+  14:project/src/freertos_app.c **** /* add user code begin private includes */
+  15:project/src/freertos_app.c **** 
+  16:project/src/freertos_app.c **** /* add user code end private includes */
+  17:project/src/freertos_app.c **** 
+  18:project/src/freertos_app.c **** /* private typedef -----------------------------------------------------------*/
+  19:project/src/freertos_app.c **** /* add user code begin private typedef */
+  20:project/src/freertos_app.c **** 
+  21:project/src/freertos_app.c **** /* add user code end private typedef */
+  22:project/src/freertos_app.c **** 
+  23:project/src/freertos_app.c **** /* private define ------------------------------------------------------------*/
+  24:project/src/freertos_app.c **** /* add user code begin private define */
+  25:project/src/freertos_app.c **** 
+  26:project/src/freertos_app.c **** /* add user code end private define */
+  27:project/src/freertos_app.c **** 
+  28:project/src/freertos_app.c **** /* private macro -------------------------------------------------------------*/
+  29:project/src/freertos_app.c **** /* add user code begin private macro */
+  30:project/src/freertos_app.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 2
+
+
+  31:project/src/freertos_app.c **** /* add user code end private macro */
+  32:project/src/freertos_app.c **** 
+  33:project/src/freertos_app.c **** /* private variables ---------------------------------------------------------*/
+  34:project/src/freertos_app.c **** /* add user code begin private variables */
+  35:project/src/freertos_app.c **** 
+  36:project/src/freertos_app.c **** /* add user code end private variables */
+  37:project/src/freertos_app.c **** 
+  38:project/src/freertos_app.c **** /* private function prototypes --------------------------------------------*/
+  39:project/src/freertos_app.c **** /* add user code begin function prototypes */
+  40:project/src/freertos_app.c **** 
+  41:project/src/freertos_app.c **** /* add user code end function prototypes */
+  42:project/src/freertos_app.c **** 
+  43:project/src/freertos_app.c **** /* private user code ---------------------------------------------------------*/
+  44:project/src/freertos_app.c **** /* add user code begin 0 */
+  45:project/src/freertos_app.c **** 
+  46:project/src/freertos_app.c **** /* add user code end 0 */
+  47:project/src/freertos_app.c **** 
+  48:project/src/freertos_app.c **** /* task handler */
+  49:project/src/freertos_app.c **** TaskHandle_t MC_Task_handle;
+  50:project/src/freertos_app.c **** TaskHandle_t CANCom_Task_handle;
+  51:project/src/freertos_app.c **** TaskHandle_t Monitor_Task_handle;
+  52:project/src/freertos_app.c **** TaskHandle_t Debug_Task_handle;
+  53:project/src/freertos_app.c **** 
+  54:project/src/freertos_app.c **** /* Idle task control block and stack */
+  55:project/src/freertos_app.c **** static StackType_t idle_task_stack[configMINIMAL_STACK_SIZE];
+  56:project/src/freertos_app.c **** static StackType_t timer_task_stack[configTIMER_TASK_STACK_DEPTH];
+  57:project/src/freertos_app.c **** 
+  58:project/src/freertos_app.c **** static StaticTask_t idle_task_tcb;
+  59:project/src/freertos_app.c **** static StaticTask_t timer_task_tcb;
+  60:project/src/freertos_app.c **** 
+  61:project/src/freertos_app.c **** /* External Idle and Timer task static memory allocation functions */
+  62:project/src/freertos_app.c **** extern void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer, StackType_t ** ppx
+  63:project/src/freertos_app.c **** extern void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, StackType_t ** p
+  64:project/src/freertos_app.c **** 
+  65:project/src/freertos_app.c **** /*
+  66:project/src/freertos_app.c ****   vApplicationGetIdleTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
+  67:project/src/freertos_app.c ****   equals to 1 and is required for static memory allocation support.
+  68:project/src/freertos_app.c **** */
+  69:project/src/freertos_app.c **** void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer, StackType_t ** ppxIdleTas
+  70:project/src/freertos_app.c **** {
+  71:project/src/freertos_app.c ****   *ppxIdleTaskTCBBuffer = &idle_task_tcb;
+  72:project/src/freertos_app.c ****   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
+  73:project/src/freertos_app.c ****   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
+  74:project/src/freertos_app.c **** }
+  75:project/src/freertos_app.c **** /*
+  76:project/src/freertos_app.c ****   vApplicationGetTimerTaskMemory gets called when configSUPPORT_STATIC_ALLOCATION
+  77:project/src/freertos_app.c ****   equals to 1 and is required for static memory allocation support.
+  78:project/src/freertos_app.c **** */
+  79:project/src/freertos_app.c **** void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, StackType_t ** ppxTimer
+  80:project/src/freertos_app.c **** {
+  81:project/src/freertos_app.c ****   *ppxTimerTaskTCBBuffer = &timer_task_tcb;
+  82:project/src/freertos_app.c ****   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
+  83:project/src/freertos_app.c ****   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
+  84:project/src/freertos_app.c **** }
+  85:project/src/freertos_app.c **** 
+  86:project/src/freertos_app.c **** /* add user code begin 1 */
+  87:project/src/freertos_app.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 3
+
+
+  88:project/src/freertos_app.c **** /* add user code end 1 */
+  89:project/src/freertos_app.c **** 
+  90:project/src/freertos_app.c **** /**
+  91:project/src/freertos_app.c ****   * @brief  initializes all task.
+  92:project/src/freertos_app.c ****   * @param  none
+  93:project/src/freertos_app.c ****   * @retval none
+  94:project/src/freertos_app.c ****   */
+  95:project/src/freertos_app.c **** void freertos_task_create(void)
+  96:project/src/freertos_app.c **** {
+  97:project/src/freertos_app.c ****   /* create MC_Task task */
+  98:project/src/freertos_app.c ****   xTaskCreate(MC_Task_func,
+  99:project/src/freertos_app.c ****               "MC_Task",
+ 100:project/src/freertos_app.c ****               512,
+ 101:project/src/freertos_app.c ****               NULL,
+ 102:project/src/freertos_app.c ****               3,
+ 103:project/src/freertos_app.c ****               &MC_Task_handle);
+ 104:project/src/freertos_app.c **** 
+ 105:project/src/freertos_app.c ****   /* create CANCom_Task task */
+ 106:project/src/freertos_app.c ****   xTaskCreate(CANCom_Task_func,
+ 107:project/src/freertos_app.c ****               "CANCom_Task",
+ 108:project/src/freertos_app.c ****               512,
+ 109:project/src/freertos_app.c ****               NULL,
+ 110:project/src/freertos_app.c ****               2,
+ 111:project/src/freertos_app.c ****               &CANCom_Task_handle);
+ 112:project/src/freertos_app.c **** 
+ 113:project/src/freertos_app.c ****   /* create Monitor_Task task */
+ 114:project/src/freertos_app.c ****   xTaskCreate(Monitor_Task_func,
+ 115:project/src/freertos_app.c ****               "Monitor_Task",
+ 116:project/src/freertos_app.c ****               512,
+ 117:project/src/freertos_app.c ****               NULL,
+ 118:project/src/freertos_app.c ****               1,
+ 119:project/src/freertos_app.c ****               &Monitor_Task_handle);
+ 120:project/src/freertos_app.c **** 
+ 121:project/src/freertos_app.c ****   /* create Debug_Task task */
+ 122:project/src/freertos_app.c ****   xTaskCreate(Debug_Task_func,
+ 123:project/src/freertos_app.c ****               "Debug_Task",
+ 124:project/src/freertos_app.c ****               512,
+ 125:project/src/freertos_app.c ****               NULL,
+ 126:project/src/freertos_app.c ****               0,
+ 127:project/src/freertos_app.c ****               &Debug_Task_handle);
+ 128:project/src/freertos_app.c **** }
+ 129:project/src/freertos_app.c **** 
+ 130:project/src/freertos_app.c **** /**
+ 131:project/src/freertos_app.c ****   * @brief  freertos init and begin run.
+ 132:project/src/freertos_app.c ****   * @param  none
+ 133:project/src/freertos_app.c ****   * @retval none
+ 134:project/src/freertos_app.c ****   */
+ 135:project/src/freertos_app.c **** void wk_freertos_init(void)
+ 136:project/src/freertos_app.c **** {
+ 137:project/src/freertos_app.c ****   /* add user code begin freertos_init 0 */
+ 138:project/src/freertos_app.c **** 
+ 139:project/src/freertos_app.c ****   /* add user code end freertos_init 0 */
+ 140:project/src/freertos_app.c **** 
+ 141:project/src/freertos_app.c ****   /* enter critical */
+ 142:project/src/freertos_app.c ****   taskENTER_CRITICAL();
+ 143:project/src/freertos_app.c **** 
+ 144:project/src/freertos_app.c ****   freertos_task_create();
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 4
+
+
+ 145:project/src/freertos_app.c **** 	
+ 146:project/src/freertos_app.c ****   /* add user code begin freertos_init 1 */
+ 147:project/src/freertos_app.c **** 
+ 148:project/src/freertos_app.c ****   /* add user code end freertos_init 1 */
+ 149:project/src/freertos_app.c **** 
+ 150:project/src/freertos_app.c ****   /* exit critical */
+ 151:project/src/freertos_app.c ****   taskEXIT_CRITICAL();
+ 152:project/src/freertos_app.c **** 
+ 153:project/src/freertos_app.c ****   /* start scheduler */
+ 154:project/src/freertos_app.c ****   vTaskStartScheduler();
+ 155:project/src/freertos_app.c **** }
+ 156:project/src/freertos_app.c **** 
+ 157:project/src/freertos_app.c **** /**
+ 158:project/src/freertos_app.c ****   * @brief MC_Task function.
+ 159:project/src/freertos_app.c ****   * @param  none
+ 160:project/src/freertos_app.c ****   * @retval none
+ 161:project/src/freertos_app.c ****   */
+ 162:project/src/freertos_app.c **** void MC_Task_func(void *pvParameters)
+ 163:project/src/freertos_app.c **** {
+  29              		.loc 1 163 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              	.LVL0:
+  35              		.loc 1 163 1 is_stmt 0 view .LVU1
+  36 0000 08B5     		push	{r3, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 3, -8
+  40              		.cfi_offset 14, -4
+  41              	.LVL1:
+  42              	.L2:
+ 164:project/src/freertos_app.c ****   /* add user code begin MC_Task_func 0 */
+ 165:project/src/freertos_app.c **** 
+ 166:project/src/freertos_app.c ****   /* add user code end MC_Task_func 0 */
+ 167:project/src/freertos_app.c **** 
+ 168:project/src/freertos_app.c ****   /* add user code begin MC_Task_func 2 */
+ 169:project/src/freertos_app.c **** 
+ 170:project/src/freertos_app.c ****   /* add user code end MC_Task_func 2 */
+ 171:project/src/freertos_app.c **** 
+ 172:project/src/freertos_app.c ****   /* Infinite loop */
+ 173:project/src/freertos_app.c ****   while(1)
+  43              		.loc 1 173 3 is_stmt 1 view .LVU2
+ 174:project/src/freertos_app.c ****   {
+ 175:project/src/freertos_app.c ****     /* when use usb,the function wk_usb_app_task() will be generated,
+ 176:project/src/freertos_app.c ****        which is the usb application layer code that users can improve themselves */
+ 177:project/src/freertos_app.c ****     wk_usb_app_task();
+  44              		.loc 1 177 5 view .LVU3
+  45 0002 FFF7FEFF 		bl	wk_usb_app_task
+  46              	.LVL2:
+ 178:project/src/freertos_app.c **** 
+ 179:project/src/freertos_app.c ****   /* add user code begin MC_Task_func 1 */
+ 180:project/src/freertos_app.c **** 
+ 181:project/src/freertos_app.c ****     vTaskDelay(1);
+  47              		.loc 1 181 5 discriminator 2 view .LVU4
+  48 0006 0120     		movs	r0, #1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 5
+
+
+  49 0008 FFF7FEFF 		bl	vTaskDelay
+  50              	.LVL3:
+ 173:project/src/freertos_app.c ****   {
+  51              		.loc 1 173 8 view .LVU5
+  52 000c F9E7     		b	.L2
+  53              		.cfi_endproc
+  54              	.LFE142:
+  56              		.section	.text.CANCom_Task_func,"ax",%progbits
+  57              		.align	1
+  58              		.global	CANCom_Task_func
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  63              	CANCom_Task_func:
+  64              	.LFB143:
+ 182:project/src/freertos_app.c **** 
+ 183:project/src/freertos_app.c ****   /* add user code end MC_Task_func 1 */
+ 184:project/src/freertos_app.c ****   }
+ 185:project/src/freertos_app.c **** }
+ 186:project/src/freertos_app.c **** 
+ 187:project/src/freertos_app.c **** 
+ 188:project/src/freertos_app.c **** /**
+ 189:project/src/freertos_app.c ****   * @brief CANCom_Task function.
+ 190:project/src/freertos_app.c ****   * @param  none
+ 191:project/src/freertos_app.c ****   * @retval none
+ 192:project/src/freertos_app.c ****   */
+ 193:project/src/freertos_app.c **** void CANCom_Task_func(void *pvParameters)
+ 194:project/src/freertos_app.c **** {
+  65              		.loc 1 194 1 view -0
+  66              		.cfi_startproc
+  67              		@ Volatile: function does not return.
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70              	.LVL4:
+  71              		.loc 1 194 1 is_stmt 0 view .LVU7
+  72 0000 08B5     		push	{r3, lr}
+  73              	.LCFI1:
+  74              		.cfi_def_cfa_offset 8
+  75              		.cfi_offset 3, -8
+  76              		.cfi_offset 14, -4
+  77              	.LVL5:
+  78              	.L5:
+ 195:project/src/freertos_app.c ****   /* add user code begin CANCom_Task_func 0 */
+ 196:project/src/freertos_app.c **** 
+ 197:project/src/freertos_app.c ****   /* add user code end CANCom_Task_func 0 */
+ 198:project/src/freertos_app.c **** 
+ 199:project/src/freertos_app.c ****   /* add user code begin CANCom_Task_func 2 */
+ 200:project/src/freertos_app.c **** 
+ 201:project/src/freertos_app.c ****   /* add user code end CANCom_Task_func 2 */
+ 202:project/src/freertos_app.c **** 
+ 203:project/src/freertos_app.c ****   /* Infinite loop */
+ 204:project/src/freertos_app.c ****   while(1)
+  79              		.loc 1 204 3 is_stmt 1 view .LVU8
+ 205:project/src/freertos_app.c ****   {
+ 206:project/src/freertos_app.c ****   /* add user code begin CANCom_Task_func 1 */
+ 207:project/src/freertos_app.c **** 
+ 208:project/src/freertos_app.c ****     vTaskDelay(1);
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 6
+
+
+  80              		.loc 1 208 5 discriminator 2 view .LVU9
+  81 0002 0120     		movs	r0, #1
+  82 0004 FFF7FEFF 		bl	vTaskDelay
+  83              	.LVL6:
+ 204:project/src/freertos_app.c ****   {
+  84              		.loc 1 204 8 view .LVU10
+  85 0008 FBE7     		b	.L5
+  86              		.cfi_endproc
+  87              	.LFE143:
+  89              		.section	.text.Monitor_Task_func,"ax",%progbits
+  90              		.align	1
+  91              		.global	Monitor_Task_func
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	Monitor_Task_func:
+  97              	.LFB144:
+ 209:project/src/freertos_app.c **** 
+ 210:project/src/freertos_app.c ****   /* add user code end CANCom_Task_func 1 */
+ 211:project/src/freertos_app.c ****   }
+ 212:project/src/freertos_app.c **** }
+ 213:project/src/freertos_app.c **** 
+ 214:project/src/freertos_app.c **** 
+ 215:project/src/freertos_app.c **** /**
+ 216:project/src/freertos_app.c ****   * @brief Monitor_Task function.
+ 217:project/src/freertos_app.c ****   * @param  none
+ 218:project/src/freertos_app.c ****   * @retval none
+ 219:project/src/freertos_app.c ****   */
+ 220:project/src/freertos_app.c **** void Monitor_Task_func(void *pvParameters)
+ 221:project/src/freertos_app.c **** {
+  98              		.loc 1 221 1 view -0
+  99              		.cfi_startproc
+ 100              		@ Volatile: function does not return.
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              	.LVL7:
+ 104              		.loc 1 221 1 is_stmt 0 view .LVU12
+ 105 0000 08B5     		push	{r3, lr}
+ 106              	.LCFI2:
+ 107              		.cfi_def_cfa_offset 8
+ 108              		.cfi_offset 3, -8
+ 109              		.cfi_offset 14, -4
+ 110              	.LVL8:
+ 111              	.L8:
+ 222:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_func 0 */
+ 223:project/src/freertos_app.c **** 
+ 224:project/src/freertos_app.c ****   /* add user code end Monitor_Task_func 0 */
+ 225:project/src/freertos_app.c **** 
+ 226:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_func 2 */
+ 227:project/src/freertos_app.c **** 
+ 228:project/src/freertos_app.c ****   /* add user code end Monitor_Task_func 2 */
+ 229:project/src/freertos_app.c **** 
+ 230:project/src/freertos_app.c ****   /* Infinite loop */
+ 231:project/src/freertos_app.c ****   while(1)
+ 112              		.loc 1 231 3 is_stmt 1 view .LVU13
+ 232:project/src/freertos_app.c ****   {
+ 233:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_func 1 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 7
+
+
+ 234:project/src/freertos_app.c **** 
+ 235:project/src/freertos_app.c ****     vTaskDelay(1);
+ 113              		.loc 1 235 5 discriminator 2 view .LVU14
+ 114 0002 0120     		movs	r0, #1
+ 115 0004 FFF7FEFF 		bl	vTaskDelay
+ 116              	.LVL9:
+ 231:project/src/freertos_app.c ****   {
+ 117              		.loc 1 231 8 view .LVU15
+ 118 0008 FBE7     		b	.L8
+ 119              		.cfi_endproc
+ 120              	.LFE144:
+ 122              		.section	.text.Debug_Task_func,"ax",%progbits
+ 123              		.align	1
+ 124              		.global	Debug_Task_func
+ 125              		.syntax unified
+ 126              		.thumb
+ 127              		.thumb_func
+ 129              	Debug_Task_func:
+ 130              	.LFB145:
+ 236:project/src/freertos_app.c **** 
+ 237:project/src/freertos_app.c ****   /* add user code end Monitor_Task_func 1 */
+ 238:project/src/freertos_app.c ****   }
+ 239:project/src/freertos_app.c **** }
+ 240:project/src/freertos_app.c **** 
+ 241:project/src/freertos_app.c **** 
+ 242:project/src/freertos_app.c **** /**
+ 243:project/src/freertos_app.c ****   * @brief Debug_Task function.
+ 244:project/src/freertos_app.c ****   * @param  none
+ 245:project/src/freertos_app.c ****   * @retval none
+ 246:project/src/freertos_app.c ****   */
+ 247:project/src/freertos_app.c **** void Debug_Task_func(void *pvParameters)
+ 248:project/src/freertos_app.c **** {
+ 131              		.loc 1 248 1 view -0
+ 132              		.cfi_startproc
+ 133              		@ Volatile: function does not return.
+ 134              		@ args = 0, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              	.LVL10:
+ 137              		.loc 1 248 1 is_stmt 0 view .LVU17
+ 138 0000 08B5     		push	{r3, lr}
+ 139              	.LCFI3:
+ 140              		.cfi_def_cfa_offset 8
+ 141              		.cfi_offset 3, -8
+ 142              		.cfi_offset 14, -4
+ 143              	.LVL11:
+ 144              	.L11:
+ 249:project/src/freertos_app.c ****   /* add user code begin Debug_Task_func 0 */
+ 250:project/src/freertos_app.c **** 
+ 251:project/src/freertos_app.c ****   /* add user code end Debug_Task_func 0 */
+ 252:project/src/freertos_app.c **** 
+ 253:project/src/freertos_app.c ****   /* add user code begin Debug_Task_func 2 */
+ 254:project/src/freertos_app.c **** 
+ 255:project/src/freertos_app.c ****   /* add user code end Debug_Task_func 2 */
+ 256:project/src/freertos_app.c **** 
+ 257:project/src/freertos_app.c ****   /* Infinite loop */
+ 258:project/src/freertos_app.c ****   while(1)
+ 145              		.loc 1 258 3 is_stmt 1 view .LVU18
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 8
+
+
+ 259:project/src/freertos_app.c ****   {
+ 260:project/src/freertos_app.c ****   /* add user code begin Debug_Task_func 1 */
+ 261:project/src/freertos_app.c **** 
+ 262:project/src/freertos_app.c ****     vTaskDelay(1);
+ 146              		.loc 1 262 5 discriminator 2 view .LVU19
+ 147 0002 0120     		movs	r0, #1
+ 148 0004 FFF7FEFF 		bl	vTaskDelay
+ 149              	.LVL12:
+ 258:project/src/freertos_app.c ****   {
+ 150              		.loc 1 258 8 view .LVU20
+ 151 0008 FBE7     		b	.L11
+ 152              		.cfi_endproc
+ 153              	.LFE145:
+ 155              		.section	.text.vApplicationGetIdleTaskMemory,"ax",%progbits
+ 156              		.align	1
+ 157              		.global	vApplicationGetIdleTaskMemory
+ 158              		.syntax unified
+ 159              		.thumb
+ 160              		.thumb_func
+ 162              	vApplicationGetIdleTaskMemory:
+ 163              	.LVL13:
+ 164              	.LFB138:
+  70:project/src/freertos_app.c ****   *ppxIdleTaskTCBBuffer = &idle_task_tcb;
+ 165              		.loc 1 70 1 view -0
+ 166              		.cfi_startproc
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169              		@ link register save eliminated.
+  71:project/src/freertos_app.c ****   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
+ 170              		.loc 1 71 3 view .LVU22
+  71:project/src/freertos_app.c ****   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
+ 171              		.loc 1 71 25 is_stmt 0 view .LVU23
+ 172 0000 034B     		ldr	r3, .L14
+ 173 0002 0360     		str	r3, [r0]
+  72:project/src/freertos_app.c ****   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
+ 174              		.loc 1 72 3 is_stmt 1 view .LVU24
+  72:project/src/freertos_app.c ****   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
+ 175              		.loc 1 72 27 is_stmt 0 view .LVU25
+ 176 0004 034B     		ldr	r3, .L14+4
+ 177 0006 0B60     		str	r3, [r1]
+  73:project/src/freertos_app.c **** }
+ 178              		.loc 1 73 3 is_stmt 1 view .LVU26
+  73:project/src/freertos_app.c **** }
+ 179              		.loc 1 73 25 is_stmt 0 view .LVU27
+ 180 0008 8023     		movs	r3, #128
+ 181 000a 1360     		str	r3, [r2]
+  74:project/src/freertos_app.c **** /*
+ 182              		.loc 1 74 1 view .LVU28
+ 183 000c 7047     		bx	lr
+ 184              	.L15:
+ 185 000e 00BF     		.align	2
+ 186              	.L14:
+ 187 0010 00000000 		.word	idle_task_tcb
+ 188 0014 00000000 		.word	idle_task_stack
+ 189              		.cfi_endproc
+ 190              	.LFE138:
+ 192              		.section	.text.vApplicationGetTimerTaskMemory,"ax",%progbits
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 9
+
+
+ 193              		.align	1
+ 194              		.global	vApplicationGetTimerTaskMemory
+ 195              		.syntax unified
+ 196              		.thumb
+ 197              		.thumb_func
+ 199              	vApplicationGetTimerTaskMemory:
+ 200              	.LVL14:
+ 201              	.LFB139:
+  80:project/src/freertos_app.c ****   *ppxTimerTaskTCBBuffer = &timer_task_tcb;
+ 202              		.loc 1 80 1 is_stmt 1 view -0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206              		@ link register save eliminated.
+  81:project/src/freertos_app.c ****   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
+ 207              		.loc 1 81 3 view .LVU30
+  81:project/src/freertos_app.c ****   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
+ 208              		.loc 1 81 26 is_stmt 0 view .LVU31
+ 209 0000 034B     		ldr	r3, .L17
+ 210 0002 0360     		str	r3, [r0]
+  82:project/src/freertos_app.c ****   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
+ 211              		.loc 1 82 3 is_stmt 1 view .LVU32
+  82:project/src/freertos_app.c ****   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
+ 212              		.loc 1 82 28 is_stmt 0 view .LVU33
+ 213 0004 034B     		ldr	r3, .L17+4
+ 214 0006 0B60     		str	r3, [r1]
+  83:project/src/freertos_app.c **** }
+ 215              		.loc 1 83 3 is_stmt 1 view .LVU34
+  83:project/src/freertos_app.c **** }
+ 216              		.loc 1 83 26 is_stmt 0 view .LVU35
+ 217 0008 4FF48073 		mov	r3, #256
+ 218 000c 1360     		str	r3, [r2]
+  84:project/src/freertos_app.c **** 
+ 219              		.loc 1 84 1 view .LVU36
+ 220 000e 7047     		bx	lr
+ 221              	.L18:
+ 222              		.align	2
+ 223              	.L17:
+ 224 0010 00000000 		.word	timer_task_tcb
+ 225 0014 00000000 		.word	timer_task_stack
+ 226              		.cfi_endproc
+ 227              	.LFE139:
+ 229              		.section	.rodata.freertos_task_create.str1.4,"aMS",%progbits,1
+ 230              		.align	2
+ 231              	.LC0:
+ 232 0000 4D435F54 		.ascii	"MC_Task\000"
+ 232      61736B00 
+ 233              		.align	2
+ 234              	.LC1:
+ 235 0008 43414E43 		.ascii	"CANCom_Task\000"
+ 235      6F6D5F54 
+ 235      61736B00 
+ 236              		.align	2
+ 237              	.LC2:
+ 238 0014 4D6F6E69 		.ascii	"Monitor_Task\000"
+ 238      746F725F 
+ 238      5461736B 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 10
+
+
+ 238      00
+ 239 0021 000000   		.align	2
+ 240              	.LC3:
+ 241 0024 44656275 		.ascii	"Debug_Task\000"
+ 241      675F5461 
+ 241      736B00
+ 242              		.section	.text.freertos_task_create,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	freertos_task_create
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	freertos_task_create:
+ 250              	.LFB140:
+  96:project/src/freertos_app.c ****   /* create MC_Task task */
+ 251              		.loc 1 96 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255 0000 00B5     		push	{lr}
+ 256              	.LCFI4:
+ 257              		.cfi_def_cfa_offset 4
+ 258              		.cfi_offset 14, -4
+ 259 0002 83B0     		sub	sp, sp, #12
+ 260              	.LCFI5:
+ 261              		.cfi_def_cfa_offset 16
+  98:project/src/freertos_app.c ****               "MC_Task",
+ 262              		.loc 1 98 3 view .LVU38
+ 263 0004 164B     		ldr	r3, .L21
+ 264 0006 0193     		str	r3, [sp, #4]
+ 265 0008 0323     		movs	r3, #3
+ 266 000a 0093     		str	r3, [sp]
+ 267 000c 0023     		movs	r3, #0
+ 268 000e 4FF40072 		mov	r2, #512
+ 269 0012 1449     		ldr	r1, .L21+4
+ 270 0014 1448     		ldr	r0, .L21+8
+ 271 0016 FFF7FEFF 		bl	xTaskCreate
+ 272              	.LVL15:
+ 106:project/src/freertos_app.c ****               "CANCom_Task",
+ 273              		.loc 1 106 3 view .LVU39
+ 274 001a 144B     		ldr	r3, .L21+12
+ 275 001c 0193     		str	r3, [sp, #4]
+ 276 001e 0223     		movs	r3, #2
+ 277 0020 0093     		str	r3, [sp]
+ 278 0022 0023     		movs	r3, #0
+ 279 0024 4FF40072 		mov	r2, #512
+ 280 0028 1149     		ldr	r1, .L21+16
+ 281 002a 1248     		ldr	r0, .L21+20
+ 282 002c FFF7FEFF 		bl	xTaskCreate
+ 283              	.LVL16:
+ 114:project/src/freertos_app.c ****               "Monitor_Task",
+ 284              		.loc 1 114 3 view .LVU40
+ 285 0030 114B     		ldr	r3, .L21+24
+ 286 0032 0193     		str	r3, [sp, #4]
+ 287 0034 0123     		movs	r3, #1
+ 288 0036 0093     		str	r3, [sp]
+ 289 0038 0023     		movs	r3, #0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 11
+
+
+ 290 003a 4FF40072 		mov	r2, #512
+ 291 003e 0F49     		ldr	r1, .L21+28
+ 292 0040 0F48     		ldr	r0, .L21+32
+ 293 0042 FFF7FEFF 		bl	xTaskCreate
+ 294              	.LVL17:
+ 122:project/src/freertos_app.c ****               "Debug_Task",
+ 295              		.loc 1 122 3 view .LVU41
+ 296 0046 0F4B     		ldr	r3, .L21+36
+ 297 0048 0193     		str	r3, [sp, #4]
+ 298 004a 0023     		movs	r3, #0
+ 299 004c 0093     		str	r3, [sp]
+ 300 004e 4FF40072 		mov	r2, #512
+ 301 0052 0D49     		ldr	r1, .L21+40
+ 302 0054 0D48     		ldr	r0, .L21+44
+ 303 0056 FFF7FEFF 		bl	xTaskCreate
+ 304              	.LVL18:
+ 128:project/src/freertos_app.c **** 
+ 305              		.loc 1 128 1 is_stmt 0 view .LVU42
+ 306 005a 03B0     		add	sp, sp, #12
+ 307              	.LCFI6:
+ 308              		.cfi_def_cfa_offset 4
+ 309              		@ sp needed
+ 310 005c 00BD     		pop	{pc}
+ 311              	.L22:
+ 312 005e 00BF     		.align	2
+ 313              	.L21:
+ 314 0060 00000000 		.word	MC_Task_handle
+ 315 0064 00000000 		.word	.LC0
+ 316 0068 00000000 		.word	MC_Task_func
+ 317 006c 00000000 		.word	CANCom_Task_handle
+ 318 0070 08000000 		.word	.LC1
+ 319 0074 00000000 		.word	CANCom_Task_func
+ 320 0078 00000000 		.word	Monitor_Task_handle
+ 321 007c 14000000 		.word	.LC2
+ 322 0080 00000000 		.word	Monitor_Task_func
+ 323 0084 00000000 		.word	Debug_Task_handle
+ 324 0088 24000000 		.word	.LC3
+ 325 008c 00000000 		.word	Debug_Task_func
+ 326              		.cfi_endproc
+ 327              	.LFE140:
+ 329              		.section	.text.wk_freertos_init,"ax",%progbits
+ 330              		.align	1
+ 331              		.global	wk_freertos_init
+ 332              		.syntax unified
+ 333              		.thumb
+ 334              		.thumb_func
+ 336              	wk_freertos_init:
+ 337              	.LFB141:
+ 136:project/src/freertos_app.c ****   /* add user code begin freertos_init 0 */
+ 338              		.loc 1 136 1 is_stmt 1 view -0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 342 0000 08B5     		push	{r3, lr}
+ 343              	.LCFI7:
+ 344              		.cfi_def_cfa_offset 8
+ 345              		.cfi_offset 3, -8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 12
+
+
+ 346              		.cfi_offset 14, -4
+ 142:project/src/freertos_app.c **** 
+ 347              		.loc 1 142 3 view .LVU44
+ 348 0002 FFF7FEFF 		bl	vPortEnterCritical
+ 349              	.LVL19:
+ 144:project/src/freertos_app.c **** 	
+ 350              		.loc 1 144 3 view .LVU45
+ 351 0006 FFF7FEFF 		bl	freertos_task_create
+ 352              	.LVL20:
+ 151:project/src/freertos_app.c **** 
+ 353              		.loc 1 151 3 view .LVU46
+ 354 000a FFF7FEFF 		bl	vPortExitCritical
+ 355              	.LVL21:
+ 154:project/src/freertos_app.c **** }
+ 356              		.loc 1 154 3 view .LVU47
+ 357 000e FFF7FEFF 		bl	vTaskStartScheduler
+ 358              	.LVL22:
+ 155:project/src/freertos_app.c **** 
+ 359              		.loc 1 155 1 is_stmt 0 view .LVU48
+ 360 0012 08BD     		pop	{r3, pc}
+ 361              		.cfi_endproc
+ 362              	.LFE141:
+ 364              		.section	.bss.timer_task_tcb,"aw",%nobits
+ 365              		.align	2
+ 368              	timer_task_tcb:
+ 369 0000 00000000 		.space	92
+ 369      00000000 
+ 369      00000000 
+ 369      00000000 
+ 369      00000000 
+ 370              		.section	.bss.idle_task_tcb,"aw",%nobits
+ 371              		.align	2
+ 374              	idle_task_tcb:
+ 375 0000 00000000 		.space	92
+ 375      00000000 
+ 375      00000000 
+ 375      00000000 
+ 375      00000000 
+ 376              		.section	.bss.timer_task_stack,"aw",%nobits
+ 377              		.align	2
+ 380              	timer_task_stack:
+ 381 0000 00000000 		.space	1024
+ 381      00000000 
+ 381      00000000 
+ 381      00000000 
+ 381      00000000 
+ 382              		.section	.bss.idle_task_stack,"aw",%nobits
+ 383              		.align	2
+ 386              	idle_task_stack:
+ 387 0000 00000000 		.space	512
+ 387      00000000 
+ 387      00000000 
+ 387      00000000 
+ 387      00000000 
+ 388              		.global	Debug_Task_handle
+ 389              		.section	.bss.Debug_Task_handle,"aw",%nobits
+ 390              		.align	2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 13
+
+
+ 393              	Debug_Task_handle:
+ 394 0000 00000000 		.space	4
+ 395              		.global	Monitor_Task_handle
+ 396              		.section	.bss.Monitor_Task_handle,"aw",%nobits
+ 397              		.align	2
+ 400              	Monitor_Task_handle:
+ 401 0000 00000000 		.space	4
+ 402              		.global	CANCom_Task_handle
+ 403              		.section	.bss.CANCom_Task_handle,"aw",%nobits
+ 404              		.align	2
+ 407              	CANCom_Task_handle:
+ 408 0000 00000000 		.space	4
+ 409              		.global	MC_Task_handle
+ 410              		.section	.bss.MC_Task_handle,"aw",%nobits
+ 411              		.align	2
+ 414              	MC_Task_handle:
+ 415 0000 00000000 		.space	4
+ 416              		.text
+ 417              	.Letext0:
+ 418              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 419              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 420              		.file 4 "middlewares/freertos/source/include/projdefs.h"
+ 421              		.file 5 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
+ 422              		.file 6 "middlewares/freertos/source/include/FreeRTOS.h"
+ 423              		.file 7 "middlewares/freertos/source/include/task.h"
+ 424              		.file 8 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 425              		.file 9 "project/inc/freertos_app.h"
+ 426              		.file 10 "project/inc/usb_app.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 freertos_app.c
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:21     .text.MC_Task_func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:27     .text.MC_Task_func:00000000 MC_Task_func
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:57     .text.CANCom_Task_func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:63     .text.CANCom_Task_func:00000000 CANCom_Task_func
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:90     .text.Monitor_Task_func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:96     .text.Monitor_Task_func:00000000 Monitor_Task_func
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:123    .text.Debug_Task_func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:129    .text.Debug_Task_func:00000000 Debug_Task_func
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:156    .text.vApplicationGetIdleTaskMemory:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:162    .text.vApplicationGetIdleTaskMemory:00000000 vApplicationGetIdleTaskMemory
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:187    .text.vApplicationGetIdleTaskMemory:00000010 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:374    .bss.idle_task_tcb:00000000 idle_task_tcb
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:386    .bss.idle_task_stack:00000000 idle_task_stack
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:193    .text.vApplicationGetTimerTaskMemory:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:199    .text.vApplicationGetTimerTaskMemory:00000000 vApplicationGetTimerTaskMemory
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:224    .text.vApplicationGetTimerTaskMemory:00000010 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:368    .bss.timer_task_tcb:00000000 timer_task_tcb
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:380    .bss.timer_task_stack:00000000 timer_task_stack
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:230    .rodata.freertos_task_create.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:243    .text.freertos_task_create:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:249    .text.freertos_task_create:00000000 freertos_task_create
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:314    .text.freertos_task_create:00000060 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:414    .bss.MC_Task_handle:00000000 MC_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:407    .bss.CANCom_Task_handle:00000000 CANCom_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:400    .bss.Monitor_Task_handle:00000000 Monitor_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:393    .bss.Debug_Task_handle:00000000 Debug_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:330    .text.wk_freertos_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:336    .text.wk_freertos_init:00000000 wk_freertos_init
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:365    .bss.timer_task_tcb:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:371    .bss.idle_task_tcb:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:377    .bss.timer_task_stack:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:383    .bss.idle_task_stack:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:390    .bss.Debug_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:397    .bss.Monitor_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:404    .bss.CANCom_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccfq3Xrk.s:411    .bss.MC_Task_handle:00000000 $d
+
+UNDEFINED SYMBOLS
+wk_usb_app_task
+vTaskDelay
+xTaskCreate
+vPortEnterCritical
+vPortExitCritical
+vTaskStartScheduler

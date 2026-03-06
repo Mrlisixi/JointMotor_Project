@@ -1,0 +1,357 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_can.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_can.c"
+  20              		.section	.text.wk_can1_init,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_can1_init
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_can1_init:
+  28              	.LFB137:
+   1:project/src/wk_can.c **** /* add user code begin Header */
+   2:project/src/wk_can.c **** /**
+   3:project/src/wk_can.c ****   **************************************************************************
+   4:project/src/wk_can.c ****   * @file     wk_can.c
+   5:project/src/wk_can.c ****   * @brief    work bench config program
+   6:project/src/wk_can.c ****   **************************************************************************
+   7:project/src/wk_can.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_can.c ****   *
+   9:project/src/wk_can.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_can.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_can.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_can.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_can.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_can.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_can.c ****   *
+  16:project/src/wk_can.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_can.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_can.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_can.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_can.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_can.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_can.c ****   *
+  23:project/src/wk_can.c ****   **************************************************************************
+  24:project/src/wk_can.c ****   */
+  25:project/src/wk_can.c **** /* add user code end Header */
+  26:project/src/wk_can.c **** 
+  27:project/src/wk_can.c **** /* Includes ------------------------------------------------------------------*/
+  28:project/src/wk_can.c **** #include "wk_can.h"
+  29:project/src/wk_can.c **** 
+  30:project/src/wk_can.c **** /* add user code begin 0 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 2
+
+
+  31:project/src/wk_can.c **** 
+  32:project/src/wk_can.c **** /* add user code end 0 */
+  33:project/src/wk_can.c **** 
+  34:project/src/wk_can.c **** /**
+  35:project/src/wk_can.c ****   * @brief  init can1 function.
+  36:project/src/wk_can.c ****   * @param  none
+  37:project/src/wk_can.c ****   * @retval none
+  38:project/src/wk_can.c ****   */
+  39:project/src/wk_can.c **** void wk_can1_init(void)
+  40:project/src/wk_can.c **** {
+  29              		.loc 1 40 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 40
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 8AB0     		sub	sp, sp, #40
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 64
+  41:project/src/wk_can.c ****   /* add user code begin can1_init 0 */
+  42:project/src/wk_can.c **** 
+  43:project/src/wk_can.c ****   /* add user code end can1_init 0 */
+  44:project/src/wk_can.c ****   
+  45:project/src/wk_can.c ****   gpio_init_type gpio_init_struct;
+  45              		.loc 1 45 3 view .LVU1
+  46:project/src/wk_can.c ****   can_base_type can_base_struct;
+  46              		.loc 1 46 3 view .LVU2
+  47:project/src/wk_can.c ****   can_baudrate_type can_baudrate_struct;
+  47              		.loc 1 47 3 view .LVU3
+  48:project/src/wk_can.c ****   can_filter_init_type can_filter_init_struct;
+  48              		.loc 1 48 3 view .LVU4
+  49:project/src/wk_can.c **** 
+  50:project/src/wk_can.c ****   /* add user code begin can1_init 1 */
+  51:project/src/wk_can.c **** 
+  52:project/src/wk_can.c ****   /* add user code end can1_init 1 */
+  53:project/src/wk_can.c ****   
+  54:project/src/wk_can.c ****   /*gpio-----------------------------------------------------------------------------*/ 
+  55:project/src/wk_can.c ****   gpio_default_para_init(&gpio_init_struct);
+  49              		.loc 1 55 3 view .LVU5
+  50 0006 08AE     		add	r6, sp, #32
+  51 0008 3046     		mov	r0, r6
+  52 000a FFF7FEFF 		bl	gpio_default_para_init
+  53              	.LVL0:
+  56:project/src/wk_can.c **** 
+  57:project/src/wk_can.c ****   /* configure the CAN1 TX pin */
+  58:project/src/wk_can.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  54              		.loc 1 58 3 view .LVU6
+  55              		.loc 1 58 40 is_stmt 0 view .LVU7
+  56 000e 0223     		movs	r3, #2
+  57 0010 8DF82730 		strb	r3, [sp, #39]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 3
+
+
+  59:project/src/wk_can.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  58              		.loc 1 59 3 is_stmt 1 view .LVU8
+  59              		.loc 1 59 34 is_stmt 0 view .LVU9
+  60 0014 0024     		movs	r4, #0
+  61 0016 8DF82440 		strb	r4, [sp, #36]
+  60:project/src/wk_can.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
+  62              		.loc 1 60 3 is_stmt 1 view .LVU10
+  63              		.loc 1 60 30 is_stmt 0 view .LVU11
+  64 001a 0823     		movs	r3, #8
+  65 001c 8DF82630 		strb	r3, [sp, #38]
+  61:project/src/wk_can.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_9;
+  66              		.loc 1 61 3 is_stmt 1 view .LVU12
+  67              		.loc 1 61 30 is_stmt 0 view .LVU13
+  68 0020 4FF40073 		mov	r3, #512
+  69 0024 0893     		str	r3, [sp, #32]
+  62:project/src/wk_can.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  70              		.loc 1 62 3 is_stmt 1 view .LVU14
+  71              		.loc 1 62 30 is_stmt 0 view .LVU15
+  72 0026 4FF00408 		mov	r8, #4
+  73 002a 8DF82580 		strb	r8, [sp, #37]
+  63:project/src/wk_can.c ****   gpio_init(GPIOB, &gpio_init_struct);
+  74              		.loc 1 63 3 is_stmt 1 view .LVU16
+  75 002e 2B4F     		ldr	r7, .L3
+  76 0030 3146     		mov	r1, r6
+  77 0032 3846     		mov	r0, r7
+  78 0034 FFF7FEFF 		bl	gpio_init
+  79              	.LVL1:
+  64:project/src/wk_can.c **** 
+  65:project/src/wk_can.c ****   /* configure the CAN1 RX pin */
+  66:project/src/wk_can.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+  80              		.loc 1 66 3 view .LVU17
+  81              		.loc 1 66 40 is_stmt 0 view .LVU18
+  82 0038 0125     		movs	r5, #1
+  83 003a 8DF82750 		strb	r5, [sp, #39]
+  67:project/src/wk_can.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+  84              		.loc 1 67 3 is_stmt 1 view .LVU19
+  85              		.loc 1 67 34 is_stmt 0 view .LVU20
+  86 003e 8DF82440 		strb	r4, [sp, #36]
+  68:project/src/wk_can.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_INPUT;
+  87              		.loc 1 68 3 is_stmt 1 view .LVU21
+  88              		.loc 1 68 30 is_stmt 0 view .LVU22
+  89 0042 8DF82640 		strb	r4, [sp, #38]
+  69:project/src/wk_can.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_8;
+  90              		.loc 1 69 3 is_stmt 1 view .LVU23
+  91              		.loc 1 69 30 is_stmt 0 view .LVU24
+  92 0046 4FF48073 		mov	r3, #256
+  93 004a 0893     		str	r3, [sp, #32]
+  70:project/src/wk_can.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
+  94              		.loc 1 70 3 is_stmt 1 view .LVU25
+  95              		.loc 1 70 30 is_stmt 0 view .LVU26
+  96 004c 8DF82580 		strb	r8, [sp, #37]
+  71:project/src/wk_can.c ****   gpio_init(GPIOB, &gpio_init_struct);
+  97              		.loc 1 71 3 is_stmt 1 view .LVU27
+  98 0050 3146     		mov	r1, r6
+  99 0052 3846     		mov	r0, r7
+ 100 0054 FFF7FEFF 		bl	gpio_init
+ 101              	.LVL2:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 4
+
+
+  72:project/src/wk_can.c **** 
+  73:project/src/wk_can.c ****   /* GPIO PIN remap */
+  74:project/src/wk_can.c ****   gpio_pin_remap_config(CAN1_GMUX_0010, TRUE); 
+ 102              		.loc 1 74 3 view .LVU28
+ 103 0058 2946     		mov	r1, r5
+ 104 005a 2148     		ldr	r0, .L3+4
+ 105 005c FFF7FEFF 		bl	gpio_pin_remap_config
+ 106              	.LVL3:
+  75:project/src/wk_can.c **** 
+  76:project/src/wk_can.c ****   /*can_base_init--------------------------------------------------------------------*/ 
+  77:project/src/wk_can.c ****   can_default_para_init(&can_base_struct);
+ 107              		.loc 1 77 3 view .LVU29
+ 108 0060 06AF     		add	r7, sp, #24
+ 109 0062 3846     		mov	r0, r7
+ 110 0064 FFF7FEFF 		bl	can_default_para_init
+ 111              	.LVL4:
+  78:project/src/wk_can.c ****   can_base_struct.mode_selection = CAN_MODE_COMMUNICATE;
+ 112              		.loc 1 78 3 view .LVU30
+ 113              		.loc 1 78 34 is_stmt 0 view .LVU31
+ 114 0068 8DF81840 		strb	r4, [sp, #24]
+  79:project/src/wk_can.c ****   can_base_struct.ttc_enable = FALSE;
+ 115              		.loc 1 79 3 is_stmt 1 view .LVU32
+ 116              		.loc 1 79 30 is_stmt 0 view .LVU33
+ 117 006c 8DF81940 		strb	r4, [sp, #25]
+  80:project/src/wk_can.c ****   can_base_struct.aebo_enable = TRUE;
+ 118              		.loc 1 80 3 is_stmt 1 view .LVU34
+ 119              		.loc 1 80 31 is_stmt 0 view .LVU35
+ 120 0070 8DF81A50 		strb	r5, [sp, #26]
+  81:project/src/wk_can.c ****   can_base_struct.aed_enable = TRUE;
+ 121              		.loc 1 81 3 is_stmt 1 view .LVU36
+ 122              		.loc 1 81 30 is_stmt 0 view .LVU37
+ 123 0074 8DF81B50 		strb	r5, [sp, #27]
+  82:project/src/wk_can.c ****   can_base_struct.prsf_enable = FALSE;
+ 124              		.loc 1 82 3 is_stmt 1 view .LVU38
+ 125              		.loc 1 82 31 is_stmt 0 view .LVU39
+ 126 0078 8DF81C40 		strb	r4, [sp, #28]
+  83:project/src/wk_can.c ****   can_base_struct.mdrsel_selection = CAN_DISCARDING_FIRST_RECEIVED;
+ 127              		.loc 1 83 3 is_stmt 1 view .LVU40
+ 128              		.loc 1 83 36 is_stmt 0 view .LVU41
+ 129 007c 8DF81D40 		strb	r4, [sp, #29]
+  84:project/src/wk_can.c ****   can_base_struct.mmssr_selection = CAN_SENDING_BY_ID;
+ 130              		.loc 1 84 3 is_stmt 1 view .LVU42
+ 131              		.loc 1 84 35 is_stmt 0 view .LVU43
+ 132 0080 8DF81E40 		strb	r4, [sp, #30]
+  85:project/src/wk_can.c **** 
+  86:project/src/wk_can.c ****   can_base_init(CAN1, &can_base_struct);
+ 133              		.loc 1 86 3 is_stmt 1 view .LVU44
+ 134 0084 174E     		ldr	r6, .L3+8
+ 135 0086 3946     		mov	r1, r7
+ 136 0088 3046     		mov	r0, r6
+ 137 008a FFF7FEFF 		bl	can_base_init
+ 138              	.LVL5:
+  87:project/src/wk_can.c **** 
+  88:project/src/wk_can.c ****   /*can_baudrate_setting-------------------------------------------------------------*/ 
+  89:project/src/wk_can.c ****   /*set baudrate = pclk/(baudrate_div *(1 + bts1_size + bts2_size))------------------*/ 
+  90:project/src/wk_can.c ****   can_baudrate_struct.baudrate_div = 30;                       /*value: 1~0xFFF*/
+ 139              		.loc 1 90 3 view .LVU45
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 5
+
+
+ 140              		.loc 1 90 36 is_stmt 0 view .LVU46
+ 141 008e 1E23     		movs	r3, #30
+ 142 0090 ADF81030 		strh	r3, [sp, #16]	@ movhi
+  91:project/src/wk_can.c ****   can_baudrate_struct.rsaw_size = CAN_RSAW_1TQ;                /*value: 1~4*/
+ 143              		.loc 1 91 3 is_stmt 1 view .LVU47
+ 144              		.loc 1 91 33 is_stmt 0 view .LVU48
+ 145 0094 8DF81240 		strb	r4, [sp, #18]
+  92:project/src/wk_can.c ****   can_baudrate_struct.bts1_size = CAN_BTS1_6TQ;                /*value: 1~16*/
+ 146              		.loc 1 92 3 is_stmt 1 view .LVU49
+ 147              		.loc 1 92 33 is_stmt 0 view .LVU50
+ 148 0098 0523     		movs	r3, #5
+ 149 009a 8DF81330 		strb	r3, [sp, #19]
+  93:project/src/wk_can.c ****   can_baudrate_struct.bts2_size = CAN_BTS2_1TQ;                /*value: 1~8*/
+ 150              		.loc 1 93 3 is_stmt 1 view .LVU51
+ 151              		.loc 1 93 33 is_stmt 0 view .LVU52
+ 152 009e 8DF81440 		strb	r4, [sp, #20]
+  94:project/src/wk_can.c ****   can_baudrate_set(CAN1, &can_baudrate_struct);
+ 153              		.loc 1 94 3 is_stmt 1 view .LVU53
+ 154 00a2 04A9     		add	r1, sp, #16
+ 155 00a4 3046     		mov	r0, r6
+ 156 00a6 FFF7FEFF 		bl	can_baudrate_set
+ 157              	.LVL6:
+  95:project/src/wk_can.c **** 
+  96:project/src/wk_can.c ****   /*can_filter_0_config--------------------------------------------------------------*/
+  97:project/src/wk_can.c ****   can_filter_init_struct.filter_activate_enable = TRUE;
+ 158              		.loc 1 97 3 view .LVU54
+ 159              		.loc 1 97 49 is_stmt 0 view .LVU55
+ 160 00aa 8DF80050 		strb	r5, [sp]
+  98:project/src/wk_can.c ****   can_filter_init_struct.filter_number = 0;
+ 161              		.loc 1 98 3 is_stmt 1 view .LVU56
+ 162              		.loc 1 98 40 is_stmt 0 view .LVU57
+ 163 00ae 8DF80340 		strb	r4, [sp, #3]
+  99:project/src/wk_can.c ****   can_filter_init_struct.filter_fifo = CAN_FILTER_FIFO0;
+ 164              		.loc 1 99 3 is_stmt 1 view .LVU58
+ 165              		.loc 1 99 38 is_stmt 0 view .LVU59
+ 166 00b2 8DF80240 		strb	r4, [sp, #2]
+ 100:project/src/wk_can.c ****   can_filter_init_struct.filter_bit = CAN_FILTER_16BIT;  
+ 167              		.loc 1 100 3 is_stmt 1 view .LVU60
+ 168              		.loc 1 100 37 is_stmt 0 view .LVU61
+ 169 00b6 8DF80440 		strb	r4, [sp, #4]
+ 101:project/src/wk_can.c ****   can_filter_init_struct.filter_mode = CAN_FILTER_MODE_ID_MASK;  
+ 170              		.loc 1 101 3 is_stmt 1 view .LVU62
+ 171              		.loc 1 101 38 is_stmt 0 view .LVU63
+ 172 00ba 8DF80140 		strb	r4, [sp, #1]
+ 102:project/src/wk_can.c ****   /*Standard identifier + Mask Mode + Data/Remote frame: id/mask 11bit --------------*/
+ 103:project/src/wk_can.c ****   can_filter_init_struct.filter_id_high = 0x0 << 5;
+ 173              		.loc 1 103 3 is_stmt 1 view .LVU64
+ 174              		.loc 1 103 41 is_stmt 0 view .LVU65
+ 175 00be ADF80640 		strh	r4, [sp, #6]	@ movhi
+ 104:project/src/wk_can.c ****   can_filter_init_struct.filter_id_low = 0x0 << 5;
+ 176              		.loc 1 104 3 is_stmt 1 view .LVU66
+ 177              		.loc 1 104 40 is_stmt 0 view .LVU67
+ 178 00c2 ADF80840 		strh	r4, [sp, #8]	@ movhi
+ 105:project/src/wk_can.c ****   can_filter_init_struct.filter_mask_high = 0x0 << 5;
+ 179              		.loc 1 105 3 is_stmt 1 view .LVU68
+ 180              		.loc 1 105 43 is_stmt 0 view .LVU69
+ 181 00c6 ADF80A40 		strh	r4, [sp, #10]	@ movhi
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 6
+
+
+ 106:project/src/wk_can.c ****   can_filter_init_struct.filter_mask_low = 0x0 << 5;
+ 182              		.loc 1 106 3 is_stmt 1 view .LVU70
+ 183              		.loc 1 106 42 is_stmt 0 view .LVU71
+ 184 00ca ADF80C40 		strh	r4, [sp, #12]	@ movhi
+ 107:project/src/wk_can.c **** 
+ 108:project/src/wk_can.c ****   can_filter_init(CAN1, &can_filter_init_struct);
+ 185              		.loc 1 108 3 is_stmt 1 view .LVU72
+ 186 00ce 6946     		mov	r1, sp
+ 187 00d0 3046     		mov	r0, r6
+ 188 00d2 FFF7FEFF 		bl	can_filter_init
+ 189              	.LVL7:
+ 109:project/src/wk_can.c **** 
+ 110:project/src/wk_can.c ****   /* add user code begin can1_init 2 */
+ 111:project/src/wk_can.c **** 
+ 112:project/src/wk_can.c ****   /* add user code end can1_init 2 */
+ 113:project/src/wk_can.c **** }
+ 190              		.loc 1 113 1 is_stmt 0 view .LVU73
+ 191 00d6 0AB0     		add	sp, sp, #40
+ 192              	.LCFI2:
+ 193              		.cfi_def_cfa_offset 24
+ 194              		@ sp needed
+ 195 00d8 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 196              	.L4:
+ 197              		.align	2
+ 198              	.L3:
+ 199 00dc 000C0140 		.word	1073810432
+ 200 00e0 0204002C 		.word	738198530
+ 201 00e4 00640040 		.word	1073767424
+ 202              		.cfi_endproc
+ 203              	.LFE137:
+ 205              		.text
+ 206              	.Letext0:
+ 207              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 208              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 209              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 210              		.file 5 "libraries/drivers/inc/at32f403a_407_can.h"
+ 211              		.file 6 "libraries/drivers/inc/at32f403a_407_gpio.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc7c79ha.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_can.c
+C:\Users\10963\AppData\Local\Temp\cc7c79ha.s:21     .text.wk_can1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc7c79ha.s:27     .text.wk_can1_init:00000000 wk_can1_init
+C:\Users\10963\AppData\Local\Temp\cc7c79ha.s:199    .text.wk_can1_init:000000dc $d
+
+UNDEFINED SYMBOLS
+gpio_default_para_init
+gpio_init
+gpio_pin_remap_config
+can_default_para_init
+can_base_init
+can_baudrate_set
+can_filter_init

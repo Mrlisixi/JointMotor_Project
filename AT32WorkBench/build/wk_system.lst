@@ -1,0 +1,372 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_system.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "project/src/wk_system.c"
+  20              		.section	.text.wk_delay_us,"ax",%progbits
+  21              		.align	1
+  22              		.weak	wk_delay_us
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_delay_us:
+  28              	.LVL0:
+  29              	.LFB134:
+   1:project/src/wk_system.c **** /* add user code begin Header */
+   2:project/src/wk_system.c **** /**
+   3:project/src/wk_system.c ****   **************************************************************************
+   4:project/src/wk_system.c ****   * @file     wk_system.c
+   5:project/src/wk_system.c ****   * @brief    work bench config program
+   6:project/src/wk_system.c ****   **************************************************************************
+   7:project/src/wk_system.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:project/src/wk_system.c ****   *
+   9:project/src/wk_system.c ****   * The software Board Support Package (BSP) that is made available to
+  10:project/src/wk_system.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:project/src/wk_system.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:project/src/wk_system.c ****   * software and its related documentation for the purpose of design and
+  13:project/src/wk_system.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:project/src/wk_system.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:project/src/wk_system.c ****   *
+  16:project/src/wk_system.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:project/src/wk_system.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:project/src/wk_system.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:project/src/wk_system.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:project/src/wk_system.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:project/src/wk_system.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:project/src/wk_system.c ****   *
+  23:project/src/wk_system.c ****   **************************************************************************
+  24:project/src/wk_system.c ****   */
+  25:project/src/wk_system.c **** /* add user code end Header */
+  26:project/src/wk_system.c **** 
+  27:project/src/wk_system.c **** #include "wk_system.h"
+  28:project/src/wk_system.c **** 
+  29:project/src/wk_system.c **** #define STEP_DELAY_MS                    (uint32_t)(50)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 2
+
+
+  30:project/src/wk_system.c **** #define TICK_COUNT_MAX                   (uint32_t)(0xFFFF)
+  31:project/src/wk_system.c **** #define TICK_COUNT_VALUE                 (TMR2->cval)
+  32:project/src/wk_system.c **** 
+  33:project/src/wk_system.c **** /* global variable */
+  34:project/src/wk_system.c **** volatile uint32_t ticks_count_us;
+  35:project/src/wk_system.c **** 
+  36:project/src/wk_system.c **** /**
+  37:project/src/wk_system.c ****   * @brief  this function provides minimum delay (in microsecond).
+  38:project/src/wk_system.c ****   * @param  delay: specifies the delay time length, in microsecond.
+  39:project/src/wk_system.c ****   * @retval none
+  40:project/src/wk_system.c ****   */
+  41:project/src/wk_system.c **** __WEAK void wk_delay_us(uint32_t delay)
+  42:project/src/wk_system.c **** {
+  30              		.loc 1 42 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  43:project/src/wk_system.c ****   uint32_t delay_ticks, pre_ticks, cur_ticks, delta;
+  35              		.loc 1 43 3 view .LVU1
+  44:project/src/wk_system.c ****   delay_ticks = delay * ticks_count_us;
+  36              		.loc 1 44 3 view .LVU2
+  37              		.loc 1 44 23 is_stmt 0 view .LVU3
+  38 0000 0A4B     		ldr	r3, .L6
+  39 0002 1B68     		ldr	r3, [r3]
+  40              		.loc 1 44 15 view .LVU4
+  41 0004 03FB00F0 		mul	r0, r3, r0
+  42              	.LVL1:
+  45:project/src/wk_system.c **** 
+  46:project/src/wk_system.c ****   pre_ticks = TICK_COUNT_VALUE;
+  43              		.loc 1 46 3 is_stmt 1 view .LVU5
+  44              		.loc 1 46 13 is_stmt 0 view .LVU6
+  45 0008 4FF08043 		mov	r3, #1073741824
+  46 000c 5A6A     		ldr	r2, [r3, #36]
+  47              	.LVL2:
+  48              		.loc 1 46 13 view .LVU7
+  49 000e 04E0     		b	.L4
+  50              	.LVL3:
+  51              	.L2:
+  47:project/src/wk_system.c ****   do
+  48:project/src/wk_system.c ****   {
+  49:project/src/wk_system.c ****     cur_ticks = TICK_COUNT_VALUE;
+  50:project/src/wk_system.c ****     /* count up */
+  51:project/src/wk_system.c ****     delta = (cur_ticks >= pre_ticks) ? (cur_ticks - pre_ticks) : ((TICK_COUNT_MAX - pre_ticks) + cu
+  52              		.loc 1 51 96 discriminator 2 view .LVU8
+  53 0010 9B1A     		subs	r3, r3, r2
+  54              	.LVL4:
+  55              		.loc 1 51 11 discriminator 2 view .LVU9
+  56 0012 03F58033 		add	r3, r3, #65536
+  57              	.L3:
+  58              	.LVL5:
+  52:project/src/wk_system.c ****   } while(delta < delay_ticks);
+  59              		.loc 1 52 17 is_stmt 1 view .LVU10
+  60 0016 8342     		cmp	r3, r0
+  61 0018 06D2     		bcs	.L5
+  62              	.LVL6:
+  63              	.L4:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 3
+
+
+  47:project/src/wk_system.c ****   do
+  64              		.loc 1 47 3 view .LVU11
+  49:project/src/wk_system.c ****     /* count up */
+  65              		.loc 1 49 5 view .LVU12
+  49:project/src/wk_system.c ****     /* count up */
+  66              		.loc 1 49 15 is_stmt 0 view .LVU13
+  67 001a 4FF08043 		mov	r3, #1073741824
+  68 001e 5B6A     		ldr	r3, [r3, #36]
+  69              	.LVL7:
+  51:project/src/wk_system.c ****   } while(delta < delay_ticks);
+  70              		.loc 1 51 5 is_stmt 1 view .LVU14
+  51:project/src/wk_system.c ****   } while(delta < delay_ticks);
+  71              		.loc 1 51 64 is_stmt 0 view .LVU15
+  72 0020 9A42     		cmp	r2, r3
+  73 0022 F5D8     		bhi	.L2
+  51:project/src/wk_system.c ****   } while(delta < delay_ticks);
+  74              		.loc 1 51 11 discriminator 1 view .LVU16
+  75 0024 9B1A     		subs	r3, r3, r2
+  76              	.LVL8:
+  51:project/src/wk_system.c ****   } while(delta < delay_ticks);
+  77              		.loc 1 51 11 discriminator 1 view .LVU17
+  78 0026 F6E7     		b	.L3
+  79              	.L5:
+  53:project/src/wk_system.c **** }
+  80              		.loc 1 53 1 view .LVU18
+  81 0028 7047     		bx	lr
+  82              	.L7:
+  83 002a 00BF     		.align	2
+  84              	.L6:
+  85 002c 00000000 		.word	ticks_count_us
+  86              		.cfi_endproc
+  87              	.LFE134:
+  89              		.section	.text.wk_delay_ms,"ax",%progbits
+  90              		.align	1
+  91              		.weak	wk_delay_ms
+  92              		.syntax unified
+  93              		.thumb
+  94              		.thumb_func
+  96              	wk_delay_ms:
+  97              	.LVL9:
+  98              	.LFB135:
+  54:project/src/wk_system.c **** 
+  55:project/src/wk_system.c **** /**
+  56:project/src/wk_system.c ****   * @brief  this function provides minimum delay (in milliseconds).
+  57:project/src/wk_system.c ****   * @param  delay variable specifies the delay time length, in milliseconds.
+  58:project/src/wk_system.c ****   * @retval none
+  59:project/src/wk_system.c ****   */
+  60:project/src/wk_system.c **** __WEAK void wk_delay_ms(uint32_t delay)
+  61:project/src/wk_system.c **** {
+  99              		.loc 1 61 1 is_stmt 1 view -0
+ 100              		.cfi_startproc
+ 101              		@ args = 0, pretend = 0, frame = 0
+ 102              		@ frame_needed = 0, uses_anonymous_args = 0
+ 103              		.loc 1 61 1 is_stmt 0 view .LVU20
+ 104 0000 10B5     		push	{r4, lr}
+ 105              	.LCFI0:
+ 106              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 4
+
+
+ 107              		.cfi_offset 4, -8
+ 108              		.cfi_offset 14, -4
+ 109 0002 0446     		mov	r4, r0
+  62:project/src/wk_system.c ****   while(delay)
+ 110              		.loc 1 62 3 is_stmt 1 view .LVU21
+ 111              		.loc 1 62 8 is_stmt 0 view .LVU22
+ 112 0004 04E0     		b	.L9
+ 113              	.LVL10:
+ 114              	.L14:
+  63:project/src/wk_system.c ****   {
+  64:project/src/wk_system.c ****     if(delay > STEP_DELAY_MS)
+  65:project/src/wk_system.c ****     {
+  66:project/src/wk_system.c ****       wk_delay_us(STEP_DELAY_MS * 1000);
+ 115              		.loc 1 66 7 is_stmt 1 view .LVU23
+ 116 0006 4CF25030 		movw	r0, #50000
+ 117 000a FFF7FEFF 		bl	wk_delay_us
+ 118              	.LVL11:
+  67:project/src/wk_system.c ****       delay -= STEP_DELAY_MS;
+ 119              		.loc 1 67 7 view .LVU24
+ 120              		.loc 1 67 13 is_stmt 0 view .LVU25
+ 121 000e 323C     		subs	r4, r4, #50
+ 122              	.LVL12:
+ 123              	.L9:
+  62:project/src/wk_system.c ****   while(delay)
+ 124              		.loc 1 62 9 is_stmt 1 view .LVU26
+ 125 0010 3CB1     		cbz	r4, .L8
+  64:project/src/wk_system.c ****     {
+ 126              		.loc 1 64 5 view .LVU27
+  64:project/src/wk_system.c ****     {
+ 127              		.loc 1 64 7 is_stmt 0 view .LVU28
+ 128 0012 322C     		cmp	r4, #50
+ 129 0014 F7D8     		bhi	.L14
+  68:project/src/wk_system.c ****     }
+  69:project/src/wk_system.c ****     else
+  70:project/src/wk_system.c ****     {
+  71:project/src/wk_system.c ****       wk_delay_us(delay * 1000);
+ 130              		.loc 1 71 7 is_stmt 1 view .LVU29
+ 131 0016 4FF47A70 		mov	r0, #1000
+ 132 001a 04FB00F0 		mul	r0, r4, r0
+ 133 001e FFF7FEFF 		bl	wk_delay_us
+ 134              	.LVL13:
+  72:project/src/wk_system.c ****       delay = 0;
+ 135              		.loc 1 72 7 view .LVU30
+  62:project/src/wk_system.c ****   {
+ 136              		.loc 1 62 9 view .LVU31
+ 137              	.L8:
+  73:project/src/wk_system.c ****     }
+  74:project/src/wk_system.c ****   }
+  75:project/src/wk_system.c **** }
+ 138              		.loc 1 75 1 is_stmt 0 view .LVU32
+ 139 0022 10BD     		pop	{r4, pc}
+ 140              		.cfi_endproc
+ 141              	.LFE135:
+ 143              		.section	.text.wk_timebase_init,"ax",%progbits
+ 144              		.align	1
+ 145              		.weak	wk_timebase_init
+ 146              		.syntax unified
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 5
+
+
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	wk_timebase_init:
+ 151              	.LFB136:
+  76:project/src/wk_system.c **** 
+  77:project/src/wk_system.c **** /**
+  78:project/src/wk_system.c ****   * @brief  this function configures the source of the time base.
+  79:project/src/wk_system.c ****   * @param  none
+  80:project/src/wk_system.c ****   * @retval none
+  81:project/src/wk_system.c ****   */
+  82:project/src/wk_system.c **** __WEAK void wk_timebase_init(void)
+  83:project/src/wk_system.c **** {
+ 152              		.loc 1 83 1 is_stmt 1 view -0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 24
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156 0000 10B5     		push	{r4, lr}
+ 157              	.LCFI1:
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 4, -8
+ 160              		.cfi_offset 14, -4
+ 161 0002 86B0     		sub	sp, sp, #24
+ 162              	.LCFI2:
+ 163              		.cfi_def_cfa_offset 32
+  84:project/src/wk_system.c ****   crm_clocks_freq_type crm_clocks;
+ 164              		.loc 1 84 3 view .LVU34
+  85:project/src/wk_system.c ****   uint32_t frequency = 0;
+ 165              		.loc 1 85 3 view .LVU35
+ 166              	.LVL14:
+  86:project/src/wk_system.c **** 
+  87:project/src/wk_system.c ****   /* get crm_clocks */
+  88:project/src/wk_system.c ****   crm_clocks_freq_get(&crm_clocks);
+ 167              		.loc 1 88 3 view .LVU36
+ 168 0004 01A8     		add	r0, sp, #4
+ 169 0006 FFF7FEFF 		bl	crm_clocks_freq_get
+ 170              	.LVL15:
+  89:project/src/wk_system.c **** 
+  90:project/src/wk_system.c ****   frequency = crm_clocks.apb1_freq * 2;
+ 171              		.loc 1 90 3 view .LVU37
+ 172              		.loc 1 90 25 is_stmt 0 view .LVU38
+ 173 000a 049A     		ldr	r2, [sp, #16]
+ 174              		.loc 1 90 13 view .LVU39
+ 175 000c 5200     		lsls	r2, r2, #1
+ 176              	.LVL16:
+  91:project/src/wk_system.c ****   /* time base configuration */
+  92:project/src/wk_system.c ****   tmr_base_init(TMR2, TICK_COUNT_MAX, ((frequency / 1000000U) - 1));
+ 177              		.loc 1 92 3 is_stmt 1 view .LVU40
+ 178              		.loc 1 92 51 is_stmt 0 view .LVU41
+ 179 000e 0D4B     		ldr	r3, .L17
+ 180 0010 A3FB0232 		umull	r3, r2, r3, r2
+ 181              	.LVL17:
+ 182              		.loc 1 92 51 view .LVU42
+ 183 0014 920C     		lsrs	r2, r2, #18
+ 184              		.loc 1 92 3 view .LVU43
+ 185 0016 013A     		subs	r2, r2, #1
+ 186 0018 4FF6FF71 		movw	r1, #65535
+ 187 001c 4FF08040 		mov	r0, #1073741824
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 6
+
+
+ 188 0020 FFF7FEFF 		bl	tmr_base_init
+ 189              	.LVL18:
+  93:project/src/wk_system.c ****   ticks_count_us = 1U;
+ 190              		.loc 1 93 3 is_stmt 1 view .LVU44
+ 191              		.loc 1 93 18 is_stmt 0 view .LVU45
+ 192 0024 0124     		movs	r4, #1
+ 193 0026 084B     		ldr	r3, .L17+4
+ 194 0028 1C60     		str	r4, [r3]
+  94:project/src/wk_system.c ****   /* config timer count up */
+  95:project/src/wk_system.c ****   tmr_cnt_dir_set(TMR2, TMR_COUNT_UP);
+ 195              		.loc 1 95 3 is_stmt 1 view .LVU46
+ 196 002a 0021     		movs	r1, #0
+ 197 002c 4FF08040 		mov	r0, #1073741824
+ 198 0030 FFF7FEFF 		bl	tmr_cnt_dir_set
+ 199              	.LVL19:
+  96:project/src/wk_system.c ****   /* enable timer */
+  97:project/src/wk_system.c ****   tmr_counter_enable(TMR2, TRUE);
+ 200              		.loc 1 97 3 view .LVU47
+ 201 0034 2146     		mov	r1, r4
+ 202 0036 4FF08040 		mov	r0, #1073741824
+ 203 003a FFF7FEFF 		bl	tmr_counter_enable
+ 204              	.LVL20:
+  98:project/src/wk_system.c **** }
+ 205              		.loc 1 98 1 is_stmt 0 view .LVU48
+ 206 003e 06B0     		add	sp, sp, #24
+ 207              	.LCFI3:
+ 208              		.cfi_def_cfa_offset 8
+ 209              		@ sp needed
+ 210 0040 10BD     		pop	{r4, pc}
+ 211              	.L18:
+ 212 0042 00BF     		.align	2
+ 213              	.L17:
+ 214 0044 83DE1B43 		.word	1125899907
+ 215 0048 00000000 		.word	ticks_count_us
+ 216              		.cfi_endproc
+ 217              	.LFE136:
+ 219              		.global	ticks_count_us
+ 220              		.section	.bss.ticks_count_us,"aw",%nobits
+ 221              		.align	2
+ 224              	ticks_count_us:
+ 225 0000 00000000 		.space	4
+ 226              		.text
+ 227              	.Letext0:
+ 228              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 229              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 230              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 231              		.file 5 "libraries/drivers/inc/at32f403a_407_crm.h"
+ 232              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccrKMltL.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_system.c
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:21     .text.wk_delay_us:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:27     .text.wk_delay_us:00000000 wk_delay_us
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:85     .text.wk_delay_us:0000002c $d
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:224    .bss.ticks_count_us:00000000 ticks_count_us
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:90     .text.wk_delay_ms:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:96     .text.wk_delay_ms:00000000 wk_delay_ms
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:144    .text.wk_timebase_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:150    .text.wk_timebase_init:00000000 wk_timebase_init
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:214    .text.wk_timebase_init:00000044 $d
+C:\Users\10963\AppData\Local\Temp\ccrKMltL.s:221    .bss.ticks_count_us:00000000 $d
+
+UNDEFINED SYMBOLS
+crm_clocks_freq_get
+tmr_base_init
+tmr_cnt_dir_set
+tmr_counter_enable
