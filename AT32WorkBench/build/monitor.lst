@@ -1,0 +1,647 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"monitor.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../Monitor/src/monitor.c"
+  20              		.section	.text.hal_adc_convert,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	hal_adc_convert:
+  27              	.LVL0:
+  28              	.LFB143:
+   1:../Monitor/src/monitor.c **** /* add user code begin Header */
+   2:../Monitor/src/monitor.c **** /**
+   3:../Monitor/src/monitor.c ****   **************************************************************************
+   4:../Monitor/src/monitor.c ****   * @file     monitor.c
+   5:../Monitor/src/monitor.c ****   * @brief    monitor implementation file
+   6:../Monitor/src/monitor.c ****   **************************************************************************
+   7:../Monitor/src/monitor.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:../Monitor/src/monitor.c ****   *
+   9:../Monitor/src/monitor.c ****   * The software Board Support Package (BSP) that is made available to
+  10:../Monitor/src/monitor.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:../Monitor/src/monitor.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:../Monitor/src/monitor.c ****   * software and its related documentation for the purpose of design and
+  13:../Monitor/src/monitor.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:../Monitor/src/monitor.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:../Monitor/src/monitor.c ****   *
+  16:../Monitor/src/monitor.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:../Monitor/src/monitor.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:../Monitor/src/monitor.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:../Monitor/src/monitor.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:../Monitor/src/monitor.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:../Monitor/src/monitor.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:../Monitor/src/monitor.c ****   *
+  23:../Monitor/src/monitor.c ****   **************************************************************************
+  24:../Monitor/src/monitor.c ****   */
+  25:../Monitor/src/monitor.c **** /* add user code end Header */
+  26:../Monitor/src/monitor.c **** 
+  27:../Monitor/src/monitor.c **** /* Includes ------------------------------------------------------------------*/
+  28:../Monitor/src/monitor.c **** #include "monitor.h"
+  29:../Monitor/src/monitor.c **** #include "wk_adc.h"
+  30:../Monitor/src/monitor.c **** #include "FreeRTOS.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 2
+
+
+  31:../Monitor/src/monitor.c **** #include "task.h"
+  32:../Monitor/src/monitor.c **** #include <math.h>
+  33:../Monitor/src/monitor.c **** 
+  34:../Monitor/src/monitor.c **** /* external variables --------------------------------------------------------*/
+  35:../Monitor/src/monitor.c **** extern uint16_t adc_data_buffer[];
+  36:../Monitor/src/monitor.c **** 
+  37:../Monitor/src/monitor.c **** /* private variables ---------------------------------------------------------*/
+  38:../Monitor/src/monitor.c **** static uint16_t adc_raw_data[6]; /* ADC raw data: phase current A, B, C, DC link voltage, unused, M
+  39:../Monitor/src/monitor.c **** 
+  40:../Monitor/src/monitor.c **** /* private function prototypes -----------------------------------------------*/
+  41:../Monitor/src/monitor.c **** static void hal_adc_init(void);
+  42:../Monitor/src/monitor.c **** static void hal_adc_read(void);
+  43:../Monitor/src/monitor.c **** static float hal_adc_convert(uint16_t raw_value, float gain, float offset, float vref);
+  44:../Monitor/src/monitor.c **** static float hal_adc_convert_temperature(uint16_t raw_value);
+  45:../Monitor/src/monitor.c **** 
+  46:../Monitor/src/monitor.c **** /* hardware abstraction layer functions --------------------------------------*/
+  47:../Monitor/src/monitor.c **** 
+  48:../Monitor/src/monitor.c **** /**
+  49:../Monitor/src/monitor.c ****   * @brief  Initialize ADC for current, voltage and temperature measurement
+  50:../Monitor/src/monitor.c ****   * @param  none
+  51:../Monitor/src/monitor.c ****   * @retval none
+  52:../Monitor/src/monitor.c ****   */
+  53:../Monitor/src/monitor.c **** static void hal_adc_init(void)
+  54:../Monitor/src/monitor.c **** {
+  55:../Monitor/src/monitor.c ****   /* ADC is already initialized in main.c */
+  56:../Monitor/src/monitor.c ****   /* Start ADC conversion */
+  57:../Monitor/src/monitor.c ****   adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  58:../Monitor/src/monitor.c **** }
+  59:../Monitor/src/monitor.c **** 
+  60:../Monitor/src/monitor.c **** /**
+  61:../Monitor/src/monitor.c ****   * @brief  Read ADC raw data
+  62:../Monitor/src/monitor.c ****   * @param  none
+  63:../Monitor/src/monitor.c ****   * @retval none
+  64:../Monitor/src/monitor.c ****   */
+  65:../Monitor/src/monitor.c **** static void hal_adc_read(void)
+  66:../Monitor/src/monitor.c **** {
+  67:../Monitor/src/monitor.c ****   /* Read ADC data from the buffer */
+  68:../Monitor/src/monitor.c ****   /* The buffer is filled by DMA in main.c */
+  69:../Monitor/src/monitor.c ****   
+  70:../Monitor/src/monitor.c ****   /* Get the latest ADC values */
+  71:../Monitor/src/monitor.c ****   adc_raw_data[0] = adc_data_buffer[0]; /* Phase A current */
+  72:../Monitor/src/monitor.c ****   adc_raw_data[1] = adc_data_buffer[1]; /* Phase B current */
+  73:../Monitor/src/monitor.c ****   adc_raw_data[2] = adc_data_buffer[2]; /* Phase C current */
+  74:../Monitor/src/monitor.c ****   adc_raw_data[3] = adc_data_buffer[3]; /* DC link voltage */
+  75:../Monitor/src/monitor.c ****   adc_raw_data[4] = adc_data_buffer[3]; /* Unused */
+  76:../Monitor/src/monitor.c ****   adc_raw_data[5] = adc_data_buffer[4]; /* MOS temperature */
+  77:../Monitor/src/monitor.c ****   
+  78:../Monitor/src/monitor.c ****   /* Trigger a new conversion */
+  79:../Monitor/src/monitor.c ****   adc_ordinary_software_trigger_enable(ADC1, TRUE);
+  80:../Monitor/src/monitor.c **** }
+  81:../Monitor/src/monitor.c **** 
+  82:../Monitor/src/monitor.c **** /**
+  83:../Monitor/src/monitor.c ****   * @brief  Convert ADC raw data to actual values
+  84:../Monitor/src/monitor.c ****   * @param  raw_value: ADC raw value
+  85:../Monitor/src/monitor.c ****   * @param  gain: Sensor gain
+  86:../Monitor/src/monitor.c ****   * @param  offset: Sensor offset
+  87:../Monitor/src/monitor.c ****   * @param  vref: Reference voltage (V)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 3
+
+
+  88:../Monitor/src/monitor.c ****   * @retval Converted value
+  89:../Monitor/src/monitor.c ****   */
+  90:../Monitor/src/monitor.c **** static float hal_adc_convert(uint16_t raw_value, float gain, float offset, float vref)
+  91:../Monitor/src/monitor.c **** {
+  29              		.loc 1 91 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 91 1 is_stmt 0 view .LVU1
+  35 0000 07EE900A 		vmov	s15, r0	@ int
+  92:../Monitor/src/monitor.c ****   /* Convert ADC raw value (0-4095) to voltage (0-3.3V) */
+  93:../Monitor/src/monitor.c ****   float voltage = (float)raw_value * 3.3f / 4095.0f;
+  36              		.loc 1 93 3 is_stmt 1 view .LVU2
+  37              		.loc 1 93 19 is_stmt 0 view .LVU3
+  38 0004 F8EE677A 		vcvt.f32.u32	s15, s15
+  39              		.loc 1 93 36 view .LVU4
+  40 0008 9FED077A 		vldr.32	s14, .L2
+  41 000c 27EE877A 		vmul.f32	s14, s15, s14
+  42              		.loc 1 93 9 view .LVU5
+  43 0010 DFED066A 		vldr.32	s13, .L2+4
+  44 0014 C7EE267A 		vdiv.f32	s15, s14, s13
+  45              	.LVL1:
+  94:../Monitor/src/monitor.c ****   /* Subtract reference voltage for current sensors */
+  95:../Monitor/src/monitor.c ****   voltage = voltage - vref;
+  46              		.loc 1 95 3 is_stmt 1 view .LVU6
+  47              		.loc 1 95 11 is_stmt 0 view .LVU7
+  48 0018 77EEC17A 		vsub.f32	s15, s15, s2
+  49              	.LVL2:
+  96:../Monitor/src/monitor.c ****   /* Convert voltage to actual value */
+  97:../Monitor/src/monitor.c ****   return voltage * gain + offset;
+  50              		.loc 1 97 3 is_stmt 1 view .LVU8
+  51              		.loc 1 97 18 is_stmt 0 view .LVU9
+  52 001c 27EE800A 		vmul.f32	s0, s15, s0
+  53              	.LVL3:
+  98:../Monitor/src/monitor.c **** }
+  54              		.loc 1 98 1 view .LVU10
+  55 0020 30EE200A 		vadd.f32	s0, s0, s1
+  56 0024 7047     		bx	lr
+  57              	.L3:
+  58 0026 00BF     		.align	2
+  59              	.L2:
+  60 0028 33335340 		.word	1079194419
+  61 002c 00F07F45 		.word	1166012416
+  62              		.cfi_endproc
+  63              	.LFE143:
+  65              		.section	.text.hal_adc_init,"ax",%progbits
+  66              		.align	1
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  71              	hal_adc_init:
+  72              	.LFB141:
+  54:../Monitor/src/monitor.c ****   /* ADC is already initialized in main.c */
+  73              		.loc 1 54 1 is_stmt 1 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 4
+
+
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77 0000 08B5     		push	{r3, lr}
+  78              	.LCFI0:
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 3, -8
+  81              		.cfi_offset 14, -4
+  57:../Monitor/src/monitor.c **** }
+  82              		.loc 1 57 3 view .LVU12
+  83 0002 0121     		movs	r1, #1
+  84 0004 0148     		ldr	r0, .L6
+  85 0006 FFF7FEFF 		bl	adc_ordinary_software_trigger_enable
+  86              	.LVL4:
+  58:../Monitor/src/monitor.c **** 
+  87              		.loc 1 58 1 is_stmt 0 view .LVU13
+  88 000a 08BD     		pop	{r3, pc}
+  89              	.L7:
+  90              		.align	2
+  91              	.L6:
+  92 000c 00240140 		.word	1073816576
+  93              		.cfi_endproc
+  94              	.LFE141:
+  96              		.section	.text.hal_adc_read,"ax",%progbits
+  97              		.align	1
+  98              		.syntax unified
+  99              		.thumb
+ 100              		.thumb_func
+ 102              	hal_adc_read:
+ 103              	.LFB142:
+  66:../Monitor/src/monitor.c ****   /* Read ADC data from the buffer */
+ 104              		.loc 1 66 1 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108 0000 08B5     		push	{r3, lr}
+ 109              	.LCFI1:
+ 110              		.cfi_def_cfa_offset 8
+ 111              		.cfi_offset 3, -8
+ 112              		.cfi_offset 14, -4
+  71:../Monitor/src/monitor.c ****   adc_raw_data[1] = adc_data_buffer[1]; /* Phase B current */
+ 113              		.loc 1 71 3 view .LVU15
+  71:../Monitor/src/monitor.c ****   adc_raw_data[1] = adc_data_buffer[1]; /* Phase B current */
+ 114              		.loc 1 71 36 is_stmt 0 view .LVU16
+ 115 0002 094A     		ldr	r2, .L10
+ 116 0004 1188     		ldrh	r1, [r2]
+  71:../Monitor/src/monitor.c ****   adc_raw_data[1] = adc_data_buffer[1]; /* Phase B current */
+ 117              		.loc 1 71 19 view .LVU17
+ 118 0006 094B     		ldr	r3, .L10+4
+ 119 0008 1980     		strh	r1, [r3]	@ movhi
+  72:../Monitor/src/monitor.c ****   adc_raw_data[2] = adc_data_buffer[2]; /* Phase C current */
+ 120              		.loc 1 72 3 is_stmt 1 view .LVU18
+  72:../Monitor/src/monitor.c ****   adc_raw_data[2] = adc_data_buffer[2]; /* Phase C current */
+ 121              		.loc 1 72 36 is_stmt 0 view .LVU19
+ 122 000a 5188     		ldrh	r1, [r2, #2]
+  72:../Monitor/src/monitor.c ****   adc_raw_data[2] = adc_data_buffer[2]; /* Phase C current */
+ 123              		.loc 1 72 19 view .LVU20
+ 124 000c 5980     		strh	r1, [r3, #2]	@ movhi
+  73:../Monitor/src/monitor.c ****   adc_raw_data[3] = adc_data_buffer[3]; /* DC link voltage */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 5
+
+
+ 125              		.loc 1 73 3 is_stmt 1 view .LVU21
+  73:../Monitor/src/monitor.c ****   adc_raw_data[3] = adc_data_buffer[3]; /* DC link voltage */
+ 126              		.loc 1 73 36 is_stmt 0 view .LVU22
+ 127 000e 9188     		ldrh	r1, [r2, #4]
+  73:../Monitor/src/monitor.c ****   adc_raw_data[3] = adc_data_buffer[3]; /* DC link voltage */
+ 128              		.loc 1 73 19 view .LVU23
+ 129 0010 9980     		strh	r1, [r3, #4]	@ movhi
+  74:../Monitor/src/monitor.c ****   adc_raw_data[4] = adc_data_buffer[3]; /* Unused */
+ 130              		.loc 1 74 3 is_stmt 1 view .LVU24
+  74:../Monitor/src/monitor.c ****   adc_raw_data[4] = adc_data_buffer[3]; /* Unused */
+ 131              		.loc 1 74 36 is_stmt 0 view .LVU25
+ 132 0012 D188     		ldrh	r1, [r2, #6]
+  74:../Monitor/src/monitor.c ****   adc_raw_data[4] = adc_data_buffer[3]; /* Unused */
+ 133              		.loc 1 74 19 view .LVU26
+ 134 0014 D980     		strh	r1, [r3, #6]	@ movhi
+  75:../Monitor/src/monitor.c ****   adc_raw_data[5] = adc_data_buffer[4]; /* MOS temperature */
+ 135              		.loc 1 75 3 is_stmt 1 view .LVU27
+  75:../Monitor/src/monitor.c ****   adc_raw_data[5] = adc_data_buffer[4]; /* MOS temperature */
+ 136              		.loc 1 75 19 is_stmt 0 view .LVU28
+ 137 0016 1981     		strh	r1, [r3, #8]	@ movhi
+  76:../Monitor/src/monitor.c ****   
+ 138              		.loc 1 76 3 is_stmt 1 view .LVU29
+  76:../Monitor/src/monitor.c ****   
+ 139              		.loc 1 76 36 is_stmt 0 view .LVU30
+ 140 0018 1289     		ldrh	r2, [r2, #8]
+  76:../Monitor/src/monitor.c ****   
+ 141              		.loc 1 76 19 view .LVU31
+ 142 001a 5A81     		strh	r2, [r3, #10]	@ movhi
+  79:../Monitor/src/monitor.c **** }
+ 143              		.loc 1 79 3 is_stmt 1 view .LVU32
+ 144 001c 0121     		movs	r1, #1
+ 145 001e 0448     		ldr	r0, .L10+8
+ 146 0020 FFF7FEFF 		bl	adc_ordinary_software_trigger_enable
+ 147              	.LVL5:
+  80:../Monitor/src/monitor.c **** 
+ 148              		.loc 1 80 1 is_stmt 0 view .LVU33
+ 149 0024 08BD     		pop	{r3, pc}
+ 150              	.L11:
+ 151 0026 00BF     		.align	2
+ 152              	.L10:
+ 153 0028 00000000 		.word	adc_data_buffer
+ 154 002c 00000000 		.word	adc_raw_data
+ 155 0030 00240140 		.word	1073816576
+ 156              		.cfi_endproc
+ 157              	.LFE142:
+ 159              		.section	.text.hal_adc_convert_temperature,"ax",%progbits
+ 160              		.align	1
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 165              	hal_adc_convert_temperature:
+ 166              	.LVL6:
+ 167              	.LFB144:
+  99:../Monitor/src/monitor.c **** 
+ 100:../Monitor/src/monitor.c **** /**
+ 101:../Monitor/src/monitor.c ****   * @brief  Convert ADC raw data to temperature using Steinhart-Hart equation
+ 102:../Monitor/src/monitor.c ****   * @param  raw_value: ADC raw value
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 6
+
+
+ 103:../Monitor/src/monitor.c ****   * @retval Temperature in °C
+ 104:../Monitor/src/monitor.c ****   */
+ 105:../Monitor/src/monitor.c **** static float hal_adc_convert_temperature(uint16_t raw_value)
+ 106:../Monitor/src/monitor.c **** {
+ 168              		.loc 1 106 1 is_stmt 1 view -0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              		.loc 1 106 1 is_stmt 0 view .LVU35
+ 173 0000 08B5     		push	{r3, lr}
+ 174              	.LCFI2:
+ 175              		.cfi_def_cfa_offset 8
+ 176              		.cfi_offset 3, -8
+ 177              		.cfi_offset 14, -4
+ 178 0002 2DED028B 		vpush.64	{d8}
+ 179              	.LCFI3:
+ 180              		.cfi_def_cfa_offset 16
+ 181              		.cfi_offset 80, -16
+ 182              		.cfi_offset 81, -12
+ 183 0006 07EE900A 		vmov	s15, r0	@ int
+ 107:../Monitor/src/monitor.c ****   // 1. ADC值转电压
+ 108:../Monitor/src/monitor.c ****     float v_out = (raw_value / ADC_MAX) * VREF;
+ 184              		.loc 1 108 5 is_stmt 1 view .LVU36
+ 185              		.loc 1 108 30 is_stmt 0 view .LVU37
+ 186 000a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 187 000e DFED146A 		vldr.32	s13, .L14
+ 188 0012 87EEA67A 		vdiv.f32	s14, s15, s13
+ 189              		.loc 1 108 11 view .LVU38
+ 190 0016 DFED136A 		vldr.32	s13, .L14+4
+ 191 001a 27EE267A 		vmul.f32	s14, s14, s13
+ 192              	.LVL7:
+ 109:../Monitor/src/monitor.c ****     // 2. 计算NTC阻值
+ 110:../Monitor/src/monitor.c ****     float r_ntc = R17 * (VCC / v_out - 1.0f);
+ 193              		.loc 1 110 5 is_stmt 1 view .LVU39
+ 194              		.loc 1 110 30 is_stmt 0 view .LVU40
+ 195 001e C6EE877A 		vdiv.f32	s15, s13, s14
+ 196              		.loc 1 110 38 view .LVU41
+ 197 0022 B7EE008A 		vmov.f32	s16, #1.0e+0
+ 198 0026 77EEC87A 		vsub.f32	s15, s15, s16
+ 199              		.loc 1 110 11 view .LVU42
+ 200 002a 9FED0F7A 		vldr.32	s14, .L14+8
+ 201              	.LVL8:
+ 202              		.loc 1 110 11 view .LVU43
+ 203 002e 67EE877A 		vmul.f32	s15, s15, s14
+ 204              	.LVL9:
+ 111:../Monitor/src/monitor.c ****     // 3. B值公式计算温度
+ 112:../Monitor/src/monitor.c ****     float inv_t = 1.0f / T0 + logf(r_ntc / R0) / B;
+ 205              		.loc 1 112 5 is_stmt 1 view .LVU44
+ 206              		.loc 1 112 31 is_stmt 0 view .LVU45
+ 207 0032 9FED0E0A 		vldr.32	s0, .L14+12
+ 208 0036 87EE800A 		vdiv.f32	s0, s15, s0
+ 209 003a FFF7FEFF 		bl	logf
+ 210              	.LVL10:
+ 211              		.loc 1 112 48 discriminator 1 view .LVU46
+ 212 003e 9FED0C7A 		vldr.32	s14, .L14+16
+ 213 0042 C0EE077A 		vdiv.f32	s15, s0, s14
+ 214              		.loc 1 112 11 discriminator 1 view .LVU47
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 7
+
+
+ 215 0046 9FED0B7A 		vldr.32	s14, .L14+20
+ 216 004a 77EE877A 		vadd.f32	s15, s15, s14
+ 217              	.LVL11:
+ 113:../Monitor/src/monitor.c ****     float t_k = 1.0f / inv_t;
+ 218              		.loc 1 113 5 is_stmt 1 view .LVU48
+ 219              		.loc 1 113 11 is_stmt 0 view .LVU49
+ 220 004e 88EE270A 		vdiv.f32	s0, s16, s15
+ 221              	.LVL12:
+ 114:../Monitor/src/monitor.c ****     return t_k - 273.15f; // 转成℃
+ 222              		.loc 1 114 5 is_stmt 1 view .LVU50
+ 115:../Monitor/src/monitor.c **** }
+ 223              		.loc 1 115 1 is_stmt 0 view .LVU51
+ 224 0052 DFED097A 		vldr.32	s15, .L14+24
+ 225              	.LVL13:
+ 226              		.loc 1 115 1 view .LVU52
+ 227 0056 30EE670A 		vsub.f32	s0, s0, s15
+ 228              	.LVL14:
+ 229              		.loc 1 115 1 view .LVU53
+ 230 005a BDEC028B 		vldm	sp!, {d8}
+ 231              	.LCFI4:
+ 232              		.cfi_restore 80
+ 233              		.cfi_restore 81
+ 234              		.cfi_def_cfa_offset 8
+ 235              	.LVL15:
+ 236              		.loc 1 115 1 view .LVU54
+ 237 005e 08BD     		pop	{r3, pc}
+ 238              	.L15:
+ 239              		.align	2
+ 240              	.L14:
+ 241 0060 00F07F45 		.word	1166012416
+ 242 0064 33335340 		.word	1079194419
+ 243 0068 00404E45 		.word	1162756096
+ 244 006c 00401C46 		.word	1176256512
+ 245 0070 00E07645 		.word	1165418496
+ 246 0074 0FCF5B3B 		.word	995872527
+ 247 0078 33938843 		.word	1133024051
+ 248              		.cfi_endproc
+ 249              	.LFE144:
+ 251              		.section	.text.monitor_init,"ax",%progbits
+ 252              		.align	1
+ 253              		.global	monitor_init
+ 254              		.syntax unified
+ 255              		.thumb
+ 256              		.thumb_func
+ 258              	monitor_init:
+ 259              	.LFB145:
+ 116:../Monitor/src/monitor.c **** 
+ 117:../Monitor/src/monitor.c **** /* monitor functions -------------------------------------------------------*/
+ 118:../Monitor/src/monitor.c **** 
+ 119:../Monitor/src/monitor.c **** /**
+ 120:../Monitor/src/monitor.c ****   * @brief  Initialize motor monitoring system
+ 121:../Monitor/src/monitor.c ****   * @param  none
+ 122:../Monitor/src/monitor.c ****   * @retval none
+ 123:../Monitor/src/monitor.c ****   */
+ 124:../Monitor/src/monitor.c **** void monitor_init(void)
+ 125:../Monitor/src/monitor.c **** {
+ 260              		.loc 1 125 1 is_stmt 1 view -0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 8
+
+
+ 261              		.cfi_startproc
+ 262              		@ args = 0, pretend = 0, frame = 0
+ 263              		@ frame_needed = 0, uses_anonymous_args = 0
+ 264 0000 08B5     		push	{r3, lr}
+ 265              	.LCFI5:
+ 266              		.cfi_def_cfa_offset 8
+ 267              		.cfi_offset 3, -8
+ 268              		.cfi_offset 14, -4
+ 126:../Monitor/src/monitor.c ****   /* Initialize ADC for current, voltage and temperature measurement */
+ 127:../Monitor/src/monitor.c ****   hal_adc_init();
+ 269              		.loc 1 127 3 view .LVU56
+ 270 0002 FFF7FEFF 		bl	hal_adc_init
+ 271              	.LVL16:
+ 128:../Monitor/src/monitor.c **** }
+ 272              		.loc 1 128 1 is_stmt 0 view .LVU57
+ 273 0006 08BD     		pop	{r3, pc}
+ 274              		.cfi_endproc
+ 275              	.LFE145:
+ 277              		.section	.text.monitor_update,"ax",%progbits
+ 278              		.align	1
+ 279              		.global	monitor_update
+ 280              		.syntax unified
+ 281              		.thumb
+ 282              		.thumb_func
+ 284              	monitor_update:
+ 285              	.LVL17:
+ 286              	.LFB146:
+ 129:../Monitor/src/monitor.c **** 
+ 130:../Monitor/src/monitor.c **** /**
+ 131:../Monitor/src/monitor.c ****   * @brief  Update motor monitoring data
+ 132:../Monitor/src/monitor.c ****   * @param  data: Monitoring data structure
+ 133:../Monitor/src/monitor.c ****   * @retval none
+ 134:../Monitor/src/monitor.c ****   */
+ 135:../Monitor/src/monitor.c **** void monitor_update(monitor_data_t *data)
+ 136:../Monitor/src/monitor.c **** {
+ 287              		.loc 1 136 1 is_stmt 1 view -0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 0
+ 290              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291              		.loc 1 136 1 is_stmt 0 view .LVU59
+ 292 0000 38B5     		push	{r3, r4, r5, lr}
+ 293              	.LCFI6:
+ 294              		.cfi_def_cfa_offset 16
+ 295              		.cfi_offset 3, -16
+ 296              		.cfi_offset 4, -12
+ 297              		.cfi_offset 5, -8
+ 298              		.cfi_offset 14, -4
+ 299 0002 2DED048B 		vpush.64	{d8, d9}
+ 300              	.LCFI7:
+ 301              		.cfi_def_cfa_offset 32
+ 302              		.cfi_offset 80, -32
+ 303              		.cfi_offset 81, -28
+ 304              		.cfi_offset 82, -24
+ 305              		.cfi_offset 83, -20
+ 306 0006 0446     		mov	r4, r0
+ 137:../Monitor/src/monitor.c ****   /* Read ADC data */
+ 138:../Monitor/src/monitor.c ****   hal_adc_read();
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 9
+
+
+ 307              		.loc 1 138 3 is_stmt 1 view .LVU60
+ 308 0008 FFF7FEFF 		bl	hal_adc_read
+ 309              	.LVL18:
+ 139:../Monitor/src/monitor.c ****   
+ 140:../Monitor/src/monitor.c ****   /* Convert ADC raw data to actual values */
+ 141:../Monitor/src/monitor.c ****   /* Current sensors use 1.65V reference */
+ 142:../Monitor/src/monitor.c ****   data->phase_current[0] = hal_adc_convert(adc_raw_data[0], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 310              		.loc 1 142 3 view .LVU61
+ 311              		.loc 1 142 28 is_stmt 0 view .LVU62
+ 312 000c 9FED219A 		vldr.32	s18, .L20
+ 313 0010 9FED218A 		vldr.32	s16, .L20+4
+ 314 0014 DFED218A 		vldr.32	s17, .L20+8
+ 315 0018 214D     		ldr	r5, .L20+12
+ 316 001a B0EE491A 		vmov.f32	s2, s18
+ 317 001e F0EE480A 		vmov.f32	s1, s16
+ 318 0022 B0EE680A 		vmov.f32	s0, s17
+ 319 0026 2888     		ldrh	r0, [r5]
+ 320 0028 FFF7FEFF 		bl	hal_adc_convert
+ 321              	.LVL19:
+ 322              		.loc 1 142 26 discriminator 1 view .LVU63
+ 323 002c 84ED000A 		vstr.32	s0, [r4]
+ 143:../Monitor/src/monitor.c ****   data->phase_current[1] = hal_adc_convert(adc_raw_data[1], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 324              		.loc 1 143 3 is_stmt 1 view .LVU64
+ 325              		.loc 1 143 28 is_stmt 0 view .LVU65
+ 326 0030 B0EE491A 		vmov.f32	s2, s18
+ 327 0034 F0EE480A 		vmov.f32	s1, s16
+ 328 0038 B0EE680A 		vmov.f32	s0, s17
+ 329 003c 6888     		ldrh	r0, [r5, #2]
+ 330 003e FFF7FEFF 		bl	hal_adc_convert
+ 331              	.LVL20:
+ 332              		.loc 1 143 26 discriminator 1 view .LVU66
+ 333 0042 84ED010A 		vstr.32	s0, [r4, #4]
+ 144:../Monitor/src/monitor.c ****   data->phase_current[2] = hal_adc_convert(adc_raw_data[2], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 334              		.loc 1 144 3 is_stmt 1 view .LVU67
+ 335              		.loc 1 144 28 is_stmt 0 view .LVU68
+ 336 0046 B0EE491A 		vmov.f32	s2, s18
+ 337 004a F0EE480A 		vmov.f32	s1, s16
+ 338 004e B0EE680A 		vmov.f32	s0, s17
+ 339 0052 A888     		ldrh	r0, [r5, #4]
+ 340 0054 FFF7FEFF 		bl	hal_adc_convert
+ 341              	.LVL21:
+ 342              		.loc 1 144 26 discriminator 1 view .LVU69
+ 343 0058 84ED020A 		vstr.32	s0, [r4, #8]
+ 145:../Monitor/src/monitor.c ****   
+ 146:../Monitor/src/monitor.c ****   /* Convert DC link voltage using 3.3V reference */
+ 147:../Monitor/src/monitor.c ****   data->dc_link_voltage = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
+ 344              		.loc 1 147 3 is_stmt 1 view .LVU70
+ 345              		.loc 1 147 27 is_stmt 0 view .LVU71
+ 346 005c B0EE481A 		vmov.f32	s2, s16
+ 347 0060 F0EE480A 		vmov.f32	s1, s16
+ 348 0064 B3EE030A 		vmov.f32	s0, #1.9e+1
+ 349 0068 E888     		ldrh	r0, [r5, #6]
+ 350 006a FFF7FEFF 		bl	hal_adc_convert
+ 351              	.LVL22:
+ 352              		.loc 1 147 25 discriminator 1 view .LVU72
+ 353 006e 84ED060A 		vstr.32	s0, [r4, #24]
+ 148:../Monitor/src/monitor.c ****   
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 10
+
+
+ 149:../Monitor/src/monitor.c ****   /* Use DC link voltage for all phases */
+ 150:../Monitor/src/monitor.c ****   data->phase_voltage[0] = data->dc_link_voltage;
+ 354              		.loc 1 150 3 is_stmt 1 view .LVU73
+ 355              		.loc 1 150 26 is_stmt 0 view .LVU74
+ 356 0072 84ED030A 		vstr.32	s0, [r4, #12]
+ 151:../Monitor/src/monitor.c ****   data->phase_voltage[1] = data->dc_link_voltage;
+ 357              		.loc 1 151 3 is_stmt 1 view .LVU75
+ 358              		.loc 1 151 26 is_stmt 0 view .LVU76
+ 359 0076 84ED040A 		vstr.32	s0, [r4, #16]
+ 152:../Monitor/src/monitor.c ****   data->phase_voltage[2] = data->dc_link_voltage;
+ 360              		.loc 1 152 3 is_stmt 1 view .LVU77
+ 361              		.loc 1 152 26 is_stmt 0 view .LVU78
+ 362 007a 84ED050A 		vstr.32	s0, [r4, #20]
+ 153:../Monitor/src/monitor.c ****   
+ 154:../Monitor/src/monitor.c ****   /* Convert MOS temperature using Steinhart-Hart equation */
+ 155:../Monitor/src/monitor.c ****   data->mos_temperature = hal_adc_convert_temperature(adc_raw_data[5]);
+ 363              		.loc 1 155 3 is_stmt 1 view .LVU79
+ 364              		.loc 1 155 27 is_stmt 0 view .LVU80
+ 365 007e 6889     		ldrh	r0, [r5, #10]
+ 366 0080 FFF7FEFF 		bl	hal_adc_convert_temperature
+ 367              	.LVL23:
+ 368              		.loc 1 155 25 discriminator 1 view .LVU81
+ 369 0084 84ED070A 		vstr.32	s0, [r4, #28]
+ 156:../Monitor/src/monitor.c ****   
+ 157:../Monitor/src/monitor.c ****   /* Update timestamp - using xTaskGetTickCount() which returns tick count */
+ 158:../Monitor/src/monitor.c ****   /* Note: Tick count unit depends on configTICK_RATE_HZ setting */
+ 159:../Monitor/src/monitor.c ****   data->timestamp = xTaskGetTickCount();
+ 370              		.loc 1 159 3 is_stmt 1 view .LVU82
+ 371              		.loc 1 159 21 is_stmt 0 view .LVU83
+ 372 0088 FFF7FEFF 		bl	xTaskGetTickCount
+ 373              	.LVL24:
+ 374              		.loc 1 159 19 discriminator 1 view .LVU84
+ 375 008c 2062     		str	r0, [r4, #32]
+ 160:../Monitor/src/monitor.c **** }
+ 376              		.loc 1 160 1 view .LVU85
+ 377 008e BDEC048B 		vldm	sp!, {d8-d9}
+ 378              	.LCFI8:
+ 379              		.cfi_restore 82
+ 380              		.cfi_restore 83
+ 381              		.cfi_restore 80
+ 382              		.cfi_restore 81
+ 383              		.cfi_def_cfa_offset 16
+ 384 0092 38BD     		pop	{r3, r4, r5, pc}
+ 385              	.LVL25:
+ 386              	.L21:
+ 387              		.loc 1 160 1 view .LVU86
+ 388              		.align	2
+ 389              	.L20:
+ 390 0094 3333D33F 		.word	1070805811
+ 391 0098 00000000 		.word	0
+ 392 009c 6666FA41 		.word	1106929254
+ 393 00a0 00000000 		.word	adc_raw_data
+ 394              		.cfi_endproc
+ 395              	.LFE146:
+ 397              		.section	.bss.adc_raw_data,"aw",%nobits
+ 398              		.align	2
+ 401              	adc_raw_data:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 11
+
+
+ 402 0000 00000000 		.space	12
+ 402      00000000 
+ 402      00000000 
+ 403              		.text
+ 404              	.Letext0:
+ 405              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 406              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 407              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 408              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
+ 409              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 410              		.file 7 "../Monitor/inc/monitor.h"
+ 411              		.file 8 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
+ 412              		.file 9 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 413              		.file 10 "middlewares/freertos/source/include/task.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 monitor.c
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:21     .text.hal_adc_convert:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:26     .text.hal_adc_convert:00000000 hal_adc_convert
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:60     .text.hal_adc_convert:00000028 $d
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:66     .text.hal_adc_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:71     .text.hal_adc_init:00000000 hal_adc_init
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:92     .text.hal_adc_init:0000000c $d
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:97     .text.hal_adc_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:102    .text.hal_adc_read:00000000 hal_adc_read
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:153    .text.hal_adc_read:00000028 $d
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:401    .bss.adc_raw_data:00000000 adc_raw_data
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:160    .text.hal_adc_convert_temperature:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:165    .text.hal_adc_convert_temperature:00000000 hal_adc_convert_temperature
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:241    .text.hal_adc_convert_temperature:00000060 $d
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:252    .text.monitor_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:258    .text.monitor_init:00000000 monitor_init
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:278    .text.monitor_update:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:284    .text.monitor_update:00000000 monitor_update
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:390    .text.monitor_update:00000094 $d
+C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:398    .bss.adc_raw_data:00000000 $d
+
+UNDEFINED SYMBOLS
+adc_ordinary_software_trigger_enable
+adc_data_buffer
+logf
+xTaskGetTickCount

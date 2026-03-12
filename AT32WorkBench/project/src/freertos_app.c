@@ -13,9 +13,28 @@
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 #include "motor_control.h"
+#include "usb_printf.h"
+#include "monitor.h"
+#include <stdio.h>
 
 /* add user code end private includes */
 
+/* private typedef -----------------------------------------------------------*/
+/* add user code begin private typedef */
+
+/* add user code end private typedef */
+
+/* private define ------------------------------------------------------------*/
+/* add user code begin private define */
+
+/* add user code end private define */
+
+/* private macro -------------------------------------------------------------*/
+/* add user code begin private macro */
+
+/* add user code end private macro */
+
+/* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
 /* extern motor parameters structure */
 extern motor_params_t motor;
@@ -173,7 +192,7 @@ void MC_Task_Func(void *pvParameters)
   motor_control_init(&motor);
   
   /* start motor with default speed and direction */
-  motor_start(&motor, 50, MOTOR_DIR_CW);
+  motor_start(&motor, 80, MOTOR_DIR_CCW);
 
   /* add user code end MC_Task_Func 0 */
 
@@ -186,10 +205,9 @@ void MC_Task_Func(void *pvParameters)
   {
     /* when use usb,the function wk_usb_app_task() will be generated,
        which is the usb application layer code that users can improve themselves */
-    wk_usb_app_task();  
+    wk_usb_app_task();
     motor_control_process(&motor);
 
-    /* add user code begin MC_Task_Func 1 */
   /* add user code begin MC_Task_Func 1 */
 
     vTaskDelay(1);
@@ -207,7 +225,18 @@ void MC_Task_Func(void *pvParameters)
 void Monitor_Task_Func(void *pvParameters)
 {
   /* add user code begin Monitor_Task_Func 0 */
-  motor_monitor_data_t monitor_data;
+  monitor_data_t monitor_data;
+  uint32_t last_print_time = 0;
+  const uint32_t print_interval = 1000; /* 1 second */
+  
+  /* Threshold values for异常检测 */
+  const float OVERCURRENT_THRESHOLD = 10.0f; /* 10A */
+  const float OVERVOLTAGE_THRESHOLD = 36.0f; /* 36V */
+  const float UNDERVOLTAGE_THRESHOLD = 10.0f; /* 10V */
+  const float OVERTEMP_THRESHOLD = 80.0f; /* 80°C */
+  
+  /* Initialize monitor */
+  monitor_init();
 
   /* add user code end Monitor_Task_Func 0 */
 
@@ -220,20 +249,123 @@ void Monitor_Task_Func(void *pvParameters)
   {
   /* add user code begin Monitor_Task_Func 1 */
     /* Get monitoring data */
-    motor_monitor_get_data(&motor, &monitor_data);
+    monitor_update(&monitor_data);
     
-    /* Add monitoring logic here */
-    /* For example: check for overcurrent, overvoltage, over temperature */
+    /* Check for异常 conditions */
+    uint8_t error_flag = 0;
     
-    /* Print monitoring data (for debugging) */
-    // printf("Current A: %.2f A, Current B: %.2f A, Current C: %.2f A\n", 
-    //        monitor_data.phase_current[0], monitor_data.phase_current[1], monitor_data.phase_current[2]);
-    // printf("Voltage A: %.2f V, Voltage B: %.2f V, Voltage C: %.2f V\n", 
-    //        monitor_data.phase_voltage[0], monitor_data.phase_voltage[1], monitor_data.phase_voltage[2]);
-    // printf("DC Link Voltage: %.2f V, MOS Temperature: %.2f °C\n", 
-    //        monitor_data.dc_link_voltage, monitor_data.mos_temperature);
+    /* Check overcurrent */
+    for (int i = 0; i < 3; i++)
+    {
+      if (monitor_data.phase_current[i] > OVERCURRENT_THRESHOLD)
+      {
+        usb_send_string("ERROR: Phase ");
+        char phase_buf[2] = {'A' + i, 0};
+        usb_send_string(phase_buf);
+        usb_send_string(" overcurrent: ");
+        usb_send_float(monitor_data.phase_current[i], 2);
+        usb_send_string(" A\n");
+        error_flag = 1;
+      }
+    }
+    
+    /* Check overvoltage */
+    if (monitor_data.dc_link_voltage > OVERVOLTAGE_THRESHOLD)
+    {
+      usb_send_string("ERROR: DC link overvoltage: ");
+      usb_send_float(monitor_data.dc_link_voltage, 2);
+      usb_send_string(" V\n");
+      error_flag = 1;
+    }
+    
+    /* Check undervoltage */
+    if (monitor_data.dc_link_voltage < UNDERVOLTAGE_THRESHOLD)
+    {
+      usb_send_string("ERROR: DC link undervoltage: ");
+      usb_send_float(monitor_data.dc_link_voltage, 2);
+      usb_send_string(" V\n");
+      error_flag = 1;
+    }
+    
+    /* Check overtemperature */
+    if (monitor_data.mos_temperature > OVERTEMP_THRESHOLD)
+    {
+      usb_send_string("ERROR: MOS overtemperature: ");
+      usb_send_float(monitor_data.mos_temperature, 2);
+      usb_send_string(" °C\n");
+      error_flag = 1;
+    }
+    
+    /* Print monitoring data periodically */
+    uint32_t current_time = xTaskGetTickCount();
+    if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
+    {
+      usb_send_string("=== Motor Monitoring Data ===\n");
+      
+      usb_send_string("Test float: ");
+      usb_send_float(3.14159, 2);
+      usb_send_string(" A\n");
+      
+      usb_send_string("Phase Currents: A=");
+      usb_send_float(monitor_data.phase_current[0], 2);
+      usb_send_string(" A, B=");
+      usb_send_float(monitor_data.phase_current[1], 2);
+      usb_send_string(" A, C=");
+      usb_send_float(monitor_data.phase_current[2], 2);
+      usb_send_string(" A\n");
+      
+      usb_send_string("Phase Voltages: A=");
+      usb_send_float(monitor_data.phase_voltage[0], 2);
+      usb_send_string(" V, B=");
+      usb_send_float(monitor_data.phase_voltage[1], 2);
+      usb_send_string(" V, C=");
+      usb_send_float(monitor_data.phase_voltage[2], 2);
+      usb_send_string(" V\n");
+      
+      usb_send_string("DC Link Voltage: ");
+      usb_send_float(monitor_data.dc_link_voltage, 2);
+      usb_send_string(" V\n");
+      
+      usb_send_string("MOS Temperature: ");
+      usb_send_float(monitor_data.mos_temperature, 2);
+      usb_send_string(" °C\n");
+      
+      usb_send_string("Motor Speed: ");
+      char speed_buf[10];
+      sprintf(speed_buf, "%d", motor.speed);
+      usb_send_string(speed_buf);
+      usb_send_string(" RPM\n");
+      
+      usb_send_string("Commutation State: ");
+      char comm_buf[10];
+      sprintf(comm_buf, "%d", motor.comm_state);
+      usb_send_string(comm_buf);
+      usb_send_string("\n");
+      
+      usb_send_string("Motor Direction: ");
+      usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
+      usb_send_string("\n");
+      
+      usb_send_string("Motor State: ");
+      char state_buf[10];
+      sprintf(state_buf, "%d", motor.state);
+      usb_send_string(state_buf);
+      usb_send_string("\n");
+      
+      usb_send_string("============================\n\n");
+      
+      last_print_time = current_time;
+    }
+    
+    /* If error detected, take action */
+    if (error_flag)
+    {
+      /* For now, just print error messages, can add more actions later */
+      usb_send_string("Taking protective action...\n");
+      /* Example: motor_stop(&motor); */
+    }
 
-    vTaskDelay(100); /* 100ms delay for monitoring */
+    vTaskDelay(500); /* 100ms delay for monitoring */
 
   /* add user code end Monitor_Task_Func 1 */
   }

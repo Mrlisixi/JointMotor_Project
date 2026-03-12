@@ -6,6 +6,8 @@ packDir: .pack/Keil/AT32F4xx_DFP.1.3.7
 srcDirs:
   - AT32WorkBench
   - Motor_Control
+  - Monitor
+  - USB_Debug
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -29,6 +31,8 @@ targets:
         - AT32WorkBench/middlewares/usbd_drivers/inc
         - AT32WorkBench/project/inc
         - Motor_Control/inc
+        - Monitor/inc
+        - USB_Debug/inc
       libList: []
     excludeList:
       - AT32WorkBench/middlewares/freertos/source/portable/IAR

@@ -51,6 +51,9 @@
 #define MAX_DUTY_CYCLE            1400       /* Maximum duty cycle (93.3%) */
 #define MIN_DUTY_CYCLE            100        /* Minimum duty cycle (6.7%) */
 
+/* sensor parameters ---------------------------------------------------------*/
+/* Moved to Monitor module */
+
 /* six-step commutation states -----------------------------------------------*/
 typedef enum {
   COMMUTATION_STATE_1 = 0,  /* A+ B- */
@@ -74,6 +77,9 @@ typedef enum {
   MOTOR_STATE_RUNNING,      /* Running state */
   MOTOR_STATE_STOPPING      /* Stopping state */
 } motor_state_t;
+
+/* monitoring data structure --------------------------------------------------*/
+/* Moved to Monitor module */
 
 /* motor parameters structure -------------------------------------------------*/
 typedef struct {

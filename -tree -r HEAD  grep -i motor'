@@ -1,0 +1,130 @@
+[33mcommit f1e00100470581d736483f448ed6c2642b22ea3d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: MrLisixi <1096313022@qq.com>
+Date:   Thu Mar 12 20:36:33 2026 +0800
+
+    电机六步换向驱动正常，修复初始化和时间基准问题
+
+ .eide/eide.yml                                     |     6 [32m+[m[31m-[m
+ AT32WorkBench/AT32WorkBench.ATWP                   |    79 [32m+[m[31m-[m
+ AT32WorkBench/Makefile                             |    21 [32m+[m[31m-[m
+ AT32WorkBench/build/AT32WorkBench.bin              |   Bin [31m42472[m -> [32m22360[m bytes
+ AT32WorkBench/build/AT32WorkBench.elf              |   Bin [31m706808[m -> [32m501052[m bytes
+ AT32WorkBench/build/AT32WorkBench.hex              |  4058 [32m++[m[31m---[m
+ AT32WorkBench/build/AT32WorkBench.map              |  3978 [32m++[m[31m---[m
+ AT32WorkBench/build/at32f403a_407_acc.lst          |   114 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_adc.lst          |   246 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_can.lst          |   264 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_crm.lst          |   346 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_debug.lst        |    22 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_dma.lst          |    94 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_exint.lst        |    82 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_flash.lst        |   456 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_gpio.lst         |   148 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_int.lst          |   330 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_int.o            |   Bin [31m8316[m -> [32m14516[m bytes
+ AT32WorkBench/build/at32f403a_407_misc.lst         |   174 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_pwc.lst          |    94 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_spi.lst          |   192 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_tmr.lst          |   424 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_usb.lst          |   204 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_wk_config.lst    |   865 [32m+[m[31m-[m
+ AT32WorkBench/build/at32f403a_407_wk_config.o      |   Bin [31m21928[m -> [32m21876[m bytes
+ AT32WorkBench/build/can_cia402.d                   |    49 [31m-[m
+ AT32WorkBench/build/can_cia402.lst                 |  1026 [31m--[m
+ AT32WorkBench/build/can_cia402.o                   |   Bin [31m12988[m -> [32m0[m bytes
+ AT32WorkBench/build/cdc_class.lst                  |   120 [32m+[m[31m-[m
+ AT32WorkBench/build/cdc_desc.lst                   |   166 [32m+[m[31m-[m
+ AT32WorkBench/build/common_utils.d                 |    49 [31m-[m
+ AT32WorkBench/build/common_utils.lst               |   409 [31m-[m
+ AT32WorkBench/build/common_utils.o                 |   Bin [31m6632[m -> [32m0[m bytes
+ AT32WorkBench/build/croutine.lst                   |     4 [32m+[m[31m-[m
+ AT32WorkBench/build/event_groups.lst               |   170 [32m+[m[31m-[m
+ AT32WorkBench/build/freertos_app.d                 |    30 [32m+[m[31m-[m
+ AT32WorkBench/build/freertos_app.lst               |  2445 [32m+[m[31m--[m
+ AT32WorkBench/build/freertos_app.o                 |   Bin [31m59300[m -> [32m13728[m bytes
+ AT32WorkBench/build/heap_4.lst                     |   146 [32m+[m[31m-[m
+ AT32WorkBench/build/list.lst                       |    40 [32m+[m[31m-[m
+ AT32WorkBench/build/main.d                         |     5 [32m+[m[31m-[m
+ AT32WorkBench/build/main.lst                       |   406 [32m+[m[31m-[m
+ AT32WorkBench/build/main.o                         |   Bin [31m12656[m -> [32m13824[m bytes
+ AT32WorkBench/build/modbus_protocol.d              |    59 [31m-[m
+ AT32WorkBench/build/modbus_protocol.lst            |  2159 [31m---[m
+ AT32WorkBench/build/modbus_protocol.o              |   Bin [31m43780[m -> [32m0[m bytes
+ AT32WorkBench/build/motor_control.d                |    23 [32m+[m[31m-[m
+ AT32WorkBench/build/motor_control.lst              |  3024 [32m++[m[31m--[m
+ AT32WorkBench/build/motor_control.o                |   Bin [31m53024[m -> [32m20140[m bytes
+ AT32WorkBench/build/motor_foc.d                    |    49 [31m-[m
+ AT32WorkBench/build/motor_foc.lst                  |  3789 [31m----[m
+ AT32WorkBench/build/motor_foc.o                    |   Bin [31m63096[m -> [32m0[m bytes
+ AT32WorkBench/build/motor_monitor.d                |    50 [31m-[m
+ AT32WorkBench/build/motor_monitor.lst              |  1553 [31m--[m
+ AT32WorkBench/build/motor_monitor.o                |   Bin [31m46244[m -> [32m0[m bytes
+ AT32WorkBench/build/motor_params.d                 |    49 [31m-[m
+ AT32WorkBench/build/motor_params.lst               | 17171 [31m-------------------[m
+ AT32WorkBench/build/motor_params.o                 |   Bin [31m107528[m -> [32m0[m bytes
+ AT32WorkBench/build/port.lst                       |   176 [32m+[m[31m-[m
+ AT32WorkBench/build/queue.lst                      |   516 [32m+[m[31m-[m
+ AT32WorkBench/build/stream_buffer.lst              |   306 [32m+[m[31m-[m
+ AT32WorkBench/build/syscalls.lst                   |   110 [32m+[m[31m-[m
+ AT32WorkBench/build/sysmem.lst                     |    20 [32m+[m[31m-[m
+ AT32WorkBench/build/system_at32f403a_407.lst       |    42 [32m+[m[31m-[m
+ AT32WorkBench/build/tasks.lst                      |  1016 [32m+[m[31m-[m
+ AT32WorkBench/build/timers.lst                     |   336 [32m+[m[31m-[m
+ AT32WorkBench/build/usb_app.lst                    |    52 [32m+[m[31m-[m
+ AT32WorkBench/build/usb_cdc.d                      |    60 [31m-[m
+ AT32WorkBench/build/usb_cdc.lst                    |   543 [31m-[m
+ AT32WorkBench/build/usb_cdc.o                      |   Bin [31m16548[m -> [32m0[m bytes
+ AT32WorkBench/build/usb_cdc_protocol.d             |    59 [31m-[m
+ AT32WorkBench/build/usb_cdc_protocol.lst           |  2245 [31m---[m
+ AT32WorkBench/build/usb_cdc_protocol.o             |   Bin [31m44376[m -> [32m0[m bytes
+ AT32WorkBench/build/usbd_core.lst                  |   218 [32m+[m[31m-[m
+ AT32WorkBench/build/usbd_int.lst                   |    74 [32m+[m[31m-[m
+ AT32WorkBench/build/usbd_sdr.lst                   |   134 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_acc.lst                     |    12 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_adc.lst                     |   256 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_adc.o                       |   Bin [31m21568[m -> [32m21568[m bytes
+ AT32WorkBench/build/wk_can.lst                     |    20 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_debug.lst                   |    12 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_dma.lst                     |    22 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_gpio.lst                    |    14 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_spi.lst                     |    20 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_system.lst                  |    34 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_tmr.lst                     |   667 [32m+[m[31m-[m
+ AT32WorkBench/build/wk_tmr.o                       |   Bin [31m22908[m -> [32m24048[m bytes
+ AT32WorkBench/build/wk_usbfs.lst                   |    10 [32m+[m[31m-[m
+ AT32WorkBench/project/inc/at32f403a_407_int.h      |     4 [32m+[m[31m-[m
+ .../project/inc/backup/at32f403a_407_int.h.bak     |     4 [32m+[m[31m-[m
+ .../inc/backup/at32f403a_407_wk_config.h.bak       |    20 [32m+[m[31m-[m
+ .../project/inc/backup/freertos_app.h.bak          |    10 [32m+[m[31m-[m
+ AT32WorkBench/project/inc/backup/wk_tmr.h.bak      |     3 [32m+[m
+ AT32WorkBench/project/inc/wk_tmr.h                 |     3 [32m+[m
+ .../project/src/at32f403a_407_wk_config.c          |     7 [32m+[m[31m-[m
+ .../project/src/backup/at32f403a_407_int.c.bak     |    63 [32m+[m[31m-[m
+ .../src/backup/at32f403a_407_wk_config.c.bak       |     7 [32m+[m[31m-[m
+ .../project/src/backup/freertos_app.c.bak          |   289 [32m+[m[31m-[m
+ AT32WorkBench/project/src/backup/main.c.bak        |    15 [32m+[m[31m-[m
+ AT32WorkBench/project/src/backup/wk_adc.c.bak      |    28 [32m+[m[31m-[m
+ AT32WorkBench/project/src/backup/wk_tmr.c.bak      |    63 [32m+[m[31m-[m
+ AT32WorkBench/project/src/main.c                   |    15 [32m+[m[31m-[m
+ AT32WorkBench/project/src/wk_adc.c                 |    28 [32m+[m[31m-[m
+ AT32WorkBench/project/src/wk_tmr.c                 |    63 [32m+[m[31m-[m
+ Common/inc/common_utils.h                          |    15 [31m-[m
+ Common/inc/modbus_protocol.h                       |   108 [31m-[m
+ Common/inc/usb_cdc.h                               |    27 [31m-[m
+ Common/readme.md                                   |   442 [31m-[m
+ Common/src/common_utils.c                          |    65 [31m-[m
+ Common/src/modbus_protocol.c                       |   386 [31m-[m
+ Common/src/usb_cdc.c                               |   101 [31m-[m
+ Core/inc/can_cia402.h                              |   147 [31m-[m
+ Core/inc/motor_config.h                            |    14 [31m-[m
+ Core/inc/motor_control.h                           |   131 [31m-[m
+ Core/inc/motor_foc.h                               |   141 [31m-[m
+ Core/inc/motor_monitor.h                           |   165 [31m-[m
+ Core/inc/motor_object.h                            |   265 [31m-[m
+ Core/inc/motor_params.h                            |   884 [31m-[m
+ Core/src/can_cia402.c                              |   267 [31m-[m
+ Core/src/motor_control.c                           |   318 [31m-[m
+ Core/src/motor_foc.c                               |   572 [31m-[m
+ Core/src/motor_monitor.c                           |   320 [31m-[m
+ Core/src/motor_params.c                            |  2640 [31m---[m
+ 123 files changed, 9711 insertions(+), 50081 deletions(-)

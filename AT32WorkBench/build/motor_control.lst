@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -27,7 +27,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 1
   24              		.thumb_func
   26              	calculate_commutation_interval:
   27              	.LVL0:
-  28              	.LFB145:
+  28              	.LFB149:
    1:../Motor_Control/src/motor_control.c **** /* add user code begin Header */
    2:../Motor_Control/src/motor_control.c **** /**
    3:../Motor_Control/src/motor_control.c ****   **************************************************************************
@@ -56,1184 +56,1283 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 1
   26:../Motor_Control/src/motor_control.c **** 
   27:../Motor_Control/src/motor_control.c **** /* Includes ------------------------------------------------------------------*/
   28:../Motor_Control/src/motor_control.c **** #include "motor_control.h"
-  29:../Motor_Control/src/motor_control.c **** #include "wk_tmr.h"
-  30:../Motor_Control/src/motor_control.c **** #include "wk_system.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 2
+  29:../Motor_Control/src/motor_control.c **** #include "monitor.h"
+  30:../Motor_Control/src/motor_control.c **** #include "wk_tmr.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 2
 
 
-  31:../Motor_Control/src/motor_control.c **** 
-  32:../Motor_Control/src/motor_control.c **** /* forward declaration */
-  33:../Motor_Control/src/motor_control.c **** uint32_t wk_timebase_get(void);
+  31:../Motor_Control/src/motor_control.c **** #include "wk_system.h"
+  32:../Motor_Control/src/motor_control.c **** #include "FreeRTOS.h"
+  33:../Motor_Control/src/motor_control.c **** #include "task.h"
   34:../Motor_Control/src/motor_control.c **** 
-  35:../Motor_Control/src/motor_control.c **** /* private variables ---------------------------------------------------------*/
+  35:../Motor_Control/src/motor_control.c **** 
   36:../Motor_Control/src/motor_control.c **** 
-  37:../Motor_Control/src/motor_control.c **** /* private function prototypes -----------------------------------------------*/
-  38:../Motor_Control/src/motor_control.c **** static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state);
-  39:../Motor_Control/src/motor_control.c **** static void motor_next_commutation_state(motor_params_t *motor);
-  40:../Motor_Control/src/motor_control.c **** static uint32_t calculate_commutation_interval(uint16_t speed);
+  37:../Motor_Control/src/motor_control.c **** /* forward declaration */
+  38:../Motor_Control/src/motor_control.c **** uint32_t wk_timebase_get(void);
+  39:../Motor_Control/src/motor_control.c **** 
+  40:../Motor_Control/src/motor_control.c **** /* external variables --------------------------------------------------------*/
   41:../Motor_Control/src/motor_control.c **** 
-  42:../Motor_Control/src/motor_control.c **** /**
-  43:../Motor_Control/src/motor_control.c ****   * @brief  motor control initialization
-  44:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
-  45:../Motor_Control/src/motor_control.c ****   * @retval none
-  46:../Motor_Control/src/motor_control.c ****   */
-  47:../Motor_Control/src/motor_control.c **** void motor_control_init(motor_params_t *motor)
-  48:../Motor_Control/src/motor_control.c **** {
-  49:../Motor_Control/src/motor_control.c ****   /* initialize motor parameters */
-  50:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
-  51:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
-  52:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
-  53:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
-  54:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
-  55:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
-  56:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
-  57:../Motor_Control/src/motor_control.c ****   
-  58:../Motor_Control/src/motor_control.c ****   /* set initial commutation state */
-  59:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
-  60:../Motor_Control/src/motor_control.c **** }
-  61:../Motor_Control/src/motor_control.c **** 
-  62:../Motor_Control/src/motor_control.c **** /**
-  63:../Motor_Control/src/motor_control.c ****   * @brief  motor control process
-  64:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
-  65:../Motor_Control/src/motor_control.c ****   * @retval none
-  66:../Motor_Control/src/motor_control.c ****   */
-  67:../Motor_Control/src/motor_control.c **** void motor_control_process(motor_params_t *motor)
-  68:../Motor_Control/src/motor_control.c **** {
-  69:../Motor_Control/src/motor_control.c ****   uint32_t current_time;
-  70:../Motor_Control/src/motor_control.c ****   
-  71:../Motor_Control/src/motor_control.c ****   /* process only if motor is running */
-  72:../Motor_Control/src/motor_control.c ****   if (motor->state == MOTOR_STATE_RUNNING)
-  73:../Motor_Control/src/motor_control.c ****   {
-  74:../Motor_Control/src/motor_control.c ****     /* get current time */
-  75:../Motor_Control/src/motor_control.c ****     current_time = wk_timebase_get();
-  76:../Motor_Control/src/motor_control.c ****     
-  77:../Motor_Control/src/motor_control.c ****     /* check if commutation is needed */
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
-  79:../Motor_Control/src/motor_control.c ****     {
-  80:../Motor_Control/src/motor_control.c ****       /* update last commutation time */
-  81:../Motor_Control/src/motor_control.c ****       motor->last_commutation_time = current_time;
-  82:../Motor_Control/src/motor_control.c ****       
-  83:../Motor_Control/src/motor_control.c ****       /* advance to next commutation state */
-  84:../Motor_Control/src/motor_control.c ****       motor_next_commutation_state(motor);
-  85:../Motor_Control/src/motor_control.c ****     }
-  86:../Motor_Control/src/motor_control.c ****   }
-  87:../Motor_Control/src/motor_control.c **** }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 3
+  42:../Motor_Control/src/motor_control.c **** /* private variables ---------------------------------------------------------*/
+  43:../Motor_Control/src/motor_control.c **** 
+  44:../Motor_Control/src/motor_control.c **** /* private function prototypes -----------------------------------------------*/
+  45:../Motor_Control/src/motor_control.c **** static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state);
+  46:../Motor_Control/src/motor_control.c **** static void motor_next_commutation_state(motor_params_t *motor);
+  47:../Motor_Control/src/motor_control.c **** static uint32_t calculate_commutation_interval(uint16_t speed);
+  48:../Motor_Control/src/motor_control.c **** 
+  49:../Motor_Control/src/motor_control.c **** /**
+  50:../Motor_Control/src/motor_control.c ****   * @brief  motor control initialization
+  51:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+  52:../Motor_Control/src/motor_control.c ****   * @retval none
+  53:../Motor_Control/src/motor_control.c ****   */
+  54:../Motor_Control/src/motor_control.c **** void motor_control_init(motor_params_t *motor)
+  55:../Motor_Control/src/motor_control.c **** {
+  56:../Motor_Control/src/motor_control.c ****   /* initialize motor parameters */
+  57:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
+  58:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
+  59:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
+  60:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+  61:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
+  62:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
+  63:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
+  64:../Motor_Control/src/motor_control.c ****   
+  65:../Motor_Control/src/motor_control.c ****   /* set all outputs to low */
+  66:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
+  67:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+  68:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
+  69:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
+  70:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
+  71:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+  72:../Motor_Control/src/motor_control.c **** }
+  73:../Motor_Control/src/motor_control.c **** 
+  74:../Motor_Control/src/motor_control.c **** /**
+  75:../Motor_Control/src/motor_control.c ****   * @brief  motor control process
+  76:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+  77:../Motor_Control/src/motor_control.c ****   * @retval none
+  78:../Motor_Control/src/motor_control.c ****   */
+  79:../Motor_Control/src/motor_control.c **** void motor_control_process(motor_params_t *motor)
+  80:../Motor_Control/src/motor_control.c **** {
+  81:../Motor_Control/src/motor_control.c ****   uint32_t current_time;
+  82:../Motor_Control/src/motor_control.c ****   
+  83:../Motor_Control/src/motor_control.c ****   /* process only if motor is running */
+  84:../Motor_Control/src/motor_control.c ****   if (motor->state == MOTOR_STATE_RUNNING)
+  85:../Motor_Control/src/motor_control.c ****   {
+  86:../Motor_Control/src/motor_control.c ****     /* get current time */
+  87:../Motor_Control/src/motor_control.c ****     current_time = wk_timebase_get();
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 3
 
 
-  88:../Motor_Control/src/motor_control.c **** 
-  89:../Motor_Control/src/motor_control.c **** /**
-  90:../Motor_Control/src/motor_control.c ****   * @brief  start motor
-  91:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
-  92:../Motor_Control/src/motor_control.c ****   * @param  speed: target speed (RPM)
-  93:../Motor_Control/src/motor_control.c ****   * @param  direction: motor direction
-  94:../Motor_Control/src/motor_control.c ****   * @retval none
-  95:../Motor_Control/src/motor_control.c ****   */
-  96:../Motor_Control/src/motor_control.c **** void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direction)
-  97:../Motor_Control/src/motor_control.c **** {
-  98:../Motor_Control/src/motor_control.c ****   /* set motor parameters */
-  99:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 100:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
- 101:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
- 102:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 103:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
- 104:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
- 105:../Motor_Control/src/motor_control.c ****   
- 106:../Motor_Control/src/motor_control.c ****   /* set initial commutation state */
- 107:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 108:../Motor_Control/src/motor_control.c **** }
- 109:../Motor_Control/src/motor_control.c **** 
- 110:../Motor_Control/src/motor_control.c **** /**
- 111:../Motor_Control/src/motor_control.c ****   * @brief  stop motor
- 112:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
- 113:../Motor_Control/src/motor_control.c ****   * @retval none
- 114:../Motor_Control/src/motor_control.c ****   */
- 115:../Motor_Control/src/motor_control.c **** void motor_stop(motor_params_t *motor)
- 116:../Motor_Control/src/motor_control.c **** {
- 117:../Motor_Control/src/motor_control.c ****   /* set all outputs to low */
- 118:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
- 119:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
- 120:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
- 121:../Motor_Control/src/motor_control.c ****   
- 122:../Motor_Control/src/motor_control.c ****   /* update motor state */
- 123:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
- 124:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
- 125:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
- 126:../Motor_Control/src/motor_control.c **** }
- 127:../Motor_Control/src/motor_control.c **** 
- 128:../Motor_Control/src/motor_control.c **** /**
- 129:../Motor_Control/src/motor_control.c ****   * @brief  set motor speed
- 130:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
- 131:../Motor_Control/src/motor_control.c ****   * @param  speed: target speed (RPM)
- 132:../Motor_Control/src/motor_control.c ****   * @retval none
- 133:../Motor_Control/src/motor_control.c ****   */
- 134:../Motor_Control/src/motor_control.c **** void motor_set_speed(motor_params_t *motor, uint16_t speed)
- 135:../Motor_Control/src/motor_control.c **** {
- 136:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 137:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+  88:../Motor_Control/src/motor_control.c ****     
+  89:../Motor_Control/src/motor_control.c ****     /* check if commutation is needed */
+  90:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
+  91:../Motor_Control/src/motor_control.c ****     {
+  92:../Motor_Control/src/motor_control.c ****       /* update last commutation time */
+  93:../Motor_Control/src/motor_control.c ****       motor->last_commutation_time = current_time;
+  94:../Motor_Control/src/motor_control.c ****       
+  95:../Motor_Control/src/motor_control.c ****       /* advance to next commutation state */
+  96:../Motor_Control/src/motor_control.c ****       motor_next_commutation_state(motor);
+  97:../Motor_Control/src/motor_control.c ****     }
+  98:../Motor_Control/src/motor_control.c ****   }
+  99:../Motor_Control/src/motor_control.c **** }
+ 100:../Motor_Control/src/motor_control.c **** 
+ 101:../Motor_Control/src/motor_control.c **** /**
+ 102:../Motor_Control/src/motor_control.c ****   * @brief  start motor
+ 103:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+ 104:../Motor_Control/src/motor_control.c ****   * @param  speed: target speed (RPM)
+ 105:../Motor_Control/src/motor_control.c ****   * @param  direction: motor direction
+ 106:../Motor_Control/src/motor_control.c ****   * @retval none
+ 107:../Motor_Control/src/motor_control.c ****   */
+ 108:../Motor_Control/src/motor_control.c **** void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direction)
+ 109:../Motor_Control/src/motor_control.c **** {
+ 110:../Motor_Control/src/motor_control.c ****   /* set motor parameters */
+ 111:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
+ 112:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
+ 113:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
+ 114:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 115:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
+ 116:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
+ 117:../Motor_Control/src/motor_control.c ****   
+ 118:../Motor_Control/src/motor_control.c ****   /* set initial commutation state */
+ 119:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
+ 120:../Motor_Control/src/motor_control.c **** }
+ 121:../Motor_Control/src/motor_control.c **** 
+ 122:../Motor_Control/src/motor_control.c **** /**
+ 123:../Motor_Control/src/motor_control.c ****   * @brief  stop motor
+ 124:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+ 125:../Motor_Control/src/motor_control.c ****   * @retval none
+ 126:../Motor_Control/src/motor_control.c ****   */
+ 127:../Motor_Control/src/motor_control.c **** void motor_stop(motor_params_t *motor)
+ 128:../Motor_Control/src/motor_control.c **** {
+ 129:../Motor_Control/src/motor_control.c ****   /* set all outputs to low */
+ 130:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
+ 131:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
+ 132:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
+ 133:../Motor_Control/src/motor_control.c ****   
+ 134:../Motor_Control/src/motor_control.c ****   /* update motor state */
+ 135:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
+ 136:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+ 137:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
  138:../Motor_Control/src/motor_control.c **** }
  139:../Motor_Control/src/motor_control.c **** 
  140:../Motor_Control/src/motor_control.c **** /**
- 141:../Motor_Control/src/motor_control.c ****   * @brief  set motor duty cycle
+ 141:../Motor_Control/src/motor_control.c ****   * @brief  set motor speed
  142:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
- 143:../Motor_Control/src/motor_control.c ****   * @param  duty_cycle: PWM duty cycle
+ 143:../Motor_Control/src/motor_control.c ****   * @param  speed: target speed (RPM)
  144:../Motor_Control/src/motor_control.c ****   * @retval none
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 4
 
 
  145:../Motor_Control/src/motor_control.c ****   */
- 146:../Motor_Control/src/motor_control.c **** void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle)
+ 146:../Motor_Control/src/motor_control.c **** void motor_set_speed(motor_params_t *motor, uint16_t speed)
  147:../Motor_Control/src/motor_control.c **** {
- 148:../Motor_Control/src/motor_control.c ****   /* limit duty cycle */
- 149:../Motor_Control/src/motor_control.c ****   if (duty_cycle > MAX_DUTY_CYCLE)
- 150:../Motor_Control/src/motor_control.c ****   {
- 151:../Motor_Control/src/motor_control.c ****     duty_cycle = MAX_DUTY_CYCLE;
- 152:../Motor_Control/src/motor_control.c ****   }
- 153:../Motor_Control/src/motor_control.c ****   else if (duty_cycle < MIN_DUTY_CYCLE)
- 154:../Motor_Control/src/motor_control.c ****   {
- 155:../Motor_Control/src/motor_control.c ****     duty_cycle = MIN_DUTY_CYCLE;
- 156:../Motor_Control/src/motor_control.c ****   }
- 157:../Motor_Control/src/motor_control.c ****   
- 158:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = duty_cycle;
- 159:../Motor_Control/src/motor_control.c ****   
- 160:../Motor_Control/src/motor_control.c ****   /* update PWM duty cycle based on current commutation state */
- 161:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 162:../Motor_Control/src/motor_control.c **** }
- 163:../Motor_Control/src/motor_control.c **** 
- 164:../Motor_Control/src/motor_control.c **** /**
- 165:../Motor_Control/src/motor_control.c ****   * @brief  set commutation state
- 166:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
- 167:../Motor_Control/src/motor_control.c ****   * @param  state: commutation state
- 168:../Motor_Control/src/motor_control.c ****   * @retval none
- 169:../Motor_Control/src/motor_control.c ****   */
- 170:../Motor_Control/src/motor_control.c **** static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state)
- 171:../Motor_Control/src/motor_control.c **** {
- 172:../Motor_Control/src/motor_control.c ****   /* update commutation state */
- 173:../Motor_Control/src/motor_control.c ****   motor->comm_state = state;
- 174:../Motor_Control/src/motor_control.c ****   
- 175:../Motor_Control/src/motor_control.c ****   /* set all channels to low first to avoid transient states */
- 176:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
- 177:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
- 178:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
- 179:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
- 180:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
- 181:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
- 182:../Motor_Control/src/motor_control.c ****   
- 183:../Motor_Control/src/motor_control.c ****   /* set PWM outputs based on commutation state */
- 184:../Motor_Control/src/motor_control.c ****   switch(state)
- 185:../Motor_Control/src/motor_control.c ****   {
- 186:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_1: /* A+ B- */
- 187:../Motor_Control/src/motor_control.c ****       /* A+ */
- 188:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 189:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
- 190:../Motor_Control/src/motor_control.c ****       /* B- */
- 191:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 192:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
- 193:../Motor_Control/src/motor_control.c ****       break;
- 194:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_2: /* A+ C- */
- 195:../Motor_Control/src/motor_control.c ****       /* A+ */
- 196:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 197:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
- 198:../Motor_Control/src/motor_control.c ****       /* C- */
- 199:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 200:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
- 201:../Motor_Control/src/motor_control.c ****       break;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 5
+ 148:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
+ 149:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 150:../Motor_Control/src/motor_control.c **** }
+ 151:../Motor_Control/src/motor_control.c **** 
+ 152:../Motor_Control/src/motor_control.c **** /**
+ 153:../Motor_Control/src/motor_control.c ****   * @brief  set motor duty cycle
+ 154:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+ 155:../Motor_Control/src/motor_control.c ****   * @param  duty_cycle: PWM duty cycle
+ 156:../Motor_Control/src/motor_control.c ****   * @retval none
+ 157:../Motor_Control/src/motor_control.c ****   */
+ 158:../Motor_Control/src/motor_control.c **** void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle)
+ 159:../Motor_Control/src/motor_control.c **** {
+ 160:../Motor_Control/src/motor_control.c ****   /* limit duty cycle */
+ 161:../Motor_Control/src/motor_control.c ****   if (duty_cycle > MAX_DUTY_CYCLE)
+ 162:../Motor_Control/src/motor_control.c ****   {
+ 163:../Motor_Control/src/motor_control.c ****     duty_cycle = MAX_DUTY_CYCLE;
+ 164:../Motor_Control/src/motor_control.c ****   }
+ 165:../Motor_Control/src/motor_control.c ****   else if (duty_cycle < MIN_DUTY_CYCLE)
+ 166:../Motor_Control/src/motor_control.c ****   {
+ 167:../Motor_Control/src/motor_control.c ****     duty_cycle = MIN_DUTY_CYCLE;
+ 168:../Motor_Control/src/motor_control.c ****   }
+ 169:../Motor_Control/src/motor_control.c ****   
+ 170:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = duty_cycle;
+ 171:../Motor_Control/src/motor_control.c ****   
+ 172:../Motor_Control/src/motor_control.c ****   /* update PWM duty cycle based on current commutation state */
+ 173:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
+ 174:../Motor_Control/src/motor_control.c **** }
+ 175:../Motor_Control/src/motor_control.c **** 
+ 176:../Motor_Control/src/motor_control.c **** /**
+ 177:../Motor_Control/src/motor_control.c ****   * @brief  set commutation state
+ 178:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+ 179:../Motor_Control/src/motor_control.c ****   * @param  state: commutation state
+ 180:../Motor_Control/src/motor_control.c ****   * @retval none
+ 181:../Motor_Control/src/motor_control.c ****   */
+ 182:../Motor_Control/src/motor_control.c **** static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state)
+ 183:../Motor_Control/src/motor_control.c **** {
+ 184:../Motor_Control/src/motor_control.c ****   /* update commutation state */
+ 185:../Motor_Control/src/motor_control.c ****   motor->comm_state = state;
+ 186:../Motor_Control/src/motor_control.c ****   
+ 187:../Motor_Control/src/motor_control.c ****   /* set all channels to low first to avoid transient states */
+ 188:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
+ 189:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 190:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
+ 191:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
+ 192:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
+ 193:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+ 194:../Motor_Control/src/motor_control.c ****   
+ 195:../Motor_Control/src/motor_control.c ****   /* set PWM outputs based on commutation state */
+ 196:../Motor_Control/src/motor_control.c ****   switch(state)
+ 197:../Motor_Control/src/motor_control.c ****   {
+ 198:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_1: /* A+ B- */
+ 199:../Motor_Control/src/motor_control.c ****       /* A+ */
+ 200:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 201:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 5
 
 
- 202:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_3: /* B+ C- */
- 203:../Motor_Control/src/motor_control.c ****       /* B+ */
- 204:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 205:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
- 206:../Motor_Control/src/motor_control.c ****       /* C- */
- 207:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 208:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
- 209:../Motor_Control/src/motor_control.c ****       break;
- 210:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_4: /* B+ A- */
- 211:../Motor_Control/src/motor_control.c ****       /* B+ */
- 212:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 213:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
- 214:../Motor_Control/src/motor_control.c ****       /* A- */
- 215:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 216:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
- 217:../Motor_Control/src/motor_control.c ****       break;
- 218:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_5: /* C+ A- */
- 219:../Motor_Control/src/motor_control.c ****       /* C+ */
- 220:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 221:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
- 222:../Motor_Control/src/motor_control.c ****       /* A- */
- 223:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 224:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
- 225:../Motor_Control/src/motor_control.c ****       break;
- 226:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_6: /* C+ B- */
- 227:../Motor_Control/src/motor_control.c ****       /* C+ */
- 228:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 229:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
- 230:../Motor_Control/src/motor_control.c ****       /* B- */
- 231:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 232:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
- 233:../Motor_Control/src/motor_control.c ****       break;
- 234:../Motor_Control/src/motor_control.c ****     default:
- 235:../Motor_Control/src/motor_control.c ****       /* all outputs already set to low */
- 236:../Motor_Control/src/motor_control.c ****       break;
- 237:../Motor_Control/src/motor_control.c ****   }
- 238:../Motor_Control/src/motor_control.c **** }
- 239:../Motor_Control/src/motor_control.c **** 
- 240:../Motor_Control/src/motor_control.c **** /**
- 241:../Motor_Control/src/motor_control.c ****   * @brief  advance to next commutation state
- 242:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
- 243:../Motor_Control/src/motor_control.c ****   * @retval none
- 244:../Motor_Control/src/motor_control.c ****   */
- 245:../Motor_Control/src/motor_control.c **** static void motor_next_commutation_state(motor_params_t *motor)
- 246:../Motor_Control/src/motor_control.c **** {
- 247:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
- 248:../Motor_Control/src/motor_control.c ****   {
- 249:../Motor_Control/src/motor_control.c ****     /* clockwise direction: increment state */
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 251:../Motor_Control/src/motor_control.c ****   } else {
- 252:../Motor_Control/src/motor_control.c ****     /* counter-clockwise direction: decrement state */
- 253:../Motor_Control/src/motor_control.c ****     if (motor->comm_state == 0)
- 254:../Motor_Control/src/motor_control.c ****     {
- 255:../Motor_Control/src/motor_control.c ****       motor->comm_state = COMMUTATION_STATE_MAX - 1;
- 256:../Motor_Control/src/motor_control.c ****     } else {
- 257:../Motor_Control/src/motor_control.c ****       motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
- 258:../Motor_Control/src/motor_control.c ****     }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 6
+ 202:../Motor_Control/src/motor_control.c ****       /* B- */
+ 203:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 204:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+ 205:../Motor_Control/src/motor_control.c ****       break;
+ 206:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_2: /* A+ C- */
+ 207:../Motor_Control/src/motor_control.c ****       /* A+ */
+ 208:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 209:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+ 210:../Motor_Control/src/motor_control.c ****       /* C- */
+ 211:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 212:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+ 213:../Motor_Control/src/motor_control.c ****       break;
+ 214:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_3: /* B+ C- */
+ 215:../Motor_Control/src/motor_control.c ****       /* B+ */
+ 216:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 217:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+ 218:../Motor_Control/src/motor_control.c ****       /* C- */
+ 219:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 220:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+ 221:../Motor_Control/src/motor_control.c ****       break;
+ 222:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_4: /* B+ A- */
+ 223:../Motor_Control/src/motor_control.c ****       /* B+ */
+ 224:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 225:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+ 226:../Motor_Control/src/motor_control.c ****       /* A- */
+ 227:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 228:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+ 229:../Motor_Control/src/motor_control.c ****       break;
+ 230:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_5: /* C+ A- */
+ 231:../Motor_Control/src/motor_control.c ****       /* C+ */
+ 232:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 233:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+ 234:../Motor_Control/src/motor_control.c ****       /* A- */
+ 235:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 236:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+ 237:../Motor_Control/src/motor_control.c ****       break;
+ 238:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_6: /* C+ B- */
+ 239:../Motor_Control/src/motor_control.c ****       /* C+ */
+ 240:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 241:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+ 242:../Motor_Control/src/motor_control.c ****       /* B- */
+ 243:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+ 244:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+ 245:../Motor_Control/src/motor_control.c ****       break;
+ 246:../Motor_Control/src/motor_control.c ****     default:
+ 247:../Motor_Control/src/motor_control.c ****       /* all outputs already set to low */
+ 248:../Motor_Control/src/motor_control.c ****       break;
+ 249:../Motor_Control/src/motor_control.c ****   }
+ 250:../Motor_Control/src/motor_control.c **** }
+ 251:../Motor_Control/src/motor_control.c **** 
+ 252:../Motor_Control/src/motor_control.c **** /**
+ 253:../Motor_Control/src/motor_control.c ****   * @brief  advance to next commutation state
+ 254:../Motor_Control/src/motor_control.c ****   * @param  motor: motor parameters structure
+ 255:../Motor_Control/src/motor_control.c ****   * @retval none
+ 256:../Motor_Control/src/motor_control.c ****   */
+ 257:../Motor_Control/src/motor_control.c **** static void motor_next_commutation_state(motor_params_t *motor)
+ 258:../Motor_Control/src/motor_control.c **** {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 6
 
 
- 259:../Motor_Control/src/motor_control.c ****   }
- 260:../Motor_Control/src/motor_control.c ****   
- 261:../Motor_Control/src/motor_control.c ****   /* set new commutation state */
- 262:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 263:../Motor_Control/src/motor_control.c **** }
- 264:../Motor_Control/src/motor_control.c **** 
- 265:../Motor_Control/src/motor_control.c **** /**
- 266:../Motor_Control/src/motor_control.c ****   * @brief  calculate commutation interval based on speed
- 267:../Motor_Control/src/motor_control.c ****   * @param  speed: motor speed (RPM)
- 268:../Motor_Control/src/motor_control.c ****   * @retval commutation interval (ms)
- 269:../Motor_Control/src/motor_control.c ****   */
- 270:../Motor_Control/src/motor_control.c **** static uint32_t calculate_commutation_interval(uint16_t speed)
- 271:../Motor_Control/src/motor_control.c **** {
-  29              		.loc 1 271 1 view -0
+ 259:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
+ 260:../Motor_Control/src/motor_control.c ****   {
+ 261:../Motor_Control/src/motor_control.c ****     /* clockwise direction: increment state */
+ 262:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
+ 263:../Motor_Control/src/motor_control.c ****   } else {
+ 264:../Motor_Control/src/motor_control.c ****     /* counter-clockwise direction: decrement state */
+ 265:../Motor_Control/src/motor_control.c ****     if (motor->comm_state == 0)
+ 266:../Motor_Control/src/motor_control.c ****     {
+ 267:../Motor_Control/src/motor_control.c ****       motor->comm_state = COMMUTATION_STATE_MAX - 1;
+ 268:../Motor_Control/src/motor_control.c ****     } else {
+ 269:../Motor_Control/src/motor_control.c ****       motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
+ 270:../Motor_Control/src/motor_control.c ****     }
+ 271:../Motor_Control/src/motor_control.c ****   }
+ 272:../Motor_Control/src/motor_control.c ****   
+ 273:../Motor_Control/src/motor_control.c ****   /* set new commutation state */
+ 274:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
+ 275:../Motor_Control/src/motor_control.c **** }
+ 276:../Motor_Control/src/motor_control.c **** 
+ 277:../Motor_Control/src/motor_control.c **** /**
+ 278:../Motor_Control/src/motor_control.c ****   * @brief  calculate commutation interval based on speed
+ 279:../Motor_Control/src/motor_control.c ****   * @param  speed: motor speed (RPM)
+ 280:../Motor_Control/src/motor_control.c ****   * @retval commutation interval (ms)
+ 281:../Motor_Control/src/motor_control.c ****   */
+ 282:../Motor_Control/src/motor_control.c **** static uint32_t calculate_commutation_interval(uint16_t speed)
+ 283:../Motor_Control/src/motor_control.c **** {
+  29              		.loc 1 283 1 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
- 272:../Motor_Control/src/motor_control.c ****   if (speed == 0)
-  34              		.loc 1 272 3 view .LVU1
-  35              		.loc 1 272 6 is_stmt 0 view .LVU2
-  36 0000 98B1     		cbz	r0, .L1
- 273:../Motor_Control/src/motor_control.c ****   {
- 274:../Motor_Control/src/motor_control.c ****     return 0;
- 275:../Motor_Control/src/motor_control.c ****   }
- 276:../Motor_Control/src/motor_control.c ****   
- 277:../Motor_Control/src/motor_control.c ****   /* calculate commutation interval in milliseconds */
- 278:../Motor_Control/src/motor_control.c ****   /* formula: interval = 60,000 / (speed * pole_pairs * 6) */
- 279:../Motor_Control/src/motor_control.c ****   return (uint32_t)(60000.0f / (speed * MOTOR_POLE_PAIRS * 6.0f));
-  37              		.loc 1 279 3 is_stmt 1 view .LVU3
-  38              		.loc 1 279 39 is_stmt 0 view .LVU4
-  39 0002 00EB4003 		add	r3, r0, r0, lsl #1
-  40 0006 C3EBC303 		rsb	r3, r3, r3, lsl #3
-  41              		.loc 1 279 58 view .LVU5
-  42 000a 07EE903A 		vmov	s15, r3	@ int
-  43 000e F8EEE77A 		vcvt.f32.s32	s15, s15
-  44 0012 B1EE087A 		vmov.f32	s14, #6.0e+0
-  45 0016 67EE877A 		vmul.f32	s15, s15, s14
-  46              		.loc 1 279 30 view .LVU6
-  47 001a DFED046A 		vldr.32	s13, .L4
-  48 001e 86EEA77A 		vdiv.f32	s14, s13, s15
-  49              		.loc 1 279 10 view .LVU7
-  50 0022 FCEEC77A 		vcvt.u32.f32	s15, s14
-  51 0026 17EE900A 		vmov	r0, s15	@ int
-  52              	.LVL1:
-  53              	.L1:
- 280:../Motor_Control/src/motor_control.c **** }...
-  54              		.loc 1 280 1 view .LVU8
-  55 002a 7047     		bx	lr
-  56              	.L5:
-  57              		.align	2
-  58              	.L4:
-  59 002c 00606A47 		.word	1198153728
-  60              		.cfi_endproc
-  61              	.LFE145:
-  63              		.section	.text.motor_set_commutation_state,"ax",%progbits
-  64              		.align	1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 7
+ 284:../Motor_Control/src/motor_control.c ****   if (speed == 0)
+  34              		.loc 1 284 3 view .LVU1
+  35              		.loc 1 284 6 is_stmt 0 view .LVU2
+  36 0000 0346     		mov	r3, r0
+  37 0002 08B3     		cbz	r0, .L1
+ 285:../Motor_Control/src/motor_control.c ****   {
+ 286:../Motor_Control/src/motor_control.c ****     return 0;
+ 287:../Motor_Control/src/motor_control.c ****   }
+ 288:../Motor_Control/src/motor_control.c ****   
+ 289:../Motor_Control/src/motor_control.c ****   /* limit speed to maximum value */
+ 290:../Motor_Control/src/motor_control.c ****   if (speed > MOTOR_MAX_SPEED)
+  38              		.loc 1 290 3 is_stmt 1 view .LVU3
+  39              		.loc 1 290 6 is_stmt 0 view .LVU4
+  40 0004 B0F5017F 		cmp	r0, #516
+  41 0008 01D9     		bls	.L3
+ 291:../Motor_Control/src/motor_control.c ****   {
+ 292:../Motor_Control/src/motor_control.c ****     speed = MOTOR_MAX_SPEED;
+  42              		.loc 1 292 11 view .LVU5
+  43 000a 4FF40173 		mov	r3, #516
+  44              	.L3:
+  45              	.LVL1:
+ 293:../Motor_Control/src/motor_control.c ****   }
+ 294:../Motor_Control/src/motor_control.c ****   
+ 295:../Motor_Control/src/motor_control.c ****   /* calculate commutation interval in milliseconds */
+ 296:../Motor_Control/src/motor_control.c ****   /* formula: interval = 60,000 / (speed * pole_pairs * 6) */
+ 297:../Motor_Control/src/motor_control.c ****   float interval = 60000.0f / (speed * MOTOR_POLE_PAIRS * 6.0f);
+  46              		.loc 1 297 3 is_stmt 1 view .LVU6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 7
 
 
-  65              		.syntax unified
-  66              		.thumb
-  67              		.thumb_func
-  69              	motor_set_commutation_state:
-  70              	.LVL2:
-  71              	.LFB143:
- 171:../Motor_Control/src/motor_control.c **** {
-  72              		.loc 1 171 1 is_stmt 1 view -0
-  73              		.cfi_startproc
-  74              		@ args = 0, pretend = 0, frame = 0
-  75              		@ frame_needed = 0, uses_anonymous_args = 0
- 171:../Motor_Control/src/motor_control.c **** {
-  76              		.loc 1 171 1 is_stmt 0 view .LVU10
-  77 0000 70B5     		push	{r4, r5, r6, lr}
-  78              	.LCFI0:
-  79              		.cfi_def_cfa_offset 16
-  80              		.cfi_offset 4, -16
-  81              		.cfi_offset 5, -12
-  82              		.cfi_offset 6, -8
-  83              		.cfi_offset 14, -4
-  84 0002 0646     		mov	r6, r0
-  85 0004 0C46     		mov	r4, r1
- 173:../Motor_Control/src/motor_control.c ****   motor->comm_state = state;
-  86              		.loc 1 173 3 is_stmt 1 view .LVU11
- 173:../Motor_Control/src/motor_control.c ****   motor->comm_state = state;
-  87              		.loc 1 173 21 is_stmt 0 view .LVU12
-  88 0006 8170     		strb	r1, [r0, #2]
- 176:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
-  89              		.loc 1 176 3 is_stmt 1 view .LVU13
-  90 0008 574D     		ldr	r5, .L16
-  91 000a 0222     		movs	r2, #2
-  92 000c 0021     		movs	r1, #0
-  93              	.LVL3:
- 176:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
-  94              		.loc 1 176 3 is_stmt 0 view .LVU14
-  95 000e 2846     		mov	r0, r5
-  96              	.LVL4:
- 176:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
-  97              		.loc 1 176 3 view .LVU15
-  98 0010 FFF7FEFF 		bl	tmr_output_channel_mode_select
-  99              	.LVL5:
- 177:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
- 100              		.loc 1 177 3 is_stmt 1 view .LVU16
- 101 0014 0222     		movs	r2, #2
- 102 0016 0121     		movs	r1, #1
- 103 0018 2846     		mov	r0, r5
- 104 001a FFF7FEFF 		bl	tmr_output_channel_mode_select
- 105              	.LVL6:
- 178:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
- 106              		.loc 1 178 3 view .LVU17
- 107 001e 0222     		movs	r2, #2
- 108 0020 1146     		mov	r1, r2
- 109 0022 2846     		mov	r0, r5
- 110 0024 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 111              	.LVL7:
- 179:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
- 112              		.loc 1 179 3 view .LVU18
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 8
+  47              		.loc 1 297 38 is_stmt 0 view .LVU7
+  48 000e 03EB4303 		add	r3, r3, r3, lsl #1
+  49              	.LVL2:
+  50              		.loc 1 297 38 view .LVU8
+  51 0012 C3EBC303 		rsb	r3, r3, r3, lsl #3
+  52              		.loc 1 297 57 view .LVU9
+  53 0016 07EE903A 		vmov	s15, r3	@ int
+  54 001a F8EEE77A 		vcvt.f32.s32	s15, s15
+  55 001e B1EE087A 		vmov.f32	s14, #6.0e+0
+  56 0022 67EE877A 		vmul.f32	s15, s15, s14
+  57              		.loc 1 297 9 view .LVU10
+  58 0026 DFED096A 		vldr.32	s13, .L7
+  59 002a 86EEA77A 		vdiv.f32	s14, s13, s15
+  60              	.LVL3:
+ 298:../Motor_Control/src/motor_control.c ****   
+ 299:../Motor_Control/src/motor_control.c ****   /* ensure minimum interval of 1ms */
+ 300:../Motor_Control/src/motor_control.c ****   if (interval < 1.0f)
+  61              		.loc 1 300 3 is_stmt 1 view .LVU11
+  62              		.loc 1 300 6 is_stmt 0 view .LVU12
+  63 002e F7EE007A 		vmov.f32	s15, #1.0e+0
+  64 0032 B4EEE77A 		vcmpe.f32	s14, s15
+  65 0036 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  66 003a 04D4     		bmi	.L6
+ 301:../Motor_Control/src/motor_control.c ****   {
+ 302:../Motor_Control/src/motor_control.c ****     return 1;
+ 303:../Motor_Control/src/motor_control.c ****   }
+ 304:../Motor_Control/src/motor_control.c ****   
+ 305:../Motor_Control/src/motor_control.c ****   return (uint32_t)interval;
+  67              		.loc 1 305 3 is_stmt 1 view .LVU13
+  68              		.loc 1 305 10 is_stmt 0 view .LVU14
+  69 003c FCEEC77A 		vcvt.u32.f32	s15, s14
+  70 0040 17EE900A 		vmov	r0, s15	@ int
+  71 0044 7047     		bx	lr
+  72              	.L6:
+ 302:../Motor_Control/src/motor_control.c ****   }
+  73              		.loc 1 302 12 view .LVU15
+  74 0046 0120     		movs	r0, #1
+  75              	.LVL4:
+  76              	.L1:
+ 306:../Motor_Control/src/motor_control.c **** }
+  77              		.loc 1 306 1 view .LVU16
+  78 0048 7047     		bx	lr
+  79              	.L8:
+  80 004a 00BF     		.align	2
+  81              	.L7:
+  82 004c 00606A47 		.word	1198153728
+  83              		.cfi_endproc
+  84              	.LFE149:
+  86              		.section	.text.motor_set_commutation_state,"ax",%progbits
+  87              		.align	1
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  92              	motor_set_commutation_state:
+  93              	.LVL5:
+  94              	.LFB147:
+ 183:../Motor_Control/src/motor_control.c ****   /* update commutation state */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 8
 
 
- 113 0028 0222     		movs	r2, #2
- 114 002a 0321     		movs	r1, #3
- 115 002c 2846     		mov	r0, r5
- 116 002e FFF7FEFF 		bl	tmr_output_channel_mode_select
- 117              	.LVL8:
- 180:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
- 118              		.loc 1 180 3 view .LVU19
- 119 0032 0222     		movs	r2, #2
- 120 0034 0421     		movs	r1, #4
- 121 0036 2846     		mov	r0, r5
- 122 0038 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 123              	.LVL9:
- 181:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
- 124              		.loc 1 181 3 view .LVU20
- 125 003c 0222     		movs	r2, #2
- 126 003e 0521     		movs	r1, #5
- 127 0040 2846     		mov	r0, r5
- 128 0042 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 129              	.LVL10:
- 184:../Motor_Control/src/motor_control.c ****   switch(state)
- 130              		.loc 1 184 3 view .LVU21
- 131 0046 032C     		cmp	r4, #3
- 132 0048 61D0     		beq	.L7
- 133 004a 1AD8     		bhi	.L8
- 134 004c 012C     		cmp	r4, #1
- 135 004e 32D0     		beq	.L9
- 136 0050 022C     		cmp	r4, #2
- 137 0052 46D0     		beq	.L10
- 138 0054 A4B9     		cbnz	r4, .L6
- 188:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 139              		.loc 1 188 7 view .LVU22
- 140 0056 444C     		ldr	r4, .L16
- 141              	.LVL11:
- 188:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 142              		.loc 1 188 7 is_stmt 0 view .LVU23
- 143 0058 0622     		movs	r2, #6
- 144 005a 0021     		movs	r1, #0
- 145 005c 2046     		mov	r0, r4
- 146 005e FFF7FEFF 		bl	tmr_output_channel_mode_select
- 147              	.LVL12:
- 189:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
- 148              		.loc 1 189 7 is_stmt 1 view .LVU24
- 149 0062 F288     		ldrh	r2, [r6, #6]
- 150 0064 0021     		movs	r1, #0
- 151 0066 2046     		mov	r0, r4
- 152 0068 FFF7FEFF 		bl	tmr_channel_value_set
- 153              	.LVL13:
- 191:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 154              		.loc 1 191 7 view .LVU25
- 155 006c 0622     		movs	r2, #6
- 156 006e 0321     		movs	r1, #3
- 157 0070 2046     		mov	r0, r4
- 158 0072 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 159              	.LVL14:
- 192:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
- 160              		.loc 1 192 7 view .LVU26
- 161 0076 F288     		ldrh	r2, [r6, #6]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 9
+  95              		.loc 1 183 1 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183:../Motor_Control/src/motor_control.c ****   /* update commutation state */
+  99              		.loc 1 183 1 is_stmt 0 view .LVU18
+ 100 0000 70B5     		push	{r4, r5, r6, lr}
+ 101              	.LCFI0:
+ 102              		.cfi_def_cfa_offset 16
+ 103              		.cfi_offset 4, -16
+ 104              		.cfi_offset 5, -12
+ 105              		.cfi_offset 6, -8
+ 106              		.cfi_offset 14, -4
+ 107 0002 0646     		mov	r6, r0
+ 108 0004 0C46     		mov	r4, r1
+ 185:../Motor_Control/src/motor_control.c ****   
+ 109              		.loc 1 185 3 is_stmt 1 view .LVU19
+ 185:../Motor_Control/src/motor_control.c ****   
+ 110              		.loc 1 185 21 is_stmt 0 view .LVU20
+ 111 0006 8170     		strb	r1, [r0, #2]
+ 188:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 112              		.loc 1 188 3 is_stmt 1 view .LVU21
+ 113 0008 574D     		ldr	r5, .L19
+ 114 000a 0222     		movs	r2, #2
+ 115 000c 0021     		movs	r1, #0
+ 116              	.LVL6:
+ 188:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 117              		.loc 1 188 3 is_stmt 0 view .LVU22
+ 118 000e 2846     		mov	r0, r5
+ 119              	.LVL7:
+ 188:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 120              		.loc 1 188 3 view .LVU23
+ 121 0010 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 122              	.LVL8:
+ 189:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
+ 123              		.loc 1 189 3 is_stmt 1 view .LVU24
+ 124 0014 0222     		movs	r2, #2
+ 125 0016 0121     		movs	r1, #1
+ 126 0018 2846     		mov	r0, r5
+ 127 001a FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 128              	.LVL9:
+ 190:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
+ 129              		.loc 1 190 3 view .LVU25
+ 130 001e 0222     		movs	r2, #2
+ 131 0020 1146     		mov	r1, r2
+ 132 0022 2846     		mov	r0, r5
+ 133 0024 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 134              	.LVL10:
+ 191:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
+ 135              		.loc 1 191 3 view .LVU26
+ 136 0028 0222     		movs	r2, #2
+ 137 002a 0321     		movs	r1, #3
+ 138 002c 2846     		mov	r0, r5
+ 139 002e FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 140              	.LVL11:
+ 192:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+ 141              		.loc 1 192 3 view .LVU27
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 9
 
 
- 162 0078 0321     		movs	r1, #3
- 163 007a 2046     		mov	r0, r4
- 164 007c FFF7FEFF 		bl	tmr_channel_value_set
- 165              	.LVL15:
- 193:../Motor_Control/src/motor_control.c ****       break;
- 166              		.loc 1 193 7 view .LVU27
- 167              	.L6:
- 238:../Motor_Control/src/motor_control.c **** }
- 168              		.loc 1 238 1 is_stmt 0 view .LVU28
- 169 0080 70BD     		pop	{r4, r5, r6, pc}
- 170              	.LVL16:
- 171              	.L8:
- 184:../Motor_Control/src/motor_control.c ****   switch(state)
- 172              		.loc 1 184 3 view .LVU29
- 173 0082 042C     		cmp	r4, #4
- 174 0084 59D0     		beq	.L13
- 175 0086 052C     		cmp	r4, #5
- 176 0088 FAD1     		bne	.L6
- 228:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 177              		.loc 1 228 7 is_stmt 1 view .LVU30
- 178 008a 374C     		ldr	r4, .L16
- 179 008c 0622     		movs	r2, #6
- 180 008e 0421     		movs	r1, #4
- 181 0090 2046     		mov	r0, r4
- 182 0092 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 183              	.LVL17:
- 229:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
- 184              		.loc 1 229 7 view .LVU31
- 185 0096 F288     		ldrh	r2, [r6, #6]
- 186 0098 0421     		movs	r1, #4
- 187 009a 2046     		mov	r0, r4
- 188 009c FFF7FEFF 		bl	tmr_channel_value_set
- 189              	.LVL18:
- 231:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 190              		.loc 1 231 7 view .LVU32
- 191 00a0 0622     		movs	r2, #6
- 192 00a2 0321     		movs	r1, #3
- 193 00a4 2046     		mov	r0, r4
- 194 00a6 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 195              	.LVL19:
- 232:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
- 196              		.loc 1 232 7 view .LVU33
- 197 00aa F288     		ldrh	r2, [r6, #6]
- 198 00ac 0321     		movs	r1, #3
- 199 00ae 2046     		mov	r0, r4
- 200 00b0 FFF7FEFF 		bl	tmr_channel_value_set
- 201              	.LVL20:
- 233:../Motor_Control/src/motor_control.c ****       break;
- 202              		.loc 1 233 7 view .LVU34
- 238:../Motor_Control/src/motor_control.c **** }
- 203              		.loc 1 238 1 is_stmt 0 view .LVU35
- 204 00b4 E4E7     		b	.L6
- 205              	.L9:
- 196:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 206              		.loc 1 196 7 is_stmt 1 view .LVU36
- 207 00b6 2C4C     		ldr	r4, .L16
- 208 00b8 0622     		movs	r2, #6
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 10
+ 142 0032 0222     		movs	r2, #2
+ 143 0034 0421     		movs	r1, #4
+ 144 0036 2846     		mov	r0, r5
+ 145 0038 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 146              	.LVL12:
+ 193:../Motor_Control/src/motor_control.c ****   
+ 147              		.loc 1 193 3 view .LVU28
+ 148 003c 0222     		movs	r2, #2
+ 149 003e 0521     		movs	r1, #5
+ 150 0040 2846     		mov	r0, r5
+ 151 0042 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 152              	.LVL13:
+ 196:../Motor_Control/src/motor_control.c ****   {
+ 153              		.loc 1 196 3 view .LVU29
+ 154 0046 032C     		cmp	r4, #3
+ 155 0048 61D0     		beq	.L10
+ 156 004a 1AD8     		bhi	.L11
+ 157 004c 012C     		cmp	r4, #1
+ 158 004e 32D0     		beq	.L12
+ 159 0050 022C     		cmp	r4, #2
+ 160 0052 46D0     		beq	.L13
+ 161 0054 A4B9     		cbnz	r4, .L9
+ 200:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+ 162              		.loc 1 200 7 view .LVU30
+ 163 0056 444C     		ldr	r4, .L19
+ 164              	.LVL14:
+ 200:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+ 165              		.loc 1 200 7 is_stmt 0 view .LVU31
+ 166 0058 0622     		movs	r2, #6
+ 167 005a 0021     		movs	r1, #0
+ 168 005c 2046     		mov	r0, r4
+ 169 005e FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 170              	.LVL15:
+ 201:../Motor_Control/src/motor_control.c ****       /* B- */
+ 171              		.loc 1 201 7 is_stmt 1 view .LVU32
+ 172 0062 F288     		ldrh	r2, [r6, #6]
+ 173 0064 0021     		movs	r1, #0
+ 174 0066 2046     		mov	r0, r4
+ 175 0068 FFF7FEFF 		bl	tmr_channel_value_set
+ 176              	.LVL16:
+ 203:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+ 177              		.loc 1 203 7 view .LVU33
+ 178 006c 0622     		movs	r2, #6
+ 179 006e 0321     		movs	r1, #3
+ 180 0070 2046     		mov	r0, r4
+ 181 0072 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 182              	.LVL17:
+ 204:../Motor_Control/src/motor_control.c ****       break;
+ 183              		.loc 1 204 7 view .LVU34
+ 184 0076 F288     		ldrh	r2, [r6, #6]
+ 185 0078 0321     		movs	r1, #3
+ 186 007a 2046     		mov	r0, r4
+ 187 007c FFF7FEFF 		bl	tmr_channel_value_set
+ 188              	.LVL18:
+ 205:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_2: /* A+ C- */
+ 189              		.loc 1 205 7 view .LVU35
+ 190              	.L9:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 10
 
 
- 209 00ba 0021     		movs	r1, #0
- 210 00bc 2046     		mov	r0, r4
- 211 00be FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 250:../Motor_Control/src/motor_control.c **** 
+ 191              		.loc 1 250 1 is_stmt 0 view .LVU36
+ 192 0080 70BD     		pop	{r4, r5, r6, pc}
+ 193              	.LVL19:
+ 194              	.L11:
+ 196:../Motor_Control/src/motor_control.c ****   {
+ 195              		.loc 1 196 3 view .LVU37
+ 196 0082 042C     		cmp	r4, #4
+ 197 0084 59D0     		beq	.L16
+ 198 0086 052C     		cmp	r4, #5
+ 199 0088 FAD1     		bne	.L9
+ 240:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+ 200              		.loc 1 240 7 is_stmt 1 view .LVU38
+ 201 008a 374C     		ldr	r4, .L19
+ 202 008c 0622     		movs	r2, #6
+ 203 008e 0421     		movs	r1, #4
+ 204 0090 2046     		mov	r0, r4
+ 205 0092 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 206              	.LVL20:
+ 241:../Motor_Control/src/motor_control.c ****       /* B- */
+ 207              		.loc 1 241 7 view .LVU39
+ 208 0096 F288     		ldrh	r2, [r6, #6]
+ 209 0098 0421     		movs	r1, #4
+ 210 009a 2046     		mov	r0, r4
+ 211 009c FFF7FEFF 		bl	tmr_channel_value_set
  212              	.LVL21:
- 197:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
- 213              		.loc 1 197 7 view .LVU37
- 214 00c2 F288     		ldrh	r2, [r6, #6]
- 215 00c4 0021     		movs	r1, #0
- 216 00c6 2046     		mov	r0, r4
- 217 00c8 FFF7FEFF 		bl	tmr_channel_value_set
+ 243:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+ 213              		.loc 1 243 7 view .LVU40
+ 214 00a0 0622     		movs	r2, #6
+ 215 00a2 0321     		movs	r1, #3
+ 216 00a4 2046     		mov	r0, r4
+ 217 00a6 FFF7FEFF 		bl	tmr_output_channel_mode_select
  218              	.LVL22:
- 199:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 219              		.loc 1 199 7 view .LVU38
- 220 00cc 0622     		movs	r2, #6
- 221 00ce 0521     		movs	r1, #5
- 222 00d0 2046     		mov	r0, r4
- 223 00d2 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 244:../Motor_Control/src/motor_control.c ****       break;
+ 219              		.loc 1 244 7 view .LVU41
+ 220 00aa F288     		ldrh	r2, [r6, #6]
+ 221 00ac 0321     		movs	r1, #3
+ 222 00ae 2046     		mov	r0, r4
+ 223 00b0 FFF7FEFF 		bl	tmr_channel_value_set
  224              	.LVL23:
- 200:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
- 225              		.loc 1 200 7 view .LVU39
- 226 00d6 F288     		ldrh	r2, [r6, #6]
- 227 00d8 0521     		movs	r1, #5
- 228 00da 2046     		mov	r0, r4
- 229 00dc FFF7FEFF 		bl	tmr_channel_value_set
- 230              	.LVL24:
- 201:../Motor_Control/src/motor_control.c ****       break;
- 231              		.loc 1 201 7 view .LVU40
- 232 00e0 CEE7     		b	.L6
- 233              	.L10:
- 204:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 234              		.loc 1 204 7 view .LVU41
- 235 00e2 214C     		ldr	r4, .L16
- 236 00e4 0622     		movs	r2, #6
- 237 00e6 0221     		movs	r1, #2
- 238 00e8 2046     		mov	r0, r4
- 239 00ea FFF7FEFF 		bl	tmr_output_channel_mode_select
- 240              	.LVL25:
- 205:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
- 241              		.loc 1 205 7 view .LVU42
- 242 00ee F288     		ldrh	r2, [r6, #6]
- 243 00f0 0221     		movs	r1, #2
- 244 00f2 2046     		mov	r0, r4
- 245 00f4 FFF7FEFF 		bl	tmr_channel_value_set
- 246              	.LVL26:
- 207:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 247              		.loc 1 207 7 view .LVU43
- 248 00f8 0622     		movs	r2, #6
- 249 00fa 0521     		movs	r1, #5
- 250 00fc 2046     		mov	r0, r4
- 251 00fe FFF7FEFF 		bl	tmr_output_channel_mode_select
- 252              	.LVL27:
- 208:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
- 253              		.loc 1 208 7 view .LVU44
- 254 0102 F288     		ldrh	r2, [r6, #6]
- 255 0104 0521     		movs	r1, #5
- 256 0106 2046     		mov	r0, r4
- 257 0108 FFF7FEFF 		bl	tmr_channel_value_set
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 11
+ 245:../Motor_Control/src/motor_control.c ****     default:
+ 225              		.loc 1 245 7 view .LVU42
+ 250:../Motor_Control/src/motor_control.c **** 
+ 226              		.loc 1 250 1 is_stmt 0 view .LVU43
+ 227 00b4 E4E7     		b	.L9
+ 228              	.L12:
+ 208:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+ 229              		.loc 1 208 7 is_stmt 1 view .LVU44
+ 230 00b6 2C4C     		ldr	r4, .L19
+ 231 00b8 0622     		movs	r2, #6
+ 232 00ba 0021     		movs	r1, #0
+ 233 00bc 2046     		mov	r0, r4
+ 234 00be FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 235              	.LVL24:
+ 209:../Motor_Control/src/motor_control.c ****       /* C- */
+ 236              		.loc 1 209 7 view .LVU45
+ 237 00c2 F288     		ldrh	r2, [r6, #6]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 11
 
 
- 258              	.LVL28:
- 209:../Motor_Control/src/motor_control.c ****       break;
- 259              		.loc 1 209 7 view .LVU45
- 260 010c B8E7     		b	.L6
- 261              	.L7:
- 212:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 262              		.loc 1 212 7 view .LVU46
- 263 010e 164C     		ldr	r4, .L16
- 264 0110 0622     		movs	r2, #6
- 265 0112 0221     		movs	r1, #2
- 266 0114 2046     		mov	r0, r4
- 267 0116 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 268              	.LVL29:
- 213:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
- 269              		.loc 1 213 7 view .LVU47
- 270 011a F288     		ldrh	r2, [r6, #6]
- 271 011c 0221     		movs	r1, #2
- 272 011e 2046     		mov	r0, r4
- 273 0120 FFF7FEFF 		bl	tmr_channel_value_set
- 274              	.LVL30:
- 215:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 275              		.loc 1 215 7 view .LVU48
- 276 0124 0622     		movs	r2, #6
- 277 0126 0121     		movs	r1, #1
- 278 0128 2046     		mov	r0, r4
- 279 012a FFF7FEFF 		bl	tmr_output_channel_mode_select
- 280              	.LVL31:
- 216:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
- 281              		.loc 1 216 7 view .LVU49
- 282 012e F288     		ldrh	r2, [r6, #6]
- 283 0130 0121     		movs	r1, #1
- 284 0132 2046     		mov	r0, r4
- 285 0134 FFF7FEFF 		bl	tmr_channel_value_set
- 286              	.LVL32:
- 217:../Motor_Control/src/motor_control.c ****       break;
- 287              		.loc 1 217 7 view .LVU50
- 288 0138 A2E7     		b	.L6
- 289              	.L13:
- 220:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 290              		.loc 1 220 7 view .LVU51
- 291 013a 0B4C     		ldr	r4, .L16
- 292 013c 0622     		movs	r2, #6
- 293 013e 0421     		movs	r1, #4
- 294 0140 2046     		mov	r0, r4
- 295 0142 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 296              	.LVL33:
- 221:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
- 297              		.loc 1 221 7 view .LVU52
- 298 0146 F288     		ldrh	r2, [r6, #6]
- 299 0148 0421     		movs	r1, #4
- 300 014a 2046     		mov	r0, r4
- 301 014c FFF7FEFF 		bl	tmr_channel_value_set
- 302              	.LVL34:
- 223:../Motor_Control/src/motor_control.c ****       tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
- 303              		.loc 1 223 7 view .LVU53
- 304 0150 0622     		movs	r2, #6
- 305 0152 0121     		movs	r1, #1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 12
+ 238 00c4 0021     		movs	r1, #0
+ 239 00c6 2046     		mov	r0, r4
+ 240 00c8 FFF7FEFF 		bl	tmr_channel_value_set
+ 241              	.LVL25:
+ 211:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+ 242              		.loc 1 211 7 view .LVU46
+ 243 00cc 0622     		movs	r2, #6
+ 244 00ce 0521     		movs	r1, #5
+ 245 00d0 2046     		mov	r0, r4
+ 246 00d2 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 247              	.LVL26:
+ 212:../Motor_Control/src/motor_control.c ****       break;
+ 248              		.loc 1 212 7 view .LVU47
+ 249 00d6 F288     		ldrh	r2, [r6, #6]
+ 250 00d8 0521     		movs	r1, #5
+ 251 00da 2046     		mov	r0, r4
+ 252 00dc FFF7FEFF 		bl	tmr_channel_value_set
+ 253              	.LVL27:
+ 213:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_3: /* B+ C- */
+ 254              		.loc 1 213 7 view .LVU48
+ 255 00e0 CEE7     		b	.L9
+ 256              	.L13:
+ 216:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+ 257              		.loc 1 216 7 view .LVU49
+ 258 00e2 214C     		ldr	r4, .L19
+ 259 00e4 0622     		movs	r2, #6
+ 260 00e6 0221     		movs	r1, #2
+ 261 00e8 2046     		mov	r0, r4
+ 262 00ea FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 263              	.LVL28:
+ 217:../Motor_Control/src/motor_control.c ****       /* C- */
+ 264              		.loc 1 217 7 view .LVU50
+ 265 00ee F288     		ldrh	r2, [r6, #6]
+ 266 00f0 0221     		movs	r1, #2
+ 267 00f2 2046     		mov	r0, r4
+ 268 00f4 FFF7FEFF 		bl	tmr_channel_value_set
+ 269              	.LVL29:
+ 219:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+ 270              		.loc 1 219 7 view .LVU51
+ 271 00f8 0622     		movs	r2, #6
+ 272 00fa 0521     		movs	r1, #5
+ 273 00fc 2046     		mov	r0, r4
+ 274 00fe FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 275              	.LVL30:
+ 220:../Motor_Control/src/motor_control.c ****       break;
+ 276              		.loc 1 220 7 view .LVU52
+ 277 0102 F288     		ldrh	r2, [r6, #6]
+ 278 0104 0521     		movs	r1, #5
+ 279 0106 2046     		mov	r0, r4
+ 280 0108 FFF7FEFF 		bl	tmr_channel_value_set
+ 281              	.LVL31:
+ 221:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_4: /* B+ A- */
+ 282              		.loc 1 221 7 view .LVU53
+ 283 010c B8E7     		b	.L9
+ 284              	.L10:
+ 224:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+ 285              		.loc 1 224 7 view .LVU54
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 12
 
 
- 306 0154 2046     		mov	r0, r4
- 307 0156 FFF7FEFF 		bl	tmr_output_channel_mode_select
- 308              	.LVL35:
- 224:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
- 309              		.loc 1 224 7 view .LVU54
- 310 015a F288     		ldrh	r2, [r6, #6]
- 311 015c 0121     		movs	r1, #1
- 312 015e 2046     		mov	r0, r4
- 313 0160 FFF7FEFF 		bl	tmr_channel_value_set
- 314              	.LVL36:
- 225:../Motor_Control/src/motor_control.c ****       break;
- 315              		.loc 1 225 7 view .LVU55
- 316 0164 8CE7     		b	.L6
- 317              	.L17:
- 318 0166 00BF     		.align	2
- 319              	.L16:
- 320 0168 002C0140 		.word	1073818624
- 321              		.cfi_endproc
- 322              	.LFE143:
- 324              		.section	.text.motor_next_commutation_state,"ax",%progbits
- 325              		.align	1
- 326              		.syntax unified
- 327              		.thumb
- 328              		.thumb_func
- 330              	motor_next_commutation_state:
- 331              	.LVL37:
- 332              	.LFB144:
- 246:../Motor_Control/src/motor_control.c **** {
- 333              		.loc 1 246 1 view -0
- 334              		.cfi_startproc
- 335              		@ args = 0, pretend = 0, frame = 0
- 336              		@ frame_needed = 0, uses_anonymous_args = 0
- 246:../Motor_Control/src/motor_control.c **** {
- 337              		.loc 1 246 1 is_stmt 0 view .LVU57
- 338 0000 08B5     		push	{r3, lr}
- 339              	.LCFI1:
- 340              		.cfi_def_cfa_offset 8
- 341              		.cfi_offset 3, -8
- 342              		.cfi_offset 14, -4
- 247:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
- 343              		.loc 1 247 3 is_stmt 1 view .LVU58
- 247:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
- 344              		.loc 1 247 12 is_stmt 0 view .LVU59
- 345 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 247:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
- 346              		.loc 1 247 6 view .LVU60
- 347 0004 83B9     		cbnz	r3, .L19
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 348              		.loc 1 250 5 is_stmt 1 view .LVU61
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 349              		.loc 1 250 53 is_stmt 0 view .LVU62
- 350 0006 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 351              		.loc 1 250 66 view .LVU63
- 352 0008 0132     		adds	r2, r2, #1
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 353              		.loc 1 250 71 view .LVU64
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 13
+ 286 010e 164C     		ldr	r4, .L19
+ 287 0110 0622     		movs	r2, #6
+ 288 0112 0221     		movs	r1, #2
+ 289 0114 2046     		mov	r0, r4
+ 290 0116 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 291              	.LVL32:
+ 225:../Motor_Control/src/motor_control.c ****       /* A- */
+ 292              		.loc 1 225 7 view .LVU55
+ 293 011a F288     		ldrh	r2, [r6, #6]
+ 294 011c 0221     		movs	r1, #2
+ 295 011e 2046     		mov	r0, r4
+ 296 0120 FFF7FEFF 		bl	tmr_channel_value_set
+ 297              	.LVL33:
+ 227:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+ 298              		.loc 1 227 7 view .LVU56
+ 299 0124 0622     		movs	r2, #6
+ 300 0126 0121     		movs	r1, #1
+ 301 0128 2046     		mov	r0, r4
+ 302 012a FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 303              	.LVL34:
+ 228:../Motor_Control/src/motor_control.c ****       break;
+ 304              		.loc 1 228 7 view .LVU57
+ 305 012e F288     		ldrh	r2, [r6, #6]
+ 306 0130 0121     		movs	r1, #1
+ 307 0132 2046     		mov	r0, r4
+ 308 0134 FFF7FEFF 		bl	tmr_channel_value_set
+ 309              	.LVL35:
+ 229:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_5: /* C+ A- */
+ 310              		.loc 1 229 7 view .LVU58
+ 311 0138 A2E7     		b	.L9
+ 312              	.L16:
+ 232:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+ 313              		.loc 1 232 7 view .LVU59
+ 314 013a 0B4C     		ldr	r4, .L19
+ 315 013c 0622     		movs	r2, #6
+ 316 013e 0421     		movs	r1, #4
+ 317 0140 2046     		mov	r0, r4
+ 318 0142 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 319              	.LVL36:
+ 233:../Motor_Control/src/motor_control.c ****       /* A- */
+ 320              		.loc 1 233 7 view .LVU60
+ 321 0146 F288     		ldrh	r2, [r6, #6]
+ 322 0148 0421     		movs	r1, #4
+ 323 014a 2046     		mov	r0, r4
+ 324 014c FFF7FEFF 		bl	tmr_channel_value_set
+ 325              	.LVL37:
+ 235:../Motor_Control/src/motor_control.c ****       tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+ 326              		.loc 1 235 7 view .LVU61
+ 327 0150 0622     		movs	r2, #6
+ 328 0152 0121     		movs	r1, #1
+ 329 0154 2046     		mov	r0, r4
+ 330 0156 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 331              	.LVL38:
+ 236:../Motor_Control/src/motor_control.c ****       break;
+ 332              		.loc 1 236 7 view .LVU62
+ 333 015a F288     		ldrh	r2, [r6, #6]
+ 334 015c 0121     		movs	r1, #1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 13
 
 
- 354 000a A3F15533 		sub	r3, r3, #1431655765
- 355 000e 03F10043 		add	r3, r3, #-2147483648
- 356 0012 83FB0213 		smull	r1, r3, r3, r2
- 357 0016 03EB4303 		add	r3, r3, r3, lsl #1
- 358 001a A2EB4303 		sub	r3, r2, r3, lsl #1
- 250:../Motor_Control/src/motor_control.c ****     motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
- 359              		.loc 1 250 23 view .LVU65
- 360 001e 8370     		strb	r3, [r0, #2]
- 361              	.L20:
- 262:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 362              		.loc 1 262 3 is_stmt 1 view .LVU66
- 363 0020 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
- 364 0022 FFF7FEFF 		bl	motor_set_commutation_state
- 365              	.LVL38:
- 263:../Motor_Control/src/motor_control.c **** }
- 366              		.loc 1 263 1 is_stmt 0 view .LVU67
- 367 0026 08BD     		pop	{r3, pc}
- 368              	.LVL39:
- 369              	.L19:
- 253:../Motor_Control/src/motor_control.c ****     if (motor->comm_state == 0)
- 370              		.loc 1 253 5 is_stmt 1 view .LVU68
- 253:../Motor_Control/src/motor_control.c ****     if (motor->comm_state == 0)
- 371              		.loc 1 253 14 is_stmt 0 view .LVU69
- 372 0028 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
- 253:../Motor_Control/src/motor_control.c ****     if (motor->comm_state == 0)
- 373              		.loc 1 253 8 view .LVU70
- 374 002a 13B9     		cbnz	r3, .L21
- 255:../Motor_Control/src/motor_control.c ****       motor->comm_state = COMMUTATION_STATE_MAX - 1;
- 375              		.loc 1 255 7 is_stmt 1 view .LVU71
- 255:../Motor_Control/src/motor_control.c ****       motor->comm_state = COMMUTATION_STATE_MAX - 1;
- 376              		.loc 1 255 25 is_stmt 0 view .LVU72
- 377 002c 0523     		movs	r3, #5
- 378 002e 8370     		strb	r3, [r0, #2]
- 379 0030 F6E7     		b	.L20
- 380              	.L21:
- 257:../Motor_Control/src/motor_control.c ****       motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
- 381              		.loc 1 257 7 is_stmt 1 view .LVU73
- 257:../Motor_Control/src/motor_control.c ****       motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
- 382              		.loc 1 257 67 is_stmt 0 view .LVU74
- 383 0032 013B     		subs	r3, r3, #1
- 257:../Motor_Control/src/motor_control.c ****       motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
- 384              		.loc 1 257 25 view .LVU75
- 385 0034 8370     		strb	r3, [r0, #2]
- 386 0036 F3E7     		b	.L20
- 387              		.cfi_endproc
- 388              	.LFE144:
- 390              		.section	.text.motor_control_init,"ax",%progbits
- 391              		.align	1
- 392              		.global	motor_control_init
- 393              		.syntax unified
- 394              		.thumb
- 395              		.thumb_func
- 397              	motor_control_init:
- 398              	.LVL40:
- 399              	.LFB137:
-  48:../Motor_Control/src/motor_control.c **** {
- 400              		.loc 1 48 1 is_stmt 1 view -0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 14
+ 335 015e 2046     		mov	r0, r4
+ 336 0160 FFF7FEFF 		bl	tmr_channel_value_set
+ 337              	.LVL39:
+ 237:../Motor_Control/src/motor_control.c ****     case COMMUTATION_STATE_6: /* C+ B- */
+ 338              		.loc 1 237 7 view .LVU63
+ 339 0164 8CE7     		b	.L9
+ 340              	.L20:
+ 341 0166 00BF     		.align	2
+ 342              	.L19:
+ 343 0168 002C0140 		.word	1073818624
+ 344              		.cfi_endproc
+ 345              	.LFE147:
+ 347              		.section	.text.motor_next_commutation_state,"ax",%progbits
+ 348              		.align	1
+ 349              		.syntax unified
+ 350              		.thumb
+ 351              		.thumb_func
+ 353              	motor_next_commutation_state:
+ 354              	.LVL40:
+ 355              	.LFB148:
+ 258:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
+ 356              		.loc 1 258 1 view -0
+ 357              		.cfi_startproc
+ 358              		@ args = 0, pretend = 0, frame = 0
+ 359              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258:../Motor_Control/src/motor_control.c ****   if (motor->direction == MOTOR_DIR_CW)
+ 360              		.loc 1 258 1 is_stmt 0 view .LVU65
+ 361 0000 08B5     		push	{r3, lr}
+ 362              	.LCFI1:
+ 363              		.cfi_def_cfa_offset 8
+ 364              		.cfi_offset 3, -8
+ 365              		.cfi_offset 14, -4
+ 259:../Motor_Control/src/motor_control.c ****   {
+ 366              		.loc 1 259 3 is_stmt 1 view .LVU66
+ 259:../Motor_Control/src/motor_control.c ****   {
+ 367              		.loc 1 259 12 is_stmt 0 view .LVU67
+ 368 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 259:../Motor_Control/src/motor_control.c ****   {
+ 369              		.loc 1 259 6 view .LVU68
+ 370 0004 83B9     		cbnz	r3, .L22
+ 262:../Motor_Control/src/motor_control.c ****   } else {
+ 371              		.loc 1 262 5 is_stmt 1 view .LVU69
+ 262:../Motor_Control/src/motor_control.c ****   } else {
+ 372              		.loc 1 262 53 is_stmt 0 view .LVU70
+ 373 0006 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 262:../Motor_Control/src/motor_control.c ****   } else {
+ 374              		.loc 1 262 66 view .LVU71
+ 375 0008 0132     		adds	r2, r2, #1
+ 262:../Motor_Control/src/motor_control.c ****   } else {
+ 376              		.loc 1 262 71 view .LVU72
+ 377 000a A3F15533 		sub	r3, r3, #1431655765
+ 378 000e 03F10043 		add	r3, r3, #-2147483648
+ 379 0012 83FB0213 		smull	r1, r3, r3, r2
+ 380 0016 03EB4303 		add	r3, r3, r3, lsl #1
+ 381 001a A2EB4303 		sub	r3, r2, r3, lsl #1
+ 262:../Motor_Control/src/motor_control.c ****   } else {
+ 382              		.loc 1 262 23 view .LVU73
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 14
 
 
- 401              		.cfi_startproc
- 402              		@ args = 0, pretend = 0, frame = 0
- 403              		@ frame_needed = 0, uses_anonymous_args = 0
-  48:../Motor_Control/src/motor_control.c **** {
- 404              		.loc 1 48 1 is_stmt 0 view .LVU77
- 405 0000 08B5     		push	{r3, lr}
- 406              	.LCFI2:
- 407              		.cfi_def_cfa_offset 8
- 408              		.cfi_offset 3, -8
- 409              		.cfi_offset 14, -4
-  50:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
- 410              		.loc 1 50 3 is_stmt 1 view .LVU78
-  50:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
- 411              		.loc 1 50 16 is_stmt 0 view .LVU79
- 412 0002 0021     		movs	r1, #0
- 413 0004 0170     		strb	r1, [r0]
-  51:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
- 414              		.loc 1 51 3 is_stmt 1 view .LVU80
-  51:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
- 415              		.loc 1 51 20 is_stmt 0 view .LVU81
- 416 0006 4170     		strb	r1, [r0, #1]
-  52:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
- 417              		.loc 1 52 3 is_stmt 1 view .LVU82
-  52:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
- 418              		.loc 1 52 21 is_stmt 0 view .LVU83
- 419 0008 8170     		strb	r1, [r0, #2]
-  53:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
- 420              		.loc 1 53 3 is_stmt 1 view .LVU84
-  53:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
- 421              		.loc 1 53 16 is_stmt 0 view .LVU85
- 422 000a 8180     		strh	r1, [r0, #4]	@ movhi
-  54:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
- 423              		.loc 1 54 3 is_stmt 1 view .LVU86
-  54:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
- 424              		.loc 1 54 21 is_stmt 0 view .LVU87
- 425 000c C180     		strh	r1, [r0, #6]	@ movhi
-  55:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
- 426              		.loc 1 55 3 is_stmt 1 view .LVU88
-  55:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
- 427              		.loc 1 55 31 is_stmt 0 view .LVU89
- 428 000e 8160     		str	r1, [r0, #8]
-  56:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
- 429              		.loc 1 56 3 is_stmt 1 view .LVU90
-  56:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
- 430              		.loc 1 56 32 is_stmt 0 view .LVU91
- 431 0010 C160     		str	r1, [r0, #12]
-  59:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 432              		.loc 1 59 3 is_stmt 1 view .LVU92
- 433 0012 FFF7FEFF 		bl	motor_set_commutation_state
- 434              	.LVL41:
-  60:../Motor_Control/src/motor_control.c **** }
- 435              		.loc 1 60 1 is_stmt 0 view .LVU93
- 436 0016 08BD     		pop	{r3, pc}
- 437              		.cfi_endproc
- 438              	.LFE137:
- 440              		.section	.text.motor_control_process,"ax",%progbits
- 441              		.align	1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 15
+ 383 001e 8370     		strb	r3, [r0, #2]
+ 384              	.L23:
+ 274:../Motor_Control/src/motor_control.c **** }
+ 385              		.loc 1 274 3 is_stmt 1 view .LVU74
+ 386 0020 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 387 0022 FFF7FEFF 		bl	motor_set_commutation_state
+ 388              	.LVL41:
+ 275:../Motor_Control/src/motor_control.c **** 
+ 389              		.loc 1 275 1 is_stmt 0 view .LVU75
+ 390 0026 08BD     		pop	{r3, pc}
+ 391              	.LVL42:
+ 392              	.L22:
+ 265:../Motor_Control/src/motor_control.c ****     {
+ 393              		.loc 1 265 5 is_stmt 1 view .LVU76
+ 265:../Motor_Control/src/motor_control.c ****     {
+ 394              		.loc 1 265 14 is_stmt 0 view .LVU77
+ 395 0028 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 265:../Motor_Control/src/motor_control.c ****     {
+ 396              		.loc 1 265 8 view .LVU78
+ 397 002a 13B9     		cbnz	r3, .L24
+ 267:../Motor_Control/src/motor_control.c ****     } else {
+ 398              		.loc 1 267 7 is_stmt 1 view .LVU79
+ 267:../Motor_Control/src/motor_control.c ****     } else {
+ 399              		.loc 1 267 25 is_stmt 0 view .LVU80
+ 400 002c 0523     		movs	r3, #5
+ 401 002e 8370     		strb	r3, [r0, #2]
+ 402 0030 F6E7     		b	.L23
+ 403              	.L24:
+ 269:../Motor_Control/src/motor_control.c ****     }
+ 404              		.loc 1 269 7 is_stmt 1 view .LVU81
+ 269:../Motor_Control/src/motor_control.c ****     }
+ 405              		.loc 1 269 67 is_stmt 0 view .LVU82
+ 406 0032 013B     		subs	r3, r3, #1
+ 269:../Motor_Control/src/motor_control.c ****     }
+ 407              		.loc 1 269 25 view .LVU83
+ 408 0034 8370     		strb	r3, [r0, #2]
+ 409 0036 F3E7     		b	.L23
+ 410              		.cfi_endproc
+ 411              	.LFE148:
+ 413              		.section	.text.motor_control_init,"ax",%progbits
+ 414              		.align	1
+ 415              		.global	motor_control_init
+ 416              		.syntax unified
+ 417              		.thumb
+ 418              		.thumb_func
+ 420              	motor_control_init:
+ 421              	.LVL43:
+ 422              	.LFB141:
+  55:../Motor_Control/src/motor_control.c ****   /* initialize motor parameters */
+ 423              		.loc 1 55 1 is_stmt 1 view -0
+ 424              		.cfi_startproc
+ 425              		@ args = 0, pretend = 0, frame = 0
+ 426              		@ frame_needed = 0, uses_anonymous_args = 0
+  55:../Motor_Control/src/motor_control.c ****   /* initialize motor parameters */
+ 427              		.loc 1 55 1 is_stmt 0 view .LVU85
+ 428 0000 10B5     		push	{r4, lr}
+ 429              	.LCFI2:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 15
 
 
- 442              		.global	motor_control_process
- 443              		.syntax unified
- 444              		.thumb
- 445              		.thumb_func
- 447              	motor_control_process:
- 448              	.LVL42:
- 449              	.LFB138:
-  68:../Motor_Control/src/motor_control.c **** {
- 450              		.loc 1 68 1 is_stmt 1 view -0
- 451              		.cfi_startproc
- 452              		@ args = 0, pretend = 0, frame = 0
- 453              		@ frame_needed = 0, uses_anonymous_args = 0
-  69:../Motor_Control/src/motor_control.c ****   uint32_t current_time;
- 454              		.loc 1 69 3 view .LVU95
-  72:../Motor_Control/src/motor_control.c ****   if (motor->state == MOTOR_STATE_RUNNING)
- 455              		.loc 1 72 3 view .LVU96
-  72:../Motor_Control/src/motor_control.c ****   if (motor->state == MOTOR_STATE_RUNNING)
- 456              		.loc 1 72 12 is_stmt 0 view .LVU97
- 457 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
-  72:../Motor_Control/src/motor_control.c ****   if (motor->state == MOTOR_STATE_RUNNING)
- 458              		.loc 1 72 6 view .LVU98
- 459 0002 012B     		cmp	r3, #1
- 460 0004 00D0     		beq	.L31
- 461 0006 7047     		bx	lr
- 462              	.L31:
-  68:../Motor_Control/src/motor_control.c **** {
- 463              		.loc 1 68 1 view .LVU99
- 464 0008 10B5     		push	{r4, lr}
- 465              	.LCFI3:
- 466              		.cfi_def_cfa_offset 8
- 467              		.cfi_offset 4, -8
- 468              		.cfi_offset 14, -4
- 469 000a 0446     		mov	r4, r0
-  75:../Motor_Control/src/motor_control.c ****     current_time = wk_timebase_get();
- 470              		.loc 1 75 5 is_stmt 1 view .LVU100
-  75:../Motor_Control/src/motor_control.c ****     current_time = wk_timebase_get();
- 471              		.loc 1 75 20 is_stmt 0 view .LVU101
- 472 000c FFF7FEFF 		bl	wk_timebase_get
- 473              	.LVL43:
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
- 474              		.loc 1 78 5 is_stmt 1 view .LVU102
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
- 475              		.loc 1 78 29 is_stmt 0 view .LVU103
- 476 0010 E368     		ldr	r3, [r4, #12]
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
- 477              		.loc 1 78 22 view .LVU104
- 478 0012 C31A     		subs	r3, r0, r3
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
- 479              		.loc 1 78 61 view .LVU105
- 480 0014 A268     		ldr	r2, [r4, #8]
-  78:../Motor_Control/src/motor_control.c ****     if (current_time - motor->last_commutation_time >= motor->commutation_interval)
- 481              		.loc 1 78 8 view .LVU106
- 482 0016 9342     		cmp	r3, r2
- 483 0018 00D2     		bcs	.L32
- 484              	.LVL44:
- 485              	.L25:
-  87:../Motor_Control/src/motor_control.c **** }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 16
+ 430              		.cfi_def_cfa_offset 8
+ 431              		.cfi_offset 4, -8
+ 432              		.cfi_offset 14, -4
+  57:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
+ 433              		.loc 1 57 3 is_stmt 1 view .LVU86
+  57:../Motor_Control/src/motor_control.c ****   motor->direction = MOTOR_DIR_CW;
+ 434              		.loc 1 57 16 is_stmt 0 view .LVU87
+ 435 0002 0021     		movs	r1, #0
+ 436 0004 0170     		strb	r1, [r0]
+  58:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
+ 437              		.loc 1 58 3 is_stmt 1 view .LVU88
+  58:../Motor_Control/src/motor_control.c ****   motor->comm_state = COMMUTATION_STATE_1;
+ 438              		.loc 1 58 20 is_stmt 0 view .LVU89
+ 439 0006 4170     		strb	r1, [r0, #1]
+  59:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+ 440              		.loc 1 59 3 is_stmt 1 view .LVU90
+  59:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+ 441              		.loc 1 59 21 is_stmt 0 view .LVU91
+ 442 0008 8170     		strb	r1, [r0, #2]
+  60:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
+ 443              		.loc 1 60 3 is_stmt 1 view .LVU92
+  60:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
+ 444              		.loc 1 60 16 is_stmt 0 view .LVU93
+ 445 000a 8180     		strh	r1, [r0, #4]	@ movhi
+  61:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
+ 446              		.loc 1 61 3 is_stmt 1 view .LVU94
+  61:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = 0;
+ 447              		.loc 1 61 21 is_stmt 0 view .LVU95
+ 448 000c C180     		strh	r1, [r0, #6]	@ movhi
+  62:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
+ 449              		.loc 1 62 3 is_stmt 1 view .LVU96
+  62:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = 0;
+ 450              		.loc 1 62 31 is_stmt 0 view .LVU97
+ 451 000e 8160     		str	r1, [r0, #8]
+  63:../Motor_Control/src/motor_control.c ****   
+ 452              		.loc 1 63 3 is_stmt 1 view .LVU98
+  63:../Motor_Control/src/motor_control.c ****   
+ 453              		.loc 1 63 32 is_stmt 0 view .LVU99
+ 454 0010 C160     		str	r1, [r0, #12]
+  66:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 455              		.loc 1 66 3 is_stmt 1 view .LVU100
+ 456 0012 0F4C     		ldr	r4, .L28
+ 457 0014 0222     		movs	r2, #2
+ 458 0016 2046     		mov	r0, r4
+ 459              	.LVL44:
+  66:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+ 460              		.loc 1 66 3 is_stmt 0 view .LVU101
+ 461 0018 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 462              	.LVL45:
+  67:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
+ 463              		.loc 1 67 3 is_stmt 1 view .LVU102
+ 464 001c 0222     		movs	r2, #2
+ 465 001e 0121     		movs	r1, #1
+ 466 0020 2046     		mov	r0, r4
+ 467 0022 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 468              	.LVL46:
+  68:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 16
 
 
- 486              		.loc 1 87 1 view .LVU107
- 487 001a 10BD     		pop	{r4, pc}
- 488              	.LVL45:
- 489              	.L32:
-  81:../Motor_Control/src/motor_control.c ****       motor->last_commutation_time = current_time;
- 490              		.loc 1 81 7 is_stmt 1 view .LVU108
-  81:../Motor_Control/src/motor_control.c ****       motor->last_commutation_time = current_time;
- 491              		.loc 1 81 36 is_stmt 0 view .LVU109
- 492 001c E060     		str	r0, [r4, #12]
-  84:../Motor_Control/src/motor_control.c ****       motor_next_commutation_state(motor);
- 493              		.loc 1 84 7 is_stmt 1 view .LVU110
- 494 001e 2046     		mov	r0, r4
- 495              	.LVL46:
-  84:../Motor_Control/src/motor_control.c ****       motor_next_commutation_state(motor);
- 496              		.loc 1 84 7 is_stmt 0 view .LVU111
- 497 0020 FFF7FEFF 		bl	motor_next_commutation_state
- 498              	.LVL47:
-  87:../Motor_Control/src/motor_control.c **** }
- 499              		.loc 1 87 1 view .LVU112
- 500 0024 F9E7     		b	.L25
- 501              		.cfi_endproc
- 502              	.LFE138:
- 504              		.section	.text.motor_start,"ax",%progbits
- 505              		.align	1
- 506              		.global	motor_start
- 507              		.syntax unified
- 508              		.thumb
- 509              		.thumb_func
- 511              	motor_start:
- 512              	.LVL48:
- 513              	.LFB139:
-  97:../Motor_Control/src/motor_control.c **** {
- 514              		.loc 1 97 1 is_stmt 1 view -0
- 515              		.cfi_startproc
- 516              		@ args = 0, pretend = 0, frame = 0
- 517              		@ frame_needed = 0, uses_anonymous_args = 0
-  97:../Motor_Control/src/motor_control.c **** {
- 518              		.loc 1 97 1 is_stmt 0 view .LVU114
- 519 0000 10B5     		push	{r4, lr}
- 520              	.LCFI4:
- 521              		.cfi_def_cfa_offset 8
- 522              		.cfi_offset 4, -8
- 523              		.cfi_offset 14, -4
- 524 0002 0446     		mov	r4, r0
- 525 0004 0846     		mov	r0, r1
- 526              	.LVL49:
-  99:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 527              		.loc 1 99 3 is_stmt 1 view .LVU115
-  99:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 528              		.loc 1 99 16 is_stmt 0 view .LVU116
- 529 0006 A180     		strh	r1, [r4, #4]	@ movhi
- 100:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
- 530              		.loc 1 100 3 is_stmt 1 view .LVU117
- 100:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
- 531              		.loc 1 100 20 is_stmt 0 view .LVU118
- 532 0008 6270     		strb	r2, [r4, #1]
- 101:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 17
+ 469              		.loc 1 68 3 view .LVU103
+ 470 0026 0222     		movs	r2, #2
+ 471 0028 1146     		mov	r1, r2
+ 472 002a 2046     		mov	r0, r4
+ 473 002c FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 474              	.LVL47:
+  69:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
+ 475              		.loc 1 69 3 view .LVU104
+ 476 0030 0222     		movs	r2, #2
+ 477 0032 0321     		movs	r1, #3
+ 478 0034 2046     		mov	r0, r4
+ 479 0036 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 480              	.LVL48:
+  70:../Motor_Control/src/motor_control.c ****   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+ 481              		.loc 1 70 3 view .LVU105
+ 482 003a 0222     		movs	r2, #2
+ 483 003c 0421     		movs	r1, #4
+ 484 003e 2046     		mov	r0, r4
+ 485 0040 FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 486              	.LVL49:
+  71:../Motor_Control/src/motor_control.c **** }
+ 487              		.loc 1 71 3 view .LVU106
+ 488 0044 0222     		movs	r2, #2
+ 489 0046 0521     		movs	r1, #5
+ 490 0048 2046     		mov	r0, r4
+ 491 004a FFF7FEFF 		bl	tmr_output_channel_mode_select
+ 492              	.LVL50:
+  72:../Motor_Control/src/motor_control.c **** 
+ 493              		.loc 1 72 1 is_stmt 0 view .LVU107
+ 494 004e 10BD     		pop	{r4, pc}
+ 495              	.L29:
+ 496              		.align	2
+ 497              	.L28:
+ 498 0050 002C0140 		.word	1073818624
+ 499              		.cfi_endproc
+ 500              	.LFE141:
+ 502              		.section	.text.motor_control_process,"ax",%progbits
+ 503              		.align	1
+ 504              		.global	motor_control_process
+ 505              		.syntax unified
+ 506              		.thumb
+ 507              		.thumb_func
+ 509              	motor_control_process:
+ 510              	.LVL51:
+ 511              	.LFB142:
+  80:../Motor_Control/src/motor_control.c ****   uint32_t current_time;
+ 512              		.loc 1 80 1 is_stmt 1 view -0
+ 513              		.cfi_startproc
+ 514              		@ args = 0, pretend = 0, frame = 0
+ 515              		@ frame_needed = 0, uses_anonymous_args = 0
+  81:../Motor_Control/src/motor_control.c ****   
+ 516              		.loc 1 81 3 view .LVU109
+  84:../Motor_Control/src/motor_control.c ****   {
+ 517              		.loc 1 84 3 view .LVU110
+  84:../Motor_Control/src/motor_control.c ****   {
+ 518              		.loc 1 84 12 is_stmt 0 view .LVU111
+ 519 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 17
 
 
- 533              		.loc 1 101 3 is_stmt 1 view .LVU119
- 101:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
- 534              		.loc 1 101 21 is_stmt 0 view .LVU120
- 535 000a 6423     		movs	r3, #100
- 536 000c E380     		strh	r3, [r4, #6]	@ movhi
- 102:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 537              		.loc 1 102 3 is_stmt 1 view .LVU121
- 102:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 538              		.loc 1 102 33 is_stmt 0 view .LVU122
- 539 000e FFF7FEFF 		bl	calculate_commutation_interval
- 540              	.LVL50:
- 102:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 541              		.loc 1 102 31 discriminator 1 view .LVU123
- 542 0012 A060     		str	r0, [r4, #8]
- 103:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
- 543              		.loc 1 103 3 is_stmt 1 view .LVU124
- 103:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
- 544              		.loc 1 103 34 is_stmt 0 view .LVU125
- 545 0014 FFF7FEFF 		bl	wk_timebase_get
- 546              	.LVL51:
- 103:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
- 547              		.loc 1 103 32 discriminator 1 view .LVU126
- 548 0018 E060     		str	r0, [r4, #12]
- 104:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
- 549              		.loc 1 104 3 is_stmt 1 view .LVU127
- 104:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
- 550              		.loc 1 104 16 is_stmt 0 view .LVU128
- 551 001a 0123     		movs	r3, #1
- 552 001c 2370     		strb	r3, [r4]
- 107:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 553              		.loc 1 107 3 is_stmt 1 view .LVU129
- 554 001e A178     		ldrb	r1, [r4, #2]	@ zero_extendqisi2
- 555 0020 2046     		mov	r0, r4
- 556 0022 FFF7FEFF 		bl	motor_set_commutation_state
- 557              	.LVL52:
- 108:../Motor_Control/src/motor_control.c **** }
- 558              		.loc 1 108 1 is_stmt 0 view .LVU130
- 559 0026 10BD     		pop	{r4, pc}
- 108:../Motor_Control/src/motor_control.c **** }
- 560              		.loc 1 108 1 view .LVU131
- 561              		.cfi_endproc
- 562              	.LFE139:
- 564              		.section	.text.motor_stop,"ax",%progbits
- 565              		.align	1
- 566              		.global	motor_stop
- 567              		.syntax unified
- 568              		.thumb
- 569              		.thumb_func
- 571              	motor_stop:
- 572              	.LVL53:
- 573              	.LFB140:
- 116:../Motor_Control/src/motor_control.c **** {
- 574              		.loc 1 116 1 is_stmt 1 view -0
- 575              		.cfi_startproc
- 576              		@ args = 0, pretend = 0, frame = 0
- 577              		@ frame_needed = 0, uses_anonymous_args = 0
- 116:../Motor_Control/src/motor_control.c **** {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 18
+  84:../Motor_Control/src/motor_control.c ****   {
+ 520              		.loc 1 84 6 view .LVU112
+ 521 0002 012B     		cmp	r3, #1
+ 522 0004 00D0     		beq	.L36
+ 523 0006 7047     		bx	lr
+ 524              	.L36:
+  80:../Motor_Control/src/motor_control.c ****   uint32_t current_time;
+ 525              		.loc 1 80 1 view .LVU113
+ 526 0008 10B5     		push	{r4, lr}
+ 527              	.LCFI3:
+ 528              		.cfi_def_cfa_offset 8
+ 529              		.cfi_offset 4, -8
+ 530              		.cfi_offset 14, -4
+ 531 000a 0446     		mov	r4, r0
+  87:../Motor_Control/src/motor_control.c ****     
+ 532              		.loc 1 87 5 is_stmt 1 view .LVU114
+  87:../Motor_Control/src/motor_control.c ****     
+ 533              		.loc 1 87 20 is_stmt 0 view .LVU115
+ 534 000c FFF7FEFF 		bl	wk_timebase_get
+ 535              	.LVL52:
+  90:../Motor_Control/src/motor_control.c ****     {
+ 536              		.loc 1 90 5 is_stmt 1 view .LVU116
+  90:../Motor_Control/src/motor_control.c ****     {
+ 537              		.loc 1 90 29 is_stmt 0 view .LVU117
+ 538 0010 E368     		ldr	r3, [r4, #12]
+  90:../Motor_Control/src/motor_control.c ****     {
+ 539              		.loc 1 90 22 view .LVU118
+ 540 0012 C31A     		subs	r3, r0, r3
+  90:../Motor_Control/src/motor_control.c ****     {
+ 541              		.loc 1 90 61 view .LVU119
+ 542 0014 A268     		ldr	r2, [r4, #8]
+  90:../Motor_Control/src/motor_control.c ****     {
+ 543              		.loc 1 90 8 view .LVU120
+ 544 0016 9342     		cmp	r3, r2
+ 545 0018 00D2     		bcs	.L37
+ 546              	.LVL53:
+ 547              	.L30:
+  99:../Motor_Control/src/motor_control.c **** 
+ 548              		.loc 1 99 1 view .LVU121
+ 549 001a 10BD     		pop	{r4, pc}
+ 550              	.LVL54:
+ 551              	.L37:
+  93:../Motor_Control/src/motor_control.c ****       
+ 552              		.loc 1 93 7 is_stmt 1 view .LVU122
+  93:../Motor_Control/src/motor_control.c ****       
+ 553              		.loc 1 93 36 is_stmt 0 view .LVU123
+ 554 001c E060     		str	r0, [r4, #12]
+  96:../Motor_Control/src/motor_control.c ****     }
+ 555              		.loc 1 96 7 is_stmt 1 view .LVU124
+ 556 001e 2046     		mov	r0, r4
+ 557              	.LVL55:
+  96:../Motor_Control/src/motor_control.c ****     }
+ 558              		.loc 1 96 7 is_stmt 0 view .LVU125
+ 559 0020 FFF7FEFF 		bl	motor_next_commutation_state
+ 560              	.LVL56:
+  99:../Motor_Control/src/motor_control.c **** 
+ 561              		.loc 1 99 1 view .LVU126
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 18
 
 
- 578              		.loc 1 116 1 is_stmt 0 view .LVU133
- 579 0000 38B5     		push	{r3, r4, r5, lr}
- 580              	.LCFI5:
- 581              		.cfi_def_cfa_offset 16
- 582              		.cfi_offset 3, -16
- 583              		.cfi_offset 4, -12
- 584              		.cfi_offset 5, -8
+ 562 0024 F9E7     		b	.L30
+ 563              		.cfi_endproc
+ 564              	.LFE142:
+ 566              		.section	.text.motor_start,"ax",%progbits
+ 567              		.align	1
+ 568              		.global	motor_start
+ 569              		.syntax unified
+ 570              		.thumb
+ 571              		.thumb_func
+ 573              	motor_start:
+ 574              	.LVL57:
+ 575              	.LFB143:
+ 109:../Motor_Control/src/motor_control.c ****   /* set motor parameters */
+ 576              		.loc 1 109 1 is_stmt 1 view -0
+ 577              		.cfi_startproc
+ 578              		@ args = 0, pretend = 0, frame = 0
+ 579              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109:../Motor_Control/src/motor_control.c ****   /* set motor parameters */
+ 580              		.loc 1 109 1 is_stmt 0 view .LVU128
+ 581 0000 10B5     		push	{r4, lr}
+ 582              	.LCFI4:
+ 583              		.cfi_def_cfa_offset 8
+ 584              		.cfi_offset 4, -8
  585              		.cfi_offset 14, -4
  586 0002 0446     		mov	r4, r0
- 118:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
- 587              		.loc 1 118 3 is_stmt 1 view .LVU134
- 588 0004 0A4D     		ldr	r5, .L37
- 589 0006 0022     		movs	r2, #0
- 590 0008 1146     		mov	r1, r2
- 591 000a 2846     		mov	r0, r5
- 592              	.LVL54:
- 118:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
- 593              		.loc 1 118 3 is_stmt 0 view .LVU135
- 594 000c FFF7FEFF 		bl	tmr_channel_value_set
- 595              	.LVL55:
- 119:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
- 596              		.loc 1 119 3 is_stmt 1 view .LVU136
- 597 0010 0022     		movs	r2, #0
- 598 0012 0221     		movs	r1, #2
- 599 0014 2846     		mov	r0, r5
- 600 0016 FFF7FEFF 		bl	tmr_channel_value_set
- 601              	.LVL56:
- 120:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
- 602              		.loc 1 120 3 view .LVU137
- 603 001a 0022     		movs	r2, #0
- 604 001c 0421     		movs	r1, #4
- 605 001e 2846     		mov	r0, r5
- 606 0020 FFF7FEFF 		bl	tmr_channel_value_set
- 607              	.LVL57:
- 123:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
- 608              		.loc 1 123 3 view .LVU138
- 123:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_IDLE;
- 609              		.loc 1 123 16 is_stmt 0 view .LVU139
- 610 0024 0023     		movs	r3, #0
- 611 0026 2370     		strb	r3, [r4]
- 124:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
- 612              		.loc 1 124 3 is_stmt 1 view .LVU140
- 124:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
- 613              		.loc 1 124 16 is_stmt 0 view .LVU141
- 614 0028 A380     		strh	r3, [r4, #4]	@ movhi
- 125:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
- 615              		.loc 1 125 3 is_stmt 1 view .LVU142
- 125:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
- 616              		.loc 1 125 21 is_stmt 0 view .LVU143
- 617 002a E380     		strh	r3, [r4, #6]	@ movhi
- 126:../Motor_Control/src/motor_control.c **** }
- 618              		.loc 1 126 1 view .LVU144
- 619 002c 38BD     		pop	{r3, r4, r5, pc}
- 620              	.LVL58:
- 621              	.L38:
- 126:../Motor_Control/src/motor_control.c **** }
- 622              		.loc 1 126 1 view .LVU145
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 19
+ 587 0004 0846     		mov	r0, r1
+ 588              	.LVL58:
+ 111:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
+ 589              		.loc 1 111 3 is_stmt 1 view .LVU129
+ 111:../Motor_Control/src/motor_control.c ****   motor->direction = direction;
+ 590              		.loc 1 111 16 is_stmt 0 view .LVU130
+ 591 0006 A180     		strh	r1, [r4, #4]	@ movhi
+ 112:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
+ 592              		.loc 1 112 3 is_stmt 1 view .LVU131
+ 112:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = MIN_DUTY_CYCLE;
+ 593              		.loc 1 112 20 is_stmt 0 view .LVU132
+ 594 0008 6270     		strb	r2, [r4, #1]
+ 113:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 595              		.loc 1 113 3 is_stmt 1 view .LVU133
+ 113:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 596              		.loc 1 113 21 is_stmt 0 view .LVU134
+ 597 000a 6423     		movs	r3, #100
+ 598 000c E380     		strh	r3, [r4, #6]	@ movhi
+ 114:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
+ 599              		.loc 1 114 3 is_stmt 1 view .LVU135
+ 114:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
+ 600              		.loc 1 114 33 is_stmt 0 view .LVU136
+ 601 000e FFF7FEFF 		bl	calculate_commutation_interval
+ 602              	.LVL59:
+ 114:../Motor_Control/src/motor_control.c ****   motor->last_commutation_time = wk_timebase_get();
+ 603              		.loc 1 114 31 discriminator 1 view .LVU137
+ 604 0012 A060     		str	r0, [r4, #8]
+ 115:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
+ 605              		.loc 1 115 3 is_stmt 1 view .LVU138
+ 115:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
+ 606              		.loc 1 115 34 is_stmt 0 view .LVU139
+ 607 0014 FFF7FEFF 		bl	wk_timebase_get
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 19
 
 
- 623 002e 00BF     		.align	2
- 624              	.L37:
- 625 0030 002C0140 		.word	1073818624
- 626              		.cfi_endproc
- 627              	.LFE140:
- 629              		.section	.text.motor_set_speed,"ax",%progbits
- 630              		.align	1
- 631              		.global	motor_set_speed
- 632              		.syntax unified
- 633              		.thumb
- 634              		.thumb_func
- 636              	motor_set_speed:
- 637              	.LVL59:
- 638              	.LFB141:
- 135:../Motor_Control/src/motor_control.c **** {
- 639              		.loc 1 135 1 is_stmt 1 view -0
- 640              		.cfi_startproc
- 641              		@ args = 0, pretend = 0, frame = 0
- 642              		@ frame_needed = 0, uses_anonymous_args = 0
- 135:../Motor_Control/src/motor_control.c **** {
- 643              		.loc 1 135 1 is_stmt 0 view .LVU147
- 644 0000 10B5     		push	{r4, lr}
- 645              	.LCFI6:
- 646              		.cfi_def_cfa_offset 8
- 647              		.cfi_offset 4, -8
- 648              		.cfi_offset 14, -4
- 649 0002 0446     		mov	r4, r0
- 650 0004 0846     		mov	r0, r1
- 651              	.LVL60:
- 136:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 652              		.loc 1 136 3 is_stmt 1 view .LVU148
- 136:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
- 653              		.loc 1 136 16 is_stmt 0 view .LVU149
- 654 0006 A180     		strh	r1, [r4, #4]	@ movhi
- 137:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 655              		.loc 1 137 3 is_stmt 1 view .LVU150
- 137:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 656              		.loc 1 137 33 is_stmt 0 view .LVU151
- 657 0008 FFF7FEFF 		bl	calculate_commutation_interval
- 658              	.LVL61:
- 137:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
- 659              		.loc 1 137 31 discriminator 1 view .LVU152
- 660 000c A060     		str	r0, [r4, #8]
- 138:../Motor_Control/src/motor_control.c **** }
- 661              		.loc 1 138 1 view .LVU153
- 662 000e 10BD     		pop	{r4, pc}
- 138:../Motor_Control/src/motor_control.c **** }
- 663              		.loc 1 138 1 view .LVU154
- 664              		.cfi_endproc
- 665              	.LFE141:
- 667              		.section	.text.motor_set_duty_cycle,"ax",%progbits
- 668              		.align	1
- 669              		.global	motor_set_duty_cycle
- 670              		.syntax unified
- 671              		.thumb
- 672              		.thumb_func
- 674              	motor_set_duty_cycle:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 20
+ 608              	.LVL60:
+ 115:../Motor_Control/src/motor_control.c ****   motor->state = MOTOR_STATE_RUNNING;
+ 609              		.loc 1 115 32 discriminator 1 view .LVU140
+ 610 0018 E060     		str	r0, [r4, #12]
+ 116:../Motor_Control/src/motor_control.c ****   
+ 611              		.loc 1 116 3 is_stmt 1 view .LVU141
+ 116:../Motor_Control/src/motor_control.c ****   
+ 612              		.loc 1 116 16 is_stmt 0 view .LVU142
+ 613 001a 0123     		movs	r3, #1
+ 614 001c 2370     		strb	r3, [r4]
+ 119:../Motor_Control/src/motor_control.c **** }
+ 615              		.loc 1 119 3 is_stmt 1 view .LVU143
+ 616 001e A178     		ldrb	r1, [r4, #2]	@ zero_extendqisi2
+ 617 0020 2046     		mov	r0, r4
+ 618 0022 FFF7FEFF 		bl	motor_set_commutation_state
+ 619              	.LVL61:
+ 120:../Motor_Control/src/motor_control.c **** 
+ 620              		.loc 1 120 1 is_stmt 0 view .LVU144
+ 621 0026 10BD     		pop	{r4, pc}
+ 120:../Motor_Control/src/motor_control.c **** 
+ 622              		.loc 1 120 1 view .LVU145
+ 623              		.cfi_endproc
+ 624              	.LFE143:
+ 626              		.section	.text.motor_stop,"ax",%progbits
+ 627              		.align	1
+ 628              		.global	motor_stop
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 633              	motor_stop:
+ 634              	.LVL62:
+ 635              	.LFB144:
+ 128:../Motor_Control/src/motor_control.c ****   /* set all outputs to low */
+ 636              		.loc 1 128 1 is_stmt 1 view -0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 0
+ 639              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128:../Motor_Control/src/motor_control.c ****   /* set all outputs to low */
+ 640              		.loc 1 128 1 is_stmt 0 view .LVU147
+ 641 0000 38B5     		push	{r3, r4, r5, lr}
+ 642              	.LCFI5:
+ 643              		.cfi_def_cfa_offset 16
+ 644              		.cfi_offset 3, -16
+ 645              		.cfi_offset 4, -12
+ 646              		.cfi_offset 5, -8
+ 647              		.cfi_offset 14, -4
+ 648 0002 0446     		mov	r4, r0
+ 130:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
+ 649              		.loc 1 130 3 is_stmt 1 view .LVU148
+ 650 0004 0A4D     		ldr	r5, .L42
+ 651 0006 0022     		movs	r2, #0
+ 652 0008 1146     		mov	r1, r2
+ 653 000a 2846     		mov	r0, r5
+ 654              	.LVL63:
+ 130:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
+ 655              		.loc 1 130 3 is_stmt 0 view .LVU149
+ 656 000c FFF7FEFF 		bl	tmr_channel_value_set
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 20
 
 
- 675              	.LVL62:
- 676              	.LFB142:
- 147:../Motor_Control/src/motor_control.c **** {
- 677              		.loc 1 147 1 is_stmt 1 view -0
- 678              		.cfi_startproc
- 679              		@ args = 0, pretend = 0, frame = 0
- 680              		@ frame_needed = 0, uses_anonymous_args = 0
- 147:../Motor_Control/src/motor_control.c **** {
- 681              		.loc 1 147 1 is_stmt 0 view .LVU156
- 682 0000 08B5     		push	{r3, lr}
- 683              	.LCFI7:
- 684              		.cfi_def_cfa_offset 8
- 685              		.cfi_offset 3, -8
- 686              		.cfi_offset 14, -4
- 149:../Motor_Control/src/motor_control.c ****   if (duty_cycle > MAX_DUTY_CYCLE)
- 687              		.loc 1 149 3 is_stmt 1 view .LVU157
- 149:../Motor_Control/src/motor_control.c ****   if (duty_cycle > MAX_DUTY_CYCLE)
- 688              		.loc 1 149 6 is_stmt 0 view .LVU158
- 689 0002 B1F5AF6F 		cmp	r1, #1400
- 690 0006 03D8     		bhi	.L43
- 153:../Motor_Control/src/motor_control.c ****   else if (duty_cycle < MIN_DUTY_CYCLE)
- 691              		.loc 1 153 8 is_stmt 1 view .LVU159
- 153:../Motor_Control/src/motor_control.c ****   else if (duty_cycle < MIN_DUTY_CYCLE)
- 692              		.loc 1 153 11 is_stmt 0 view .LVU160
- 693 0008 6329     		cmp	r1, #99
- 694 000a 03D8     		bhi	.L42
- 155:../Motor_Control/src/motor_control.c ****     duty_cycle = MIN_DUTY_CYCLE;
- 695              		.loc 1 155 16 view .LVU161
- 696 000c 6421     		movs	r1, #100
- 697              	.LVL63:
- 155:../Motor_Control/src/motor_control.c ****     duty_cycle = MIN_DUTY_CYCLE;
- 698              		.loc 1 155 16 view .LVU162
- 699 000e 01E0     		b	.L42
- 700              	.LVL64:
- 701              	.L43:
- 151:../Motor_Control/src/motor_control.c ****     duty_cycle = MAX_DUTY_CYCLE;
- 702              		.loc 1 151 16 view .LVU163
- 703 0010 4FF4AF61 		mov	r1, #1400
- 704              	.LVL65:
- 705              	.L42:
- 158:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = duty_cycle;
- 706              		.loc 1 158 3 is_stmt 1 view .LVU164
- 158:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = duty_cycle;
- 707              		.loc 1 158 21 is_stmt 0 view .LVU165
- 708 0014 C180     		strh	r1, [r0, #6]	@ movhi
- 161:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 709              		.loc 1 161 3 is_stmt 1 view .LVU166
- 710 0016 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
- 711              	.LVL66:
- 161:../Motor_Control/src/motor_control.c ****   motor_set_commutation_state(motor, motor->comm_state);
- 712              		.loc 1 161 3 is_stmt 0 view .LVU167
- 713 0018 FFF7FEFF 		bl	motor_set_commutation_state
- 714              	.LVL67:
- 162:../Motor_Control/src/motor_control.c **** }
- 715              		.loc 1 162 1 view .LVU168
- 716 001c 08BD     		pop	{r3, pc}
- 717              		.cfi_endproc
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 21
+ 657              	.LVL64:
+ 131:../Motor_Control/src/motor_control.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
+ 658              		.loc 1 131 3 is_stmt 1 view .LVU150
+ 659 0010 0022     		movs	r2, #0
+ 660 0012 0221     		movs	r1, #2
+ 661 0014 2846     		mov	r0, r5
+ 662 0016 FFF7FEFF 		bl	tmr_channel_value_set
+ 663              	.LVL65:
+ 132:../Motor_Control/src/motor_control.c ****   
+ 664              		.loc 1 132 3 view .LVU151
+ 665 001a 0022     		movs	r2, #0
+ 666 001c 0421     		movs	r1, #4
+ 667 001e 2846     		mov	r0, r5
+ 668 0020 FFF7FEFF 		bl	tmr_channel_value_set
+ 669              	.LVL66:
+ 135:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+ 670              		.loc 1 135 3 view .LVU152
+ 135:../Motor_Control/src/motor_control.c ****   motor->speed = 0;
+ 671              		.loc 1 135 16 is_stmt 0 view .LVU153
+ 672 0024 0023     		movs	r3, #0
+ 673 0026 2370     		strb	r3, [r4]
+ 136:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
+ 674              		.loc 1 136 3 is_stmt 1 view .LVU154
+ 136:../Motor_Control/src/motor_control.c ****   motor->duty_cycle = 0;
+ 675              		.loc 1 136 16 is_stmt 0 view .LVU155
+ 676 0028 A380     		strh	r3, [r4, #4]	@ movhi
+ 137:../Motor_Control/src/motor_control.c **** }
+ 677              		.loc 1 137 3 is_stmt 1 view .LVU156
+ 137:../Motor_Control/src/motor_control.c **** }
+ 678              		.loc 1 137 21 is_stmt 0 view .LVU157
+ 679 002a E380     		strh	r3, [r4, #6]	@ movhi
+ 138:../Motor_Control/src/motor_control.c **** 
+ 680              		.loc 1 138 1 view .LVU158
+ 681 002c 38BD     		pop	{r3, r4, r5, pc}
+ 682              	.LVL67:
+ 683              	.L43:
+ 138:../Motor_Control/src/motor_control.c **** 
+ 684              		.loc 1 138 1 view .LVU159
+ 685 002e 00BF     		.align	2
+ 686              	.L42:
+ 687 0030 002C0140 		.word	1073818624
+ 688              		.cfi_endproc
+ 689              	.LFE144:
+ 691              		.section	.text.motor_set_speed,"ax",%progbits
+ 692              		.align	1
+ 693              		.global	motor_set_speed
+ 694              		.syntax unified
+ 695              		.thumb
+ 696              		.thumb_func
+ 698              	motor_set_speed:
+ 699              	.LVL68:
+ 700              	.LFB145:
+ 147:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
+ 701              		.loc 1 147 1 is_stmt 1 view -0
+ 702              		.cfi_startproc
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 21
 
 
- 718              	.LFE142:
- 720              		.text
- 721              	.Letext0:
- 722              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 723              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 724              		.file 4 "libraries/drivers/inc/at32f403a_407_tmr.h"
- 725              		.file 5 "../Motor_Control/inc/motor_params.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cckgQWYT.s 			page 22
+ 147:../Motor_Control/src/motor_control.c ****   motor->speed = speed;
+ 705              		.loc 1 147 1 is_stmt 0 view .LVU161
+ 706 0000 10B5     		push	{r4, lr}
+ 707              	.LCFI6:
+ 708              		.cfi_def_cfa_offset 8
+ 709              		.cfi_offset 4, -8
+ 710              		.cfi_offset 14, -4
+ 711 0002 0446     		mov	r4, r0
+ 712 0004 0846     		mov	r0, r1
+ 713              	.LVL69:
+ 148:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 714              		.loc 1 148 3 is_stmt 1 view .LVU162
+ 148:../Motor_Control/src/motor_control.c ****   motor->commutation_interval = calculate_commutation_interval(speed);
+ 715              		.loc 1 148 16 is_stmt 0 view .LVU163
+ 716 0006 A180     		strh	r1, [r4, #4]	@ movhi
+ 149:../Motor_Control/src/motor_control.c **** }
+ 717              		.loc 1 149 3 is_stmt 1 view .LVU164
+ 149:../Motor_Control/src/motor_control.c **** }
+ 718              		.loc 1 149 33 is_stmt 0 view .LVU165
+ 719 0008 FFF7FEFF 		bl	calculate_commutation_interval
+ 720              	.LVL70:
+ 149:../Motor_Control/src/motor_control.c **** }
+ 721              		.loc 1 149 31 discriminator 1 view .LVU166
+ 722 000c A060     		str	r0, [r4, #8]
+ 150:../Motor_Control/src/motor_control.c **** 
+ 723              		.loc 1 150 1 view .LVU167
+ 724 000e 10BD     		pop	{r4, pc}
+ 150:../Motor_Control/src/motor_control.c **** 
+ 725              		.loc 1 150 1 view .LVU168
+ 726              		.cfi_endproc
+ 727              	.LFE145:
+ 729              		.section	.text.motor_set_duty_cycle,"ax",%progbits
+ 730              		.align	1
+ 731              		.global	motor_set_duty_cycle
+ 732              		.syntax unified
+ 733              		.thumb
+ 734              		.thumb_func
+ 736              	motor_set_duty_cycle:
+ 737              	.LVL71:
+ 738              	.LFB146:
+ 159:../Motor_Control/src/motor_control.c ****   /* limit duty cycle */
+ 739              		.loc 1 159 1 is_stmt 1 view -0
+ 740              		.cfi_startproc
+ 741              		@ args = 0, pretend = 0, frame = 0
+ 742              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159:../Motor_Control/src/motor_control.c ****   /* limit duty cycle */
+ 743              		.loc 1 159 1 is_stmt 0 view .LVU170
+ 744 0000 08B5     		push	{r3, lr}
+ 745              	.LCFI7:
+ 746              		.cfi_def_cfa_offset 8
+ 747              		.cfi_offset 3, -8
+ 748              		.cfi_offset 14, -4
+ 161:../Motor_Control/src/motor_control.c ****   {
+ 749              		.loc 1 161 3 is_stmt 1 view .LVU171
+ 161:../Motor_Control/src/motor_control.c ****   {
+ 750              		.loc 1 161 6 is_stmt 0 view .LVU172
+ 751 0002 B1F5AF6F 		cmp	r1, #1400
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 22
+
+
+ 752 0006 03D8     		bhi	.L48
+ 165:../Motor_Control/src/motor_control.c ****   {
+ 753              		.loc 1 165 8 is_stmt 1 view .LVU173
+ 165:../Motor_Control/src/motor_control.c ****   {
+ 754              		.loc 1 165 11 is_stmt 0 view .LVU174
+ 755 0008 6329     		cmp	r1, #99
+ 756 000a 03D8     		bhi	.L47
+ 167:../Motor_Control/src/motor_control.c ****   }
+ 757              		.loc 1 167 16 view .LVU175
+ 758 000c 6421     		movs	r1, #100
+ 759              	.LVL72:
+ 167:../Motor_Control/src/motor_control.c ****   }
+ 760              		.loc 1 167 16 view .LVU176
+ 761 000e 01E0     		b	.L47
+ 762              	.LVL73:
+ 763              	.L48:
+ 163:../Motor_Control/src/motor_control.c ****   }
+ 764              		.loc 1 163 16 view .LVU177
+ 765 0010 4FF4AF61 		mov	r1, #1400
+ 766              	.LVL74:
+ 767              	.L47:
+ 170:../Motor_Control/src/motor_control.c ****   
+ 768              		.loc 1 170 3 is_stmt 1 view .LVU178
+ 170:../Motor_Control/src/motor_control.c ****   
+ 769              		.loc 1 170 21 is_stmt 0 view .LVU179
+ 770 0014 C180     		strh	r1, [r0, #6]	@ movhi
+ 173:../Motor_Control/src/motor_control.c **** }
+ 771              		.loc 1 173 3 is_stmt 1 view .LVU180
+ 772 0016 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
+ 773              	.LVL75:
+ 173:../Motor_Control/src/motor_control.c **** }
+ 774              		.loc 1 173 3 is_stmt 0 view .LVU181
+ 775 0018 FFF7FEFF 		bl	motor_set_commutation_state
+ 776              	.LVL76:
+ 174:../Motor_Control/src/motor_control.c **** 
+ 777              		.loc 1 174 1 view .LVU182
+ 778 001c 08BD     		pop	{r3, pc}
+ 779              		.cfi_endproc
+ 780              	.LFE146:
+ 782              		.text
+ 783              	.Letext0:
+ 784              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 785              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 786              		.file 4 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 787              		.file 5 "../Motor_Control/inc/motor_params.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccPXIu35.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 motor_control.c
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:21     .text.calculate_commutation_interval:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:26     .text.calculate_commutation_interval:00000000 calculate_commutation_interval
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:59     .text.calculate_commutation_interval:0000002c $d
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:64     .text.motor_set_commutation_state:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:69     .text.motor_set_commutation_state:00000000 motor_set_commutation_state
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:320    .text.motor_set_commutation_state:00000168 $d
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:325    .text.motor_next_commutation_state:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:330    .text.motor_next_commutation_state:00000000 motor_next_commutation_state
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:391    .text.motor_control_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:397    .text.motor_control_init:00000000 motor_control_init
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:441    .text.motor_control_process:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:447    .text.motor_control_process:00000000 motor_control_process
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:505    .text.motor_start:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:511    .text.motor_start:00000000 motor_start
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:565    .text.motor_stop:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:571    .text.motor_stop:00000000 motor_stop
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:625    .text.motor_stop:00000030 $d
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:630    .text.motor_set_speed:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:636    .text.motor_set_speed:00000000 motor_set_speed
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:668    .text.motor_set_duty_cycle:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cckgQWYT.s:674    .text.motor_set_duty_cycle:00000000 motor_set_duty_cycle
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:21     .text.calculate_commutation_interval:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:26     .text.calculate_commutation_interval:00000000 calculate_commutation_interval
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:82     .text.calculate_commutation_interval:0000004c $d
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:87     .text.motor_set_commutation_state:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:92     .text.motor_set_commutation_state:00000000 motor_set_commutation_state
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:343    .text.motor_set_commutation_state:00000168 $d
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:348    .text.motor_next_commutation_state:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:353    .text.motor_next_commutation_state:00000000 motor_next_commutation_state
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:414    .text.motor_control_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:420    .text.motor_control_init:00000000 motor_control_init
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:498    .text.motor_control_init:00000050 $d
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:503    .text.motor_control_process:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:509    .text.motor_control_process:00000000 motor_control_process
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:567    .text.motor_start:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:573    .text.motor_start:00000000 motor_start
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:627    .text.motor_stop:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:633    .text.motor_stop:00000000 motor_stop
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:687    .text.motor_stop:00000030 $d
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:692    .text.motor_set_speed:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:698    .text.motor_set_speed:00000000 motor_set_speed
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:730    .text.motor_set_duty_cycle:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccPXIu35.s:736    .text.motor_set_duty_cycle:00000000 motor_set_duty_cycle
 
 UNDEFINED SYMBOLS
 tmr_output_channel_mode_select

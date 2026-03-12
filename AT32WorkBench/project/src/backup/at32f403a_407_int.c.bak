@@ -201,7 +201,9 @@ void SysTick_Handler(void)
 #endif /* INCLUDE_xTaskGetSchedulerState */
 
   /* add user code begin SysTick_IRQ 1 */
-
+  /* call timebase handler */
+  extern void wk_timebase_handler(void);
+  wk_timebase_handler();
   /* add user code end SysTick_IRQ 1 */
 }
 

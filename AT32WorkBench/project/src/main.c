@@ -119,7 +119,7 @@ int main(void)
      and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL1, 
                         (uint32_t)&ADC1->odt, 
-                        (uint32_t)adc_data_buffer, 
+                        (uint32_t)&adc_data_buffer, 
                         DMA1_CHANNEL1_BUFFER_SIZE);
   dma_channel_enable(DMA1_CHANNEL1, TRUE);
 

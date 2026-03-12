@@ -12,8 +12,15 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
+#include "motor_control.h"
 
 /* add user code end private includes */
+
+/* add user code begin private variables */
+/* extern motor parameters structure */
+extern motor_params_t motor;
+
+/* add user code end private variables */
 
 /* private typedef -----------------------------------------------------------*/
 /* add user code begin private typedef */
@@ -46,7 +53,10 @@
 /* add user code end 0 */
 
 /* task handler */
-TaskHandle_t my_task01_handle;
+TaskHandle_t MC_Task_handle;
+TaskHandle_t Monitor_Task_handle;
+TaskHandle_t Community_Task_handle;
+TaskHandle_t Debug_Task_handle;
 
 /* Idle task control block and stack */
 static StackType_t idle_task_stack[configMINIMAL_STACK_SIZE];
@@ -91,13 +101,37 @@ void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, Stac
   */
 void freertos_task_create(void)
 {
-  /* create my_task01 task */
-  xTaskCreate(my_task01_func,
-              "my_task01",
-              128,
+  /* create MC_Task task */
+  xTaskCreate(MC_Task_Func,
+              "MC_Task",
+              512,
               NULL,
               0,
-              &my_task01_handle);
+              &MC_Task_handle);
+
+  /* create Monitor_Task task */
+  xTaskCreate(Monitor_Task_Func,
+              "Monitor_Task",
+              512,
+              NULL,
+              0,
+              &Monitor_Task_handle);
+
+  /* create Community_Task task */
+  xTaskCreate(Community_Task_Func,
+              "Community_Task",
+              512,
+              NULL,
+              0,
+              &Community_Task_handle);
+
+  /* create Debug_Task task */
+  xTaskCreate(Debug_Task_Func,
+              "Debug_Task",
+              512,
+              NULL,
+              0,
+              &Debug_Task_handle);
 }
 
 /**
@@ -128,32 +162,134 @@ void wk_freertos_init(void)
 }
 
 /**
-  * @brief my_task01 function.
+  * @brief MC_Task function.
   * @param  none
   * @retval none
   */
-void my_task01_func(void *pvParameters)
+void MC_Task_Func(void *pvParameters)
 {
-  /* add user code begin my_task01_func 0 */
+  /* add user code begin MC_Task_Func 0 */
+  /* initialize motor */
+  motor_control_init(&motor);
+  
+  /* start motor with default speed and direction */
+  motor_start(&motor, 100, MOTOR_DIR_CW);
 
-  /* add user code end my_task01_func 0 */
+  /* add user code end MC_Task_Func 0 */
 
-  /* add user code begin my_task01_func 2 */
+  /* add user code begin MC_Task_Func 2 */
 
-  /* add user code end my_task01_func 2 */
+  /* add user code end MC_Task_Func 2 */
 
   /* Infinite loop */
   while(1)
   {
     /* when use usb,the function wk_usb_app_task() will be generated,
        which is the usb application layer code that users can improve themselves */
-    wk_usb_app_task();
+    wk_usb_app_task();  
+    motor_control_process(&motor);
 
-  /* add user code begin my_task01_func 1 */
+    /* add user code begin MC_Task_Func 1 */
+  /* add user code begin MC_Task_Func 1 */
 
     vTaskDelay(1);
 
-  /* add user code end my_task01_func 1 */
+  /* add user code end MC_Task_Func 1 */
+  }
+}
+
+
+/**
+  * @brief Monitor_Task function.
+  * @param  none
+  * @retval none
+  */
+void Monitor_Task_Func(void *pvParameters)
+{
+  /* add user code begin Monitor_Task_Func 0 */
+  motor_monitor_data_t monitor_data;
+
+  /* add user code end Monitor_Task_Func 0 */
+
+  /* add user code begin Monitor_Task_Func 2 */
+
+  /* add user code end Monitor_Task_Func 2 */
+
+  /* Infinite loop */
+  while(1)
+  {
+  /* add user code begin Monitor_Task_Func 1 */
+    /* Get monitoring data */
+    motor_monitor_get_data(&motor, &monitor_data);
+    
+    /* Add monitoring logic here */
+    /* For example: check for overcurrent, overvoltage, over temperature */
+    
+    /* Print monitoring data (for debugging) */
+    // printf("Current A: %.2f A, Current B: %.2f A, Current C: %.2f A\n", 
+    //        monitor_data.phase_current[0], monitor_data.phase_current[1], monitor_data.phase_current[2]);
+    // printf("Voltage A: %.2f V, Voltage B: %.2f V, Voltage C: %.2f V\n", 
+    //        monitor_data.phase_voltage[0], monitor_data.phase_voltage[1], monitor_data.phase_voltage[2]);
+    // printf("DC Link Voltage: %.2f V, MOS Temperature: %.2f °C\n", 
+    //        monitor_data.dc_link_voltage, monitor_data.mos_temperature);
+
+    vTaskDelay(100); /* 100ms delay for monitoring */
+
+  /* add user code end Monitor_Task_Func 1 */
+  }
+}
+
+
+/**
+  * @brief Community_Task function.
+  * @param  none
+  * @retval none
+  */
+void Community_Task_Func(void *pvParameters)
+{
+  /* add user code begin Community_Task_Func 0 */
+
+  /* add user code end Community_Task_Func 0 */
+
+  /* add user code begin Community_Task_Func 2 */
+
+  /* add user code end Community_Task_Func 2 */
+
+  /* Infinite loop */
+  while(1)
+  {
+  /* add user code begin Community_Task_Func 1 */
+
+    vTaskDelay(1);
+
+  /* add user code end Community_Task_Func 1 */
+  }
+}
+
+
+/**
+  * @brief Debug_Task function.
+  * @param  none
+  * @retval none
+  */
+void Debug_Task_Func(void *pvParameters)
+{
+  /* add user code begin Debug_Task_Func 0 */
+
+  /* add user code end Debug_Task_Func 0 */
+
+  /* add user code begin Debug_Task_Func 2 */
+
+  /* add user code end Debug_Task_Func 2 */
+
+  /* Infinite loop */
+  while(1)
+  {
+  /* add user code begin Debug_Task_Func 1 */
+
+    vTaskDelay(1);
+
+  /* add user code end Debug_Task_Func 1 */
   }
 }
 

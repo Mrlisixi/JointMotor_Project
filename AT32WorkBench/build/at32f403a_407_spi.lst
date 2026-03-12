@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
   27:libraries/drivers/src/at32f403a_407_spi.c **** 
   28:libraries/drivers/src/at32f403a_407_spi.c **** /** @addtogroup AT32F403A_407_periph_driver
   29:libraries/drivers/src/at32f403a_407_spi.c ****   * @{
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 2
 
 
   30:libraries/drivers/src/at32f403a_407_spi.c ****   */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
   51              		.loc 1 62 10 is_stmt 0 view .LVU7
   52 000e 194B     		ldr	r3, .L11+8
   53 0010 9842     		cmp	r0, r3
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 3
 
 
   54 0012 17D0     		beq	.L9
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
   92 0042 EAE7     		b	.L1
   93              	.LVL10:
   94              	.L9:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 4
 
 
   64:libraries/drivers/src/at32f403a_407_spi.c ****     crm_periph_reset(CRM_SPI3_PERIPH_RESET, FALSE);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
   73:libraries/drivers/src/at32f403a_407_spi.c **** 
   74:libraries/drivers/src/at32f403a_407_spi.c **** /**
   75:libraries/drivers/src/at32f403a_407_spi.c ****   * @brief  spi init config with its default value.
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 5
 
 
   76:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  spi_init_struct : pointer to a spi_init_type structure which will
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  185              		.thumb
  186              		.thumb_func
  188              	spi_init:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 6
 
 
  189              	.LVL19:
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  111:libraries/drivers/src/at32f403a_407_spi.c ****   }
  112:libraries/drivers/src/at32f403a_407_spi.c ****   else if(spi_init_struct->transmission_mode == SPI_TRANSMIT_HALF_DUPLEX_RX)
  113:libraries/drivers/src/at32f403a_407_spi.c ****   {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 7
 
 
  114:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->ctrl1_bit.slben = TRUE;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  255 004c 52D9     		bls	.L21
  136:libraries/drivers/src/at32f403a_407_spi.c ****   {
  137:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->ctrl2_bit.mdiv_h = 1;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 8
 
 
  256              		.loc 1 137 5 is_stmt 1 view .LVU68
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  298 0088 7047     		bx	lr
  299              	.L15:
  106:libraries/drivers/src/at32f403a_407_spi.c ****   {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 9
 
 
  300              		.loc 1 106 8 is_stmt 1 view .LVU86
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  110:libraries/drivers/src/at32f403a_407_spi.c ****   }
  339              		.loc 1 110 5 is_stmt 1 view .LVU102
  110:libraries/drivers/src/at32f403a_407_spi.c ****   }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 10
 
 
  340              		.loc 1 110 26 is_stmt 0 view .LVU103
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  143:libraries/drivers/src/at32f403a_407_spi.c ****   }
  381              		.loc 1 143 46 is_stmt 0 view .LVU117
  382 00fc 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 11
 
 
  143:libraries/drivers/src/at32f403a_407_spi.c ****   }
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  164:libraries/drivers/src/at32f403a_407_spi.c ****   * @brief  set the crc polynomial value for the spi peripheral.
  165:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  spi_x: select the spi peripheral.
  166:libraries/drivers/src/at32f403a_407_spi.c ****   *         this parameter can be one of the following values:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 12
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 12
 
 
  167:libraries/drivers/src/at32f403a_407_spi.c ****   *         SPI1, SPI2, SPI3 ,SPI4
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  462              		.loc 1 186 1 view .LVU131
  463 0002 80B2     		uxth	r0, r0
  464 0004 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 13
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 13
 
 
  465              		.cfi_endproc
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  207:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  crc_direction: select transmit or receive crc value to be read
  208:libraries/drivers/src/at32f403a_407_spi.c ****   *         - SPI_CRC_RX
  209:libraries/drivers/src/at32f403a_407_spi.c ****   *         - SPI_CRC_TX
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 14
 
 
  210:libraries/drivers/src/at32f403a_407_spi.c ****   * @retval the select crc register value
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  224:libraries/drivers/src/at32f403a_407_spi.c ****   *         SPI1, SPI2, SPI3 ,SPI4
  225:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  new_state: new state of spi master cs output.
  226:libraries/drivers/src/at32f403a_407_spi.c ****   *         this parameter can be: TRUE or FALSE.
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 15
 
 
  227:libraries/drivers/src/at32f403a_407_spi.c ****   *         note:the bit only use in spi master mode
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  574 0000 0368     		ldr	r3, [r0]
  575 0002 61F30823 		bfi	r3, r1, #8, #1
  576 0006 0360     		str	r3, [r0]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 16
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 16
 
 
  251:libraries/drivers/src/at32f403a_407_spi.c **** }
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  269:libraries/drivers/src/at32f403a_407_spi.c ****   * @brief  set the data transmission direction in single line bidirectiona half duplex mode of the
  270:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  spi_x: select the spi peripheral.
  271:libraries/drivers/src/at32f403a_407_spi.c ****   *         this parameter can be one of the following values:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 17
 
 
  272:libraries/drivers/src/at32f403a_407_spi.c ****   *         SPI1, SPI2, SPI3 ,SPI4
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  649 0000 0368     		ldr	r3, [r0]
  650 0002 61F38613 		bfi	r3, r1, #6, #1
  651 0006 0360     		str	r3, [r0]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 18
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 18
 
 
  296:libraries/drivers/src/at32f403a_407_spi.c **** }
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  692 0010 8372     		strb	r3, [r0, #10]
  312:libraries/drivers/src/at32f403a_407_spi.c **** }
  693              		.loc 1 312 1 view .LVU179
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 19
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 19
 
 
  694 0012 7047     		bx	lr
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  735 000e 0023     		movs	r3, #0
  736              	.LVL38:
  737              	.L41:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 20
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 20
 
 
  327:libraries/drivers/src/at32f403a_407_spi.c ****   {
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  752 001e C2EBD302 		rsb	r2, r2, r3, lsr #3
  753              		.loc 1 366 16 view .LVU196
  754 0022 5308     		lsrs	r3, r2, #1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 21
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 21
 
 
  755              	.LVL42:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  789              		.loc 1 385 21 is_stmt 0 view .LVU211
  790 004a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
  791              		.loc 1 385 5 view .LVU212
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 22
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 22
 
 
  792 004c 042B     		cmp	r3, #4
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  333:libraries/drivers/src/at32f403a_407_spi.c ****     i2s_sclk_index = clocks_freq.sclk_freq;
  823              		.loc 1 333 5 is_stmt 1 view .LVU225
  824 0078 01A8     		add	r0, sp, #4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 23
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 23
 
 
  825              	.LVL46:
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  862 009e 6A68     		ldr	r2, [r5, #4]
  360:libraries/drivers/src/at32f403a_407_spi.c ****       }
  863              		.loc 1 360 59 view .LVU243
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 24
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 24
 
 
  864 00a0 B3FBF2F3 		udiv	r3, r3, r2
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  902              		.loc 1 339 9 is_stmt 1 view .LVU259
  339:libraries/drivers/src/at32f403a_407_spi.c ****       }
  903              		.loc 1 339 45 is_stmt 0 view .LVU260
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 25
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 25
 
 
  904 00c6 DB09     		lsrs	r3, r3, #7
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  943 00ec 03EB8303 		add	r3, r3, r3, lsl #2
  944 00f0 5B00     		lsls	r3, r3, #1
  353:libraries/drivers/src/at32f403a_407_spi.c ****       }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 26
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 26
 
 
  945              		.loc 1 353 75 view .LVU276
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  375:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->i2sclk_bit.i2sdiv_l = i2sdiv_index & 0x00FF;
  984              		.loc 1 375 54 is_stmt 0 view .LVU292
  985 011a C2F34122 		ubfx	r2, r2, #9, #2
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 27
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 27
 
 
  375:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->i2sclk_bit.i2sdiv_l = i2sdiv_index & 0x00FF;
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  419:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->i2sctrl_bit.i2scbn = 1;
  420:libraries/drivers/src/at32f403a_407_spi.c ****     spi_x->i2sctrl_bit.i2sdbn = 0;
  421:libraries/drivers/src/at32f403a_407_spi.c ****   }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 28
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 28
 
 
  422:libraries/drivers/src/at32f403a_407_spi.c ****   else if(i2s_init_struct->data_channel_format == I2S_DATA_24BIT_CHANNEL_32BIT)
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1060              		.loc 1 398 5 is_stmt 1 view .LVU320
  398:libraries/drivers/src/at32f403a_407_spi.c ****   }
  1061              		.loc 1 398 31 is_stmt 0 view .LVU321
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 29
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 29
 
 
  1062 0182 E369     		ldr	r3, [r4, #28]
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1104 01c0 62F34923 		bfi	r3, r2, #9, #1
  1105 01c4 2362     		str	r3, [r4, #32]
  435:libraries/drivers/src/at32f403a_407_spi.c ****   spi_x->i2sctrl_bit.opersel = i2s_init_struct->operation_mode;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 30
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 30
 
 
  1106              		.loc 1 435 3 is_stmt 1 view .LVU336
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1150 01fa 62F34203 		bfi	r3, r2, #1, #2
  1151 01fe E361     		str	r3, [r4, #28]
  1152 0200 D7E7     		b	.L56
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 31
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 31
 
 
  1153              	.L75:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  454:libraries/drivers/src/at32f403a_407_spi.c ****   * @brief  enable or disable the specified spi/i2s interrupts.
  455:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  spi_x: select the spi/i2s peripheral.
  456:libraries/drivers/src/at32f403a_407_spi.c ****   *         this parameter can be one of the following values:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 32
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 32
 
 
  457:libraries/drivers/src/at32f403a_407_spi.c ****   *         SPI1, SPI2, SPI3 ,SPI4, I2S2EXT, I2S3EXT
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1230              	.LVL72:
  1231              	.LFB151:
  478:libraries/drivers/src/at32f403a_407_spi.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 33
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 33
 
 
  479:libraries/drivers/src/at32f403a_407_spi.c **** /**
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1262              		.loc 1 504 3 view .LVU369
  1263              		.loc 1 504 27 is_stmt 0 view .LVU370
  1264 0000 4368     		ldr	r3, [r0, #4]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 34
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 34
 
 
  1265 0002 61F30003 		bfi	r3, r1, #0, #1
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  523:libraries/drivers/src/at32f403a_407_spi.c ****   * @brief  spi/i2s data receive
  524:libraries/drivers/src/at32f403a_407_spi.c ****   * @param  spi_x: select the spi/i2s peripheral.
  525:libraries/drivers/src/at32f403a_407_spi.c ****   *         this parameter can be one of the following values:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 35
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 35
 
 
  526:libraries/drivers/src/at32f403a_407_spi.c ****   *         SPI1, SPI2, SPI3 ,SPI4, I2S2EXT, I2S3EXT
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1334              		@ link register save eliminated.
  553:libraries/drivers/src/at32f403a_407_spi.c ****   flag_status status = RESET;
  1335              		.loc 1 553 3 view .LVU381
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 36
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 36
 
 
  554:libraries/drivers/src/at32f403a_407_spi.c ****   if ((spi_x->sts & spi_i2s_flag) == RESET)
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  578:libraries/drivers/src/at32f403a_407_spi.c ****   * @retval the new state of spi/i2s flag
  579:libraries/drivers/src/at32f403a_407_spi.c ****   */
  580:libraries/drivers/src/at32f403a_407_spi.c **** flag_status spi_i2s_interrupt_flag_get(spi_type* spi_x, uint32_t spi_i2s_flag)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 37
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 37
 
 
  581:libraries/drivers/src/at32f403a_407_spi.c **** {
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1410 002a 2029     		cmp	r1, #32
  1411 002c 2BD0     		beq	.L94
  1412 002e 4029     		cmp	r1, #64
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 38
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 38
 
 
  1413 0030 09D1     		bne	.L109
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1434              	.LVL88:
  584:libraries/drivers/src/at32f403a_407_spi.c ****   {
  1435              		.loc 1 584 3 view .LVU411
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 39
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 39
 
 
  1436 0048 7047     		bx	lr
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1475              		.loc 1 605 7 is_stmt 1 view .LVU426
  605:libraries/drivers/src/at32f403a_407_spi.c ****       {
  1476              		.loc 1 605 24 is_stmt 0 view .LVU427
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 40
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 40
 
 
  1477 0072 8368     		ldr	r3, [r0, #8]
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1517              	.L97:
  589:libraries/drivers/src/at32f403a_407_spi.c ****       }
  1518              		.loc 1 589 16 view .LVU442
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 41
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 41
 
 
  1519 009e 0120     		movs	r0, #1
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1561 00b6 0120     		movs	r0, #1
  1562              	.LVL112:
  607:libraries/drivers/src/at32f403a_407_spi.c ****       }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 42
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 42
 
 
  1563              		.loc 1 607 16 view .LVU455
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1603              		.thumb_func
  1605              	spi_i2s_flag_clear:
  1606              	.LVL121:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 43
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 43
 
 
  1607              	.LFB157:
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  659:libraries/drivers/src/at32f403a_407_spi.c ****   else if(spi_i2s_flag == SPI_I2S_ROERR_FLAG)
  1629              		.loc 1 659 8 is_stmt 1 view .LVU475
  1630              		.loc 1 659 10 is_stmt 0 view .LVU476
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 44
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 44
 
 
  1631 0010 4029     		cmp	r1, #64
@@ -2638,66 +2638,66 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 1
  1671              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  1672              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  1673              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 45
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 45
 
 
  1674              		.file 5 "libraries/drivers/inc/at32f403a_407_crm.h"
  1675              		.file 6 "libraries/drivers/inc/at32f403a_407_spi.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccQzytmd.s 			page 46
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cccu3gYK.s 			page 46
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 at32f403a_407_spi.c
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:21     .text.spi_i2s_reset:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:27     .text.spi_i2s_reset:00000000 spi_i2s_reset
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:127    .text.spi_i2s_reset:0000006c $d
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:136    .text.spi_default_para_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:142    .text.spi_default_para_init:00000000 spi_default_para_init
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:182    .text.spi_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:188    .text.spi_init:00000000 spi_init
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:392    .text.spi_crc_next_transmit:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:398    .text.spi_crc_next_transmit:00000000 spi_crc_next_transmit
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:417    .text.spi_crc_polynomial_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:423    .text.spi_crc_polynomial_set:00000000 spi_crc_polynomial_set
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:444    .text.spi_crc_polynomial_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:450    .text.spi_crc_polynomial_get:00000000 spi_crc_polynomial_get
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:469    .text.spi_crc_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:475    .text.spi_crc_enable:00000000 spi_crc_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:494    .text.spi_crc_value_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:500    .text.spi_crc_value_get:00000000 spi_crc_value_get
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:533    .text.spi_hardware_cs_output_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:539    .text.spi_hardware_cs_output_enable:00000000 spi_hardware_cs_output_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:558    .text.spi_software_cs_internal_level_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:564    .text.spi_software_cs_internal_level_set:00000000 spi_software_cs_internal_level_set
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:583    .text.spi_frame_bit_num_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:589    .text.spi_frame_bit_num_set:00000000 spi_frame_bit_num_set
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:608    .text.spi_half_duplex_direction_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:614    .text.spi_half_duplex_direction_set:00000000 spi_half_duplex_direction_set
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:633    .text.spi_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:639    .text.spi_enable:00000000 spi_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:658    .text.i2s_default_para_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:664    .text.i2s_default_para_init:00000000 i2s_default_para_init
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:699    .text.i2s_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:705    .text.i2s_init:00000000 i2s_init
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1156   .text.i2s_init:00000204 $d
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1161   .text.i2s_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1167   .text.i2s_enable:00000000 i2s_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1186   .text.spi_i2s_interrupt_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1192   .text.spi_i2s_interrupt_enable:00000000 spi_i2s_interrupt_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1223   .text.spi_i2s_dma_transmitter_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1229   .text.spi_i2s_dma_transmitter_enable:00000000 spi_i2s_dma_transmitter_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1248   .text.spi_i2s_dma_receiver_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1254   .text.spi_i2s_dma_receiver_enable:00000000 spi_i2s_dma_receiver_enable
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1273   .text.spi_i2s_data_transmit:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1279   .text.spi_i2s_data_transmit:00000000 spi_i2s_data_transmit
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1296   .text.spi_i2s_data_receive:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1302   .text.spi_i2s_data_receive:00000000 spi_i2s_data_receive
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1321   .text.spi_i2s_flag_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1327   .text.spi_i2s_flag_get:00000000 spi_i2s_flag_get
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1359   .text.spi_i2s_interrupt_flag_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1365   .text.spi_i2s_interrupt_flag_get:00000000 spi_i2s_interrupt_flag_get
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1599   .text.spi_i2s_flag_clear:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccQzytmd.s:1605   .text.spi_i2s_flag_clear:00000000 spi_i2s_flag_clear
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:21     .text.spi_i2s_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:27     .text.spi_i2s_reset:00000000 spi_i2s_reset
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:127    .text.spi_i2s_reset:0000006c $d
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:136    .text.spi_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:142    .text.spi_default_para_init:00000000 spi_default_para_init
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:182    .text.spi_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:188    .text.spi_init:00000000 spi_init
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:392    .text.spi_crc_next_transmit:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:398    .text.spi_crc_next_transmit:00000000 spi_crc_next_transmit
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:417    .text.spi_crc_polynomial_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:423    .text.spi_crc_polynomial_set:00000000 spi_crc_polynomial_set
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:444    .text.spi_crc_polynomial_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:450    .text.spi_crc_polynomial_get:00000000 spi_crc_polynomial_get
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:469    .text.spi_crc_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:475    .text.spi_crc_enable:00000000 spi_crc_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:494    .text.spi_crc_value_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:500    .text.spi_crc_value_get:00000000 spi_crc_value_get
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:533    .text.spi_hardware_cs_output_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:539    .text.spi_hardware_cs_output_enable:00000000 spi_hardware_cs_output_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:558    .text.spi_software_cs_internal_level_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:564    .text.spi_software_cs_internal_level_set:00000000 spi_software_cs_internal_level_set
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:583    .text.spi_frame_bit_num_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:589    .text.spi_frame_bit_num_set:00000000 spi_frame_bit_num_set
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:608    .text.spi_half_duplex_direction_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:614    .text.spi_half_duplex_direction_set:00000000 spi_half_duplex_direction_set
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:633    .text.spi_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:639    .text.spi_enable:00000000 spi_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:658    .text.i2s_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:664    .text.i2s_default_para_init:00000000 i2s_default_para_init
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:699    .text.i2s_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:705    .text.i2s_init:00000000 i2s_init
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1156   .text.i2s_init:00000204 $d
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1161   .text.i2s_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1167   .text.i2s_enable:00000000 i2s_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1186   .text.spi_i2s_interrupt_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1192   .text.spi_i2s_interrupt_enable:00000000 spi_i2s_interrupt_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1223   .text.spi_i2s_dma_transmitter_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1229   .text.spi_i2s_dma_transmitter_enable:00000000 spi_i2s_dma_transmitter_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1248   .text.spi_i2s_dma_receiver_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1254   .text.spi_i2s_dma_receiver_enable:00000000 spi_i2s_dma_receiver_enable
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1273   .text.spi_i2s_data_transmit:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1279   .text.spi_i2s_data_transmit:00000000 spi_i2s_data_transmit
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1296   .text.spi_i2s_data_receive:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1302   .text.spi_i2s_data_receive:00000000 spi_i2s_data_receive
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1321   .text.spi_i2s_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1327   .text.spi_i2s_flag_get:00000000 spi_i2s_flag_get
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1359   .text.spi_i2s_interrupt_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1365   .text.spi_i2s_interrupt_flag_get:00000000 spi_i2s_interrupt_flag_get
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1599   .text.spi_i2s_flag_clear:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cccu3gYK.s:1605   .text.spi_i2s_flag_clear:00000000 spi_i2s_flag_clear
 
 UNDEFINED SYMBOLS
 crm_periph_reset

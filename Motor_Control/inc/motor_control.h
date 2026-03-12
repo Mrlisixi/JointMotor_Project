@@ -38,5 +38,8 @@ void motor_stop(motor_params_t *motor);
 void motor_set_speed(motor_params_t *motor, uint16_t speed);
 void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle);
 
+/* monitoring functions -------------------------------------------------------*/
+/* Moved to Monitor module */
+
 
 #endif /* MOTOR_CONTROL_H */

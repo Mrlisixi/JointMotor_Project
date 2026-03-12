@@ -22,8 +22,18 @@ build/motor_control.o: ../Motor_Control/src/motor_control.c \
  libraries/drivers/inc/at32f403a_407_pwc.h \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
- libraries/drivers/inc/at32f403a_407_usb.h project/inc/wk_tmr.h \
- project/inc/at32f403a_407_wk_config.h project/inc/wk_system.h
+ libraries/drivers/inc/at32f403a_407_usb.h ../Monitor/inc/monitor.h \
+ project/inc/wk_tmr.h project/inc/at32f403a_407_wk_config.h \
+ project/inc/wk_system.h middlewares/freertos/source/include/FreeRTOS.h \
+ project/inc/FreeRTOSConfig.h \
+ libraries/cmsis/cm4/device_support/system_at32f403a_407.h \
+ middlewares/freertos/source/include/projdefs.h \
+ middlewares/freertos/source/include/portable.h \
+ middlewares/freertos/source/include/deprecated_definitions.h \
+ middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h \
+ middlewares/freertos/source/include/mpu_wrappers.h \
+ middlewares/freertos/source/include/task.h \
+ middlewares/freertos/source/include/list.h
 ../Motor_Control/inc/motor_control.h:
 ../Motor_Control/inc/motor_params.h:
 libraries/cmsis/cm4/device_support/at32f403a_407.h:
@@ -49,6 +59,17 @@ libraries/drivers/inc/at32f403a_407_pwc.h:
 libraries/drivers/inc/at32f403a_407_spi.h:
 libraries/drivers/inc/at32f403a_407_tmr.h:
 libraries/drivers/inc/at32f403a_407_usb.h:
+../Monitor/inc/monitor.h:
 project/inc/wk_tmr.h:
 project/inc/at32f403a_407_wk_config.h:
 project/inc/wk_system.h:
+middlewares/freertos/source/include/FreeRTOS.h:
+project/inc/FreeRTOSConfig.h:
+libraries/cmsis/cm4/device_support/system_at32f403a_407.h:
+middlewares/freertos/source/include/projdefs.h:
+middlewares/freertos/source/include/portable.h:
+middlewares/freertos/source/include/deprecated_definitions.h:
+middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h:
+middlewares/freertos/source/include/mpu_wrappers.h:
+middlewares/freertos/source/include/task.h:
+middlewares/freertos/source/include/list.h:

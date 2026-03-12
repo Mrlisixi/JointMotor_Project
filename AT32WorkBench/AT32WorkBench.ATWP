@@ -24,13 +24,13 @@
         <Parameters>
             <ParametersSub name="OrdinaryTriggerSource" value="ADC12_ORDINARY_TRIG_SOFTWARE"/>
             <ParametersSub name="NbrOfOrdinarySequence" value="5"/>
-            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_0"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_1" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_1"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_2" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_2"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_3" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_3"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_4" value="1.429"/>
             <ParametersSub name="Channel_OrdinarySequence_5" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_5" value="1.429"/>

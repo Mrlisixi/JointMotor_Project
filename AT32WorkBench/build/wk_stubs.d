@@ -1,4 +1,4 @@
-build/wk_stubs.o: ../Motor_Control/src/wk_stubs.c \
+build/wk_stubs.o: ../USB_Debug/src/wk_stubs.c \
  libraries/cmsis/cm4/device_support/at32f403a_407.h \
  libraries/cmsis/cm4/core_support/core_cm4.h \
  libraries/cmsis/cm4/core_support/cmsis_version.h \

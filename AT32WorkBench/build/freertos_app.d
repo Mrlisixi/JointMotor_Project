@@ -40,7 +40,8 @@ build/freertos_app.o: project/src/freertos_app.c \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
  libraries/drivers/inc/at32f403a_407_usb.h project/inc/usb_app.h \
- ../Motor_Control/inc/motor_control.h ../Motor_Control/inc/motor_params.h
+ ../Motor_Control/inc/motor_control.h ../Motor_Control/inc/motor_params.h \
+ ../USB_Debug/inc/usb_printf.h ../Monitor/inc/monitor.h
 project/inc/freertos_app.h:
 middlewares/freertos/source/include/FreeRTOS.h:
 project/inc/FreeRTOSConfig.h:
@@ -86,3 +87,5 @@ libraries/drivers/inc/at32f403a_407_usb.h:
 project/inc/usb_app.h:
 ../Motor_Control/inc/motor_control.h:
 ../Motor_Control/inc/motor_params.h:
+../USB_Debug/inc/usb_printf.h:
+../Monitor/inc/monitor.h:

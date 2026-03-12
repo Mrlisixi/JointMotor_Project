@@ -26,11 +26,18 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "motor_control.h"
+#include "monitor.h"
 #include "wk_tmr.h"
 #include "wk_system.h"
+#include "FreeRTOS.h"
+#include "task.h"
+
+
 
 /* forward declaration */
 uint32_t wk_timebase_get(void);
+
+/* external variables --------------------------------------------------------*/
 
 /* private variables ---------------------------------------------------------*/
 
@@ -297,3 +304,6 @@ static uint32_t calculate_commutation_interval(uint16_t speed)
   
   return (uint32_t)interval;
 }
+
+/* monitoring functions -------------------------------------------------------*/
+/* Moved to Monitor module */

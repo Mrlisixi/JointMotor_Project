@@ -67,7 +67,9 @@ AT32WorkBench/libraries/drivers/src/at32f403a_407_acc.c \
 AT32WorkBench/libraries/drivers/src/at32f403a_407_can.c \
 AT32WorkBench/libraries/drivers/src/at32f403a_407_debug.c \
 Motor_Control/src/motor_control.c \
-Motor_Control/src/wk_stubs.c \
+USB_Debug/src/wk_stubs.c \
+USB_Debug/src/usb_printf.c \
+Monitor/src/monitor.c \
 AT32WorkBench/middlewares/usbd_drivers/src/usbd_core.c \
 AT32WorkBench/middlewares/usbd_drivers/src/usbd_int.c \
 AT32WorkBench/middlewares/usbd_drivers/src/usbd_sdr.c \
@@ -142,6 +144,8 @@ C_INCLUDES = \
 -IAT32WorkBench/libraries/cmsis/cm4/device_support \
 -IAT32WorkBench/middlewares/usbd_drivers/inc \
 -IMotor_Control/inc \
+-IMonitor/inc \
+-IUSB_Debug/inc \
 -IAT32WorkBench/middlewares/freertos/source/include \
 -IAT32WorkBench/middlewares/freertos/source/portable/memmang \
 -IAT32WorkBench/middlewares/freertos/source/portable/GCC/ARM_CM4F \
@@ -170,7 +174,7 @@ LDSCRIPT = AT32WorkBench/AT32F403AxG_FLASH.ld
 # libraries
 LIBS = -lc -lm -lnosys 
 LIBDIR = 
-LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
+LDFLAGS = $(MCU) -specs=nano.specs -u _printf_float -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin

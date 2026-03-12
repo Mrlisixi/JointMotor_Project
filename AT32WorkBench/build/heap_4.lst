@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
   29:middlewares/freertos/source/portable/memmang/heap_4.c ****  * (coalescences) adjacent memory blocks as they are freed, and in so doing
   30:middlewares/freertos/source/portable/memmang/heap_4.c ****  * limits memory fragmentation.
   31:middlewares/freertos/source/portable/memmang/heap_4.c ****  *
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 2
 
 
   32:middlewares/freertos/source/portable/memmang/heap_4.c ****  * See heap_1.c, heap_2.c and heap_3.c for alternative implementations, and the
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
   86:middlewares/freertos/source/portable/memmang/heap_4.c ****  * Called automatically to setup the required heap structures the first time
   87:middlewares/freertos/source/portable/memmang/heap_4.c ****  * pvPortMalloc() is called.
   88:middlewares/freertos/source/portable/memmang/heap_4.c ****  */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 3
 
 
   89:middlewares/freertos/source/portable/memmang/heap_4.c **** static void prvHeapInit( void ) PRIVILEGED_FUNCTION;
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  143:middlewares/freertos/source/portable/memmang/heap_4.c ****             {
  144:middlewares/freertos/source/portable/memmang/heap_4.c ****                 xWantedSize += xHeapStructSize;
  145:middlewares/freertos/source/portable/memmang/heap_4.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 4
 
 
  146:middlewares/freertos/source/portable/memmang/heap_4.c ****                 /* Ensure that blocks are always aligned. */
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  200:middlewares/freertos/source/portable/memmang/heap_4.c ****                         /* This block is to be split into two.  Create a new
  201:middlewares/freertos/source/portable/memmang/heap_4.c ****                          * block following the number of bytes requested. The void
  202:middlewares/freertos/source/portable/memmang/heap_4.c ****                          * cast is used to prevent byte alignment warnings from the
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 5
 
 
  203:middlewares/freertos/source/portable/memmang/heap_4.c ****                          * compiler. */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  257:middlewares/freertos/source/portable/memmang/heap_4.c ****         {
  258:middlewares/freertos/source/portable/memmang/heap_4.c ****             if( pvReturn == NULL )
  259:middlewares/freertos/source/portable/memmang/heap_4.c ****             {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 6
 
 
  260:middlewares/freertos/source/portable/memmang/heap_4.c ****                 extern void vApplicationMallocFailedHook( void );
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  314:middlewares/freertos/source/portable/memmang/heap_4.c ****             }
  315:middlewares/freertos/source/portable/memmang/heap_4.c ****         }
  316:middlewares/freertos/source/portable/memmang/heap_4.c ****         else
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 7
 
 
  317:middlewares/freertos/source/portable/memmang/heap_4.c ****         {
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  353:middlewares/freertos/source/portable/memmang/heap_4.c ****     {
  354:middlewares/freertos/source/portable/memmang/heap_4.c ****         uxAddress += ( portBYTE_ALIGNMENT - 1 );
   46              		.loc 1 354 9 is_stmt 1 view .LVU9
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 8
 
 
   47              		.loc 1 354 19 is_stmt 0 view .LVU10
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  371:middlewares/freertos/source/portable/memmang/heap_4.c ****     pxEnd = ( void * ) uxAddress;
   84              		.loc 1 371 5 is_stmt 1 view .LVU27
   85              		.loc 1 371 11 is_stmt 0 view .LVU28
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 9
 
 
   86 0026 0B48     		ldr	r0, .L4+8
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  124              	.L3:
  347:middlewares/freertos/source/portable/memmang/heap_4.c **** 
  125              		.loc 1 347 12 view .LVU48
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 10
 
 
  126 0046 4FF42053 		mov	r3, #10240
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  401:middlewares/freertos/source/portable/memmang/heap_4.c **** 
  402:middlewares/freertos/source/portable/memmang/heap_4.c ****     /* Do the block being inserted, and the block it is being inserted after
  403:middlewares/freertos/source/portable/memmang/heap_4.c ****      * make a contiguous block of memory? */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 11
 
 
  404:middlewares/freertos/source/portable/memmang/heap_4.c ****     puc = ( uint8_t * ) pxIterator;
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  191              		.loc 1 435 9 is_stmt 1 view .LVU68
  192              		.loc 1 435 42 is_stmt 0 view .LVU69
  193 001e 0360     		str	r3, [r0]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 12
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 12
 
 
  194              	.L11:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  422:middlewares/freertos/source/portable/memmang/heap_4.c ****         {
  226              		.loc 1 422 11 view .LVU83
  227 003a 6345     		cmp	r3, ip
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 13
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 13
 
 
  228 003c 06D0     		beq	.L10
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  273              		.cfi_def_cfa_offset 16
  274              		.cfi_offset 3, -16
  275              		.cfi_offset 4, -12
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 14
 
 
  276              		.cfi_offset 5, -8
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  313 0026 05D0     		beq	.L20
  150:middlewares/freertos/source/portable/memmang/heap_4.c ****                             > xWantedSize )
  314              		.loc 1 150 21 is_stmt 1 view .LVU112
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 15
 
 
  150:middlewares/freertos/source/portable/memmang/heap_4.c ****                             > xWantedSize )
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  355              	.LVL32:
  181:middlewares/freertos/source/portable/memmang/heap_4.c ****                 }
  356              		.loc 1 181 29 view .LVU127
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 16
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 16
 
 
  357 004e 1C46     		mov	r4, r3
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  394 006e 9B1A     		subs	r3, r3, r2
  198:middlewares/freertos/source/portable/memmang/heap_4.c ****                     {
  395              		.loc 1 198 23 view .LVU145
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 17
 
 
  396 0070 102B     		cmp	r3, #16
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
   38:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****  *
   39:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****  * The settings in this file configure FreeRTOS correctly for the
   40:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****  * given hardware and compiler.
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 18
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 18
 
 
   41:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****  *
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
   95:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
   96:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** 
   97:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** /* Critical section management. */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 19
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 19
 
 
   98:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****     extern void vPortEnterCritical( void );
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  152:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** 
  153:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****     #endif /* configUSE_PORT_OPTIMISED_TASK_SELECTION */
  154:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 20
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 20
 
 
  155:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h **** /*-----------------------------------------------------------*/
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  420              	@ 0 "" 2
  421              		.thumb
  422              		.syntax unified
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 21
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 21
 
 
  423              	.L25:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  228:middlewares/freertos/source/portable/memmang/heap_4.c ****                     }
  461              		.loc 1 228 49 is_stmt 1 view .LVU169
  233:middlewares/freertos/source/portable/memmang/heap_4.c ****                     pxBlock->pxNextFreeBlock = NULL;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 22
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 22
 
 
  462              		.loc 1 233 21 view .LVU170
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  502              		.loc 2 195 9 view .LVU184
  503              		.loc 2 197 9 view .LVU185
  504              		.syntax unified
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 23
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 23
 
 
  505              	@ 197 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h" 1
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  552 010c 00000000 		.word	xNumberOfSuccessfulAllocations
  553              		.cfi_endproc
  554              	.LFE4:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 24
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 24
 
 
  556              		.section	.text.vPortFree,"ax",%progbits
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  599              		.loc 1 290 9 is_stmt 1 discriminator 1 view .LVU204
  600              	.LBB16:
  601              	.LBI16:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 25
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 25
 
 
  193:middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h ****     {
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  647 0042 FEE7     		b	.L45
  648              	.L44:
  291:middlewares/freertos/source/portable/memmang/heap_4.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 26
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 26
 
 
  649              		.loc 1 291 56 view .LVU216
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  687              	.LCFI2:
  688              		.cfi_def_cfa_offset 0
  689              		.cfi_restore 3
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 27
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 27
 
 
  690              		.cfi_restore 4
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  743              		@ link register save eliminated.
  332:middlewares/freertos/source/portable/memmang/heap_4.c **** }
  744              		.loc 1 332 5 view .LVU238
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 28
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 28
 
 
  333:middlewares/freertos/source/portable/memmang/heap_4.c **** /*-----------------------------------------------------------*/
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  796              		.cfi_offset 6, -12
  797              		.cfi_offset 7, -8
  798              		.cfi_offset 14, -4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 29
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 29
 
 
  799 0002 0746     		mov	r7, r0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  482:middlewares/freertos/source/portable/memmang/heap_4.c ****                 /* Move to the next block in the chain until the last block is
  483:middlewares/freertos/source/portable/memmang/heap_4.c ****                  * reached. */
  484:middlewares/freertos/source/portable/memmang/heap_4.c ****                 pxBlock = pxBlock->pxNextFreeBlock;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 30
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 30
 
 
  823              		.loc 1 484 17 is_stmt 1 view .LVU254
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  863 0038 1D46     		mov	r5, r3
  456:middlewares/freertos/source/portable/memmang/heap_4.c **** 
  864              		.loc 1 456 12 view .LVU270
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 31
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 31
 
 
  865 003a 1C46     		mov	r4, r3
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  501:middlewares/freertos/source/portable/memmang/heap_4.c ****     taskEXIT_CRITICAL();
  904              		.loc 1 501 5 is_stmt 1 view .LVU288
  905 0062 FFF7FEFF 		bl	vPortExitCritical
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 32
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 32
 
 
  906              	.LVL65:
@@ -1918,57 +1918,57 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 1
  971              		.text
  972              	.Letext0:
  973              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/lib/gcc/arm-none-ea
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 33
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 33
 
 
  974              		.file 4 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  975              		.file 5 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  976              		.file 6 "middlewares/freertos/source/include/portable.h"
  977              		.file 7 "middlewares/freertos/source/include/task.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUl02za.s 			page 34
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s 			page 34
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 heap_4.c
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:21     .text.prvHeapInit:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:26     .text.prvHeapInit:00000000 prvHeapInit
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:131    .text.prvHeapInit:0000004c $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:969    .bss.ucHeap:00000000 ucHeap
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:963    .bss.xStart:00000000 xStart
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:957    .bss.pxEnd:00000000 pxEnd
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:945    .bss.xMinimumEverFreeBytesRemaining:00000000 xMinimumEverFreeBytesRemaining
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:951    .bss.xFreeBytesRemaining:00000000 xFreeBytesRemaining
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:927    .bss.xBlockAllocatedBit:00000000 xBlockAllocatedBit
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:141    .text.prvInsertBlockIntoFreeList:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:146    .text.prvInsertBlockIntoFreeList:00000000 prvInsertBlockIntoFreeList
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:251    .text.prvInsertBlockIntoFreeList:00000054 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:257    .text.pvPortMalloc:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:263    .text.pvPortMalloc:00000000 pvPortMalloc
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:547    .text.pvPortMalloc:000000f8 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:939    .bss.xNumberOfSuccessfulAllocations:00000000 xNumberOfSuccessfulAllocations
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:557    .text.vPortFree:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:563    .text.vPortFree:00000000 vPortFree
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:698    .text.vPortFree:00000074 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:933    .bss.xNumberOfSuccessfulFrees:00000000 xNumberOfSuccessfulFrees
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:705    .text.xPortGetFreeHeapSize:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:711    .text.xPortGetFreeHeapSize:00000000 xPortGetFreeHeapSize
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:726    .text.xPortGetFreeHeapSize:00000008 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:731    .text.xPortGetMinimumEverFreeHeapSize:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:737    .text.xPortGetMinimumEverFreeHeapSize:00000000 xPortGetMinimumEverFreeHeapSize
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:752    .text.xPortGetMinimumEverFreeHeapSize:00000008 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:757    .text.vPortInitialiseBlocks:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:763    .text.vPortInitialiseBlocks:00000000 vPortInitialiseBlocks
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:776    .text.vPortGetHeapStats:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:782    .text.vPortGetHeapStats:00000000 vPortGetHeapStats
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:914    .text.vPortGetHeapStats:00000068 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:924    .bss.xBlockAllocatedBit:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:930    .bss.xNumberOfSuccessfulFrees:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:936    .bss.xNumberOfSuccessfulAllocations:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:942    .bss.xMinimumEverFreeBytesRemaining:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:948    .bss.xFreeBytesRemaining:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:954    .bss.pxEnd:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:960    .bss.xStart:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUl02za.s:966    .bss.ucHeap:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:21     .text.prvHeapInit:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:26     .text.prvHeapInit:00000000 prvHeapInit
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:131    .text.prvHeapInit:0000004c $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:969    .bss.ucHeap:00000000 ucHeap
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:963    .bss.xStart:00000000 xStart
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:957    .bss.pxEnd:00000000 pxEnd
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:945    .bss.xMinimumEverFreeBytesRemaining:00000000 xMinimumEverFreeBytesRemaining
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:951    .bss.xFreeBytesRemaining:00000000 xFreeBytesRemaining
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:927    .bss.xBlockAllocatedBit:00000000 xBlockAllocatedBit
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:141    .text.prvInsertBlockIntoFreeList:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:146    .text.prvInsertBlockIntoFreeList:00000000 prvInsertBlockIntoFreeList
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:251    .text.prvInsertBlockIntoFreeList:00000054 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:257    .text.pvPortMalloc:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:263    .text.pvPortMalloc:00000000 pvPortMalloc
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:547    .text.pvPortMalloc:000000f8 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:939    .bss.xNumberOfSuccessfulAllocations:00000000 xNumberOfSuccessfulAllocations
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:557    .text.vPortFree:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:563    .text.vPortFree:00000000 vPortFree
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:698    .text.vPortFree:00000074 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:933    .bss.xNumberOfSuccessfulFrees:00000000 xNumberOfSuccessfulFrees
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:705    .text.xPortGetFreeHeapSize:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:711    .text.xPortGetFreeHeapSize:00000000 xPortGetFreeHeapSize
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:726    .text.xPortGetFreeHeapSize:00000008 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:731    .text.xPortGetMinimumEverFreeHeapSize:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:737    .text.xPortGetMinimumEverFreeHeapSize:00000000 xPortGetMinimumEverFreeHeapSize
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:752    .text.xPortGetMinimumEverFreeHeapSize:00000008 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:757    .text.vPortInitialiseBlocks:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:763    .text.vPortInitialiseBlocks:00000000 vPortInitialiseBlocks
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:776    .text.vPortGetHeapStats:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:782    .text.vPortGetHeapStats:00000000 vPortGetHeapStats
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:914    .text.vPortGetHeapStats:00000068 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:924    .bss.xBlockAllocatedBit:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:930    .bss.xNumberOfSuccessfulFrees:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:936    .bss.xNumberOfSuccessfulAllocations:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:942    .bss.xMinimumEverFreeBytesRemaining:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:948    .bss.xFreeBytesRemaining:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:954    .bss.pxEnd:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:960    .bss.xStart:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccEfnz8k.s:966    .bss.ucHeap:00000000 $d
 
 UNDEFINED SYMBOLS
 vTaskSuspendAll

@@ -67,7 +67,9 @@ libraries/drivers/src/at32f403a_407_acc.c \
 libraries/drivers/src/at32f403a_407_can.c \
 libraries/drivers/src/at32f403a_407_debug.c \
 ../Motor_Control/src/motor_control.c \
-../Motor_Control/src/wk_stubs.c \
+../Monitor/src/monitor.c \
+../USB_Debug/src/usb_printf.c \
+../USB_Debug/src/wk_stubs.c \
 middlewares/usbd_drivers/src/usbd_core.c \
 middlewares/usbd_drivers/src/usbd_int.c \
 middlewares/usbd_drivers/src/usbd_sdr.c \
@@ -145,6 +147,8 @@ C_INCLUDES = \
 -Ilibraries/cmsis/cm4/device_support \
 -Imiddlewares/usbd_drivers/inc \
 -I../Motor_Control/inc \
+-I../Monitor/inc \
+-I../USB_Debug/inc \
 -Imiddlewares/freertos/source/include \
 -Imiddlewares/freertos/source/portable/memmang \
 -Imiddlewares/freertos/source/portable/GCC/ARM_CM4F \
