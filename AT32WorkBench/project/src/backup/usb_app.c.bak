@@ -28,8 +28,8 @@
 #include "wk_system.h"
 
 #include "usbd_int.h"
-#include "winusb_class.h"
-#include "winusb_desc.h"
+#include "cdc_class.h"
+#include "cdc_desc.h"
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
@@ -81,8 +81,8 @@ void wk_usb_app_init(void)
 
   /* add user code end usb_app_init 0 */
 
-  /*fs1 device winusb*/
-  usbd_core_init(&usb_core_dev, USB, &winusb_class_handler, &winusb_desc_handler, 0);
+  /*fs1 device cdc*/
+  usbd_core_init(&usb_core_dev, USB, &cdc_class_handler, &cdc_desc_handler, 0);
 
   /* enable usb pull-up */
   usbd_connect(&usb_core_dev);
@@ -105,11 +105,31 @@ void wk_usb_app_task(void)
 
   uint32_t length = 0;
 
-  /* fs1 device winusb */
-  length = usb_winusb_get_rxdata(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1);
-  if(length > 0)
+  uint32_t timeout = 5000000;
+  static uint8_t send_zero_packet = 0;
+
+  /* add user code begin usb_app_task 1 */
+
+  /* add user code end usb_app_task 1 */
+
+  /* fs1 device cdc */
+  length = usb_vcp_get_rxdata(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1);
+  if(length > 0 || send_zero_packet == 1)
   {
-    usb_winusb_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length);
+    if(length > 0)
+      send_zero_packet = 1;
+
+    if(length == 0)
+      send_zero_packet = 0;
+    
+    do
+    {
+      /* send data to host */
+      if(usb_vcp_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length) == SUCCESS)
+      {
+        break;
+      }
+    }while(timeout --);
   }
 
   /* add user code begin usb_app_task 2 */

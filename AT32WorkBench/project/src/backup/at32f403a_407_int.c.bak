@@ -26,34 +26,9 @@
 
 /* includes ------------------------------------------------------------------*/
 #include "at32f403a_407_int.h"
-[#usb_app_include]
 #include "usb_app.h"
-[/#usb_app_include]
-[#wk_system_include]
-#include "wk_system.h"
-[/#wk_system_include]
-[#lwip_include]
-#include "wk_lwip.h"
-[/#lwip_include]
-[#lwip_sys_include]
-#include "ethernetif.h"
-[/#lwip_sys_include]
-[#FreeRTOS_enable]
 #include "freertos_app.h"
-[/#FreeRTOS_enable]
-[#i2c_app_include]
-#include "i2c_application.h"
-[/#i2c_app_include]
 
-[#i2c1_handle_type]
-extern i2c_handle_type hi2c1;
-[/#i2c1_handle_type]
-[#i2c2_handle_type]
-extern i2c_handle_type hi2c2;
-[/#i2c2_handle_type]
-[#i2c3_handle_type]
-extern i2c_handle_type hi2c3;
-[/#i2c3_handle_type]
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
@@ -187,22 +162,6 @@ void UsageFault_Handler(void)
   }
 }
 
-[#SVC_Handler]
-/**
-  * @brief  this function handles svcall exception.
-  * @param  none
-  * @retval none
-  */
-void SVC_Handler(void)
-{
-  /* add user code begin SVCall_IRQ 0 */
-
-  /* add user code end SVCall_IRQ 0 */
-  /* add user code begin SVCall_IRQ 1 */
-
-  /* add user code end SVCall_IRQ 1 */
-}
-[/#SVC_Handler]
 
 /**
   * @brief  this function handles debug monitor exception.
@@ -219,26 +178,8 @@ void DebugMon_Handler(void)
   /* add user code end DebugMonitor_IRQ 1 */
 }
 
-[#PendSV_Handler]
-/**
-  * @brief  this function handles pendsv_handler exception.
-  * @param  none
-  * @retval none
-  */
-void PendSV_Handler(void)
-{
-  /* add user code begin PendSV_IRQ 0 */
-
-  /* add user code end PendSV_IRQ 0 */
-  /* add user code begin PendSV_IRQ 1 */
-
-  /* add user code end PendSV_IRQ 1 */
-}
-[/#PendSV_Handler]
-
-[#FreeRTOS_extern]
 extern void xPortSysTickHandler(void);
-[/#FreeRTOS_extern]
+
 /**
   * @brief  this function handles systick handler.
   * @param  none
@@ -250,15 +191,6 @@ void SysTick_Handler(void)
 
   /* add user code end SysTick_IRQ 0 */
 
-[#TimeBase_SysTick_Handler]
-  wk_timebase_handler();
-
-[#Lwip_SysTick_Handler]
-  wk_time_user_handler();
-[/#Lwip_SysTick_Handler]
-[/#TimeBase_SysTick_Handler]
-
-[#FreeRTOS_SysTick_Handler]
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
   {
@@ -267,7 +199,6 @@ void SysTick_Handler(void)
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   }
 #endif /* INCLUDE_xTaskGetSchedulerState */
-[/#FreeRTOS_SysTick_Handler]
 
   /* add user code begin SysTick_IRQ 1 */
 
@@ -284,30 +215,6 @@ void DMA1_Channel1_IRQHandler(void)
   /* add user code begin DMA1_Channel1_IRQ 0 */
 
   /* add user code end DMA1_Channel1_IRQ 0 */
-
-[#DMA1_Channel1_i2c1_app_rx]
-  i2c_dma_rx_irq_handler(&hi2c1);
-[/#DMA1_Channel1_i2c1_app_rx]
-
-[#DMA1_Channel1_i2c1_app_tx]
-  i2c_dma_tx_irq_handler(&hi2c1);
-[/#DMA1_Channel1_i2c1_app_tx]
-
-[#DMA1_Channel1_i2c2_app_rx]
-  i2c_dma_rx_irq_handler(&hi2c2);
-[/#DMA1_Channel1_i2c2_app_rx]
-
-[#DMA1_Channel1_i2c2_app_tx]
-  i2c_dma_tx_irq_handler(&hi2c2);
-[/#DMA1_Channel1_i2c2_app_tx]
-
-[#DMA1_Channel1_i2c3_app_rx]
-  i2c_dma_rx_irq_handler(&hi2c3);
-[/#DMA1_Channel1_i2c3_app_rx]
-
-[#DMA1_Channel1_i2c3_app_tx]
-  i2c_dma_tx_irq_handler(&hi2c3);
-[/#DMA1_Channel1_i2c3_app_tx]
 
   if(dma_interrupt_flag_get(DMA1_FDT1_FLAG) != RESET)
   {   
@@ -333,14 +240,6 @@ void TMR1_BRK_TMR9_IRQHandler(void)
 
   /* add user code end TMR1_BRK_TMR9_IRQ 0 */
 
-[#TimeBase_TMR9_Handler]
-  wk_timebase_handler();
-
-[#Lwip_SysTick_Handler]
-  wk_time_user_handler();
-[/#Lwip_SysTick_Handler]
-[/#TimeBase_TMR9_Handler]
-
   /* add user code begin TMR1_BRK_TMR9_IRQ 1 */
 
   /* add user code end TMR1_BRK_TMR9_IRQ 1 */
@@ -357,14 +256,6 @@ void TMR1_OVF_TMR10_IRQHandler(void)
 
   /* add user code end TMR1_OVF_TMR10_IRQ 0 */
 
-[#TimeBase_TMR1_TMR10_Handler]
-  wk_timebase_handler();
-
-[#Lwip_SysTick_Handler]
-  wk_time_user_handler();
-[/#Lwip_SysTick_Handler]
-[/#TimeBase_TMR1_TMR10_Handler]
-
   /* add user code begin TMR1_OVF_TMR10_IRQ 1 */
 
   /* add user code end TMR1_OVF_TMR10_IRQ 1 */
@@ -380,14 +271,6 @@ void TMR1_TRG_HALL_TMR11_IRQHandler(void)
   /* add user code begin TMR1_TRG_HALL_TMR11_IRQ 0 */
 
   /* add user code end TMR1_TRG_HALL_TMR11_IRQ 0 */
-
-[#TimeBase_TMR11_Handler]
-  wk_timebase_handler();
-
-[#Lwip_SysTick_Handler]
-  wk_time_user_handler();
-[/#Lwip_SysTick_Handler]
-[/#TimeBase_TMR11_Handler]
 
   /* add user code begin TMR1_TRG_HALL_TMR11_IRQ 1 */
 
@@ -421,9 +304,7 @@ void USBFS_MAPL_IRQHandler(void)
 
   /* add user code end USBFS_MAPL_IRQ 0 */
 
-[#fs1_irq_handler]
   wk_usbfs_irq_handler();
-[/#fs1_irq_handler]
 
   /* add user code begin USBFS_MAPL_IRQ 1 */
 

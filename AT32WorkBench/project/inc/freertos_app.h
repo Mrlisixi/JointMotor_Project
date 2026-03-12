@@ -40,14 +40,14 @@
 
 /* task handler */
 extern TaskHandle_t MC_Task_handle;
-extern TaskHandle_t CANCom_Task_handle;
 extern TaskHandle_t Monitor_Task_handle;
+extern TaskHandle_t Community_Task_handle;
 extern TaskHandle_t Debug_Task_handle;
 /* declaration for task function */
-void MC_Task_func(void *pvParameters);
-void CANCom_Task_func(void *pvParameters);
-void Monitor_Task_func(void *pvParameters);
-void Debug_Task_func(void *pvParameters);
+void MC_Task_Func(void *pvParameters);
+void Monitor_Task_Func(void *pvParameters);
+void Community_Task_Func(void *pvParameters);
+void Debug_Task_Func(void *pvParameters);
 
 /* add user code begin 0 */
 

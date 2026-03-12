@@ -28,29 +28,27 @@ build/freertos_app.o: project/src/freertos_app.c \
  project/inc/at32f403a_407_conf.h \
  libraries/drivers/inc/at32f403a_407_acc.h \
  libraries/drivers/inc/at32f403a_407_adc.h \
- libraries/drivers/inc/at32f403a_407_bpr.h \
  libraries/drivers/inc/at32f403a_407_can.h \
- libraries/drivers/inc/at32f403a_407_crc.h \
  libraries/drivers/inc/at32f403a_407_crm.h \
- libraries/drivers/inc/at32f403a_407_dac.h \
  libraries/drivers/inc/at32f403a_407_debug.h \
  libraries/drivers/inc/at32f403a_407_dma.h \
- libraries/drivers/inc/at32f403a_407_emac.h \
  libraries/drivers/inc/at32f403a_407_exint.h \
  libraries/drivers/inc/at32f403a_407_flash.h \
  libraries/drivers/inc/at32f403a_407_gpio.h \
- libraries/drivers/inc/at32f403a_407_i2c.h \
  libraries/drivers/inc/at32f403a_407_misc.h \
  libraries/drivers/inc/at32f403a_407_pwc.h \
- libraries/drivers/inc/at32f403a_407_rtc.h project/inc/rtc.h \
- libraries/drivers/inc/at32f403a_407_sdio.h \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
- libraries/drivers/inc/at32f403a_407_usart.h \
- libraries/drivers/inc/at32f403a_407_usb.h \
- libraries/drivers/inc/at32f403a_407_wdt.h \
- libraries/drivers/inc/at32f403a_407_wwdt.h \
- libraries/drivers/inc/at32f403a_407_xmc.h project/inc/usb_app.h
+ libraries/drivers/inc/at32f403a_407_usb.h project/inc/usb_app.h \
+ project/inc/at32f403a_407_wk_config.h project/inc/wk_gpio.h \
+ project/inc/at32f403a_407_wk_config.h project/inc/wk_tmr.h \
+ ../Core/inc/can_cia402.h ../Core/inc/motor_params.h \
+ ../Core/inc/motor_control.h ../Core/inc/can_cia402.h \
+ ../Core/inc/motor_params.h ../Core/inc/motor_foc.h \
+ ../Core/inc/motor_monitor.h ../Core/inc/motor_foc.h \
+ ../Core/inc/motor_monitor.h ../Common/inc/modbus_protocol.h \
+ ../Common/inc/usb_cdc.h middlewares/usbd_drivers/inc/usbd_core.h \
+ project/inc/usb_conf.h middlewares/usbd_drivers/inc/usb_std.h
 project/inc/freertos_app.h:
 middlewares/freertos/source/include/FreeRTOS.h:
 project/inc/FreeRTOSConfig.h:
@@ -81,28 +79,34 @@ libraries/drivers/inc/at32f403a_407_def.h:
 project/inc/at32f403a_407_conf.h:
 libraries/drivers/inc/at32f403a_407_acc.h:
 libraries/drivers/inc/at32f403a_407_adc.h:
-libraries/drivers/inc/at32f403a_407_bpr.h:
 libraries/drivers/inc/at32f403a_407_can.h:
-libraries/drivers/inc/at32f403a_407_crc.h:
 libraries/drivers/inc/at32f403a_407_crm.h:
-libraries/drivers/inc/at32f403a_407_dac.h:
 libraries/drivers/inc/at32f403a_407_debug.h:
 libraries/drivers/inc/at32f403a_407_dma.h:
-libraries/drivers/inc/at32f403a_407_emac.h:
 libraries/drivers/inc/at32f403a_407_exint.h:
 libraries/drivers/inc/at32f403a_407_flash.h:
 libraries/drivers/inc/at32f403a_407_gpio.h:
-libraries/drivers/inc/at32f403a_407_i2c.h:
 libraries/drivers/inc/at32f403a_407_misc.h:
 libraries/drivers/inc/at32f403a_407_pwc.h:
-libraries/drivers/inc/at32f403a_407_rtc.h:
-project/inc/rtc.h:
-libraries/drivers/inc/at32f403a_407_sdio.h:
 libraries/drivers/inc/at32f403a_407_spi.h:
 libraries/drivers/inc/at32f403a_407_tmr.h:
-libraries/drivers/inc/at32f403a_407_usart.h:
 libraries/drivers/inc/at32f403a_407_usb.h:
-libraries/drivers/inc/at32f403a_407_wdt.h:
-libraries/drivers/inc/at32f403a_407_wwdt.h:
-libraries/drivers/inc/at32f403a_407_xmc.h:
 project/inc/usb_app.h:
+project/inc/at32f403a_407_wk_config.h:
+project/inc/wk_gpio.h:
+project/inc/at32f403a_407_wk_config.h:
+project/inc/wk_tmr.h:
+../Core/inc/can_cia402.h:
+../Core/inc/motor_params.h:
+../Core/inc/motor_control.h:
+../Core/inc/can_cia402.h:
+../Core/inc/motor_params.h:
+../Core/inc/motor_foc.h:
+../Core/inc/motor_monitor.h:
+../Core/inc/motor_foc.h:
+../Core/inc/motor_monitor.h:
+../Common/inc/modbus_protocol.h:
+../Common/inc/usb_cdc.h:
+middlewares/usbd_drivers/inc/usbd_core.h:
+project/inc/usb_conf.h:
+middlewares/usbd_drivers/inc/usb_std.h:

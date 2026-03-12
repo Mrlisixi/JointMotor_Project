@@ -57,8 +57,8 @@ extern "C" {
 
 /* add user code begin dma define */
 /* user can only modify the dma define value */
-#define DMA1_CHANNEL1_BUFFER_SIZE   0
-#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   0
+#define DMA1_CHANNEL1_BUFFER_SIZE   20
+#define DMA1_CHANNEL1_MEMORY_BASE_ADDR   ((uint32_t)&adc_data_buffer)
 //#define DMA1_CHANNEL1_PERIPHERAL_BASE_ADDR  0
 
 //#define DMA1_CHANNEL2_BUFFER_SIZE   0
@@ -117,16 +117,16 @@ extern "C" {
 /* Private defines -------------------------------------------------------------*/
 #define LED_PIN    GPIO_PINS_13
 #define LED_GPIO_PORT    GPIOC
-#define CURR_PHASE_A_ADC_CH_PIN    GPIO_PINS_0
-#define CURR_PHASE_A_ADC_CH_GPIO_PORT    GPIOA
-#define CURR_PHASE_B_ADC_CH_PIN    GPIO_PINS_1
-#define CURR_PHASE_B_ADC_CH_GPIO_PORT    GPIOA
-#define CURR_PHASE_C_ADC_CH_PIN    GPIO_PINS_2
-#define CURR_PHASE_C_ADC_CH_GPIO_PORT    GPIOA
-#define VOLT_BUS_ADC_CH_PIN    GPIO_PINS_3
-#define VOLT_BUS_ADC_CH_GPIO_PORT    GPIOA
-#define MOS_TEMP_ADC_CH_PIN    GPIO_PINS_0
-#define MOS_TEMP_ADC_CH_GPIO_PORT    GPIOB
+#define CURR_PHASE_A_PIN    GPIO_PINS_0
+#define CURR_PHASE_A_GPIO_PORT    GPIOA
+#define CURR_PHASE_B_PIN    GPIO_PINS_1
+#define CURR_PHASE_B_GPIO_PORT    GPIOA
+#define CURR_PHASE_C_PIN    GPIO_PINS_2
+#define CURR_PHASE_C_GPIO_PORT    GPIOA
+#define VOLT_BUS_PIN    GPIO_PINS_3
+#define VOLT_BUS_GPIO_PORT    GPIOA
+#define MOS_TEMP_PIN    GPIO_PINS_0
+#define MOS_TEMP_GPIO_PORT    GPIOB
 
 /* exported functions ------------------------------------------------------- */
   /* system clock config. */

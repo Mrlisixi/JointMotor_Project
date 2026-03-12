@@ -12,8 +12,15 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
+#include "motor_control.h"
 
 /* add user code end private includes */
+
+/* add user code begin private variables */
+/* extern motor parameters structure */
+extern motor_params_t motor;
+
+/* add user code end private variables */
 
 /* private typedef -----------------------------------------------------------*/
 /* add user code begin private typedef */
@@ -47,8 +54,8 @@
 
 /* task handler */
 TaskHandle_t MC_Task_handle;
-TaskHandle_t CANCom_Task_handle;
 TaskHandle_t Monitor_Task_handle;
+TaskHandle_t Community_Task_handle;
 TaskHandle_t Debug_Task_handle;
 
 /* Idle task control block and stack */
@@ -95,31 +102,31 @@ void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, Stac
 void freertos_task_create(void)
 {
   /* create MC_Task task */
-  xTaskCreate(MC_Task_func,
+  xTaskCreate(MC_Task_Func,
               "MC_Task",
               512,
               NULL,
-              3,
+              0,
               &MC_Task_handle);
 
-  /* create CANCom_Task task */
-  xTaskCreate(CANCom_Task_func,
-              "CANCom_Task",
-              512,
-              NULL,
-              2,
-              &CANCom_Task_handle);
-
   /* create Monitor_Task task */
-  xTaskCreate(Monitor_Task_func,
+  xTaskCreate(Monitor_Task_Func,
               "Monitor_Task",
               512,
               NULL,
-              1,
+              0,
               &Monitor_Task_handle);
 
+  /* create Community_Task task */
+  xTaskCreate(Community_Task_Func,
+              "Community_Task",
+              512,
+              NULL,
+              0,
+              &Community_Task_handle);
+
   /* create Debug_Task task */
-  xTaskCreate(Debug_Task_func,
+  xTaskCreate(Debug_Task_Func,
               "Debug_Task",
               512,
               NULL,
@@ -135,7 +142,7 @@ void freertos_task_create(void)
 void wk_freertos_init(void)
 {
   /* add user code begin freertos_init 0 */
-
+  
   /* add user code end freertos_init 0 */
 
   /* enter critical */
@@ -159,55 +166,35 @@ void wk_freertos_init(void)
   * @param  none
   * @retval none
   */
-void MC_Task_func(void *pvParameters)
+void MC_Task_Func(void *pvParameters)
 {
-  /* add user code begin MC_Task_func 0 */
+  /* add user code begin MC_Task_Func 0 */
+  /* initialize motor */
+  motor_control_init(&motor);
+  
+  /* start motor with default speed and direction */
+  motor_start(&motor, 100, MOTOR_DIR_CW);
 
-  /* add user code end MC_Task_func 0 */
+  /* add user code end MC_Task_Func 0 */
 
-  /* add user code begin MC_Task_func 2 */
+  /* add user code begin MC_Task_Func 2 */
 
-  /* add user code end MC_Task_func 2 */
+  /* add user code end MC_Task_Func 2 */
 
   /* Infinite loop */
   while(1)
   {
     /* when use usb,the function wk_usb_app_task() will be generated,
        which is the usb application layer code that users can improve themselves */
-    wk_usb_app_task();
+    wk_usb_app_task();  
+    motor_control_process(&motor);
 
-  /* add user code begin MC_Task_func 1 */
-
-    vTaskDelay(1);
-
-  /* add user code end MC_Task_func 1 */
-  }
-}
-
-
-/**
-  * @brief CANCom_Task function.
-  * @param  none
-  * @retval none
-  */
-void CANCom_Task_func(void *pvParameters)
-{
-  /* add user code begin CANCom_Task_func 0 */
-
-  /* add user code end CANCom_Task_func 0 */
-
-  /* add user code begin CANCom_Task_func 2 */
-
-  /* add user code end CANCom_Task_func 2 */
-
-  /* Infinite loop */
-  while(1)
-  {
-  /* add user code begin CANCom_Task_func 1 */
+    /* add user code begin MC_Task_Func 1 */
+  /* add user code begin MC_Task_Func 1 */
 
     vTaskDelay(1);
 
-  /* add user code end CANCom_Task_func 1 */
+  /* add user code end MC_Task_Func 1 */
   }
 }
 
@@ -217,24 +204,51 @@ void CANCom_Task_func(void *pvParameters)
   * @param  none
   * @retval none
   */
-void Monitor_Task_func(void *pvParameters)
+void Monitor_Task_Func(void *pvParameters)
 {
-  /* add user code begin Monitor_Task_func 0 */
+  /* add user code begin Monitor_Task_Func 0 */
 
-  /* add user code end Monitor_Task_func 0 */
+  /* add user code end Monitor_Task_Func 0 */
 
-  /* add user code begin Monitor_Task_func 2 */
+  /* add user code begin Monitor_Task_Func 2 */
 
-  /* add user code end Monitor_Task_func 2 */
+  /* add user code end Monitor_Task_Func 2 */
 
   /* Infinite loop */
   while(1)
   {
-  /* add user code begin Monitor_Task_func 1 */
+  /* add user code begin Monitor_Task_Func 1 */
 
     vTaskDelay(1);
 
-  /* add user code end Monitor_Task_func 1 */
+  /* add user code end Monitor_Task_Func 1 */
+  }
+}
+
+
+/**
+  * @brief Community_Task function.
+  * @param  none
+  * @retval none
+  */
+void Community_Task_Func(void *pvParameters)
+{
+  /* add user code begin Community_Task_Func 0 */
+
+  /* add user code end Community_Task_Func 0 */
+
+  /* add user code begin Community_Task_Func 2 */
+
+  /* add user code end Community_Task_Func 2 */
+
+  /* Infinite loop */
+  while(1)
+  {
+  /* add user code begin Community_Task_Func 1 */
+
+    vTaskDelay(1);
+
+  /* add user code end Community_Task_Func 1 */
   }
 }
 
@@ -244,24 +258,24 @@ void Monitor_Task_func(void *pvParameters)
   * @param  none
   * @retval none
   */
-void Debug_Task_func(void *pvParameters)
+void Debug_Task_Func(void *pvParameters)
 {
-  /* add user code begin Debug_Task_func 0 */
+  /* add user code begin Debug_Task_Func 0 */
 
-  /* add user code end Debug_Task_func 0 */
+  /* add user code end Debug_Task_Func 0 */
 
-  /* add user code begin Debug_Task_func 2 */
+  /* add user code begin Debug_Task_Func 2 */
 
-  /* add user code end Debug_Task_func 2 */
+  /* add user code end Debug_Task_Func 2 */
 
   /* Infinite loop */
   while(1)
   {
-  /* add user code begin Debug_Task_func 1 */
+  /* add user code begin Debug_Task_Func 1 */
 
     vTaskDelay(1);
 
-  /* add user code end Debug_Task_func 1 */
+  /* add user code end Debug_Task_Func 1 */
   }
 }
 

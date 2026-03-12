@@ -5,6 +5,8 @@ deviceName: AT32F403ACGT7
 packDir: .pack/Keil/AT32F4xx_DFP.1.3.7
 srcDirs:
   - AT32WorkBench
+  - Core
+  - Common
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -27,6 +29,8 @@ targets:
         - AT32WorkBench/middlewares/freertos/source/portable/GCC/ARM_CM4F
         - AT32WorkBench/middlewares/usbd_drivers/inc
         - AT32WorkBench/project/inc
+        - Core/inc
+        - Common/inc
       libList: []
     excludeList:
       - AT32WorkBench/middlewares/freertos/source/portable/IAR
@@ -48,6 +52,7 @@ targets:
       - AT32WorkBench/libraries/cmsis/cm4/device_support/startup/iar
       - AT32WorkBench/libraries/cmsis/cm4/device_support/startup/mdk
       - AT32WorkBench/libraries/cmsis/cm4/device_support/startup/gcc
+      - AT32WorkBench/Core
     toolchain: GCC
     toolchainConfigMap:
       GCC:

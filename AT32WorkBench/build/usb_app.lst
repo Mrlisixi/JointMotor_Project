@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,11 +58,11 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   28:project/src/usb_app.c **** #include "wk_system.h"
   29:project/src/usb_app.c **** 
   30:project/src/usb_app.c **** #include "usbd_int.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 2
 
 
-  31:project/src/usb_app.c **** #include "winusb_class.h"
-  32:project/src/usb_app.c **** #include "winusb_desc.h"
+  31:project/src/usb_app.c **** #include "cdc_class.h"
+  32:project/src/usb_app.c **** #include "cdc_desc.h"
   33:project/src/usb_app.c **** 
   34:project/src/usb_app.c **** /* private includes ----------------------------------------------------------*/
   35:project/src/usb_app.c **** /* add user code begin private includes */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   34              	.LCFI0:
   35              		.cfi_def_cfa_offset 8
   36              		.cfi_offset 4, -8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 3
 
 
   37              		.cfi_offset 14, -4
@@ -129,8 +129,8 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   81:project/src/usb_app.c **** 
   82:project/src/usb_app.c ****   /* add user code end usb_app_init 0 */
   83:project/src/usb_app.c **** 
-  84:project/src/usb_app.c ****   /*fs1 device winusb*/
-  85:project/src/usb_app.c ****   usbd_core_init(&usb_core_dev, USB, &winusb_class_handler, &winusb_desc_handler, 0);
+  84:project/src/usb_app.c ****   /*fs1 device cdc*/
+  85:project/src/usb_app.c ****   usbd_core_init(&usb_core_dev, USB, &cdc_class_handler, &cdc_desc_handler, 0);
   41              		.loc 1 85 3 view .LVU1
   42 0004 064C     		ldr	r4, .L3
   43 0006 0023     		movs	r3, #0
@@ -163,8 +163,8 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   62              		.align	2
   63              	.L3:
   64 0020 00000000 		.word	usb_core_dev
-  65 0024 00000000 		.word	winusb_desc_handler
-  66 0028 00000000 		.word	winusb_class_handler
+  65 0024 00000000 		.word	cdc_desc_handler
+  66 0028 00000000 		.word	cdc_class_handler
   67 002c 005C0040 		.word	1073765376
   68              		.cfi_endproc
   69              	.LFE137:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   79              	.LFB138:
   94:project/src/usb_app.c **** 
   95:project/src/usb_app.c **** /**
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 4
 
 
   96:project/src/usb_app.c ****   * @brief  usb application task
@@ -191,223 +191,312 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 1
   81              		.cfi_startproc
   82              		@ args = 0, pretend = 0, frame = 0
   83              		@ frame_needed = 0, uses_anonymous_args = 0
-  84 0000 08B5     		push	{r3, lr}
+  84 0000 38B5     		push	{r3, r4, r5, lr}
   85              	.LCFI3:
-  86              		.cfi_def_cfa_offset 8
-  87              		.cfi_offset 3, -8
-  88              		.cfi_offset 14, -4
+  86              		.cfi_def_cfa_offset 16
+  87              		.cfi_offset 3, -16
+  88              		.cfi_offset 4, -12
+  89              		.cfi_offset 5, -8
+  90              		.cfi_offset 14, -4
  102:project/src/usb_app.c ****   /* add user code begin usb_app_task 0 */
  103:project/src/usb_app.c **** 
  104:project/src/usb_app.c ****   /* add user code end usb_app_task 0 */
  105:project/src/usb_app.c **** 
  106:project/src/usb_app.c ****   uint32_t length = 0;
-  89              		.loc 1 106 3 view .LVU5
-  90              	.LVL2:
+  91              		.loc 1 106 3 view .LVU5
+  92              	.LVL2:
  107:project/src/usb_app.c **** 
- 108:project/src/usb_app.c ****   /* fs1 device winusb */
- 109:project/src/usb_app.c ****   length = usb_winusb_get_rxdata(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1);
-  91              		.loc 1 109 3 view .LVU6
-  92              		.loc 1 109 12 is_stmt 0 view .LVU7
-  93 0002 0649     		ldr	r1, .L9
-  94 0004 0648     		ldr	r0, .L9+4
-  95 0006 FFF7FEFF 		bl	usb_winusb_get_rxdata
-  96              	.LVL3:
- 110:project/src/usb_app.c ****   if(length > 0)
-  97              		.loc 1 110 3 is_stmt 1 view .LVU8
-  98              		.loc 1 110 5 is_stmt 0 view .LVU9
-  99 000a 00B9     		cbnz	r0, .L8
- 100              	.LVL4:
- 101              	.L5:
- 111:project/src/usb_app.c ****   {
- 112:project/src/usb_app.c ****     usb_winusb_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length);
- 113:project/src/usb_app.c ****   }
+ 108:project/src/usb_app.c ****   uint32_t timeout = 5000000;
+  93              		.loc 1 108 3 view .LVU6
+ 109:project/src/usb_app.c ****   static uint8_t send_zero_packet = 0;
+  94              		.loc 1 109 3 view .LVU7
+ 110:project/src/usb_app.c **** 
+ 111:project/src/usb_app.c ****   /* add user code begin usb_app_task 1 */
+ 112:project/src/usb_app.c **** 
+ 113:project/src/usb_app.c ****   /* add user code end usb_app_task 1 */
  114:project/src/usb_app.c **** 
- 115:project/src/usb_app.c ****   /* add user code begin usb_app_task 2 */
- 116:project/src/usb_app.c **** 
- 117:project/src/usb_app.c ****   /* add user code end usb_app_task 2 */
- 118:project/src/usb_app.c **** }
- 102              		.loc 1 118 1 view .LVU10
- 103 000c 08BD     		pop	{r3, pc}
- 104              	.LVL5:
- 105              	.L8:
- 106              		.loc 1 118 1 view .LVU11
- 107 000e 0246     		mov	r2, r0
- 112:project/src/usb_app.c ****   }
- 108              		.loc 1 112 5 is_stmt 1 view .LVU12
- 109 0010 0249     		ldr	r1, .L9
- 110 0012 0348     		ldr	r0, .L9+4
- 111              	.LVL6:
- 112:project/src/usb_app.c ****   }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 5
+ 115:project/src/usb_app.c ****   /* fs1 device cdc */
+ 116:project/src/usb_app.c ****   length = usb_vcp_get_rxdata(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1);
+  95              		.loc 1 116 3 view .LVU8
+  96              		.loc 1 116 12 is_stmt 0 view .LVU9
+  97 0002 0F49     		ldr	r1, .L13
+  98 0004 0F48     		ldr	r0, .L13+4
+  99 0006 FFF7FEFF 		bl	usb_vcp_get_rxdata
+ 100              	.LVL3:
+ 117:project/src/usb_app.c ****   if(length > 0 || send_zero_packet == 1)
+ 101              		.loc 1 117 3 is_stmt 1 view .LVU10
+ 102              		.loc 1 117 5 is_stmt 0 view .LVU11
+ 103 000a 0546     		mov	r5, r0
+ 104 000c 38B9     		cbnz	r0, .L6
+ 105              		.loc 1 117 37 discriminator 1 view .LVU12
+ 106 000e 0E4B     		ldr	r3, .L13+8
+ 107 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 108              		.loc 1 117 17 discriminator 1 view .LVU13
+ 109 0012 012B     		cmp	r3, #1
+ 110 0014 00D0     		beq	.L12
+ 111              	.LVL4:
+ 112              	.L5:
+ 118:project/src/usb_app.c ****   {
+ 119:project/src/usb_app.c ****     if(length > 0)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 5
 
 
- 112              		.loc 1 112 5 is_stmt 0 view .LVU13
- 113 0014 FFF7FEFF 		bl	usb_winusb_send_data
- 114              	.LVL7:
- 115              		.loc 1 118 1 view .LVU14
- 116 0018 F8E7     		b	.L5
- 117              	.L10:
- 118 001a 00BF     		.align	2
- 119              	.L9:
- 120 001c 00000000 		.word	usbd_app_buffer_fs1
- 121 0020 00000000 		.word	usb_core_dev
- 122              		.cfi_endproc
- 123              	.LFE138:
- 125              		.section	.text.wk_usbfs_irq_handler,"ax",%progbits
- 126              		.align	1
- 127              		.global	wk_usbfs_irq_handler
- 128              		.syntax unified
- 129              		.thumb
- 130              		.thumb_func
- 132              	wk_usbfs_irq_handler:
- 133              	.LFB139:
- 119:project/src/usb_app.c **** 
- 120:project/src/usb_app.c **** /**
- 121:project/src/usb_app.c ****   * @brief  usb interrupt handler
- 122:project/src/usb_app.c ****   * @param  none
- 123:project/src/usb_app.c ****   * @retval none
- 124:project/src/usb_app.c ****   */
- 125:project/src/usb_app.c **** void wk_usbfs_irq_handler(void)
- 126:project/src/usb_app.c **** {
- 134              		.loc 1 126 1 is_stmt 1 view -0
- 135              		.cfi_startproc
- 136              		@ args = 0, pretend = 0, frame = 0
- 137              		@ frame_needed = 0, uses_anonymous_args = 0
- 138 0000 08B5     		push	{r3, lr}
- 139              	.LCFI4:
- 140              		.cfi_def_cfa_offset 8
- 141              		.cfi_offset 3, -8
- 142              		.cfi_offset 14, -4
- 127:project/src/usb_app.c ****   /* add user code begin otgfs1_irq_handler 0 */
- 128:project/src/usb_app.c **** 
- 129:project/src/usb_app.c ****   /* add user code end otgfs1_irq_handler 0 */
- 130:project/src/usb_app.c **** 
- 131:project/src/usb_app.c ****   usbd_irq_handler(&usb_core_dev);
- 143              		.loc 1 131 3 view .LVU16
- 144 0002 0248     		ldr	r0, .L13
- 145 0004 FFF7FEFF 		bl	usbd_irq_handler
- 146              	.LVL8:
- 132:project/src/usb_app.c **** 
- 133:project/src/usb_app.c ****   /* add user code begin otgfs1_irq_handler 1 */
+ 120:project/src/usb_app.c ****       send_zero_packet = 1;
+ 121:project/src/usb_app.c **** 
+ 122:project/src/usb_app.c ****     if(length == 0)
+ 123:project/src/usb_app.c ****       send_zero_packet = 0;
+ 124:project/src/usb_app.c ****     
+ 125:project/src/usb_app.c ****     do
+ 126:project/src/usb_app.c ****     {
+ 127:project/src/usb_app.c ****       /* send data to host */
+ 128:project/src/usb_app.c ****       if(usb_vcp_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length) == SUCCESS)
+ 129:project/src/usb_app.c ****       {
+ 130:project/src/usb_app.c ****         break;
+ 131:project/src/usb_app.c ****       }
+ 132:project/src/usb_app.c ****     }while(timeout --);
+ 133:project/src/usb_app.c ****   }
  134:project/src/usb_app.c **** 
- 135:project/src/usb_app.c ****   /* add user code end otgfs1_irq_handler 1 */
- 136:project/src/usb_app.c **** }
- 147              		.loc 1 136 1 is_stmt 0 view .LVU17
- 148 0008 08BD     		pop	{r3, pc}
- 149              	.L14:
- 150 000a 00BF     		.align	2
- 151              	.L13:
- 152 000c 00000000 		.word	usb_core_dev
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 6
+ 135:project/src/usb_app.c ****   /* add user code begin usb_app_task 2 */
+ 136:project/src/usb_app.c **** 
+ 137:project/src/usb_app.c ****   /* add user code end usb_app_task 2 */
+ 138:project/src/usb_app.c **** }
+ 113              		.loc 1 138 1 view .LVU14
+ 114 0016 38BD     		pop	{r3, r4, r5, pc}
+ 115              	.LVL5:
+ 116              	.L12:
+ 119:project/src/usb_app.c ****       send_zero_packet = 1;
+ 117              		.loc 1 119 5 is_stmt 1 view .LVU15
+ 122:project/src/usb_app.c ****       send_zero_packet = 0;
+ 118              		.loc 1 122 5 view .LVU16
+ 123:project/src/usb_app.c ****     
+ 119              		.loc 1 123 7 view .LVU17
+ 123:project/src/usb_app.c ****     
+ 120              		.loc 1 123 24 is_stmt 0 view .LVU18
+ 121 0018 0B4B     		ldr	r3, .L13+8
+ 122 001a 1870     		strb	r0, [r3]
+ 123 001c 02E0     		b	.L8
+ 124              	.L6:
+ 119:project/src/usb_app.c ****       send_zero_packet = 1;
+ 125              		.loc 1 119 5 is_stmt 1 view .LVU19
+ 120:project/src/usb_app.c **** 
+ 126              		.loc 1 120 7 view .LVU20
+ 120:project/src/usb_app.c **** 
+ 127              		.loc 1 120 24 is_stmt 0 view .LVU21
+ 128 001e 0A4B     		ldr	r3, .L13+8
+ 129 0020 0122     		movs	r2, #1
+ 130 0022 1A70     		strb	r2, [r3]
+ 122:project/src/usb_app.c ****       send_zero_packet = 0;
+ 131              		.loc 1 122 5 is_stmt 1 view .LVU22
+ 132              	.L8:
+ 101:project/src/usb_app.c ****   /* add user code begin usb_app_task 0 */
+ 133              		.loc 1 101 1 is_stmt 0 view .LVU23
+ 134 0024 094C     		ldr	r4, .L13+12
+ 135 0026 00E0     		b	.L9
+ 136              	.LVL6:
+ 137              	.L10:
+ 132:project/src/usb_app.c ****   }
+ 138              		.loc 1 132 20 view .LVU24
+ 139 0028 1C46     		mov	r4, r3
+ 140              	.LVL7:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 6
 
 
- 153              		.cfi_endproc
- 154              	.LFE139:
- 156              		.section	.text.usb_delay_ms,"ax",%progbits
- 157              		.align	1
- 158              		.global	usb_delay_ms
- 159              		.syntax unified
- 160              		.thumb
- 161              		.thumb_func
- 163              	usb_delay_ms:
- 164              	.LVL9:
- 165              	.LFB140:
- 137:project/src/usb_app.c **** 
- 138:project/src/usb_app.c **** /**
- 139:project/src/usb_app.c ****   * @brief  usb delay function
- 140:project/src/usb_app.c ****   * @param  ms: delay number of milliseconds.
- 141:project/src/usb_app.c ****   * @retval none
- 142:project/src/usb_app.c ****   */
- 143:project/src/usb_app.c **** void usb_delay_ms(uint32_t ms)
- 144:project/src/usb_app.c **** {
- 166              		.loc 1 144 1 is_stmt 1 view -0
- 167              		.cfi_startproc
- 168              		@ args = 0, pretend = 0, frame = 0
- 169              		@ frame_needed = 0, uses_anonymous_args = 0
- 170              		.loc 1 144 1 is_stmt 0 view .LVU19
- 171 0000 08B5     		push	{r3, lr}
- 172              	.LCFI5:
- 173              		.cfi_def_cfa_offset 8
- 174              		.cfi_offset 3, -8
- 175              		.cfi_offset 14, -4
- 145:project/src/usb_app.c ****   /* add user code begin delay_ms 0 */
- 146:project/src/usb_app.c **** 
- 147:project/src/usb_app.c ****   /* add user code end delay_ms 0 */
+ 141              	.L9:
+ 125:project/src/usb_app.c ****     {
+ 142              		.loc 1 125 5 is_stmt 1 view .LVU25
+ 128:project/src/usb_app.c ****       {
+ 143              		.loc 1 128 7 view .LVU26
+ 128:project/src/usb_app.c ****       {
+ 144              		.loc 1 128 10 is_stmt 0 view .LVU27
+ 145 002a 2A46     		mov	r2, r5
+ 146 002c 0449     		ldr	r1, .L13
+ 147 002e 0548     		ldr	r0, .L13+4
+ 148 0030 FFF7FEFF 		bl	usb_vcp_send_data
+ 149              	.LVL8:
+ 128:project/src/usb_app.c ****       {
+ 150              		.loc 1 128 9 discriminator 1 view .LVU28
+ 151 0034 0128     		cmp	r0, #1
+ 152 0036 EED0     		beq	.L5
+ 132:project/src/usb_app.c ****   }
+ 153              		.loc 1 132 12 is_stmt 1 view .LVU29
+ 132:project/src/usb_app.c ****   }
+ 154              		.loc 1 132 20 is_stmt 0 view .LVU30
+ 155 0038 631E     		subs	r3, r4, #1
+ 156              	.LVL9:
+ 132:project/src/usb_app.c ****   }
+ 157              		.loc 1 132 12 view .LVU31
+ 158 003a 002C     		cmp	r4, #0
+ 159 003c F4D1     		bne	.L10
+ 160 003e EAE7     		b	.L5
+ 161              	.L14:
+ 162              		.align	2
+ 163              	.L13:
+ 164 0040 00000000 		.word	usbd_app_buffer_fs1
+ 165 0044 00000000 		.word	usb_core_dev
+ 166 0048 00000000 		.word	send_zero_packet.0
+ 167 004c 404B4C00 		.word	5000000
+ 168              		.cfi_endproc
+ 169              	.LFE138:
+ 171              		.section	.text.wk_usbfs_irq_handler,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	wk_usbfs_irq_handler
+ 174              		.syntax unified
+ 175              		.thumb
+ 176              		.thumb_func
+ 178              	wk_usbfs_irq_handler:
+ 179              	.LFB139:
+ 139:project/src/usb_app.c **** 
+ 140:project/src/usb_app.c **** /**
+ 141:project/src/usb_app.c ****   * @brief  usb interrupt handler
+ 142:project/src/usb_app.c ****   * @param  none
+ 143:project/src/usb_app.c ****   * @retval none
+ 144:project/src/usb_app.c ****   */
+ 145:project/src/usb_app.c **** void wk_usbfs_irq_handler(void)
+ 146:project/src/usb_app.c **** {
+ 180              		.loc 1 146 1 is_stmt 1 view -0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 7
+
+
+ 185              	.LCFI4:
+ 186              		.cfi_def_cfa_offset 8
+ 187              		.cfi_offset 3, -8
+ 188              		.cfi_offset 14, -4
+ 147:project/src/usb_app.c ****   /* add user code begin otgfs1_irq_handler 0 */
  148:project/src/usb_app.c **** 
- 149:project/src/usb_app.c ****   wk_delay_ms(ms);
- 176              		.loc 1 149 3 is_stmt 1 view .LVU20
- 177 0002 FFF7FEFF 		bl	wk_delay_ms
- 178              	.LVL10:
+ 149:project/src/usb_app.c ****   /* add user code end otgfs1_irq_handler 0 */
  150:project/src/usb_app.c **** 
- 151:project/src/usb_app.c ****   /* add user code begin delay_ms 1 */
+ 151:project/src/usb_app.c ****   usbd_irq_handler(&usb_core_dev);
+ 189              		.loc 1 151 3 view .LVU33
+ 190 0002 0248     		ldr	r0, .L17
+ 191 0004 FFF7FEFF 		bl	usbd_irq_handler
+ 192              	.LVL10:
  152:project/src/usb_app.c **** 
- 153:project/src/usb_app.c ****   /* add user code end delay_ms 1*/
- 154:project/src/usb_app.c **** }
- 179              		.loc 1 154 1 is_stmt 0 view .LVU21
- 180 0006 08BD     		pop	{r3, pc}
- 181              		.cfi_endproc
- 182              	.LFE140:
- 184              		.global	usbd_app_buffer_fs1
- 185              		.section	.bss.usbd_app_buffer_fs1,"aw",%nobits
- 186              		.align	2
- 189              	usbd_app_buffer_fs1:
- 190 0000 00000000 		.space	512
- 190      00000000 
- 190      00000000 
- 190      00000000 
- 190      00000000 
- 191              		.global	usb_core_dev
- 192              		.section	.bss.usb_core_dev,"aw",%nobits
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 7
+ 153:project/src/usb_app.c ****   /* add user code begin otgfs1_irq_handler 1 */
+ 154:project/src/usb_app.c **** 
+ 155:project/src/usb_app.c ****   /* add user code end otgfs1_irq_handler 1 */
+ 156:project/src/usb_app.c **** }
+ 193              		.loc 1 156 1 is_stmt 0 view .LVU34
+ 194 0008 08BD     		pop	{r3, pc}
+ 195              	.L18:
+ 196 000a 00BF     		.align	2
+ 197              	.L17:
+ 198 000c 00000000 		.word	usb_core_dev
+ 199              		.cfi_endproc
+ 200              	.LFE139:
+ 202              		.section	.text.usb_delay_ms,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	usb_delay_ms
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	usb_delay_ms:
+ 210              	.LVL11:
+ 211              	.LFB140:
+ 157:project/src/usb_app.c **** 
+ 158:project/src/usb_app.c **** /**
+ 159:project/src/usb_app.c ****   * @brief  usb delay function
+ 160:project/src/usb_app.c ****   * @param  ms: delay number of milliseconds.
+ 161:project/src/usb_app.c ****   * @retval none
+ 162:project/src/usb_app.c ****   */
+ 163:project/src/usb_app.c **** void usb_delay_ms(uint32_t ms)
+ 164:project/src/usb_app.c **** {
+ 212              		.loc 1 164 1 is_stmt 1 view -0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 0
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216              		.loc 1 164 1 is_stmt 0 view .LVU36
+ 217 0000 08B5     		push	{r3, lr}
+ 218              	.LCFI5:
+ 219              		.cfi_def_cfa_offset 8
+ 220              		.cfi_offset 3, -8
+ 221              		.cfi_offset 14, -4
+ 165:project/src/usb_app.c ****   /* add user code begin delay_ms 0 */
+ 166:project/src/usb_app.c **** 
+ 167:project/src/usb_app.c ****   /* add user code end delay_ms 0 */
+ 168:project/src/usb_app.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 8
 
 
- 193              		.align	2
- 196              	usb_core_dev:
- 197 0000 00000000 		.space	556
- 197      00000000 
- 197      00000000 
- 197      00000000 
- 197      00000000 
- 198              		.text
- 199              	.Letext0:
- 200              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 201              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 202              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
- 203              		.file 5 "libraries/drivers/inc/at32f403a_407_tmr.h"
- 204              		.file 6 "libraries/drivers/inc/at32f403a_407_usb.h"
- 205              		.file 7 "middlewares/usbd_drivers/inc/usb_std.h"
- 206              		.file 8 "middlewares/usbd_drivers/inc/usbd_core.h"
- 207              		.file 9 "project/inc/winusb_class.h"
- 208              		.file 10 "project/inc/winusb_desc.h"
- 209              		.file 11 "project/inc/wk_system.h"
- 210              		.file 12 "middlewares/usbd_drivers/inc/usbd_int.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccjATNcf.s 			page 8
+ 169:project/src/usb_app.c ****   wk_delay_ms(ms);
+ 222              		.loc 1 169 3 is_stmt 1 view .LVU37
+ 223 0002 FFF7FEFF 		bl	wk_delay_ms
+ 224              	.LVL12:
+ 170:project/src/usb_app.c **** 
+ 171:project/src/usb_app.c ****   /* add user code begin delay_ms 1 */
+ 172:project/src/usb_app.c **** 
+ 173:project/src/usb_app.c ****   /* add user code end delay_ms 1*/
+ 174:project/src/usb_app.c **** }
+ 225              		.loc 1 174 1 is_stmt 0 view .LVU38
+ 226 0006 08BD     		pop	{r3, pc}
+ 227              		.cfi_endproc
+ 228              	.LFE140:
+ 230              		.section	.bss.send_zero_packet.0,"aw",%nobits
+ 233              	send_zero_packet.0:
+ 234 0000 00       		.space	1
+ 235              		.global	usbd_app_buffer_fs1
+ 236              		.section	.bss.usbd_app_buffer_fs1,"aw",%nobits
+ 237              		.align	2
+ 240              	usbd_app_buffer_fs1:
+ 241 0000 00000000 		.space	512
+ 241      00000000 
+ 241      00000000 
+ 241      00000000 
+ 241      00000000 
+ 242              		.global	usb_core_dev
+ 243              		.section	.bss.usb_core_dev,"aw",%nobits
+ 244              		.align	2
+ 247              	usb_core_dev:
+ 248 0000 00000000 		.space	556
+ 248      00000000 
+ 248      00000000 
+ 248      00000000 
+ 248      00000000 
+ 249              		.text
+ 250              	.Letext0:
+ 251              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 252              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 253              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 254              		.file 5 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 255              		.file 6 "libraries/drivers/inc/at32f403a_407_usb.h"
+ 256              		.file 7 "middlewares/usbd_drivers/inc/usb_std.h"
+ 257              		.file 8 "middlewares/usbd_drivers/inc/usbd_core.h"
+ 258              		.file 9 "project/inc/cdc_class.h"
+ 259              		.file 10 "project/inc/cdc_desc.h"
+ 260              		.file 11 "project/inc/wk_system.h"
+ 261              		.file 12 "middlewares/usbd_drivers/inc/usbd_int.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccraOKfj.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 usb_app.c
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:21     .text.wk_usb_app_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:27     .text.wk_usb_app_init:00000000 wk_usb_app_init
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:64     .text.wk_usb_app_init:00000020 $d
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:196    .bss.usb_core_dev:00000000 usb_core_dev
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:72     .text.wk_usb_app_task:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:78     .text.wk_usb_app_task:00000000 wk_usb_app_task
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:120    .text.wk_usb_app_task:0000001c $d
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:189    .bss.usbd_app_buffer_fs1:00000000 usbd_app_buffer_fs1
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:126    .text.wk_usbfs_irq_handler:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:132    .text.wk_usbfs_irq_handler:00000000 wk_usbfs_irq_handler
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:152    .text.wk_usbfs_irq_handler:0000000c $d
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:157    .text.usb_delay_ms:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:163    .text.usb_delay_ms:00000000 usb_delay_ms
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:186    .bss.usbd_app_buffer_fs1:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccjATNcf.s:193    .bss.usb_core_dev:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:21     .text.wk_usb_app_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:27     .text.wk_usb_app_init:00000000 wk_usb_app_init
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:64     .text.wk_usb_app_init:00000020 $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:247    .bss.usb_core_dev:00000000 usb_core_dev
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:72     .text.wk_usb_app_task:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:78     .text.wk_usb_app_task:00000000 wk_usb_app_task
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:164    .text.wk_usb_app_task:00000040 $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:240    .bss.usbd_app_buffer_fs1:00000000 usbd_app_buffer_fs1
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:233    .bss.send_zero_packet.0:00000000 send_zero_packet.0
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:172    .text.wk_usbfs_irq_handler:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:178    .text.wk_usbfs_irq_handler:00000000 wk_usbfs_irq_handler
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:198    .text.wk_usbfs_irq_handler:0000000c $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:203    .text.usb_delay_ms:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:209    .text.usb_delay_ms:00000000 usb_delay_ms
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:234    .bss.send_zero_packet.0:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:237    .bss.usbd_app_buffer_fs1:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccraOKfj.s:244    .bss.usb_core_dev:00000000 $d
 
 UNDEFINED SYMBOLS
 usbd_core_init
 usbd_connect
-winusb_desc_handler
-winusb_class_handler
-usb_winusb_get_rxdata
-usb_winusb_send_data
+cdc_desc_handler
+cdc_class_handler
+usb_vcp_get_rxdata
+usb_vcp_send_data
 usbd_irq_handler
 wk_delay_ms

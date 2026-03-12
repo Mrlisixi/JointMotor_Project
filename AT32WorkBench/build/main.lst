@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
   28:project/src/main.c **** #include "at32f403a_407_wk_config.h"
   29:project/src/main.c **** #include "wk_acc.h"
   30:project/src/main.c **** #include "wk_adc.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 2
 
 
   31:project/src/main.c **** #include "wk_can.h"
@@ -89,7 +89,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
   56:project/src/main.c **** 
   57:project/src/main.c **** /* private macro -------------------------------------------------------------*/
   58:project/src/main.c **** /* add user code begin private macro */
-  59:project/src/main.c **** 
+  59:project/src/main.c **** uint16_t adc_odt[20];
   60:project/src/main.c **** /* add user code end private macro */
   61:project/src/main.c **** 
   62:project/src/main.c **** /* private variables ---------------------------------------------------------*/
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
   30              		.cfi_startproc
   31              		@ Volatile: function does not return.
   32              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 3
 
 
   33              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
  111:project/src/main.c ****   /* init dma1 channel1 */
  112:project/src/main.c ****   wk_dma1_channel1_init();
   60              		.loc 1 112 3 view .LVU8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 4
 
 
   61 001e FFF7FEFF 		bl	wk_dma1_channel1_init
@@ -189,14 +189,14 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
  116:project/src/main.c ****   wk_dma_channel_config(DMA1_CHANNEL1, 
   63              		.loc 1 116 3 view .LVU9
   64 0022 0D4C     		ldr	r4, .L4
-  65 0024 0023     		movs	r3, #0
-  66 0026 1A46     		mov	r2, r3
-  67 0028 0C49     		ldr	r1, .L4+4
+  65 0024 1423     		movs	r3, #20
+  66 0026 0D4A     		ldr	r2, .L4+4
+  67 0028 0D49     		ldr	r1, .L4+8
   68 002a 2046     		mov	r0, r4
   69 002c FFF7FEFF 		bl	wk_dma_channel_config
   70              	.LVL8:
  117:project/src/main.c ****                         (uint32_t)&ADC1->odt, 
- 118:project/src/main.c ****                         DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
+ 118:project/src/main.c ****                         (uint32_t)&adc_odt, 
  119:project/src/main.c ****                         DMA1_CHANNEL1_BUFFER_SIZE);
  120:project/src/main.c ****   dma_channel_enable(DMA1_CHANNEL1, TRUE);
   71              		.loc 1 120 3 view .LVU10
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
  137:project/src/main.c ****   /* init usb app function. */
  138:project/src/main.c ****   wk_usb_app_init();
   91              		.loc 1 138 3 view .LVU16
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 5
 
 
   92 004c FFF7FEFF 		bl	wk_usb_app_init
@@ -270,37 +270,53 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 1
  103 0056 00BF     		.align	2
  104              	.L4:
  105 0058 08000240 		.word	1073872904
- 106 005c 4C240140 		.word	1073816652
- 107              		.cfi_endproc
- 108              	.LFE141:
- 110              		.text
- 111              	.Letext0:
- 112              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 113              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 114              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
- 115              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
- 116              		.file 6 "libraries/drivers/inc/at32f403a_407_dma.h"
- 117              		.file 7 "project/inc/freertos_app.h"
- 118              		.file 8 "project/inc/usb_app.h"
- 119              		.file 9 "project/inc/wk_can.h"
- 120              		.file 10 "project/inc/wk_usbfs.h"
- 121              		.file 11 "project/inc/wk_acc.h"
- 122              		.file 12 "project/inc/wk_tmr.h"
- 123              		.file 13 "project/inc/wk_spi.h"
- 124              		.file 14 "project/inc/wk_dma.h"
- 125              		.file 15 "project/inc/wk_adc.h"
- 126              		.file 16 "project/inc/wk_gpio.h"
- 127              		.file 17 "project/inc/wk_system.h"
- 128              		.file 18 "project/inc/at32f403a_407_wk_config.h"
- 129              		.file 19 "project/inc/wk_debug.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s 			page 6
+ 106 005c 00000000 		.word	adc_odt
+ 107 0060 4C240140 		.word	1073816652
+ 108              		.cfi_endproc
+ 109              	.LFE141:
+ 111              		.global	adc_odt
+ 112              		.section	.bss.adc_odt,"aw",%nobits
+ 113              		.align	2
+ 116              	adc_odt:
+ 117 0000 00000000 		.space	40
+ 117      00000000 
+ 117      00000000 
+ 117      00000000 
+ 117      00000000 
+ 118              		.text
+ 119              	.Letext0:
+ 120              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 121              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 122              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 123              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
+ 124              		.file 6 "libraries/drivers/inc/at32f403a_407_dma.h"
+ 125              		.file 7 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 126              		.file 8 "project/inc/freertos_app.h"
+ 127              		.file 9 "project/inc/usb_app.h"
+ 128              		.file 10 "project/inc/wk_can.h"
+ 129              		.file 11 "project/inc/wk_usbfs.h"
+ 130              		.file 12 "project/inc/wk_acc.h"
+ 131              		.file 13 "project/inc/wk_tmr.h"
+ 132              		.file 14 "project/inc/wk_spi.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 6
+
+
+ 133              		.file 15 "project/inc/wk_dma.h"
+ 134              		.file 16 "project/inc/wk_adc.h"
+ 135              		.file 17 "project/inc/wk_gpio.h"
+ 136              		.file 18 "project/inc/wk_system.h"
+ 137              		.file 19 "project/inc/at32f403a_407_wk_config.h"
+ 138              		.file 20 "project/inc/wk_debug.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s:21     .text.main:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s:27     .text.main:00000000 main
-C:\Users\10963\AppData\Local\Temp\ccDeNQCI.s:105    .text.main:00000058 $d
+C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s:21     .text.main:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s:27     .text.main:00000000 main
+C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s:105    .text.main:00000058 $d
+C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s:116    .bss.adc_odt:00000000 adc_odt
+C:\Users\10963\AppData\Local\Temp\ccuy1pDo.s:113    .bss.adc_odt:00000000 $d
 
 UNDEFINED SYMBOLS
 wk_system_clock_config

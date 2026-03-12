@@ -11,29 +11,18 @@ build/usbd_core.o: middlewares/usbd_drivers/src/usbd_core.c \
  project/inc/at32f403a_407_conf.h \
  libraries/drivers/inc/at32f403a_407_acc.h \
  libraries/drivers/inc/at32f403a_407_adc.h \
- libraries/drivers/inc/at32f403a_407_bpr.h \
  libraries/drivers/inc/at32f403a_407_can.h \
- libraries/drivers/inc/at32f403a_407_crc.h \
  libraries/drivers/inc/at32f403a_407_crm.h \
- libraries/drivers/inc/at32f403a_407_dac.h \
  libraries/drivers/inc/at32f403a_407_debug.h \
  libraries/drivers/inc/at32f403a_407_dma.h \
- libraries/drivers/inc/at32f403a_407_emac.h \
  libraries/drivers/inc/at32f403a_407_exint.h \
  libraries/drivers/inc/at32f403a_407_flash.h \
  libraries/drivers/inc/at32f403a_407_gpio.h \
- libraries/drivers/inc/at32f403a_407_i2c.h \
  libraries/drivers/inc/at32f403a_407_misc.h \
  libraries/drivers/inc/at32f403a_407_pwc.h \
- libraries/drivers/inc/at32f403a_407_rtc.h project/inc/rtc.h \
- libraries/drivers/inc/at32f403a_407_sdio.h \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
- libraries/drivers/inc/at32f403a_407_usart.h \
  libraries/drivers/inc/at32f403a_407_usb.h \
- libraries/drivers/inc/at32f403a_407_wdt.h \
- libraries/drivers/inc/at32f403a_407_wwdt.h \
- libraries/drivers/inc/at32f403a_407_xmc.h \
  middlewares/usbd_drivers/inc/usb_std.h \
  middlewares/usbd_drivers/inc/usbd_sdr.h \
  middlewares/usbd_drivers/inc/usbd_core.h
@@ -50,30 +39,18 @@ libraries/drivers/inc/at32f403a_407_def.h:
 project/inc/at32f403a_407_conf.h:
 libraries/drivers/inc/at32f403a_407_acc.h:
 libraries/drivers/inc/at32f403a_407_adc.h:
-libraries/drivers/inc/at32f403a_407_bpr.h:
 libraries/drivers/inc/at32f403a_407_can.h:
-libraries/drivers/inc/at32f403a_407_crc.h:
 libraries/drivers/inc/at32f403a_407_crm.h:
-libraries/drivers/inc/at32f403a_407_dac.h:
 libraries/drivers/inc/at32f403a_407_debug.h:
 libraries/drivers/inc/at32f403a_407_dma.h:
-libraries/drivers/inc/at32f403a_407_emac.h:
 libraries/drivers/inc/at32f403a_407_exint.h:
 libraries/drivers/inc/at32f403a_407_flash.h:
 libraries/drivers/inc/at32f403a_407_gpio.h:
-libraries/drivers/inc/at32f403a_407_i2c.h:
 libraries/drivers/inc/at32f403a_407_misc.h:
 libraries/drivers/inc/at32f403a_407_pwc.h:
-libraries/drivers/inc/at32f403a_407_rtc.h:
-project/inc/rtc.h:
-libraries/drivers/inc/at32f403a_407_sdio.h:
 libraries/drivers/inc/at32f403a_407_spi.h:
 libraries/drivers/inc/at32f403a_407_tmr.h:
-libraries/drivers/inc/at32f403a_407_usart.h:
 libraries/drivers/inc/at32f403a_407_usb.h:
-libraries/drivers/inc/at32f403a_407_wdt.h:
-libraries/drivers/inc/at32f403a_407_wwdt.h:
-libraries/drivers/inc/at32f403a_407_xmc.h:
 middlewares/usbd_drivers/inc/usb_std.h:
 middlewares/usbd_drivers/inc/usbd_sdr.h:
 middlewares/usbd_drivers/inc/usbd_core.h:

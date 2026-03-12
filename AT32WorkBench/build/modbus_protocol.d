@@ -1,0 +1,59 @@
+build/modbus_protocol.o: ../Common/src/modbus_protocol.c \
+ ../Common/inc/modbus_protocol.h ../Common/inc/usb_cdc.h \
+ libraries/cmsis/cm4/device_support/at32f403a_407.h \
+ libraries/cmsis/cm4/core_support/core_cm4.h \
+ libraries/cmsis/cm4/core_support/cmsis_version.h \
+ libraries/cmsis/cm4/core_support/cmsis_compiler.h \
+ libraries/cmsis/cm4/core_support/cmsis_gcc.h \
+ libraries/cmsis/cm4/core_support/mpu_armv7.h \
+ libraries/cmsis/cm4/device_support/system_at32f403a_407.h \
+ libraries/drivers/inc/at32f403a_407_def.h \
+ project/inc/at32f403a_407_conf.h \
+ libraries/drivers/inc/at32f403a_407_acc.h \
+ libraries/drivers/inc/at32f403a_407_adc.h \
+ libraries/drivers/inc/at32f403a_407_can.h \
+ libraries/drivers/inc/at32f403a_407_crm.h \
+ libraries/drivers/inc/at32f403a_407_debug.h \
+ libraries/drivers/inc/at32f403a_407_dma.h \
+ libraries/drivers/inc/at32f403a_407_exint.h \
+ libraries/drivers/inc/at32f403a_407_flash.h \
+ libraries/drivers/inc/at32f403a_407_gpio.h \
+ libraries/drivers/inc/at32f403a_407_misc.h \
+ libraries/drivers/inc/at32f403a_407_pwc.h \
+ libraries/drivers/inc/at32f403a_407_spi.h \
+ libraries/drivers/inc/at32f403a_407_tmr.h \
+ libraries/drivers/inc/at32f403a_407_usb.h ../Core/inc/motor_params.h \
+ middlewares/usbd_drivers/inc/usbd_core.h project/inc/usb_conf.h \
+ middlewares/usbd_drivers/inc/usb_std.h project/inc/cdc_class.h \
+ middlewares/usbd_drivers/inc/usb_std.h
+../Common/inc/modbus_protocol.h:
+../Common/inc/usb_cdc.h:
+libraries/cmsis/cm4/device_support/at32f403a_407.h:
+libraries/cmsis/cm4/core_support/core_cm4.h:
+libraries/cmsis/cm4/core_support/cmsis_version.h:
+libraries/cmsis/cm4/core_support/cmsis_compiler.h:
+libraries/cmsis/cm4/core_support/cmsis_gcc.h:
+libraries/cmsis/cm4/core_support/mpu_armv7.h:
+libraries/cmsis/cm4/device_support/system_at32f403a_407.h:
+libraries/drivers/inc/at32f403a_407_def.h:
+project/inc/at32f403a_407_conf.h:
+libraries/drivers/inc/at32f403a_407_acc.h:
+libraries/drivers/inc/at32f403a_407_adc.h:
+libraries/drivers/inc/at32f403a_407_can.h:
+libraries/drivers/inc/at32f403a_407_crm.h:
+libraries/drivers/inc/at32f403a_407_debug.h:
+libraries/drivers/inc/at32f403a_407_dma.h:
+libraries/drivers/inc/at32f403a_407_exint.h:
+libraries/drivers/inc/at32f403a_407_flash.h:
+libraries/drivers/inc/at32f403a_407_gpio.h:
+libraries/drivers/inc/at32f403a_407_misc.h:
+libraries/drivers/inc/at32f403a_407_pwc.h:
+libraries/drivers/inc/at32f403a_407_spi.h:
+libraries/drivers/inc/at32f403a_407_tmr.h:
+libraries/drivers/inc/at32f403a_407_usb.h:
+../Core/inc/motor_params.h:
+middlewares/usbd_drivers/inc/usbd_core.h:
+project/inc/usb_conf.h:
+middlewares/usbd_drivers/inc/usb_std.h:
+project/inc/cdc_class.h:
+middlewares/usbd_drivers/inc/usb_std.h:

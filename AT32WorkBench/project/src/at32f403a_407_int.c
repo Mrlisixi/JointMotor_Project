@@ -201,7 +201,9 @@ void SysTick_Handler(void)
 #endif /* INCLUDE_xTaskGetSchedulerState */
 
   /* add user code begin SysTick_IRQ 1 */
-
+  /* call timebase handler */
+  extern void wk_timebase_handler(void);
+  wk_timebase_handler();
   /* add user code end SysTick_IRQ 1 */
 }
 
@@ -230,54 +232,6 @@ void DMA1_Channel1_IRQHandler(void)
 }
 
 /**
-  * @brief  this function handles TMR1 Brake and TMR9 handler.
-  * @param  none
-  * @retval none
-  */
-void TMR1_BRK_TMR9_IRQHandler(void)
-{
-  /* add user code begin TMR1_BRK_TMR9_IRQ 0 */
-
-  /* add user code end TMR1_BRK_TMR9_IRQ 0 */
-
-  /* add user code begin TMR1_BRK_TMR9_IRQ 1 */
-
-  /* add user code end TMR1_BRK_TMR9_IRQ 1 */
-}
-
-/**
-  * @brief  this function handles TMR1 Overflow and TMR10 handler.
-  * @param  none
-  * @retval none
-  */
-void TMR1_OVF_TMR10_IRQHandler(void)
-{
-  /* add user code begin TMR1_OVF_TMR10_IRQ 0 */
-
-  /* add user code end TMR1_OVF_TMR10_IRQ 0 */
-
-  /* add user code begin TMR1_OVF_TMR10_IRQ 1 */
-
-  /* add user code end TMR1_OVF_TMR10_IRQ 1 */
-}
-
-/**
-  * @brief  this function handles TMR1 Trigger and hall and TMR11 handler.
-  * @param  none
-  * @retval none
-  */
-void TMR1_TRG_HALL_TMR11_IRQHandler(void)
-{
-  /* add user code begin TMR1_TRG_HALL_TMR11_IRQ 0 */
-
-  /* add user code end TMR1_TRG_HALL_TMR11_IRQ 0 */
-
-  /* add user code begin TMR1_TRG_HALL_TMR11_IRQ 1 */
-
-  /* add user code end TMR1_TRG_HALL_TMR11_IRQ 1 */
-}
-
-/**
   * @brief  this function handles SPI1 handler.
   * @param  none
   * @retval none
@@ -291,6 +245,31 @@ void SPI1_IRQHandler(void)
   /* add user code begin SPI1_IRQ 1 */
 
   /* add user code end SPI1_IRQ 1 */
+}
+
+/**
+  * @brief  this function handles TMR5 handler.
+  * @param  none
+  * @retval none
+  */
+void TMR5_GLOBAL_IRQHandler(void)
+{
+  /* add user code begin TMR5_GLOBAL_IRQ 0 */
+
+  /* add user code end TMR5_GLOBAL_IRQ 0 */
+
+  /* overflow interrupt management */
+  if(tmr_interrupt_flag_get(TMR5, TMR_OVF_FLAG) != RESET)
+  {
+    /* add user code begin TMR5_TMR_OVF_FLAG */
+    /* clear flag */
+    tmr_flag_clear(TMR5, TMR_OVF_FLAG);
+    /* add user code end TMR5_TMR_OVF_FLAG */
+  }
+
+  /* add user code begin TMR5_GLOBAL_IRQ 1 */
+
+  /* add user code end TMR5_GLOBAL_IRQ 1 */
 }
 
 /**

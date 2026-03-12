@@ -56,7 +56,7 @@
 
 /* private macro -------------------------------------------------------------*/
 /* add user code begin private macro */
-
+uint16_t adc_odt[20];
 /* add user code end private macro */
 
 /* private variables ---------------------------------------------------------*/
@@ -115,7 +115,7 @@ int main(void)
      and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL1, 
                         (uint32_t)&ADC1->odt, 
-                        DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
+                        (uint32_t)&adc_odt, 
                         DMA1_CHANNEL1_BUFFER_SIZE);
   dma_channel_enable(DMA1_CHANNEL1, TRUE);
 

@@ -1,0 +1,2245 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"usb_cdc_protocol.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../Common/src/usb_cdc_protocol.c"
+  20              		.section	.text.calculate_checksum,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	calculate_checksum:
+  27              	.LVL0:
+  28              	.LFB137:
+   1:../Common/src/usb_cdc_protocol.c **** #include "usb_cdc_protocol.h"
+   2:../Common/src/usb_cdc_protocol.c **** #include <string.h>
+   3:../Common/src/usb_cdc_protocol.c **** #include "usbd_core.h"
+   4:../Common/src/usb_cdc_protocol.c **** #include "cdc_class.h"
+   5:../Common/src/usb_cdc_protocol.c **** 
+   6:../Common/src/usb_cdc_protocol.c **** /* 外部变量 */
+   7:../Common/src/usb_cdc_protocol.c **** extern motor_params_t motor;
+   8:../Common/src/usb_cdc_protocol.c **** extern usbd_core_type usb_core_dev;
+   9:../Common/src/usb_cdc_protocol.c **** 
+  10:../Common/src/usb_cdc_protocol.c **** /* 内部变量 */
+  11:../Common/src/usb_cdc_protocol.c **** static uint8_t rx_buffer[512];
+  12:../Common/src/usb_cdc_protocol.c **** static uint16_t rx_len = 0;
+  13:../Common/src/usb_cdc_protocol.c **** 
+  14:../Common/src/usb_cdc_protocol.c **** /* 计算校验和 */
+  15:../Common/src/usb_cdc_protocol.c **** static uint8_t calculate_checksum(uint8_t *data, uint16_t len)
+  16:../Common/src/usb_cdc_protocol.c **** {
+  29              		.loc 1 16 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              		.loc 1 16 1 is_stmt 0 view .LVU1
+  35 0000 8446     		mov	ip, r0
+  17:../Common/src/usb_cdc_protocol.c ****   uint8_t checksum = 0;
+  36              		.loc 1 17 3 is_stmt 1 view .LVU2
+  37              	.LVL1:
+  18:../Common/src/usb_cdc_protocol.c ****   for (uint16_t i = 0; i < len; i++)
+  38              		.loc 1 18 3 view .LVU3
+  39              	.LBB2:
+  40              		.loc 1 18 8 view .LVU4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 2
+
+
+  41              		.loc 1 18 17 is_stmt 0 view .LVU5
+  42 0002 0023     		movs	r3, #0
+  43              	.LBE2:
+  17:../Common/src/usb_cdc_protocol.c ****   uint8_t checksum = 0;
+  44              		.loc 1 17 11 view .LVU6
+  45 0004 1846     		mov	r0, r3
+  46              	.LVL2:
+  47              	.LBB3:
+  48              		.loc 1 18 3 view .LVU7
+  49 0006 05E0     		b	.L2
+  50              	.LVL3:
+  51              	.L3:
+  19:../Common/src/usb_cdc_protocol.c ****   {
+  20:../Common/src/usb_cdc_protocol.c ****     checksum += data[i];
+  52              		.loc 1 20 5 is_stmt 1 view .LVU8
+  53              		.loc 1 20 21 is_stmt 0 view .LVU9
+  54 0008 1CF80320 		ldrb	r2, [ip, r3]	@ zero_extendqisi2
+  55              		.loc 1 20 14 view .LVU10
+  56 000c 1044     		add	r0, r0, r2
+  57              	.LVL4:
+  58              		.loc 1 20 14 view .LVU11
+  59 000e C0B2     		uxtb	r0, r0
+  60              	.LVL5:
+  18:../Common/src/usb_cdc_protocol.c ****   for (uint16_t i = 0; i < len; i++)
+  61              		.loc 1 18 34 is_stmt 1 discriminator 3 view .LVU12
+  62 0010 0133     		adds	r3, r3, #1
+  63              	.LVL6:
+  18:../Common/src/usb_cdc_protocol.c ****   for (uint16_t i = 0; i < len; i++)
+  64              		.loc 1 18 34 is_stmt 0 discriminator 3 view .LVU13
+  65 0012 9BB2     		uxth	r3, r3
+  66              	.LVL7:
+  67              	.L2:
+  18:../Common/src/usb_cdc_protocol.c ****   for (uint16_t i = 0; i < len; i++)
+  68              		.loc 1 18 26 is_stmt 1 discriminator 1 view .LVU14
+  69 0014 8B42     		cmp	r3, r1
+  70 0016 F7D3     		bcc	.L3
+  71              	.LBE3:
+  21:../Common/src/usb_cdc_protocol.c ****   }
+  22:../Common/src/usb_cdc_protocol.c ****   return checksum;
+  72              		.loc 1 22 3 view .LVU15
+  23:../Common/src/usb_cdc_protocol.c **** }
+  73              		.loc 1 23 1 is_stmt 0 view .LVU16
+  74 0018 7047     		bx	lr
+  75              		.cfi_endproc
+  76              	.LFE137:
+  78              		.section	.text.cdc_protocol_init,"ax",%progbits
+  79              		.align	1
+  80              		.global	cdc_protocol_init
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  85              	cdc_protocol_init:
+  86              	.LFB138:
+  24:../Common/src/usb_cdc_protocol.c **** 
+  25:../Common/src/usb_cdc_protocol.c **** /* 初始化USB CDC协议 */
+  26:../Common/src/usb_cdc_protocol.c **** void cdc_protocol_init(void)
+  27:../Common/src/usb_cdc_protocol.c **** {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 3
+
+
+  87              		.loc 1 27 1 is_stmt 1 view -0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91 0000 08B5     		push	{r3, lr}
+  92              	.LCFI0:
+  93              		.cfi_def_cfa_offset 8
+  94              		.cfi_offset 3, -8
+  95              		.cfi_offset 14, -4
+  28:../Common/src/usb_cdc_protocol.c ****   /* 初始化USB CDC */
+  29:../Common/src/usb_cdc_protocol.c ****   cdc_init();
+  96              		.loc 1 29 3 view .LVU18
+  97 0002 FFF7FEFF 		bl	cdc_init
+  98              	.LVL8:
+  30:../Common/src/usb_cdc_protocol.c **** }
+  99              		.loc 1 30 1 is_stmt 0 view .LVU19
+ 100 0006 08BD     		pop	{r3, pc}
+ 101              		.cfi_endproc
+ 102              	.LFE138:
+ 104              		.section	.text.cdc_send_response,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	cdc_send_response
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	cdc_send_response:
+ 112              	.LVL9:
+ 113              	.LFB140:
+  31:../Common/src/usb_cdc_protocol.c **** 
+  32:../Common/src/usb_cdc_protocol.c **** /* 处理USB CDC协议 */
+  33:../Common/src/usb_cdc_protocol.c **** void cdc_protocol_process(void)
+  34:../Common/src/usb_cdc_protocol.c **** {
+  35:../Common/src/usb_cdc_protocol.c ****   /* 处理USB CDC */
+  36:../Common/src/usb_cdc_protocol.c ****   cdc_process();
+  37:../Common/src/usb_cdc_protocol.c ****   
+  38:../Common/src/usb_cdc_protocol.c ****   /* 直接从USB核心获取数据 */
+  39:../Common/src/usb_cdc_protocol.c ****   uint8_t usb_rx_buffer[USBD_CDC_OUT_MAXPACKET_SIZE];
+  40:../Common/src/usb_cdc_protocol.c ****   uint16_t recv_len = usb_vcp_get_rxdata(&usb_core_dev, usb_rx_buffer);
+  41:../Common/src/usb_cdc_protocol.c ****   
+  42:../Common/src/usb_cdc_protocol.c ****   if (recv_len > 0)
+  43:../Common/src/usb_cdc_protocol.c ****   {
+  44:../Common/src/usb_cdc_protocol.c ****     /* 打印接收到的数据 */
+  45:../Common/src/usb_cdc_protocol.c ****     printf("Received %d bytes: ", recv_len);
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+  47:../Common/src/usb_cdc_protocol.c ****     {
+  48:../Common/src/usb_cdc_protocol.c ****       printf("%02X ", usb_rx_buffer[i]);
+  49:../Common/src/usb_cdc_protocol.c ****     }
+  50:../Common/src/usb_cdc_protocol.c ****     printf("\r\n");
+  51:../Common/src/usb_cdc_protocol.c ****     
+  52:../Common/src/usb_cdc_protocol.c ****     /* 将数据追加到接收缓冲区 */
+  53:../Common/src/usb_cdc_protocol.c ****     if (rx_len + recv_len <= sizeof(rx_buffer))
+  54:../Common/src/usb_cdc_protocol.c ****     {
+  55:../Common/src/usb_cdc_protocol.c ****       memcpy(rx_buffer + rx_len, usb_rx_buffer, recv_len);
+  56:../Common/src/usb_cdc_protocol.c ****       rx_len += recv_len;
+  57:../Common/src/usb_cdc_protocol.c ****       printf("Buffer length: %d\r\n", rx_len);
+  58:../Common/src/usb_cdc_protocol.c ****     }
+  59:../Common/src/usb_cdc_protocol.c ****     
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 4
+
+
+  60:../Common/src/usb_cdc_protocol.c ****     /* 处理接收到的帧 */
+  61:../Common/src/usb_cdc_protocol.c ****     while (rx_len >= 6) /* 最小帧长度：帧头2 + 命令1 + 数据长度1 + 校验和1 */
+  62:../Common/src/usb_cdc_protocol.c ****     {
+  63:../Common/src/usb_cdc_protocol.c ****       cdc_frame_t *frame = (cdc_frame_t *)rx_buffer;
+  64:../Common/src/usb_cdc_protocol.c ****       
+  65:../Common/src/usb_cdc_protocol.c ****       /* 打印帧头信息 */
+  66:../Common/src/usb_cdc_protocol.c ****       printf("Frame header: %02X %02X, cmd: %02X, data_len: %02X\r\n", 
+  67:../Common/src/usb_cdc_protocol.c ****              frame->header1, frame->header2, frame->cmd, frame->data_len);
+  68:../Common/src/usb_cdc_protocol.c ****       
+  69:../Common/src/usb_cdc_protocol.c ****       /* 检查帧头 */
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+  71:../Common/src/usb_cdc_protocol.c ****       {
+  72:../Common/src/usb_cdc_protocol.c ****         /* 帧头错误，丢弃数据 */
+  73:../Common/src/usb_cdc_protocol.c ****         printf("Invalid frame header, discarding\r\n");
+  74:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+  75:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+  76:../Common/src/usb_cdc_protocol.c ****         continue;
+  77:../Common/src/usb_cdc_protocol.c ****       }
+  78:../Common/src/usb_cdc_protocol.c ****       
+  79:../Common/src/usb_cdc_protocol.c ****       /* 计算完整帧长度 */
+  80:../Common/src/usb_cdc_protocol.c ****       uint16_t frame_len = 6 + frame->data_len;
+  81:../Common/src/usb_cdc_protocol.c ****       printf("Expected frame length: %d, current buffer length: %d\r\n", frame_len, rx_len);
+  82:../Common/src/usb_cdc_protocol.c ****       
+  83:../Common/src/usb_cdc_protocol.c ****       if (rx_len < frame_len)
+  84:../Common/src/usb_cdc_protocol.c ****       {
+  85:../Common/src/usb_cdc_protocol.c ****         /* 数据不完整，等待更多数据 */
+  86:../Common/src/usb_cdc_protocol.c ****         printf("Incomplete frame, waiting for more data\r\n");
+  87:../Common/src/usb_cdc_protocol.c ****         break;
+  88:../Common/src/usb_cdc_protocol.c ****       }
+  89:../Common/src/usb_cdc_protocol.c ****       
+  90:../Common/src/usb_cdc_protocol.c ****       /* 打印完整帧数据 */
+  91:../Common/src/usb_cdc_protocol.c ****       printf("Complete frame: ");
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+  93:../Common/src/usb_cdc_protocol.c ****       {
+  94:../Common/src/usb_cdc_protocol.c ****         printf("%02X ", ((uint8_t *)frame)[i]);
+  95:../Common/src/usb_cdc_protocol.c ****       }
+  96:../Common/src/usb_cdc_protocol.c ****       printf("\r\n");
+  97:../Common/src/usb_cdc_protocol.c ****       
+  98:../Common/src/usb_cdc_protocol.c ****       /* 检查校验和 */
+  99:../Common/src/usb_cdc_protocol.c ****       uint8_t checksum = calculate_checksum((uint8_t *)frame + 2, 2 + frame->data_len);
+ 100:../Common/src/usb_cdc_protocol.c ****       printf("Calculated checksum: %02X, received checksum: %02X\r\n", checksum, frame->checksum);
+ 101:../Common/src/usb_cdc_protocol.c ****       
+ 102:../Common/src/usb_cdc_protocol.c ****       if (checksum != frame->checksum)
+ 103:../Common/src/usb_cdc_protocol.c ****       {
+ 104:../Common/src/usb_cdc_protocol.c ****         /* 校验和错误，丢弃数据 */
+ 105:../Common/src/usb_cdc_protocol.c ****         printf("Checksum error, discarding\r\n");
+ 106:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 107:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+ 108:../Common/src/usb_cdc_protocol.c ****         continue;
+ 109:../Common/src/usb_cdc_protocol.c ****       }
+ 110:../Common/src/usb_cdc_protocol.c ****       
+ 111:../Common/src/usb_cdc_protocol.c ****       /* 处理命令 */
+ 112:../Common/src/usb_cdc_protocol.c ****       printf("Processing command: %02X\r\n", frame->cmd);
+ 113:../Common/src/usb_cdc_protocol.c ****       switch (frame->cmd)
+ 114:../Common/src/usb_cdc_protocol.c ****       {
+ 115:../Common/src/usb_cdc_protocol.c ****         case CMD_READ_PARAM:
+ 116:../Common/src/usb_cdc_protocol.c ****         {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 5
+
+
+ 117:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 118:../Common/src/usb_cdc_protocol.c ****           {
+ 119:../Common/src/usb_cdc_protocol.c ****             param_data_t *param = (param_data_t *)frame->data;
+ 120:../Common/src/usb_cdc_protocol.c ****             printf("Reading param ID: %d\r\n", param->param_id);
+ 121:../Common/src/usb_cdc_protocol.c ****             float value = motor_params_get(&motor, param->param_id);
+ 122:../Common/src/usb_cdc_protocol.c ****             printf("Param value: %f\r\n", value);
+ 123:../Common/src/usb_cdc_protocol.c ****             cdc_send_param_read_response(param->param_id, value, ERROR_SUCCESS);
+ 124:../Common/src/usb_cdc_protocol.c ****             printf("Sent read response\r\n");
+ 125:../Common/src/usb_cdc_protocol.c ****           }
+ 126:../Common/src/usb_cdc_protocol.c ****           else
+ 127:../Common/src/usb_cdc_protocol.c ****           {
+ 128:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for read param\r\n");
+ 129:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_READ_PARAM, ERROR_CMD_FORMAT, NULL, 0);
+ 130:../Common/src/usb_cdc_protocol.c ****           }
+ 131:../Common/src/usb_cdc_protocol.c ****           break;
+ 132:../Common/src/usb_cdc_protocol.c ****         }
+ 133:../Common/src/usb_cdc_protocol.c ****         case CMD_WRITE_PARAM:
+ 134:../Common/src/usb_cdc_protocol.c ****         {
+ 135:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 136:../Common/src/usb_cdc_protocol.c ****           {
+ 137:../Common/src/usb_cdc_protocol.c ****             param_data_t *param = (param_data_t *)frame->data;
+ 138:../Common/src/usb_cdc_protocol.c ****             printf("Writing param ID: %d, value: %f\r\n", param->param_id, param->value.f_value);
+ 139:../Common/src/usb_cdc_protocol.c ****             motor_params_update(&motor, param->param_id, param->value.f_value);
+ 140:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_WRITE_PARAM, ERROR_SUCCESS, NULL, 0);
+ 141:../Common/src/usb_cdc_protocol.c ****             printf("Sent write response\r\n");
+ 142:../Common/src/usb_cdc_protocol.c ****           }
+ 143:../Common/src/usb_cdc_protocol.c ****           else
+ 144:../Common/src/usb_cdc_protocol.c ****           {
+ 145:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for write param\r\n");
+ 146:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_WRITE_PARAM, ERROR_CMD_FORMAT, NULL, 0);
+ 147:../Common/src/usb_cdc_protocol.c ****           }
+ 148:../Common/src/usb_cdc_protocol.c ****           break;
+ 149:../Common/src/usb_cdc_protocol.c ****         }
+ 150:../Common/src/usb_cdc_protocol.c ****         case CMD_BATCH_READ:
+ 151:../Common/src/usb_cdc_protocol.c ****         {
+ 152:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 153:../Common/src/usb_cdc_protocol.c ****           {
+ 154:../Common/src/usb_cdc_protocol.c ****             batch_param_data_t *batch_data = (batch_param_data_t *)frame->data;
+ 155:../Common/src/usb_cdc_protocol.c ****             printf("Batch read, param count: %d\r\n", batch_data->param_count);
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 157:../Common/src/usb_cdc_protocol.c ****             {
+ 158:../Common/src/usb_cdc_protocol.c ****               batch_data->params[i].value.f_value = motor_params_get(&motor, batch_data->params[i].
+ 159:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 160:../Common/src/usb_cdc_protocol.c ****             }
+ 161:../Common/src/usb_cdc_protocol.c ****             cdc_send_batch_read_response(batch_data, ERROR_SUCCESS);
+ 162:../Common/src/usb_cdc_protocol.c ****             printf("Sent batch read response\r\n");
+ 163:../Common/src/usb_cdc_protocol.c ****           }
+ 164:../Common/src/usb_cdc_protocol.c ****           else
+ 165:../Common/src/usb_cdc_protocol.c ****           {
+ 166:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for batch read\r\n");
+ 167:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_READ, ERROR_CMD_FORMAT, NULL, 0);
+ 168:../Common/src/usb_cdc_protocol.c ****           }
+ 169:../Common/src/usb_cdc_protocol.c ****           break;
+ 170:../Common/src/usb_cdc_protocol.c ****         }
+ 171:../Common/src/usb_cdc_protocol.c ****         case CMD_BATCH_WRITE:
+ 172:../Common/src/usb_cdc_protocol.c ****         {
+ 173:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 6
+
+
+ 174:../Common/src/usb_cdc_protocol.c ****           {
+ 175:../Common/src/usb_cdc_protocol.c ****             batch_param_data_t *batch_data = (batch_param_data_t *)frame->data;
+ 176:../Common/src/usb_cdc_protocol.c ****             printf("Batch write, param count: %d\r\n", batch_data->param_count);
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 178:../Common/src/usb_cdc_protocol.c ****             {
+ 179:../Common/src/usb_cdc_protocol.c ****               motor_params_update(&motor, batch_data->params[i].param_id, batch_data->params[i].val
+ 180:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 181:../Common/src/usb_cdc_protocol.c ****             }
+ 182:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_WRITE, ERROR_SUCCESS, NULL, 0);
+ 183:../Common/src/usb_cdc_protocol.c ****             printf("Sent batch write response\r\n");
+ 184:../Common/src/usb_cdc_protocol.c ****           }
+ 185:../Common/src/usb_cdc_protocol.c ****           else
+ 186:../Common/src/usb_cdc_protocol.c ****           {
+ 187:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for batch write\r\n");
+ 188:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_WRITE, ERROR_CMD_FORMAT, NULL, 0);
+ 189:../Common/src/usb_cdc_protocol.c ****           }
+ 190:../Common/src/usb_cdc_protocol.c ****           break;
+ 191:../Common/src/usb_cdc_protocol.c ****         }
+ 192:../Common/src/usb_cdc_protocol.c ****         case CMD_READ_PARAM_LIST:
+ 193:../Common/src/usb_cdc_protocol.c ****         {
+ 194:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_list_request_t))
+ 195:../Common/src/usb_cdc_protocol.c ****           {
+ 196:../Common/src/usb_cdc_protocol.c ****             param_list_request_t *request = (param_list_request_t *)frame->data;
+ 197:../Common/src/usb_cdc_protocol.c ****             printf("Read param list, start ID: %d, count: %d\r\n", request->start_param_id, request
+ 198:../Common/src/usb_cdc_protocol.c ****             param_data_t param_list[16];
+ 199:../Common/src/usb_cdc_protocol.c ****             uint16_t param_count = 0;
+ 200:../Common/src/usb_cdc_protocol.c ****             
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 202:../Common/src/usb_cdc_protocol.c ****             {
+ 203:../Common/src/usb_cdc_protocol.c ****               param_list[i].param_id = request->start_param_id + i;
+ 204:../Common/src/usb_cdc_protocol.c ****               param_list[i].value.f_value = motor_params_get(&motor, param_list[i].param_id);
+ 205:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", param_list[i].param_id, param_list[i].value.f_v
+ 206:../Common/src/usb_cdc_protocol.c ****               param_count++;
+ 207:../Common/src/usb_cdc_protocol.c ****             }
+ 208:../Common/src/usb_cdc_protocol.c ****             
+ 209:../Common/src/usb_cdc_protocol.c ****             cdc_send_param_list_response(param_list, param_count, ERROR_SUCCESS);
+ 210:../Common/src/usb_cdc_protocol.c ****             printf("Sent param list response\r\n");
+ 211:../Common/src/usb_cdc_protocol.c ****           }
+ 212:../Common/src/usb_cdc_protocol.c ****           else
+ 213:../Common/src/usb_cdc_protocol.c ****           {
+ 214:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for param list\r\n");
+ 215:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_READ_PARAM_LIST, ERROR_CMD_FORMAT, NULL, 0);
+ 216:../Common/src/usb_cdc_protocol.c ****           }
+ 217:../Common/src/usb_cdc_protocol.c ****           break;
+ 218:../Common/src/usb_cdc_protocol.c ****         }
+ 219:../Common/src/usb_cdc_protocol.c ****         case CMD_SYSTEM_CMD:
+ 220:../Common/src/usb_cdc_protocol.c ****         {
+ 221:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len >= sizeof(system_cmd_t))
+ 222:../Common/src/usb_cdc_protocol.c ****           {
+ 223:../Common/src/usb_cdc_protocol.c ****             system_cmd_t *sys_cmd = (system_cmd_t *)frame->data;
+ 224:../Common/src/usb_cdc_protocol.c ****             printf("System command: %02X\r\n", sys_cmd->sub_cmd);
+ 225:../Common/src/usb_cdc_protocol.c ****             uint8_t error_code = ERROR_SUCCESS;
+ 226:../Common/src/usb_cdc_protocol.c ****             
+ 227:../Common/src/usb_cdc_protocol.c ****             switch (sys_cmd->sub_cmd)
+ 228:../Common/src/usb_cdc_protocol.c ****             {
+ 229:../Common/src/usb_cdc_protocol.c ****               case SYS_CMD_REBOOT:
+ 230:../Common/src/usb_cdc_protocol.c ****                 /* 重启设备 */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 7
+
+
+ 231:../Common/src/usb_cdc_protocol.c ****                 break;
+ 232:../Common/src/usb_cdc_protocol.c ****               case SYS_CMD_SAVE_PARAMS:
+ 233:../Common/src/usb_cdc_protocol.c ****                 /* 保存参数 */
+ 234:../Common/src/usb_cdc_protocol.c ****                 break;
+ 235:../Common/src/usb_cdc_protocol.c ****               case SYS_CMD_LOAD_PARAMS:
+ 236:../Common/src/usb_cdc_protocol.c ****                 /* 加载参数 */
+ 237:../Common/src/usb_cdc_protocol.c ****                 break;
+ 238:../Common/src/usb_cdc_protocol.c ****               case SYS_CMD_CLEAR_ERRORS:
+ 239:../Common/src/usb_cdc_protocol.c ****                 motor_params_clear_errors(&motor);
+ 240:../Common/src/usb_cdc_protocol.c ****                 break;
+ 241:../Common/src/usb_cdc_protocol.c ****               default:
+ 242:../Common/src/usb_cdc_protocol.c ****                 error_code = ERROR_CMD_FORMAT;
+ 243:../Common/src/usb_cdc_protocol.c ****                 break;
+ 244:../Common/src/usb_cdc_protocol.c ****             }
+ 245:../Common/src/usb_cdc_protocol.c ****             
+ 246:../Common/src/usb_cdc_protocol.c ****             cdc_send_system_cmd_response(sys_cmd->sub_cmd, sys_cmd->data, frame->data_len - 1, erro
+ 247:../Common/src/usb_cdc_protocol.c ****             printf("Sent system command response\r\n");
+ 248:../Common/src/usb_cdc_protocol.c ****           }
+ 249:../Common/src/usb_cdc_protocol.c ****           else
+ 250:../Common/src/usb_cdc_protocol.c ****           {
+ 251:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for system command\r\n");
+ 252:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_SYSTEM_CMD, ERROR_CMD_FORMAT, NULL, 0);
+ 253:../Common/src/usb_cdc_protocol.c ****           }
+ 254:../Common/src/usb_cdc_protocol.c ****           break;
+ 255:../Common/src/usb_cdc_protocol.c ****         }
+ 256:../Common/src/usb_cdc_protocol.c ****         default:
+ 257:../Common/src/usb_cdc_protocol.c ****           /* 未知命令 */
+ 258:../Common/src/usb_cdc_protocol.c ****           printf("Unknown command: %02X\r\n", frame->cmd);
+ 259:../Common/src/usb_cdc_protocol.c ****           break;
+ 260:../Common/src/usb_cdc_protocol.c ****       }
+ 261:../Common/src/usb_cdc_protocol.c ****       
+ 262:../Common/src/usb_cdc_protocol.c ****       /* 移动缓冲区指针 */
+ 263:../Common/src/usb_cdc_protocol.c ****       memmove(rx_buffer, rx_buffer + frame_len, rx_len - frame_len);
+ 264:../Common/src/usb_cdc_protocol.c ****       rx_len -= frame_len;
+ 265:../Common/src/usb_cdc_protocol.c ****       printf("Buffer length after processing: %d\r\n", rx_len);
+ 266:../Common/src/usb_cdc_protocol.c ****     }
+ 267:../Common/src/usb_cdc_protocol.c ****   }
+ 268:../Common/src/usb_cdc_protocol.c **** }
+ 269:../Common/src/usb_cdc_protocol.c **** 
+ 270:../Common/src/usb_cdc_protocol.c **** /* 发送响应 */
+ 271:../Common/src/usb_cdc_protocol.c **** void cdc_send_response(uint8_t cmd, uint8_t error_code, void *data, uint16_t data_len)
+ 272:../Common/src/usb_cdc_protocol.c **** {
+ 114              		.loc 1 272 1 is_stmt 1 view -0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 264
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		.loc 1 272 1 is_stmt 0 view .LVU21
+ 119 0000 30B5     		push	{r4, r5, lr}
+ 120              	.LCFI1:
+ 121              		.cfi_def_cfa_offset 12
+ 122              		.cfi_offset 4, -12
+ 123              		.cfi_offset 5, -8
+ 124              		.cfi_offset 14, -4
+ 125 0002 C3B0     		sub	sp, sp, #268
+ 126              	.LCFI2:
+ 127              		.cfi_def_cfa_offset 280
+ 273:../Common/src/usb_cdc_protocol.c ****   cdc_frame_t frame;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 8
+
+
+ 128              		.loc 1 273 3 is_stmt 1 view .LVU22
+ 274:../Common/src/usb_cdc_protocol.c ****   frame.header1 = FRAME_HEADER_1;
+ 129              		.loc 1 274 3 view .LVU23
+ 130              		.loc 1 274 17 is_stmt 0 view .LVU24
+ 131 0004 AA24     		movs	r4, #170
+ 132 0006 8DF80040 		strb	r4, [sp]
+ 275:../Common/src/usb_cdc_protocol.c ****   frame.header2 = FRAME_HEADER_2;
+ 133              		.loc 1 275 3 is_stmt 1 view .LVU25
+ 134              		.loc 1 275 17 is_stmt 0 view .LVU26
+ 135 000a 5524     		movs	r4, #85
+ 136 000c 8DF80140 		strb	r4, [sp, #1]
+ 276:../Common/src/usb_cdc_protocol.c ****   frame.cmd = cmd;
+ 137              		.loc 1 276 3 is_stmt 1 view .LVU27
+ 138              		.loc 1 276 13 is_stmt 0 view .LVU28
+ 139 0010 8DF80200 		strb	r0, [sp, #2]
+ 277:../Common/src/usb_cdc_protocol.c ****   frame.data_len = data_len + 1; /* 加上错误码 */
+ 140              		.loc 1 277 3 is_stmt 1 view .LVU29
+ 141              		.loc 1 277 29 is_stmt 0 view .LVU30
+ 142 0014 5C1C     		adds	r4, r3, #1
+ 143 0016 E4B2     		uxtb	r4, r4
+ 144              		.loc 1 277 18 view .LVU31
+ 145 0018 8DF80340 		strb	r4, [sp, #3]
+ 278:../Common/src/usb_cdc_protocol.c ****   frame.data[0] = error_code;
+ 146              		.loc 1 278 3 is_stmt 1 view .LVU32
+ 147              		.loc 1 278 17 is_stmt 0 view .LVU33
+ 148 001c 8DF80410 		strb	r1, [sp, #4]
+ 279:../Common/src/usb_cdc_protocol.c ****   if (data != NULL && data_len > 0)
+ 149              		.loc 1 279 3 is_stmt 1 view .LVU34
+ 150              		.loc 1 279 6 is_stmt 0 view .LVU35
+ 151 0020 0AB1     		cbz	r2, .L7
+ 152 0022 1146     		mov	r1, r2
+ 153              	.LVL10:
+ 154              		.loc 1 279 20 discriminator 1 view .LVU36
+ 155 0024 63B9     		cbnz	r3, .L9
+ 156              	.LVL11:
+ 157              	.L7:
+ 280:../Common/src/usb_cdc_protocol.c ****   {
+ 281:../Common/src/usb_cdc_protocol.c ****     memcpy(frame.data + 1, data, data_len);
+ 282:../Common/src/usb_cdc_protocol.c ****   }
+ 283:../Common/src/usb_cdc_protocol.c ****   frame.checksum = calculate_checksum((uint8_t *)&frame + 2, 2 + frame.data_len);
+ 158              		.loc 1 283 3 is_stmt 1 view .LVU37
+ 159              		.loc 1 283 20 is_stmt 0 view .LVU38
+ 160 0026 A11C     		adds	r1, r4, #2
+ 161 0028 0DF10200 		add	r0, sp, #2
+ 162 002c FFF7FEFF 		bl	calculate_checksum
+ 163              	.LVL12:
+ 164              		.loc 1 283 18 discriminator 1 view .LVU39
+ 165 0030 8DF80401 		strb	r0, [sp, #260]
+ 284:../Common/src/usb_cdc_protocol.c ****   
+ 285:../Common/src/usb_cdc_protocol.c ****   cdc_send_data((uint8_t *)&frame, 6 + frame.data_len);
+ 166              		.loc 1 285 3 is_stmt 1 view .LVU40
+ 167 0034 A11D     		adds	r1, r4, #6
+ 168 0036 6846     		mov	r0, sp
+ 169 0038 FFF7FEFF 		bl	cdc_send_data
+ 170              	.LVL13:
+ 286:../Common/src/usb_cdc_protocol.c **** }
+ 171              		.loc 1 286 1 is_stmt 0 view .LVU41
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 9
+
+
+ 172 003c 43B0     		add	sp, sp, #268
+ 173              	.LCFI3:
+ 174              		.cfi_remember_state
+ 175              		.cfi_def_cfa_offset 12
+ 176              		@ sp needed
+ 177 003e 30BD     		pop	{r4, r5, pc}
+ 178              	.LVL14:
+ 179              	.L9:
+ 180              	.LCFI4:
+ 181              		.cfi_restore_state
+ 281:../Common/src/usb_cdc_protocol.c ****   }
+ 182              		.loc 1 281 5 is_stmt 1 view .LVU42
+ 183 0040 1A46     		mov	r2, r3
+ 184 0042 0DF10500 		add	r0, sp, #5
+ 185              	.LVL15:
+ 281:../Common/src/usb_cdc_protocol.c ****   }
+ 186              		.loc 1 281 5 is_stmt 0 view .LVU43
+ 187 0046 FFF7FEFF 		bl	memcpy
+ 188              	.LVL16:
+ 281:../Common/src/usb_cdc_protocol.c ****   }
+ 189              		.loc 1 281 5 view .LVU44
+ 190 004a ECE7     		b	.L7
+ 191              		.cfi_endproc
+ 192              	.LFE140:
+ 194              		.section	.text.cdc_send_param_read_response,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	cdc_send_param_read_response
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	cdc_send_param_read_response:
+ 202              	.LVL17:
+ 203              	.LFB141:
+ 287:../Common/src/usb_cdc_protocol.c **** 
+ 288:../Common/src/usb_cdc_protocol.c **** /* 发送参数读取响应 */
+ 289:../Common/src/usb_cdc_protocol.c **** void cdc_send_param_read_response(uint16_t param_id, float value, uint8_t error_code)
+ 290:../Common/src/usb_cdc_protocol.c **** {
+ 204              		.loc 1 290 1 is_stmt 1 view -0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 8
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208              		.loc 1 290 1 is_stmt 0 view .LVU46
+ 209 0000 00B5     		push	{lr}
+ 210              	.LCFI5:
+ 211              		.cfi_def_cfa_offset 4
+ 212              		.cfi_offset 14, -4
+ 213 0002 83B0     		sub	sp, sp, #12
+ 214              	.LCFI6:
+ 215              		.cfi_def_cfa_offset 16
+ 291:../Common/src/usb_cdc_protocol.c ****   param_data_t param;
+ 216              		.loc 1 291 3 is_stmt 1 view .LVU47
+ 292:../Common/src/usb_cdc_protocol.c ****   param.param_id = param_id;
+ 217              		.loc 1 292 3 view .LVU48
+ 218              		.loc 1 292 18 is_stmt 0 view .LVU49
+ 219 0004 ADF80000 		strh	r0, [sp]	@ movhi
+ 293:../Common/src/usb_cdc_protocol.c ****   param.value.f_value = value;
+ 220              		.loc 1 293 3 is_stmt 1 view .LVU50
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 10
+
+
+ 221              		.loc 1 293 23 is_stmt 0 view .LVU51
+ 222 0008 8DED010A 		vstr.32	s0, [sp, #4]
+ 294:../Common/src/usb_cdc_protocol.c ****   cdc_send_response(CMD_RESP_READ_PARAM, error_code, &param, sizeof(param));
+ 223              		.loc 1 294 3 is_stmt 1 view .LVU52
+ 224 000c 0823     		movs	r3, #8
+ 225 000e 6A46     		mov	r2, sp
+ 226 0010 8120     		movs	r0, #129
+ 227              	.LVL18:
+ 228              		.loc 1 294 3 is_stmt 0 view .LVU53
+ 229 0012 FFF7FEFF 		bl	cdc_send_response
+ 230              	.LVL19:
+ 295:../Common/src/usb_cdc_protocol.c **** }
+ 231              		.loc 1 295 1 view .LVU54
+ 232 0016 03B0     		add	sp, sp, #12
+ 233              	.LCFI7:
+ 234              		.cfi_def_cfa_offset 4
+ 235              		@ sp needed
+ 236 0018 00BD     		pop	{pc}
+ 237              		.cfi_endproc
+ 238              	.LFE141:
+ 240              		.section	.text.cdc_send_batch_read_response,"ax",%progbits
+ 241              		.align	1
+ 242              		.global	cdc_send_batch_read_response
+ 243              		.syntax unified
+ 244              		.thumb
+ 245              		.thumb_func
+ 247              	cdc_send_batch_read_response:
+ 248              	.LVL20:
+ 249              	.LFB142:
+ 296:../Common/src/usb_cdc_protocol.c **** 
+ 297:../Common/src/usb_cdc_protocol.c **** /* 发送批量读取响应 */
+ 298:../Common/src/usb_cdc_protocol.c **** void cdc_send_batch_read_response(batch_param_data_t *batch_data, uint8_t error_code)
+ 299:../Common/src/usb_cdc_protocol.c **** {
+ 250              		.loc 1 299 1 is_stmt 1 view -0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 0
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254              		.loc 1 299 1 is_stmt 0 view .LVU56
+ 255 0000 08B5     		push	{r3, lr}
+ 256              	.LCFI8:
+ 257              		.cfi_def_cfa_offset 8
+ 258              		.cfi_offset 3, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 0246     		mov	r2, r0
+ 300:../Common/src/usb_cdc_protocol.c ****   cdc_send_response(CMD_RESP_BATCH_READ, error_code, batch_data, sizeof(batch_param_data_t));
+ 261              		.loc 1 300 3 is_stmt 1 view .LVU57
+ 262 0004 8423     		movs	r3, #132
+ 263 0006 8320     		movs	r0, #131
+ 264              	.LVL21:
+ 265              		.loc 1 300 3 is_stmt 0 view .LVU58
+ 266 0008 FFF7FEFF 		bl	cdc_send_response
+ 267              	.LVL22:
+ 301:../Common/src/usb_cdc_protocol.c **** }
+ 268              		.loc 1 301 1 view .LVU59
+ 269 000c 08BD     		pop	{r3, pc}
+ 270              		.cfi_endproc
+ 271              	.LFE142:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 11
+
+
+ 273              		.section	.text.cdc_send_param_list_response,"ax",%progbits
+ 274              		.align	1
+ 275              		.global	cdc_send_param_list_response
+ 276              		.syntax unified
+ 277              		.thumb
+ 278              		.thumb_func
+ 280              	cdc_send_param_list_response:
+ 281              	.LVL23:
+ 282              	.LFB143:
+ 302:../Common/src/usb_cdc_protocol.c **** 
+ 303:../Common/src/usb_cdc_protocol.c **** /* 发送参数列表响应 */
+ 304:../Common/src/usb_cdc_protocol.c **** void cdc_send_param_list_response(param_data_t *param_list, uint16_t param_count, uint8_t error_cod
+ 305:../Common/src/usb_cdc_protocol.c **** {
+ 283              		.loc 1 305 1 is_stmt 1 view -0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+ 287              		.loc 1 305 1 is_stmt 0 view .LVU61
+ 288 0000 08B5     		push	{r3, lr}
+ 289              	.LCFI9:
+ 290              		.cfi_def_cfa_offset 8
+ 291              		.cfi_offset 3, -8
+ 292              		.cfi_offset 14, -4
+ 293 0002 0B46     		mov	r3, r1
+ 294 0004 1146     		mov	r1, r2
+ 295              	.LVL24:
+ 306:../Common/src/usb_cdc_protocol.c ****   cdc_send_response(CMD_RESP_READ_PARAM_LIST, error_code, param_list, param_count * sizeof(param_da
+ 296              		.loc 1 306 3 is_stmt 1 view .LVU62
+ 297 0006 DB00     		lsls	r3, r3, #3
+ 298              	.LVL25:
+ 299              		.loc 1 306 3 is_stmt 0 view .LVU63
+ 300 0008 9BB2     		uxth	r3, r3
+ 301 000a 0246     		mov	r2, r0
+ 302              	.LVL26:
+ 303              		.loc 1 306 3 view .LVU64
+ 304 000c 8520     		movs	r0, #133
+ 305              	.LVL27:
+ 306              		.loc 1 306 3 view .LVU65
+ 307 000e FFF7FEFF 		bl	cdc_send_response
+ 308              	.LVL28:
+ 307:../Common/src/usb_cdc_protocol.c **** }
+ 309              		.loc 1 307 1 view .LVU66
+ 310 0012 08BD     		pop	{r3, pc}
+ 311              		.cfi_endproc
+ 312              	.LFE143:
+ 314              		.section	.text.cdc_send_system_cmd_response,"ax",%progbits
+ 315              		.align	1
+ 316              		.global	cdc_send_system_cmd_response
+ 317              		.syntax unified
+ 318              		.thumb
+ 319              		.thumb_func
+ 321              	cdc_send_system_cmd_response:
+ 322              	.LVL29:
+ 323              	.LFB144:
+ 308:../Common/src/usb_cdc_protocol.c **** 
+ 309:../Common/src/usb_cdc_protocol.c **** /* 发送系统命令响应 */
+ 310:../Common/src/usb_cdc_protocol.c **** void cdc_send_system_cmd_response(uint8_t sub_cmd, uint8_t *data, uint8_t data_len, uint8_t error_c
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 12
+
+
+ 311:../Common/src/usb_cdc_protocol.c **** {
+ 324              		.loc 1 311 1 is_stmt 1 view -0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 24
+ 327              		@ frame_needed = 0, uses_anonymous_args = 0
+ 328              		.loc 1 311 1 is_stmt 0 view .LVU68
+ 329 0000 30B5     		push	{r4, r5, lr}
+ 330              	.LCFI10:
+ 331              		.cfi_def_cfa_offset 12
+ 332              		.cfi_offset 4, -12
+ 333              		.cfi_offset 5, -8
+ 334              		.cfi_offset 14, -4
+ 335 0002 87B0     		sub	sp, sp, #28
+ 336              	.LCFI11:
+ 337              		.cfi_def_cfa_offset 40
+ 338 0004 1446     		mov	r4, r2
+ 339 0006 1D46     		mov	r5, r3
+ 312:../Common/src/usb_cdc_protocol.c ****   system_cmd_t sys_cmd;
+ 340              		.loc 1 312 3 is_stmt 1 view .LVU69
+ 313:../Common/src/usb_cdc_protocol.c ****   sys_cmd.sub_cmd = sub_cmd;
+ 341              		.loc 1 313 3 view .LVU70
+ 342              		.loc 1 313 19 is_stmt 0 view .LVU71
+ 343 0008 8DF80400 		strb	r0, [sp, #4]
+ 314:../Common/src/usb_cdc_protocol.c ****   if (data != NULL && data_len > 0)
+ 344              		.loc 1 314 3 is_stmt 1 view .LVU72
+ 345              		.loc 1 314 6 is_stmt 0 view .LVU73
+ 346 000c 01B1     		cbz	r1, .L17
+ 347              		.loc 1 314 20 discriminator 1 view .LVU74
+ 348 000e 3AB9     		cbnz	r2, .L19
+ 349              	.LVL30:
+ 350              	.L17:
+ 315:../Common/src/usb_cdc_protocol.c ****   {
+ 316:../Common/src/usb_cdc_protocol.c ****     memcpy(sys_cmd.data, data, data_len);
+ 317:../Common/src/usb_cdc_protocol.c ****   }
+ 318:../Common/src/usb_cdc_protocol.c ****   cdc_send_response(CMD_RESP_SYSTEM_CMD, error_code, &sys_cmd, 1 + data_len);
+ 351              		.loc 1 318 3 is_stmt 1 view .LVU75
+ 352 0010 631C     		adds	r3, r4, #1
+ 353 0012 01AA     		add	r2, sp, #4
+ 354 0014 2946     		mov	r1, r5
+ 355 0016 8620     		movs	r0, #134
+ 356 0018 FFF7FEFF 		bl	cdc_send_response
+ 357              	.LVL31:
+ 319:../Common/src/usb_cdc_protocol.c **** }...
+ 358              		.loc 1 319 1 is_stmt 0 view .LVU76
+ 359 001c 07B0     		add	sp, sp, #28
+ 360              	.LCFI12:
+ 361              		.cfi_remember_state
+ 362              		.cfi_def_cfa_offset 12
+ 363              		@ sp needed
+ 364 001e 30BD     		pop	{r4, r5, pc}
+ 365              	.LVL32:
+ 366              	.L19:
+ 367              	.LCFI13:
+ 368              		.cfi_restore_state
+ 316:../Common/src/usb_cdc_protocol.c ****     memcpy(sys_cmd.data, data, data_len);
+ 369              		.loc 1 316 5 is_stmt 1 view .LVU77
+ 370 0020 0DF10500 		add	r0, sp, #5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 13
+
+
+ 371              	.LVL33:
+ 316:../Common/src/usb_cdc_protocol.c ****     memcpy(sys_cmd.data, data, data_len);
+ 372              		.loc 1 316 5 is_stmt 0 view .LVU78
+ 373 0024 FFF7FEFF 		bl	memcpy
+ 374              	.LVL34:
+ 316:../Common/src/usb_cdc_protocol.c ****     memcpy(sys_cmd.data, data, data_len);
+ 375              		.loc 1 316 5 view .LVU79
+ 376 0028 F2E7     		b	.L17
+ 377              		.cfi_endproc
+ 378              	.LFE144:
+ 380              		.section	.rodata.cdc_protocol_process.str1.4,"aMS",%progbits,1
+ 381              		.align	2
+ 382              	.LC0:
+ 383 0000 52656365 		.ascii	"Received %d bytes: \000"
+ 383      69766564 
+ 383      20256420 
+ 383      62797465 
+ 383      733A2000 
+ 384              		.align	2
+ 385              	.LC1:
+ 386 0014 25303258 		.ascii	"%02X \000"
+ 386      2000
+ 387 001a 0000     		.align	2
+ 388              	.LC2:
+ 389 001c 0D00     		.ascii	"\015\000"
+ 390 001e 0000     		.align	2
+ 391              	.LC3:
+ 392 0020 42756666 		.ascii	"Buffer length: %d\015\012\000"
+ 392      6572206C 
+ 392      656E6774 
+ 392      683A2025 
+ 392      640D0A00 
+ 393              		.align	2
+ 394              	.LC4:
+ 395 0034 4672616D 		.ascii	"Frame header: %02X %02X, cmd: %02X, data_len: %02X\015"
+ 395      65206865 
+ 395      61646572 
+ 395      3A202530 
+ 395      32582025 
+ 396 0067 0A00     		.ascii	"\012\000"
+ 397 0069 000000   		.align	2
+ 398              	.LC5:
+ 399 006c 496E7661 		.ascii	"Invalid frame header, discarding\015\000"
+ 399      6C696420 
+ 399      6672616D 
+ 399      65206865 
+ 399      61646572 
+ 400 008e 0000     		.align	2
+ 401              	.LC6:
+ 402 0090 45787065 		.ascii	"Expected frame length: %d, current buffer length: %"
+ 402      63746564 
+ 402      20667261 
+ 402      6D65206C 
+ 402      656E6774 
+ 403 00c3 640D0A00 		.ascii	"d\015\012\000"
+ 404 00c7 00       		.align	2
+ 405              	.LC7:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 14
+
+
+ 406 00c8 496E636F 		.ascii	"Incomplete frame, waiting for more data\015\000"
+ 406      6D706C65 
+ 406      74652066 
+ 406      72616D65 
+ 406      2C207761 
+ 407 00f1 000000   		.align	2
+ 408              	.LC8:
+ 409 00f4 436F6D70 		.ascii	"Complete frame: \000"
+ 409      6C657465 
+ 409      20667261 
+ 409      6D653A20 
+ 409      00
+ 410 0105 000000   		.align	2
+ 411              	.LC9:
+ 412 0108 43616C63 		.ascii	"Calculated checksum: %02X, received checksum: %02X\015"
+ 412      756C6174 
+ 412      65642063 
+ 412      6865636B 
+ 412      73756D3A 
+ 413 013b 0A00     		.ascii	"\012\000"
+ 414 013d 000000   		.align	2
+ 415              	.LC10:
+ 416 0140 43686563 		.ascii	"Checksum error, discarding\015\000"
+ 416      6B73756D 
+ 416      20657272 
+ 416      6F722C20 
+ 416      64697363 
+ 417              		.align	2
+ 418              	.LC11:
+ 419 015c 50726F63 		.ascii	"Processing command: %02X\015\012\000"
+ 419      65737369 
+ 419      6E672063 
+ 419      6F6D6D61 
+ 419      6E643A20 
+ 420 0177 00       		.align	2
+ 421              	.LC12:
+ 422 0178 52656164 		.ascii	"Reading param ID: %d\015\012\000"
+ 422      696E6720 
+ 422      70617261 
+ 422      6D204944 
+ 422      3A202564 
+ 423 018f 00       		.align	2
+ 424              	.LC13:
+ 425 0190 50617261 		.ascii	"Param value: %f\015\012\000"
+ 425      6D207661 
+ 425      6C75653A 
+ 425      2025660D 
+ 425      0A00
+ 426 01a2 0000     		.align	2
+ 427              	.LC14:
+ 428 01a4 53656E74 		.ascii	"Sent read response\015\000"
+ 428      20726561 
+ 428      64207265 
+ 428      73706F6E 
+ 428      73650D00 
+ 429              		.align	2
+ 430              	.LC15:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 15
+
+
+ 431 01b8 496E7661 		.ascii	"Invalid data length for read param\015\000"
+ 431      6C696420 
+ 431      64617461 
+ 431      206C656E 
+ 431      67746820 
+ 432              		.align	2
+ 433              	.LC16:
+ 434 01dc 57726974 		.ascii	"Writing param ID: %d, value: %f\015\012\000"
+ 434      696E6720 
+ 434      70617261 
+ 434      6D204944 
+ 434      3A202564 
+ 435 01fe 0000     		.align	2
+ 436              	.LC17:
+ 437 0200 53656E74 		.ascii	"Sent write response\015\000"
+ 437      20777269 
+ 437      74652072 
+ 437      6573706F 
+ 437      6E73650D 
+ 438 0215 000000   		.align	2
+ 439              	.LC18:
+ 440 0218 496E7661 		.ascii	"Invalid data length for write param\015\000"
+ 440      6C696420 
+ 440      64617461 
+ 440      206C656E 
+ 440      67746820 
+ 441 023d 000000   		.align	2
+ 442              	.LC19:
+ 443 0240 42617463 		.ascii	"Batch read, param count: %d\015\012\000"
+ 443      68207265 
+ 443      61642C20 
+ 443      70617261 
+ 443      6D20636F 
+ 444 025e 0000     		.align	2
+ 445              	.LC20:
+ 446 0260 50617261 		.ascii	"Param ID: %d, value: %f\015\012\000"
+ 446      6D204944 
+ 446      3A202564 
+ 446      2C207661 
+ 446      6C75653A 
+ 447 027a 0000     		.align	2
+ 448              	.LC21:
+ 449 027c 53656E74 		.ascii	"Sent batch read response\015\000"
+ 449      20626174 
+ 449      63682072 
+ 449      65616420 
+ 449      72657370 
+ 450 0296 0000     		.align	2
+ 451              	.LC22:
+ 452 0298 496E7661 		.ascii	"Invalid data length for batch read\015\000"
+ 452      6C696420 
+ 452      64617461 
+ 452      206C656E 
+ 452      67746820 
+ 453              		.align	2
+ 454              	.LC23:
+ 455 02bc 42617463 		.ascii	"Batch write, param count: %d\015\012\000"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 16
+
+
+ 455      68207772 
+ 455      6974652C 
+ 455      20706172 
+ 455      616D2063 
+ 456 02db 00       		.align	2
+ 457              	.LC24:
+ 458 02dc 53656E74 		.ascii	"Sent batch write response\015\000"
+ 458      20626174 
+ 458      63682077 
+ 458      72697465 
+ 458      20726573 
+ 459 02f7 00       		.align	2
+ 460              	.LC25:
+ 461 02f8 496E7661 		.ascii	"Invalid data length for batch write\015\000"
+ 461      6C696420 
+ 461      64617461 
+ 461      206C656E 
+ 461      67746820 
+ 462 031d 000000   		.align	2
+ 463              	.LC26:
+ 464 0320 52656164 		.ascii	"Read param list, start ID: %d, count: %d\015\012\000"
+ 464      20706172 
+ 464      616D206C 
+ 464      6973742C 
+ 464      20737461 
+ 465 034b 00       		.align	2
+ 466              	.LC27:
+ 467 034c 53656E74 		.ascii	"Sent param list response\015\000"
+ 467      20706172 
+ 467      616D206C 
+ 467      69737420 
+ 467      72657370 
+ 468 0366 0000     		.align	2
+ 469              	.LC28:
+ 470 0368 496E7661 		.ascii	"Invalid data length for param list\015\000"
+ 470      6C696420 
+ 470      64617461 
+ 470      206C656E 
+ 470      67746820 
+ 471              		.align	2
+ 472              	.LC29:
+ 473 038c 53797374 		.ascii	"System command: %02X\015\012\000"
+ 473      656D2063 
+ 473      6F6D6D61 
+ 473      6E643A20 
+ 473      25303258 
+ 474 03a3 00       		.align	2
+ 475              	.LC30:
+ 476 03a4 53656E74 		.ascii	"Sent system command response\015\000"
+ 476      20737973 
+ 476      74656D20 
+ 476      636F6D6D 
+ 476      616E6420 
+ 477 03c2 0000     		.align	2
+ 478              	.LC31:
+ 479 03c4 496E7661 		.ascii	"Invalid data length for system command\015\000"
+ 479      6C696420 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 17
+
+
+ 479      64617461 
+ 479      206C656E 
+ 479      67746820 
+ 480              		.align	2
+ 481              	.LC32:
+ 482 03ec 556E6B6E 		.ascii	"Unknown command: %02X\015\012\000"
+ 482      6F776E20 
+ 482      636F6D6D 
+ 482      616E643A 
+ 482      20253032 
+ 483              		.align	2
+ 484              	.LC33:
+ 485 0404 42756666 		.ascii	"Buffer length after processing: %d\015\012\000"
+ 485      6572206C 
+ 485      656E6774 
+ 485      68206166 
+ 485      74657220 
+ 486              		.section	.text.cdc_protocol_process,"ax",%progbits
+ 487              		.align	1
+ 488              		.global	cdc_protocol_process
+ 489              		.syntax unified
+ 490              		.thumb
+ 491              		.thumb_func
+ 493              	cdc_protocol_process:
+ 494              	.LFB139:
+  34:../Common/src/usb_cdc_protocol.c **** {
+ 495              		.loc 1 34 1 is_stmt 1 view -0
+ 496              		.cfi_startproc
+ 497              		@ args = 0, pretend = 0, frame = 192
+ 498              		@ frame_needed = 0, uses_anonymous_args = 0
+ 499 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 500              	.LCFI14:
+ 501              		.cfi_def_cfa_offset 20
+ 502              		.cfi_offset 4, -20
+ 503              		.cfi_offset 5, -16
+ 504              		.cfi_offset 6, -12
+ 505              		.cfi_offset 7, -8
+ 506              		.cfi_offset 14, -4
+ 507 0002 B3B0     		sub	sp, sp, #204
+ 508              	.LCFI15:
+ 509              		.cfi_def_cfa_offset 224
+  36:../Common/src/usb_cdc_protocol.c ****   cdc_process();
+ 510              		.loc 1 36 3 view .LVU81
+ 511 0004 FFF7FEFF 		bl	cdc_process
+ 512              	.LVL35:
+  39:../Common/src/usb_cdc_protocol.c ****   uint8_t usb_rx_buffer[USBD_CDC_OUT_MAXPACKET_SIZE];
+ 513              		.loc 1 39 3 view .LVU82
+  40:../Common/src/usb_cdc_protocol.c ****   uint16_t recv_len = usb_vcp_get_rxdata(&usb_core_dev, usb_rx_buffer);
+ 514              		.loc 1 40 3 view .LVU83
+  40:../Common/src/usb_cdc_protocol.c ****   uint16_t recv_len = usb_vcp_get_rxdata(&usb_core_dev, usb_rx_buffer);
+ 515              		.loc 1 40 23 is_stmt 0 view .LVU84
+ 516 0008 22A9     		add	r1, sp, #136
+ 517 000a A848     		ldr	r0, .L69
+ 518 000c FFF7FEFF 		bl	usb_vcp_get_rxdata
+ 519              	.LVL36:
+  42:../Common/src/usb_cdc_protocol.c ****   if (recv_len > 0)
+ 520              		.loc 1 42 3 is_stmt 1 view .LVU85
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 18
+
+
+  42:../Common/src/usb_cdc_protocol.c ****   if (recv_len > 0)
+ 521              		.loc 1 42 6 is_stmt 0 view .LVU86
+ 522 0010 08B9     		cbnz	r0, .L61
+ 523              	.LVL37:
+ 524              	.L20:
+ 268:../Common/src/usb_cdc_protocol.c **** }
+ 525              		.loc 1 268 1 view .LVU87
+ 526 0012 33B0     		add	sp, sp, #204
+ 527              	.LCFI16:
+ 528              		.cfi_remember_state
+ 529              		.cfi_def_cfa_offset 20
+ 530              		@ sp needed
+ 531 0014 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 532              	.LVL38:
+ 533              	.L61:
+ 534              	.LCFI17:
+ 535              		.cfi_restore_state
+ 268:../Common/src/usb_cdc_protocol.c **** }
+ 536              		.loc 1 268 1 view .LVU88
+ 537 0016 0546     		mov	r5, r0
+  45:../Common/src/usb_cdc_protocol.c ****     printf("Received %d bytes: ", recv_len);
+ 538              		.loc 1 45 5 is_stmt 1 view .LVU89
+ 539 0018 0146     		mov	r1, r0
+ 540 001a A548     		ldr	r0, .L69+4
+ 541              	.LVL39:
+  45:../Common/src/usb_cdc_protocol.c ****     printf("Received %d bytes: ", recv_len);
+ 542              		.loc 1 45 5 is_stmt 0 view .LVU90
+ 543 001c FFF7FEFF 		bl	printf
+ 544              	.LVL40:
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 545              		.loc 1 46 5 is_stmt 1 view .LVU91
+ 546              	.LBB4:
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 547              		.loc 1 46 10 view .LVU92
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 548              		.loc 1 46 19 is_stmt 0 view .LVU93
+ 549 0020 0024     		movs	r4, #0
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 550              		.loc 1 46 5 view .LVU94
+ 551 0022 09E0     		b	.L22
+ 552              	.LVL41:
+ 553              	.L23:
+  48:../Common/src/usb_cdc_protocol.c ****       printf("%02X ", usb_rx_buffer[i]);
+ 554              		.loc 1 48 7 is_stmt 1 view .LVU95
+  48:../Common/src/usb_cdc_protocol.c ****       printf("%02X ", usb_rx_buffer[i]);
+ 555              		.loc 1 48 36 is_stmt 0 view .LVU96
+ 556 0024 04F1C803 		add	r3, r4, #200
+ 557 0028 6B44     		add	r3, sp, r3
+  48:../Common/src/usb_cdc_protocol.c ****       printf("%02X ", usb_rx_buffer[i]);
+ 558              		.loc 1 48 7 view .LVU97
+ 559 002a 13F8401C 		ldrb	r1, [r3, #-64]	@ zero_extendqisi2
+ 560 002e A148     		ldr	r0, .L69+8
+ 561 0030 FFF7FEFF 		bl	printf
+ 562              	.LVL42:
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 563              		.loc 1 46 41 is_stmt 1 discriminator 3 view .LVU98
+ 564 0034 0134     		adds	r4, r4, #1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 19
+
+
+ 565              	.LVL43:
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 566              		.loc 1 46 41 is_stmt 0 discriminator 3 view .LVU99
+ 567 0036 A4B2     		uxth	r4, r4
+ 568              	.LVL44:
+ 569              	.L22:
+  46:../Common/src/usb_cdc_protocol.c ****     for (uint16_t i = 0; i < recv_len; i++)
+ 570              		.loc 1 46 28 is_stmt 1 discriminator 1 view .LVU100
+ 571 0038 AC42     		cmp	r4, r5
+ 572 003a F3D3     		bcc	.L23
+ 573              	.LBE4:
+  50:../Common/src/usb_cdc_protocol.c ****     printf("\r\n");
+ 574              		.loc 1 50 5 view .LVU101
+ 575 003c 9E48     		ldr	r0, .L69+12
+ 576 003e FFF7FEFF 		bl	puts
+ 577              	.LVL45:
+  53:../Common/src/usb_cdc_protocol.c ****     if (rx_len + recv_len <= sizeof(rx_buffer))
+ 578              		.loc 1 53 5 view .LVU102
+  53:../Common/src/usb_cdc_protocol.c ****     if (rx_len + recv_len <= sizeof(rx_buffer))
+ 579              		.loc 1 53 16 is_stmt 0 view .LVU103
+ 580 0042 9E4B     		ldr	r3, .L69+16
+ 581 0044 1C88     		ldrh	r4, [r3]
+ 582              	.LVL46:
+  53:../Common/src/usb_cdc_protocol.c ****     if (rx_len + recv_len <= sizeof(rx_buffer))
+ 583              		.loc 1 53 16 view .LVU104
+ 584 0046 6319     		adds	r3, r4, r5
+  53:../Common/src/usb_cdc_protocol.c ****     if (rx_len + recv_len <= sizeof(rx_buffer))
+ 585              		.loc 1 53 8 view .LVU105
+ 586 0048 B3F5007F 		cmp	r3, #512
+ 587 004c 19D8     		bhi	.L56
+  55:../Common/src/usb_cdc_protocol.c ****       memcpy(rx_buffer + rx_len, usb_rx_buffer, recv_len);
+ 588              		.loc 1 55 7 is_stmt 1 view .LVU106
+ 589 004e 2A46     		mov	r2, r5
+ 590 0050 22A9     		add	r1, sp, #136
+ 591 0052 9B48     		ldr	r0, .L69+20
+ 592 0054 2044     		add	r0, r0, r4
+ 593 0056 FFF7FEFF 		bl	memcpy
+ 594              	.LVL47:
+  56:../Common/src/usb_cdc_protocol.c ****       rx_len += recv_len;
+ 595              		.loc 1 56 7 view .LVU107
+  56:../Common/src/usb_cdc_protocol.c ****       rx_len += recv_len;
+ 596              		.loc 1 56 14 is_stmt 0 view .LVU108
+ 597 005a 6119     		adds	r1, r4, r5
+ 598 005c 89B2     		uxth	r1, r1
+ 599 005e 974B     		ldr	r3, .L69+16
+ 600 0060 1980     		strh	r1, [r3]	@ movhi
+  57:../Common/src/usb_cdc_protocol.c ****       printf("Buffer length: %d\r\n", rx_len);
+ 601              		.loc 1 57 7 is_stmt 1 view .LVU109
+ 602 0062 9848     		ldr	r0, .L69+24
+ 603 0064 FFF7FEFF 		bl	printf
+ 604              	.LVL48:
+ 605 0068 0BE0     		b	.L56
+ 606              	.LVL49:
+ 607              	.L25:
+ 608              	.LBB5:
+  73:../Common/src/usb_cdc_protocol.c ****         printf("Invalid frame header, discarding\r\n");
+ 609              		.loc 1 73 9 view .LVU110
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 20
+
+
+ 610 006a 9748     		ldr	r0, .L69+28
+ 611 006c FFF7FEFF 		bl	puts
+ 612              	.LVL50:
+  74:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 613              		.loc 1 74 9 view .LVU111
+  74:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 614              		.loc 1 74 50 is_stmt 0 view .LVU112
+ 615 0070 924D     		ldr	r5, .L69+16
+ 616 0072 2C88     		ldrh	r4, [r5]
+ 617 0074 013C     		subs	r4, r4, #1
+  74:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 618              		.loc 1 74 9 view .LVU113
+ 619 0076 9549     		ldr	r1, .L69+32
+ 620 0078 2246     		mov	r2, r4
+ 621 007a 481E     		subs	r0, r1, #1
+ 622 007c FFF7FEFF 		bl	memmove
+ 623              	.LVL51:
+  75:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+ 624              		.loc 1 75 9 is_stmt 1 view .LVU114
+  75:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+ 625              		.loc 1 75 15 is_stmt 0 view .LVU115
+ 626 0080 2C80     		strh	r4, [r5]	@ movhi
+  76:../Common/src/usb_cdc_protocol.c ****         continue;
+ 627              		.loc 1 76 9 is_stmt 1 view .LVU116
+ 628              	.LVL52:
+ 629              	.L56:
+  76:../Common/src/usb_cdc_protocol.c ****         continue;
+ 630              		.loc 1 76 9 is_stmt 0 view .LVU117
+ 631              	.LBE5:
+  61:../Common/src/usb_cdc_protocol.c ****     while (rx_len >= 6) /* 最小帧长度：帧头2 + 命令1 + 数据长度1 + 校验和1 */
+ 632              		.loc 1 61 19 is_stmt 1 view .LVU118
+ 633 0082 8E4B     		ldr	r3, .L69+16
+ 634 0084 1B88     		ldrh	r3, [r3]
+ 635 0086 052B     		cmp	r3, #5
+ 636 0088 C3D9     		bls	.L20
+ 637              	.LBB19:
+  63:../Common/src/usb_cdc_protocol.c ****       cdc_frame_t *frame = (cdc_frame_t *)rx_buffer;
+ 638              		.loc 1 63 7 view .LVU119
+ 639              	.LVL53:
+  66:../Common/src/usb_cdc_protocol.c ****       printf("Frame header: %02X %02X, cmd: %02X, data_len: %02X\r\n", 
+ 640              		.loc 1 66 7 view .LVU120
+  67:../Common/src/usb_cdc_protocol.c ****              frame->header1, frame->header2, frame->cmd, frame->data_len);
+ 641              		.loc 1 67 19 is_stmt 0 view .LVU121
+ 642 008a 8D4C     		ldr	r4, .L69+20
+  67:../Common/src/usb_cdc_protocol.c ****              frame->header1, frame->header2, frame->cmd, frame->data_len);
+ 643              		.loc 1 67 63 view .LVU122
+ 644 008c E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+  66:../Common/src/usb_cdc_protocol.c ****       printf("Frame header: %02X %02X, cmd: %02X, data_len: %02X\r\n", 
+ 645              		.loc 1 66 7 view .LVU123
+ 646 008e 0093     		str	r3, [sp]
+ 647 0090 A378     		ldrb	r3, [r4, #2]	@ zero_extendqisi2
+ 648 0092 6278     		ldrb	r2, [r4, #1]	@ zero_extendqisi2
+ 649 0094 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 650 0096 8E48     		ldr	r0, .L69+36
+ 651 0098 FFF7FEFF 		bl	printf
+ 652              	.LVL54:
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 21
+
+
+ 653              		.loc 1 70 7 is_stmt 1 view .LVU124
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+ 654              		.loc 1 70 16 is_stmt 0 view .LVU125
+ 655 009c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+ 656              		.loc 1 70 10 view .LVU126
+ 657 009e AA2B     		cmp	r3, #170
+ 658 00a0 E3D1     		bne	.L25
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+ 659              		.loc 1 70 52 discriminator 2 view .LVU127
+ 660 00a2 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+  70:../Common/src/usb_cdc_protocol.c ****       if (frame->header1 != FRAME_HEADER_1 || frame->header2 != FRAME_HEADER_2)
+ 661              		.loc 1 70 44 discriminator 2 view .LVU128
+ 662 00a4 552B     		cmp	r3, #85
+ 663 00a6 E0D1     		bne	.L25
+  80:../Common/src/usb_cdc_protocol.c ****       uint16_t frame_len = 6 + frame->data_len;
+ 664              		.loc 1 80 7 is_stmt 1 view .LVU129
+  80:../Common/src/usb_cdc_protocol.c ****       uint16_t frame_len = 6 + frame->data_len;
+ 665              		.loc 1 80 37 is_stmt 0 view .LVU130
+ 666 00a8 854B     		ldr	r3, .L69+20
+ 667 00aa DD78     		ldrb	r5, [r3, #3]	@ zero_extendqisi2
+  80:../Common/src/usb_cdc_protocol.c ****       uint16_t frame_len = 6 + frame->data_len;
+ 668              		.loc 1 80 16 view .LVU131
+ 669 00ac 0635     		adds	r5, r5, #6
+ 670              	.LVL55:
+  81:../Common/src/usb_cdc_protocol.c ****       printf("Expected frame length: %d, current buffer length: %d\r\n", frame_len, rx_len);
+ 671              		.loc 1 81 7 is_stmt 1 view .LVU132
+ 672 00ae 834C     		ldr	r4, .L69+16
+ 673 00b0 2288     		ldrh	r2, [r4]
+ 674 00b2 2946     		mov	r1, r5
+ 675 00b4 8748     		ldr	r0, .L69+40
+ 676 00b6 FFF7FEFF 		bl	printf
+ 677              	.LVL56:
+  83:../Common/src/usb_cdc_protocol.c ****       if (rx_len < frame_len)
+ 678              		.loc 1 83 7 view .LVU133
+  83:../Common/src/usb_cdc_protocol.c ****       if (rx_len < frame_len)
+ 679              		.loc 1 83 18 is_stmt 0 view .LVU134
+ 680 00ba 2388     		ldrh	r3, [r4]
+  83:../Common/src/usb_cdc_protocol.c ****       if (rx_len < frame_len)
+ 681              		.loc 1 83 10 view .LVU135
+ 682 00bc AB42     		cmp	r3, r5
+ 683 00be 04D3     		bcc	.L62
+  91:../Common/src/usb_cdc_protocol.c ****       printf("Complete frame: ");
+ 684              		.loc 1 91 7 is_stmt 1 view .LVU136
+ 685 00c0 8548     		ldr	r0, .L69+44
+ 686 00c2 FFF7FEFF 		bl	printf
+ 687              	.LVL57:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 688              		.loc 1 92 7 view .LVU137
+ 689              	.LBB6:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 690              		.loc 1 92 12 view .LVU138
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 691              		.loc 1 92 21 is_stmt 0 view .LVU139
+ 692 00c6 0024     		movs	r4, #0
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 693              		.loc 1 92 7 view .LVU140
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 22
+
+
+ 694 00c8 0AE0     		b	.L29
+ 695              	.LVL58:
+ 696              	.L62:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 697              		.loc 1 92 7 view .LVU141
+ 698              	.LBE6:
+  86:../Common/src/usb_cdc_protocol.c ****         printf("Incomplete frame, waiting for more data\r\n");
+ 699              		.loc 1 86 9 is_stmt 1 view .LVU142
+ 700 00ca 8448     		ldr	r0, .L69+48
+ 701 00cc FFF7FEFF 		bl	puts
+ 702              	.LVL59:
+  87:../Common/src/usb_cdc_protocol.c ****         break;
+ 703              		.loc 1 87 9 view .LVU143
+ 704 00d0 9FE7     		b	.L20
+ 705              	.LVL60:
+ 706              	.L30:
+ 707              	.LBB7:
+  94:../Common/src/usb_cdc_protocol.c ****         printf("%02X ", ((uint8_t *)frame)[i]);
+ 708              		.loc 1 94 9 view .LVU144
+ 709 00d2 7B4B     		ldr	r3, .L69+20
+ 710 00d4 195D     		ldrb	r1, [r3, r4]	@ zero_extendqisi2
+ 711 00d6 7748     		ldr	r0, .L69+8
+ 712 00d8 FFF7FEFF 		bl	printf
+ 713              	.LVL61:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 714              		.loc 1 92 44 discriminator 3 view .LVU145
+ 715 00dc 0134     		adds	r4, r4, #1
+ 716              	.LVL62:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 717              		.loc 1 92 44 is_stmt 0 discriminator 3 view .LVU146
+ 718 00de A4B2     		uxth	r4, r4
+ 719              	.LVL63:
+ 720              	.L29:
+  92:../Common/src/usb_cdc_protocol.c ****       for (uint16_t i = 0; i < frame_len; i++)
+ 721              		.loc 1 92 30 is_stmt 1 discriminator 1 view .LVU147
+ 722 00e0 AC42     		cmp	r4, r5
+ 723 00e2 F6D3     		bcc	.L30
+ 724              	.LBE7:
+  96:../Common/src/usb_cdc_protocol.c ****       printf("\r\n");
+ 725              		.loc 1 96 7 view .LVU148
+ 726 00e4 7448     		ldr	r0, .L69+12
+ 727 00e6 FFF7FEFF 		bl	puts
+ 728              	.LVL64:
+  99:../Common/src/usb_cdc_protocol.c ****       uint8_t checksum = calculate_checksum((uint8_t *)frame + 2, 2 + frame->data_len);
+ 729              		.loc 1 99 7 view .LVU149
+  99:../Common/src/usb_cdc_protocol.c ****       uint8_t checksum = calculate_checksum((uint8_t *)frame + 2, 2 + frame->data_len);
+ 730              		.loc 1 99 76 is_stmt 0 view .LVU150
+ 731 00ea 754E     		ldr	r6, .L69+20
+ 732 00ec F178     		ldrb	r1, [r6, #3]	@ zero_extendqisi2
+  99:../Common/src/usb_cdc_protocol.c ****       uint8_t checksum = calculate_checksum((uint8_t *)frame + 2, 2 + frame->data_len);
+ 733              		.loc 1 99 26 view .LVU151
+ 734 00ee 0231     		adds	r1, r1, #2
+ 735 00f0 B01C     		adds	r0, r6, #2
+ 736 00f2 FFF7FEFF 		bl	calculate_checksum
+ 737              	.LVL65:
+ 738 00f6 0446     		mov	r4, r0
+ 739              	.LVL66:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 23
+
+
+ 100:../Common/src/usb_cdc_protocol.c ****       printf("Calculated checksum: %02X, received checksum: %02X\r\n", checksum, frame->checksum);
+ 740              		.loc 1 100 7 is_stmt 1 view .LVU152
+ 741 00f8 96F80421 		ldrb	r2, [r6, #260]	@ zero_extendqisi2
+ 742 00fc 0146     		mov	r1, r0
+ 743 00fe 7848     		ldr	r0, .L69+52
+ 744              	.LVL67:
+ 100:../Common/src/usb_cdc_protocol.c ****       printf("Calculated checksum: %02X, received checksum: %02X\r\n", checksum, frame->checksum);
+ 745              		.loc 1 100 7 is_stmt 0 view .LVU153
+ 746 0100 FFF7FEFF 		bl	printf
+ 747              	.LVL68:
+ 102:../Common/src/usb_cdc_protocol.c ****       if (checksum != frame->checksum)
+ 748              		.loc 1 102 7 is_stmt 1 view .LVU154
+ 102:../Common/src/usb_cdc_protocol.c ****       if (checksum != frame->checksum)
+ 749              		.loc 1 102 28 is_stmt 0 view .LVU155
+ 750 0104 96F80431 		ldrb	r3, [r6, #260]	@ zero_extendqisi2
+ 102:../Common/src/usb_cdc_protocol.c ****       if (checksum != frame->checksum)
+ 751              		.loc 1 102 10 view .LVU156
+ 752 0108 A342     		cmp	r3, r4
+ 753 010a 1FD1     		bne	.L63
+ 112:../Common/src/usb_cdc_protocol.c ****       printf("Processing command: %02X\r\n", frame->cmd);
+ 754              		.loc 1 112 7 is_stmt 1 view .LVU157
+ 112:../Common/src/usb_cdc_protocol.c ****       printf("Processing command: %02X\r\n", frame->cmd);
+ 755              		.loc 1 112 51 is_stmt 0 view .LVU158
+ 756 010c 6C4C     		ldr	r4, .L69+20
+ 112:../Common/src/usb_cdc_protocol.c ****       printf("Processing command: %02X\r\n", frame->cmd);
+ 757              		.loc 1 112 7 view .LVU159
+ 758 010e A178     		ldrb	r1, [r4, #2]	@ zero_extendqisi2
+ 759 0110 7448     		ldr	r0, .L69+56
+ 760 0112 FFF7FEFF 		bl	printf
+ 761              	.LVL69:
+ 113:../Common/src/usb_cdc_protocol.c ****       switch (frame->cmd)
+ 762              		.loc 1 113 7 is_stmt 1 view .LVU160
+ 113:../Common/src/usb_cdc_protocol.c ****       switch (frame->cmd)
+ 763              		.loc 1 113 20 is_stmt 0 view .LVU161
+ 764 0116 A178     		ldrb	r1, [r4, #2]	@ zero_extendqisi2
+ 113:../Common/src/usb_cdc_protocol.c ****       switch (frame->cmd)
+ 765              		.loc 1 113 7 view .LVU162
+ 766 0118 0429     		cmp	r1, #4
+ 767 011a 00F00581 		beq	.L32
+ 768 011e 22D8     		bhi	.L33
+ 769 0120 0229     		cmp	r1, #2
+ 770 0122 62D0     		beq	.L34
+ 771 0124 0329     		cmp	r1, #3
+ 772 0126 00F08980 		beq	.L35
+ 773 012a 0129     		cmp	r1, #1
+ 774 012c 40F08F81 		bne	.L37
+ 117:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 775              		.loc 1 117 11 is_stmt 1 view .LVU163
+ 117:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 776              		.loc 1 117 20 is_stmt 0 view .LVU164
+ 777 0130 634B     		ldr	r3, .L69+20
+ 778 0132 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 117:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 779              		.loc 1 117 14 view .LVU165
+ 780 0134 082B     		cmp	r3, #8
+ 781 0136 3BD0     		beq	.L64
+ 128:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for read param\r\n");
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 24
+
+
+ 782              		.loc 1 128 13 is_stmt 1 view .LVU166
+ 783 0138 6B48     		ldr	r0, .L69+60
+ 784 013a FFF7FEFF 		bl	puts
+ 785              	.LVL70:
+ 129:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_READ_PARAM, ERROR_CMD_FORMAT, NULL, 0);
+ 786              		.loc 1 129 13 view .LVU167
+ 787 013e 0023     		movs	r3, #0
+ 788 0140 1A46     		mov	r2, r3
+ 789 0142 0521     		movs	r1, #5
+ 790 0144 8120     		movs	r0, #129
+ 791 0146 FFF7FEFF 		bl	cdc_send_response
+ 792              	.LVL71:
+ 793 014a 83E1     		b	.L41
+ 794              	.L63:
+ 105:../Common/src/usb_cdc_protocol.c ****         printf("Checksum error, discarding\r\n");
+ 795              		.loc 1 105 9 view .LVU168
+ 796 014c 6748     		ldr	r0, .L69+64
+ 797 014e FFF7FEFF 		bl	puts
+ 798              	.LVL72:
+ 106:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 799              		.loc 1 106 9 view .LVU169
+ 106:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 800              		.loc 1 106 50 is_stmt 0 view .LVU170
+ 801 0152 5A4D     		ldr	r5, .L69+16
+ 802              	.LVL73:
+ 106:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 803              		.loc 1 106 50 view .LVU171
+ 804 0154 2C88     		ldrh	r4, [r5]
+ 805 0156 013C     		subs	r4, r4, #1
+ 106:../Common/src/usb_cdc_protocol.c ****         memmove(rx_buffer, rx_buffer + 1, rx_len - 1);
+ 806              		.loc 1 106 9 view .LVU172
+ 807 0158 711C     		adds	r1, r6, #1
+ 808 015a 2246     		mov	r2, r4
+ 809 015c 481E     		subs	r0, r1, #1
+ 810 015e FFF7FEFF 		bl	memmove
+ 811              	.LVL74:
+ 107:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+ 812              		.loc 1 107 9 is_stmt 1 view .LVU173
+ 107:../Common/src/usb_cdc_protocol.c ****         rx_len--;
+ 813              		.loc 1 107 15 is_stmt 0 view .LVU174
+ 814 0162 2C80     		strh	r4, [r5]	@ movhi
+ 108:../Common/src/usb_cdc_protocol.c ****         continue;
+ 815              		.loc 1 108 9 is_stmt 1 view .LVU175
+ 816 0164 8DE7     		b	.L56
+ 817              	.LVL75:
+ 818              	.L33:
+ 113:../Common/src/usb_cdc_protocol.c ****       switch (frame->cmd)
+ 819              		.loc 1 113 7 is_stmt 0 view .LVU176
+ 820 0166 0529     		cmp	r1, #5
+ 821 0168 00F01681 		beq	.L38
+ 822 016c 0629     		cmp	r1, #6
+ 823 016e 40F06E81 		bne	.L37
+ 221:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len >= sizeof(system_cmd_t))
+ 824              		.loc 1 221 11 is_stmt 1 view .LVU177
+ 221:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len >= sizeof(system_cmd_t))
+ 825              		.loc 1 221 20 is_stmt 0 view .LVU178
+ 826 0172 534B     		ldr	r3, .L69+20
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 25
+
+
+ 827 0174 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 221:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len >= sizeof(system_cmd_t))
+ 828              		.loc 1 221 14 view .LVU179
+ 829 0176 102B     		cmp	r3, #16
+ 830 0178 40F25F81 		bls	.L53
+ 831              	.LBB8:
+ 223:../Common/src/usb_cdc_protocol.c ****             system_cmd_t *sys_cmd = (system_cmd_t *)frame->data;
+ 832              		.loc 1 223 13 is_stmt 1 view .LVU180
+ 833              	.LVL76:
+ 224:../Common/src/usb_cdc_protocol.c ****             printf("System command: %02X\r\n", sys_cmd->sub_cmd);
+ 834              		.loc 1 224 13 view .LVU181
+ 224:../Common/src/usb_cdc_protocol.c ****             printf("System command: %02X\r\n", sys_cmd->sub_cmd);
+ 835              		.loc 1 224 55 is_stmt 0 view .LVU182
+ 836 017c 504C     		ldr	r4, .L69+20
+ 224:../Common/src/usb_cdc_protocol.c ****             printf("System command: %02X\r\n", sys_cmd->sub_cmd);
+ 837              		.loc 1 224 13 view .LVU183
+ 838 017e 2179     		ldrb	r1, [r4, #4]	@ zero_extendqisi2
+ 839 0180 5B48     		ldr	r0, .L69+68
+ 840 0182 FFF7FEFF 		bl	printf
+ 841              	.LVL77:
+ 225:../Common/src/usb_cdc_protocol.c ****             uint8_t error_code = ERROR_SUCCESS;
+ 842              		.loc 1 225 13 is_stmt 1 view .LVU184
+ 227:../Common/src/usb_cdc_protocol.c ****             switch (sys_cmd->sub_cmd)
+ 843              		.loc 1 227 13 view .LVU185
+ 227:../Common/src/usb_cdc_protocol.c ****             switch (sys_cmd->sub_cmd)
+ 844              		.loc 1 227 28 is_stmt 0 view .LVU186
+ 845 0186 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 227:../Common/src/usb_cdc_protocol.c ****             switch (sys_cmd->sub_cmd)
+ 846              		.loc 1 227 13 view .LVU187
+ 847 0188 032B     		cmp	r3, #3
+ 848 018a 00F24B81 		bhi	.L54
+ 849 018e 5BB2     		sxtb	r3, r3
+ 850 0190 002B     		cmp	r3, #0
+ 851 0192 00F04E81 		beq	.L58
+ 852 0196 0023     		movs	r3, #0
+ 853              	.L55:
+ 854              	.LVL78:
+ 246:../Common/src/usb_cdc_protocol.c ****             cdc_send_system_cmd_response(sys_cmd->sub_cmd, sys_cmd->data, frame->data_len - 1, erro
+ 855              		.loc 1 246 13 is_stmt 1 view .LVU188
+ 246:../Common/src/usb_cdc_protocol.c ****             cdc_send_system_cmd_response(sys_cmd->sub_cmd, sys_cmd->data, frame->data_len - 1, erro
+ 856              		.loc 1 246 80 is_stmt 0 view .LVU189
+ 857 0198 4948     		ldr	r0, .L69+20
+ 858 019a C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+ 246:../Common/src/usb_cdc_protocol.c ****             cdc_send_system_cmd_response(sys_cmd->sub_cmd, sys_cmd->data, frame->data_len - 1, erro
+ 859              		.loc 1 246 13 view .LVU190
+ 860 019c 013A     		subs	r2, r2, #1
+ 861 019e D2B2     		uxtb	r2, r2
+ 862 01a0 411D     		adds	r1, r0, #5
+ 863 01a2 0079     		ldrb	r0, [r0, #4]	@ zero_extendqisi2
+ 864 01a4 FFF7FEFF 		bl	cdc_send_system_cmd_response
+ 865              	.LVL79:
+ 247:../Common/src/usb_cdc_protocol.c ****             printf("Sent system command response\r\n");
+ 866              		.loc 1 247 13 is_stmt 1 view .LVU191
+ 867 01a8 5248     		ldr	r0, .L69+72
+ 868 01aa FFF7FEFF 		bl	puts
+ 869              	.LVL80:
+ 870              	.LBE8:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 26
+
+
+ 871 01ae 51E1     		b	.L41
+ 872              	.LVL81:
+ 873              	.L64:
+ 874              	.LBB9:
+ 119:../Common/src/usb_cdc_protocol.c ****             param_data_t *param = (param_data_t *)frame->data;
+ 875              		.loc 1 119 13 view .LVU192
+ 120:../Common/src/usb_cdc_protocol.c ****             printf("Reading param ID: %d\r\n", param->param_id);
+ 876              		.loc 1 120 13 view .LVU193
+ 120:../Common/src/usb_cdc_protocol.c ****             printf("Reading param ID: %d\r\n", param->param_id);
+ 877              		.loc 1 120 53 is_stmt 0 view .LVU194
+ 878 01b0 434E     		ldr	r6, .L69+20
+ 120:../Common/src/usb_cdc_protocol.c ****             printf("Reading param ID: %d\r\n", param->param_id);
+ 879              		.loc 1 120 13 view .LVU195
+ 880 01b2 B188     		ldrh	r1, [r6, #4]
+ 881 01b4 5048     		ldr	r0, .L69+76
+ 882 01b6 FFF7FEFF 		bl	printf
+ 883              	.LVL82:
+ 121:../Common/src/usb_cdc_protocol.c ****             float value = motor_params_get(&motor, param->param_id);
+ 884              		.loc 1 121 13 is_stmt 1 view .LVU196
+ 121:../Common/src/usb_cdc_protocol.c ****             float value = motor_params_get(&motor, param->param_id);
+ 885              		.loc 1 121 27 is_stmt 0 view .LVU197
+ 886 01ba B188     		ldrh	r1, [r6, #4]
+ 887 01bc 4F48     		ldr	r0, .L69+80
+ 888 01be FFF7FEFF 		bl	motor_params_get
+ 889              	.LVL83:
+ 890 01c2 10EE104A 		vmov	r4, s0
+ 891              	.LVL84:
+ 122:../Common/src/usb_cdc_protocol.c ****             printf("Param value: %f\r\n", value);
+ 892              		.loc 1 122 13 is_stmt 1 view .LVU198
+ 893 01c6 2046     		mov	r0, r4	@ float
+ 894 01c8 FFF7FEFF 		bl	__aeabi_f2d
+ 895              	.LVL85:
+ 896 01cc 0246     		mov	r2, r0
+ 897 01ce 0B46     		mov	r3, r1
+ 898 01d0 4B48     		ldr	r0, .L69+84
+ 899 01d2 FFF7FEFF 		bl	printf
+ 900              	.LVL86:
+ 123:../Common/src/usb_cdc_protocol.c ****             cdc_send_param_read_response(param->param_id, value, ERROR_SUCCESS);
+ 901              		.loc 1 123 13 view .LVU199
+ 902 01d6 0021     		movs	r1, #0
+ 903 01d8 00EE104A 		vmov	s0, r4
+ 904 01dc B088     		ldrh	r0, [r6, #4]
+ 905 01de FFF7FEFF 		bl	cdc_send_param_read_response
+ 906              	.LVL87:
+ 124:../Common/src/usb_cdc_protocol.c ****             printf("Sent read response\r\n");
+ 907              		.loc 1 124 13 view .LVU200
+ 908 01e2 4848     		ldr	r0, .L69+88
+ 909 01e4 FFF7FEFF 		bl	puts
+ 910              	.LVL88:
+ 911              	.LBE9:
+ 912 01e8 34E1     		b	.L41
+ 913              	.LVL89:
+ 914              	.L34:
+ 135:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 915              		.loc 1 135 11 view .LVU201
+ 135:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 916              		.loc 1 135 20 is_stmt 0 view .LVU202
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 27
+
+
+ 917 01ea 354B     		ldr	r3, .L69+20
+ 918 01ec DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 135:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_data_t))
+ 919              		.loc 1 135 14 view .LVU203
+ 920 01ee 082B     		cmp	r3, #8
+ 921 01f0 09D0     		beq	.L65
+ 145:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for write param\r\n");
+ 922              		.loc 1 145 13 is_stmt 1 view .LVU204
+ 923 01f2 4548     		ldr	r0, .L69+92
+ 924 01f4 FFF7FEFF 		bl	puts
+ 925              	.LVL90:
+ 146:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_WRITE_PARAM, ERROR_CMD_FORMAT, NULL, 0);
+ 926              		.loc 1 146 13 view .LVU205
+ 927 01f8 0023     		movs	r3, #0
+ 928 01fa 1A46     		mov	r2, r3
+ 929 01fc 0521     		movs	r1, #5
+ 930 01fe 8220     		movs	r0, #130
+ 931 0200 FFF7FEFF 		bl	cdc_send_response
+ 932              	.LVL91:
+ 933 0204 26E1     		b	.L41
+ 934              	.L65:
+ 935              	.LBB10:
+ 137:../Common/src/usb_cdc_protocol.c ****             param_data_t *param = (param_data_t *)frame->data;
+ 936              		.loc 1 137 13 view .LVU206
+ 937              	.LVL92:
+ 138:../Common/src/usb_cdc_protocol.c ****             printf("Writing param ID: %d, value: %f\r\n", param->param_id, param->value.f_value);
+ 938              		.loc 1 138 13 view .LVU207
+ 138:../Common/src/usb_cdc_protocol.c ****             printf("Writing param ID: %d, value: %f\r\n", param->param_id, param->value.f_value);
+ 939              		.loc 1 138 64 is_stmt 0 view .LVU208
+ 940 0206 2E4C     		ldr	r4, .L69+20
+ 941 0208 A688     		ldrh	r6, [r4, #4]
+ 138:../Common/src/usb_cdc_protocol.c ****             printf("Writing param ID: %d, value: %f\r\n", param->param_id, param->value.f_value);
+ 942              		.loc 1 138 13 view .LVU209
+ 943 020a A068     		ldr	r0, [r4, #8]	@ float
+ 944 020c FFF7FEFF 		bl	__aeabi_f2d
+ 945              	.LVL93:
+ 946 0210 0246     		mov	r2, r0
+ 947 0212 0B46     		mov	r3, r1
+ 948 0214 3146     		mov	r1, r6
+ 949 0216 3D48     		ldr	r0, .L69+96
+ 950 0218 FFF7FEFF 		bl	printf
+ 951              	.LVL94:
+ 139:../Common/src/usb_cdc_protocol.c ****             motor_params_update(&motor, param->param_id, param->value.f_value);
+ 952              		.loc 1 139 13 is_stmt 1 view .LVU210
+ 953 021c 94ED020A 		vldr.32	s0, [r4, #8]
+ 954 0220 A188     		ldrh	r1, [r4, #4]
+ 955 0222 3648     		ldr	r0, .L69+80
+ 956 0224 FFF7FEFF 		bl	motor_params_update
+ 957              	.LVL95:
+ 140:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_WRITE_PARAM, ERROR_SUCCESS, NULL, 0);
+ 958              		.loc 1 140 13 view .LVU211
+ 959 0228 0023     		movs	r3, #0
+ 960 022a 1A46     		mov	r2, r3
+ 961 022c 1946     		mov	r1, r3
+ 962 022e 8220     		movs	r0, #130
+ 963 0230 FFF7FEFF 		bl	cdc_send_response
+ 964              	.LVL96:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 28
+
+
+ 141:../Common/src/usb_cdc_protocol.c ****             printf("Sent write response\r\n");
+ 965              		.loc 1 141 13 view .LVU212
+ 966 0234 3648     		ldr	r0, .L69+100
+ 967 0236 FFF7FEFF 		bl	puts
+ 968              	.LVL97:
+ 969              	.LBE10:
+ 970 023a 0BE1     		b	.L41
+ 971              	.LVL98:
+ 972              	.L35:
+ 152:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 973              		.loc 1 152 11 view .LVU213
+ 152:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 974              		.loc 1 152 20 is_stmt 0 view .LVU214
+ 975 023c 204B     		ldr	r3, .L69+20
+ 976 023e DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 152:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 977              		.loc 1 152 14 view .LVU215
+ 978 0240 842B     		cmp	r3, #132
+ 979 0242 09D0     		beq	.L66
+ 166:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for batch read\r\n");
+ 980              		.loc 1 166 13 is_stmt 1 view .LVU216
+ 981 0244 3348     		ldr	r0, .L69+104
+ 982 0246 FFF7FEFF 		bl	puts
+ 983              	.LVL99:
+ 167:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_READ, ERROR_CMD_FORMAT, NULL, 0);
+ 984              		.loc 1 167 13 view .LVU217
+ 985 024a 0023     		movs	r3, #0
+ 986 024c 1A46     		mov	r2, r3
+ 987 024e 0521     		movs	r1, #5
+ 988 0250 8320     		movs	r0, #131
+ 989 0252 FFF7FEFF 		bl	cdc_send_response
+ 990              	.LVL100:
+ 991 0256 FDE0     		b	.L41
+ 992              	.L66:
+ 993              	.LBB11:
+ 154:../Common/src/usb_cdc_protocol.c ****             batch_param_data_t *batch_data = (batch_param_data_t *)frame->data;
+ 994              		.loc 1 154 13 view .LVU218
+ 995              	.LVL101:
+ 155:../Common/src/usb_cdc_protocol.c ****             printf("Batch read, param count: %d\r\n", batch_data->param_count);
+ 996              		.loc 1 155 13 view .LVU219
+ 997 0258 194B     		ldr	r3, .L69+20
+ 998 025a 9988     		ldrh	r1, [r3, #4]
+ 999 025c 2E48     		ldr	r0, .L69+108
+ 1000 025e FFF7FEFF 		bl	printf
+ 1001              	.LVL102:
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1002              		.loc 1 156 13 view .LVU220
+ 1003              	.LBB12:
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1004              		.loc 1 156 18 view .LVU221
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1005              		.loc 1 156 27 is_stmt 0 view .LVU222
+ 1006 0262 0024     		movs	r4, #0
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1007              		.loc 1 156 13 view .LVU223
+ 1008 0264 15E0     		b	.L44
+ 1009              	.LVL103:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 29
+
+
+ 1010              	.L45:
+ 158:../Common/src/usb_cdc_protocol.c ****               batch_data->params[i].value.f_value = motor_params_get(&motor, batch_data->params[i].
+ 1011              		.loc 1 158 15 is_stmt 1 view .LVU224
+ 158:../Common/src/usb_cdc_protocol.c ****               batch_data->params[i].value.f_value = motor_params_get(&motor, batch_data->params[i].
+ 1012              		.loc 1 158 53 is_stmt 0 view .LVU225
+ 1013 0266 164E     		ldr	r6, .L69+20
+ 1014 0268 06EBC406 		add	r6, r6, r4, lsl #3
+ 1015 026c 3189     		ldrh	r1, [r6, #8]
+ 1016 026e 2348     		ldr	r0, .L69+80
+ 1017 0270 FFF7FEFF 		bl	motor_params_get
+ 1018              	.LVL104:
+ 1019 0274 10EE100A 		vmov	r0, s0
+ 158:../Common/src/usb_cdc_protocol.c ****               batch_data->params[i].value.f_value = motor_params_get(&motor, batch_data->params[i].
+ 1020              		.loc 1 158 51 discriminator 1 view .LVU226
+ 1021 0278 86ED030A 		vstr.32	s0, [r6, #12]
+ 159:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1022              		.loc 1 159 15 is_stmt 1 view .LVU227
+ 159:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1023              		.loc 1 159 74 is_stmt 0 view .LVU228
+ 1024 027c 3689     		ldrh	r6, [r6, #8]
+ 159:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1025              		.loc 1 159 15 view .LVU229
+ 1026 027e FFF7FEFF 		bl	__aeabi_f2d
+ 1027              	.LVL105:
+ 1028 0282 0246     		mov	r2, r0
+ 1029 0284 0B46     		mov	r3, r1
+ 1030 0286 3146     		mov	r1, r6
+ 1031 0288 2448     		ldr	r0, .L69+112
+ 1032 028a FFF7FEFF 		bl	printf
+ 1033              	.LVL106:
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1034              		.loc 1 156 64 is_stmt 1 discriminator 3 view .LVU230
+ 1035 028e 0134     		adds	r4, r4, #1
+ 1036              	.LVL107:
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1037              		.loc 1 156 64 is_stmt 0 discriminator 3 view .LVU231
+ 1038 0290 A4B2     		uxth	r4, r4
+ 1039              	.LVL108:
+ 1040              	.L44:
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1041              		.loc 1 156 36 is_stmt 1 discriminator 1 view .LVU232
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1042              		.loc 1 156 48 is_stmt 0 discriminator 1 view .LVU233
+ 1043 0292 0B4B     		ldr	r3, .L69+20
+ 1044 0294 9B88     		ldrh	r3, [r3, #4]
+ 156:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1045              		.loc 1 156 36 discriminator 1 view .LVU234
+ 1046 0296 A342     		cmp	r3, r4
+ 1047 0298 E5D8     		bhi	.L45
+ 1048              	.LBE12:
+ 161:../Common/src/usb_cdc_protocol.c ****             cdc_send_batch_read_response(batch_data, ERROR_SUCCESS);
+ 1049              		.loc 1 161 13 is_stmt 1 view .LVU235
+ 1050 029a 0021     		movs	r1, #0
+ 1051 029c 2048     		ldr	r0, .L69+116
+ 1052              	.LVL109:
+ 161:../Common/src/usb_cdc_protocol.c ****             cdc_send_batch_read_response(batch_data, ERROR_SUCCESS);
+ 1053              		.loc 1 161 13 is_stmt 0 view .LVU236
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 30
+
+
+ 1054 029e FFF7FEFF 		bl	cdc_send_batch_read_response
+ 1055              	.LVL110:
+ 162:../Common/src/usb_cdc_protocol.c ****             printf("Sent batch read response\r\n");
+ 1056              		.loc 1 162 13 is_stmt 1 view .LVU237
+ 1057 02a2 2048     		ldr	r0, .L69+120
+ 1058 02a4 FFF7FEFF 		bl	puts
+ 1059              	.LVL111:
+ 1060              	.LBE11:
+ 1061 02a8 D4E0     		b	.L41
+ 1062              	.L70:
+ 1063 02aa 00BF     		.align	2
+ 1064              	.L69:
+ 1065 02ac 00000000 		.word	usb_core_dev
+ 1066 02b0 00000000 		.word	.LC0
+ 1067 02b4 14000000 		.word	.LC1
+ 1068 02b8 1C000000 		.word	.LC2
+ 1069 02bc 00000000 		.word	rx_len
+ 1070 02c0 00000000 		.word	rx_buffer
+ 1071 02c4 20000000 		.word	.LC3
+ 1072 02c8 6C000000 		.word	.LC5
+ 1073 02cc 01000000 		.word	rx_buffer+1
+ 1074 02d0 34000000 		.word	.LC4
+ 1075 02d4 90000000 		.word	.LC6
+ 1076 02d8 F4000000 		.word	.LC8
+ 1077 02dc C8000000 		.word	.LC7
+ 1078 02e0 08010000 		.word	.LC9
+ 1079 02e4 5C010000 		.word	.LC11
+ 1080 02e8 B8010000 		.word	.LC15
+ 1081 02ec 40010000 		.word	.LC10
+ 1082 02f0 8C030000 		.word	.LC29
+ 1083 02f4 A4030000 		.word	.LC30
+ 1084 02f8 78010000 		.word	.LC12
+ 1085 02fc 00000000 		.word	motor
+ 1086 0300 90010000 		.word	.LC13
+ 1087 0304 A4010000 		.word	.LC14
+ 1088 0308 18020000 		.word	.LC18
+ 1089 030c DC010000 		.word	.LC16
+ 1090 0310 00020000 		.word	.LC17
+ 1091 0314 98020000 		.word	.LC22
+ 1092 0318 40020000 		.word	.LC19
+ 1093 031c 60020000 		.word	.LC20
+ 1094 0320 04000000 		.word	rx_buffer+4
+ 1095 0324 7C020000 		.word	.LC21
+ 1096              	.LVL112:
+ 1097              	.L32:
+ 173:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 1098              		.loc 1 173 11 view .LVU238
+ 173:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 1099              		.loc 1 173 20 is_stmt 0 view .LVU239
+ 1100 0328 514B     		ldr	r3, .L71
+ 1101 032a DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 173:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(batch_param_data_t))
+ 1102              		.loc 1 173 14 view .LVU240
+ 1103 032c 842B     		cmp	r3, #132
+ 1104 032e 09D0     		beq	.L67
+ 187:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for batch write\r\n");
+ 1105              		.loc 1 187 13 is_stmt 1 view .LVU241
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 31
+
+
+ 1106 0330 5048     		ldr	r0, .L71+4
+ 1107 0332 FFF7FEFF 		bl	puts
+ 1108              	.LVL113:
+ 188:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_WRITE, ERROR_CMD_FORMAT, NULL, 0);
+ 1109              		.loc 1 188 13 view .LVU242
+ 1110 0336 0023     		movs	r3, #0
+ 1111 0338 1A46     		mov	r2, r3
+ 1112 033a 0521     		movs	r1, #5
+ 1113 033c 8420     		movs	r0, #132
+ 1114 033e FFF7FEFF 		bl	cdc_send_response
+ 1115              	.LVL114:
+ 1116 0342 87E0     		b	.L41
+ 1117              	.L67:
+ 1118              	.LBB13:
+ 175:../Common/src/usb_cdc_protocol.c ****             batch_param_data_t *batch_data = (batch_param_data_t *)frame->data;
+ 1119              		.loc 1 175 13 view .LVU243
+ 1120              	.LVL115:
+ 176:../Common/src/usb_cdc_protocol.c ****             printf("Batch write, param count: %d\r\n", batch_data->param_count);
+ 1121              		.loc 1 176 13 view .LVU244
+ 1122 0344 4A4B     		ldr	r3, .L71
+ 1123 0346 9988     		ldrh	r1, [r3, #4]
+ 1124 0348 4B48     		ldr	r0, .L71+8
+ 1125 034a FFF7FEFF 		bl	printf
+ 1126              	.LVL116:
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1127              		.loc 1 177 13 view .LVU245
+ 1128              	.LBB14:
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1129              		.loc 1 177 18 view .LVU246
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1130              		.loc 1 177 27 is_stmt 0 view .LVU247
+ 1131 034e 0026     		movs	r6, #0
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1132              		.loc 1 177 13 view .LVU248
+ 1133 0350 14E0     		b	.L47
+ 1134              	.LVL117:
+ 1135              	.L48:
+ 179:../Common/src/usb_cdc_protocol.c ****               motor_params_update(&motor, batch_data->params[i].param_id, batch_data->params[i].val
+ 1136              		.loc 1 179 15 is_stmt 1 view .LVU249
+ 1137 0352 474C     		ldr	r4, .L71
+ 1138 0354 04EBC604 		add	r4, r4, r6, lsl #3
+ 1139 0358 94ED030A 		vldr.32	s0, [r4, #12]
+ 1140 035c 2189     		ldrh	r1, [r4, #8]
+ 1141 035e 4748     		ldr	r0, .L71+12
+ 1142 0360 FFF7FEFF 		bl	motor_params_update
+ 1143              	.LVL118:
+ 180:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1144              		.loc 1 180 15 view .LVU250
+ 180:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1145              		.loc 1 180 74 is_stmt 0 view .LVU251
+ 1146 0364 2789     		ldrh	r7, [r4, #8]
+ 180:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", batch_data->params[i].param_id, batch_data->par
+ 1147              		.loc 1 180 15 view .LVU252
+ 1148 0366 E068     		ldr	r0, [r4, #12]	@ float
+ 1149 0368 FFF7FEFF 		bl	__aeabi_f2d
+ 1150              	.LVL119:
+ 1151 036c 0246     		mov	r2, r0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 32
+
+
+ 1152 036e 0B46     		mov	r3, r1
+ 1153 0370 3946     		mov	r1, r7
+ 1154 0372 4348     		ldr	r0, .L71+16
+ 1155 0374 FFF7FEFF 		bl	printf
+ 1156              	.LVL120:
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1157              		.loc 1 177 64 is_stmt 1 discriminator 3 view .LVU253
+ 1158 0378 0136     		adds	r6, r6, #1
+ 1159              	.LVL121:
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1160              		.loc 1 177 64 is_stmt 0 discriminator 3 view .LVU254
+ 1161 037a B6B2     		uxth	r6, r6
+ 1162              	.LVL122:
+ 1163              	.L47:
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1164              		.loc 1 177 36 is_stmt 1 discriminator 1 view .LVU255
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1165              		.loc 1 177 48 is_stmt 0 discriminator 1 view .LVU256
+ 1166 037c 3C4B     		ldr	r3, .L71
+ 1167 037e 9B88     		ldrh	r3, [r3, #4]
+ 177:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < batch_data->param_count; i++)
+ 1168              		.loc 1 177 36 discriminator 1 view .LVU257
+ 1169 0380 B342     		cmp	r3, r6
+ 1170 0382 E6D8     		bhi	.L48
+ 1171              	.LBE14:
+ 182:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_BATCH_WRITE, ERROR_SUCCESS, NULL, 0);
+ 1172              		.loc 1 182 13 is_stmt 1 view .LVU258
+ 1173 0384 0023     		movs	r3, #0
+ 1174 0386 1A46     		mov	r2, r3
+ 1175 0388 1946     		mov	r1, r3
+ 1176 038a 8420     		movs	r0, #132
+ 1177 038c FFF7FEFF 		bl	cdc_send_response
+ 1178              	.LVL123:
+ 183:../Common/src/usb_cdc_protocol.c ****             printf("Sent batch write response\r\n");
+ 1179              		.loc 1 183 13 view .LVU259
+ 1180 0390 3C48     		ldr	r0, .L71+20
+ 1181 0392 FFF7FEFF 		bl	puts
+ 1182              	.LVL124:
+ 1183              	.LBE13:
+ 1184 0396 5DE0     		b	.L41
+ 1185              	.LVL125:
+ 1186              	.L38:
+ 194:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_list_request_t))
+ 1187              		.loc 1 194 11 view .LVU260
+ 194:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_list_request_t))
+ 1188              		.loc 1 194 20 is_stmt 0 view .LVU261
+ 1189 0398 354B     		ldr	r3, .L71
+ 1190 039a DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 194:../Common/src/usb_cdc_protocol.c ****           if (frame->data_len == sizeof(param_list_request_t))
+ 1191              		.loc 1 194 14 view .LVU262
+ 1192 039c 042B     		cmp	r3, #4
+ 1193 039e 09D0     		beq	.L68
+ 214:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for param list\r\n");
+ 1194              		.loc 1 214 13 is_stmt 1 view .LVU263
+ 1195 03a0 3948     		ldr	r0, .L71+24
+ 1196 03a2 FFF7FEFF 		bl	puts
+ 1197              	.LVL126:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 33
+
+
+ 215:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_READ_PARAM_LIST, ERROR_CMD_FORMAT, NULL, 0);
+ 1198              		.loc 1 215 13 view .LVU264
+ 1199 03a6 0023     		movs	r3, #0
+ 1200 03a8 1A46     		mov	r2, r3
+ 1201 03aa 0521     		movs	r1, #5
+ 1202 03ac 8520     		movs	r0, #133
+ 1203 03ae FFF7FEFF 		bl	cdc_send_response
+ 1204              	.LVL127:
+ 1205 03b2 4FE0     		b	.L41
+ 1206              	.L68:
+ 1207              	.LBB15:
+ 196:../Common/src/usb_cdc_protocol.c ****             param_list_request_t *request = (param_list_request_t *)frame->data;
+ 1208              		.loc 1 196 13 view .LVU265
+ 1209              	.LVL128:
+ 197:../Common/src/usb_cdc_protocol.c ****             printf("Read param list, start ID: %d, count: %d\r\n", request->start_param_id, request
+ 1210              		.loc 1 197 13 view .LVU266
+ 197:../Common/src/usb_cdc_protocol.c ****             printf("Read param list, start ID: %d, count: %d\r\n", request->start_param_id, request
+ 1211              		.loc 1 197 75 is_stmt 0 view .LVU267
+ 1212 03b4 2E4B     		ldr	r3, .L71
+ 197:../Common/src/usb_cdc_protocol.c ****             printf("Read param list, start ID: %d, count: %d\r\n", request->start_param_id, request
+ 1213              		.loc 1 197 13 view .LVU268
+ 1214 03b6 DA88     		ldrh	r2, [r3, #6]
+ 1215 03b8 9988     		ldrh	r1, [r3, #4]
+ 1216 03ba 3448     		ldr	r0, .L71+28
+ 1217 03bc FFF7FEFF 		bl	printf
+ 1218              	.LVL129:
+ 198:../Common/src/usb_cdc_protocol.c ****             param_data_t param_list[16];
+ 1219              		.loc 1 198 13 is_stmt 1 view .LVU269
+ 199:../Common/src/usb_cdc_protocol.c ****             uint16_t param_count = 0;
+ 1220              		.loc 1 199 13 view .LVU270
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1221              		.loc 1 201 13 view .LVU271
+ 1222              	.LBB16:
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1223              		.loc 1 201 18 view .LVU272
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1224              		.loc 1 201 27 is_stmt 0 view .LVU273
+ 1225 03c0 0024     		movs	r4, #0
+ 1226              	.LBE16:
+ 199:../Common/src/usb_cdc_protocol.c ****             uint16_t param_count = 0;
+ 1227              		.loc 1 199 22 view .LVU274
+ 1228 03c2 2746     		mov	r7, r4
+ 1229              	.LBB17:
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1230              		.loc 1 201 13 view .LVU275
+ 1231 03c4 1FE0     		b	.L50
+ 1232              	.LVL130:
+ 1233              	.L52:
+ 203:../Common/src/usb_cdc_protocol.c ****               param_list[i].param_id = request->start_param_id + i;
+ 1234              		.loc 1 203 15 is_stmt 1 view .LVU276
+ 203:../Common/src/usb_cdc_protocol.c ****               param_list[i].param_id = request->start_param_id + i;
+ 1235              		.loc 1 203 47 is_stmt 0 view .LVU277
+ 1236 03c6 2A4B     		ldr	r3, .L71
+ 1237 03c8 9988     		ldrh	r1, [r3, #4]
+ 203:../Common/src/usb_cdc_protocol.c ****               param_list[i].param_id = request->start_param_id + i;
+ 1238              		.loc 1 203 64 view .LVU278
+ 1239 03ca 2144     		add	r1, r1, r4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 34
+
+
+ 1240 03cc 89B2     		uxth	r1, r1
+ 203:../Common/src/usb_cdc_protocol.c ****               param_list[i].param_id = request->start_param_id + i;
+ 1241              		.loc 1 203 38 view .LVU279
+ 1242 03ce 32AB     		add	r3, sp, #200
+ 1243 03d0 03EBC406 		add	r6, r3, r4, lsl #3
+ 1244 03d4 26F8C01C 		strh	r1, [r6, #-192]	@ movhi
+ 204:../Common/src/usb_cdc_protocol.c ****               param_list[i].value.f_value = motor_params_get(&motor, param_list[i].param_id);
+ 1245              		.loc 1 204 15 is_stmt 1 view .LVU280
+ 204:../Common/src/usb_cdc_protocol.c ****               param_list[i].value.f_value = motor_params_get(&motor, param_list[i].param_id);
+ 1246              		.loc 1 204 45 is_stmt 0 view .LVU281
+ 1247 03d8 2848     		ldr	r0, .L71+12
+ 1248 03da FFF7FEFF 		bl	motor_params_get
+ 1249              	.LVL131:
+ 1250 03de 10EE100A 		vmov	r0, s0
+ 204:../Common/src/usb_cdc_protocol.c ****               param_list[i].value.f_value = motor_params_get(&motor, param_list[i].param_id);
+ 1251              		.loc 1 204 43 discriminator 1 view .LVU282
+ 1252 03e2 06ED2F0A 		vstr.32	s0, [r6, #-188]
+ 205:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", param_list[i].param_id, param_list[i].value.f_v
+ 1253              		.loc 1 205 15 is_stmt 1 view .LVU283
+ 205:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", param_list[i].param_id, param_list[i].value.f_v
+ 1254              		.loc 1 205 66 is_stmt 0 view .LVU284
+ 1255 03e6 36F8C06C 		ldrh	r6, [r6, #-192]
+ 205:../Common/src/usb_cdc_protocol.c ****               printf("Param ID: %d, value: %f\r\n", param_list[i].param_id, param_list[i].value.f_v
+ 1256              		.loc 1 205 15 view .LVU285
+ 1257 03ea FFF7FEFF 		bl	__aeabi_f2d
+ 1258              	.LVL132:
+ 1259 03ee 0246     		mov	r2, r0
+ 1260 03f0 0B46     		mov	r3, r1
+ 1261 03f2 3146     		mov	r1, r6
+ 1262 03f4 2248     		ldr	r0, .L71+16
+ 1263 03f6 FFF7FEFF 		bl	printf
+ 1264              	.LVL133:
+ 206:../Common/src/usb_cdc_protocol.c ****               param_count++;
+ 1265              		.loc 1 206 15 is_stmt 1 view .LVU286
+ 206:../Common/src/usb_cdc_protocol.c ****               param_count++;
+ 1266              		.loc 1 206 26 is_stmt 0 view .LVU287
+ 1267 03fa 3E46     		mov	r6, r7
+ 1268 03fc 0136     		adds	r6, r6, #1
+ 1269 03fe B3B2     		uxth	r3, r6
+ 1270 0400 1F46     		mov	r7, r3
+ 1271              	.LVL134:
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1272              		.loc 1 201 71 is_stmt 1 discriminator 4 view .LVU288
+ 1273 0402 0134     		adds	r4, r4, #1
+ 1274              	.LVL135:
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1275              		.loc 1 201 71 is_stmt 0 discriminator 4 view .LVU289
+ 1276 0404 A4B2     		uxth	r4, r4
+ 1277              	.LVL136:
+ 1278              	.L50:
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1279              		.loc 1 201 59 is_stmt 1 discriminator 1 view .LVU290
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1280              		.loc 1 201 45 is_stmt 0 discriminator 1 view .LVU291
+ 1281 0406 1A4B     		ldr	r3, .L71
+ 1282 0408 DB88     		ldrh	r3, [r3, #6]
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 35
+
+
+ 1283              		.loc 1 201 59 discriminator 1 view .LVU292
+ 1284 040a A342     		cmp	r3, r4
+ 1285 040c 01D9     		bls	.L51
+ 201:../Common/src/usb_cdc_protocol.c ****             for (uint16_t i = 0; i < request->param_count && i < 16; i++)
+ 1286              		.loc 1 201 59 discriminator 3 view .LVU293
+ 1287 040e 0F2C     		cmp	r4, #15
+ 1288 0410 D9D9     		bls	.L52
+ 1289              	.L51:
+ 1290              	.LBE17:
+ 209:../Common/src/usb_cdc_protocol.c ****             cdc_send_param_list_response(param_list, param_count, ERROR_SUCCESS);
+ 1291              		.loc 1 209 13 is_stmt 1 view .LVU294
+ 1292 0412 0022     		movs	r2, #0
+ 1293 0414 3946     		mov	r1, r7
+ 1294 0416 02A8     		add	r0, sp, #8
+ 1295 0418 FFF7FEFF 		bl	cdc_send_param_list_response
+ 1296              	.LVL137:
+ 210:../Common/src/usb_cdc_protocol.c ****             printf("Sent param list response\r\n");
+ 1297              		.loc 1 210 13 view .LVU295
+ 1298 041c 1C48     		ldr	r0, .L71+32
+ 1299 041e FFF7FEFF 		bl	puts
+ 1300              	.LVL138:
+ 1301              	.LBE15:
+ 1302 0422 17E0     		b	.L41
+ 1303              	.LVL139:
+ 1304              	.L54:
+ 1305              	.LBB18:
+ 227:../Common/src/usb_cdc_protocol.c ****             switch (sys_cmd->sub_cmd)
+ 1306              		.loc 1 227 13 is_stmt 0 view .LVU296
+ 1307 0424 042B     		cmp	r3, #4
+ 1308 0426 06D1     		bne	.L59
+ 239:../Common/src/usb_cdc_protocol.c ****                 motor_params_clear_errors(&motor);
+ 1309              		.loc 1 239 17 is_stmt 1 view .LVU297
+ 1310 0428 1448     		ldr	r0, .L71+12
+ 1311 042a FFF7FEFF 		bl	motor_params_clear_errors
+ 1312              	.LVL140:
+ 240:../Common/src/usb_cdc_protocol.c ****                 break;
+ 1313              		.loc 1 240 17 view .LVU298
+ 225:../Common/src/usb_cdc_protocol.c ****             uint8_t error_code = ERROR_SUCCESS;
+ 1314              		.loc 1 225 21 is_stmt 0 view .LVU299
+ 1315 042e 0023     		movs	r3, #0
+ 240:../Common/src/usb_cdc_protocol.c ****                 break;
+ 1316              		.loc 1 240 17 view .LVU300
+ 1317 0430 B2E6     		b	.L55
+ 1318              	.L58:
+ 242:../Common/src/usb_cdc_protocol.c ****                 error_code = ERROR_CMD_FORMAT;
+ 1319              		.loc 1 242 28 view .LVU301
+ 1320 0432 0523     		movs	r3, #5
+ 1321 0434 B0E6     		b	.L55
+ 1322              	.L59:
+ 1323 0436 0523     		movs	r3, #5
+ 1324 0438 AEE6     		b	.L55
+ 1325              	.LVL141:
+ 1326              	.L53:
+ 242:../Common/src/usb_cdc_protocol.c ****                 error_code = ERROR_CMD_FORMAT;
+ 1327              		.loc 1 242 28 view .LVU302
+ 1328              	.LBE18:
+ 251:../Common/src/usb_cdc_protocol.c ****             printf("Invalid data length for system command\r\n");
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 36
+
+
+ 1329              		.loc 1 251 13 is_stmt 1 view .LVU303
+ 1330 043a 1648     		ldr	r0, .L71+36
+ 1331 043c FFF7FEFF 		bl	puts
+ 1332              	.LVL142:
+ 252:../Common/src/usb_cdc_protocol.c ****             cdc_send_response(CMD_RESP_SYSTEM_CMD, ERROR_CMD_FORMAT, NULL, 0);
+ 1333              		.loc 1 252 13 view .LVU304
+ 1334 0440 0023     		movs	r3, #0
+ 1335 0442 1A46     		mov	r2, r3
+ 1336 0444 0521     		movs	r1, #5
+ 1337 0446 8620     		movs	r0, #134
+ 1338 0448 FFF7FEFF 		bl	cdc_send_response
+ 1339              	.LVL143:
+ 1340 044c 02E0     		b	.L41
+ 1341              	.L37:
+ 258:../Common/src/usb_cdc_protocol.c ****           printf("Unknown command: %02X\r\n", frame->cmd);
+ 1342              		.loc 1 258 11 view .LVU305
+ 1343 044e 1248     		ldr	r0, .L71+40
+ 1344 0450 FFF7FEFF 		bl	printf
+ 1345              	.LVL144:
+ 259:../Common/src/usb_cdc_protocol.c ****           break;
+ 1346              		.loc 1 259 11 view .LVU306
+ 1347              	.L41:
+ 263:../Common/src/usb_cdc_protocol.c ****       memmove(rx_buffer, rx_buffer + frame_len, rx_len - frame_len);
+ 1348              		.loc 1 263 7 view .LVU307
+ 263:../Common/src/usb_cdc_protocol.c ****       memmove(rx_buffer, rx_buffer + frame_len, rx_len - frame_len);
+ 1349              		.loc 1 263 56 is_stmt 0 view .LVU308
+ 1350 0454 114E     		ldr	r6, .L71+44
+ 1351 0456 3488     		ldrh	r4, [r6]
+ 263:../Common/src/usb_cdc_protocol.c ****       memmove(rx_buffer, rx_buffer + frame_len, rx_len - frame_len);
+ 1352              		.loc 1 263 7 view .LVU309
+ 1353 0458 0548     		ldr	r0, .L71
+ 1354 045a 621B     		subs	r2, r4, r5
+ 1355 045c 4119     		adds	r1, r0, r5
+ 1356 045e FFF7FEFF 		bl	memmove
+ 1357              	.LVL145:
+ 264:../Common/src/usb_cdc_protocol.c ****       rx_len -= frame_len;
+ 1358              		.loc 1 264 7 is_stmt 1 view .LVU310
+ 264:../Common/src/usb_cdc_protocol.c ****       rx_len -= frame_len;
+ 1359              		.loc 1 264 14 is_stmt 0 view .LVU311
+ 1360 0462 611B     		subs	r1, r4, r5
+ 1361 0464 89B2     		uxth	r1, r1
+ 1362 0466 3180     		strh	r1, [r6]	@ movhi
+ 265:../Common/src/usb_cdc_protocol.c ****       printf("Buffer length after processing: %d\r\n", rx_len);
+ 1363              		.loc 1 265 7 is_stmt 1 view .LVU312
+ 1364 0468 0D48     		ldr	r0, .L71+48
+ 1365 046a FFF7FEFF 		bl	printf
+ 1366              	.LVL146:
+ 1367 046e 08E6     		b	.L56
+ 1368              	.L72:
+ 1369              		.align	2
+ 1370              	.L71:
+ 1371 0470 00000000 		.word	rx_buffer
+ 1372 0474 F8020000 		.word	.LC25
+ 1373 0478 BC020000 		.word	.LC23
+ 1374 047c 00000000 		.word	motor
+ 1375 0480 60020000 		.word	.LC20
+ 1376 0484 DC020000 		.word	.LC24
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 37
+
+
+ 1377 0488 68030000 		.word	.LC28
+ 1378 048c 20030000 		.word	.LC26
+ 1379 0490 4C030000 		.word	.LC27
+ 1380 0494 C4030000 		.word	.LC31
+ 1381 0498 EC030000 		.word	.LC32
+ 1382 049c 00000000 		.word	rx_len
+ 1383 04a0 04040000 		.word	.LC33
+ 1384              	.LBE19:
+ 1385              		.cfi_endproc
+ 1386              	.LFE139:
+ 1388              		.section	.bss.rx_len,"aw",%nobits
+ 1389              		.align	1
+ 1392              	rx_len:
+ 1393 0000 0000     		.space	2
+ 1394              		.section	.bss.rx_buffer,"aw",%nobits
+ 1395              		.align	2
+ 1398              	rx_buffer:
+ 1399 0000 00000000 		.space	512
+ 1399      00000000 
+ 1399      00000000 
+ 1399      00000000 
+ 1399      00000000 
+ 1400              		.text
+ 1401              	.Letext0:
+ 1402              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1403              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1404              		.file 4 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 1405              		.file 5 "libraries/drivers/inc/at32f403a_407_usb.h"
+ 1406              		.file 6 "../Core/inc/motor_params.h"
+ 1407              		.file 7 "../Common/inc/usb_cdc_protocol.h"
+ 1408              		.file 8 "middlewares/usbd_drivers/inc/usb_std.h"
+ 1409              		.file 9 "middlewares/usbd_drivers/inc/usbd_core.h"
+ 1410              		.file 10 "../Common/inc/usb_cdc.h"
+ 1411              		.file 11 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/incl
+ 1412              		.file 12 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/incl
+ 1413              		.file 13 "project/inc/cdc_class.h"
+ 1414              		.file 14 "<built-in>"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s 			page 38
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usb_cdc_protocol.c
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:21     .text.calculate_checksum:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:26     .text.calculate_checksum:00000000 calculate_checksum
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:79     .text.cdc_protocol_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:85     .text.cdc_protocol_init:00000000 cdc_protocol_init
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:105    .text.cdc_send_response:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:111    .text.cdc_send_response:00000000 cdc_send_response
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:195    .text.cdc_send_param_read_response:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:201    .text.cdc_send_param_read_response:00000000 cdc_send_param_read_response
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:241    .text.cdc_send_batch_read_response:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:247    .text.cdc_send_batch_read_response:00000000 cdc_send_batch_read_response
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:274    .text.cdc_send_param_list_response:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:280    .text.cdc_send_param_list_response:00000000 cdc_send_param_list_response
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:315    .text.cdc_send_system_cmd_response:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:321    .text.cdc_send_system_cmd_response:00000000 cdc_send_system_cmd_response
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:381    .rodata.cdc_protocol_process.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:487    .text.cdc_protocol_process:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:493    .text.cdc_protocol_process:00000000 cdc_protocol_process
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1065   .text.cdc_protocol_process:000002ac $d
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1392   .bss.rx_len:00000000 rx_len
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1398   .bss.rx_buffer:00000000 rx_buffer
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1100   .text.cdc_protocol_process:00000328 $t
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1371   .text.cdc_protocol_process:00000470 $d
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1389   .bss.rx_len:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccOgj9nh.s:1395   .bss.rx_buffer:00000000 $d
+
+UNDEFINED SYMBOLS
+cdc_init
+cdc_send_data
+memcpy
+cdc_process
+usb_vcp_get_rxdata
+printf
+puts
+memmove
+motor_params_get
+__aeabi_f2d
+motor_params_update
+usb_core_dev
+motor
+motor_params_clear_errors

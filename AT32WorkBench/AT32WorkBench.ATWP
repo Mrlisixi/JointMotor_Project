@@ -23,15 +23,17 @@
         </Mode>
         <Parameters>
             <ParametersSub name="OrdinaryTriggerSource" value="ADC12_ORDINARY_TRIG_SOFTWARE"/>
-            <ParametersSub name="NbrOfOrdinarySequence" value="4"/>
-            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_1"/>
+            <ParametersSub name="NbrOfOrdinarySequence" value="5"/>
+            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_0"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_1" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_1"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_2" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_2"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_3" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_3"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_4" value="1.429"/>
+            <ParametersSub name="Channel_OrdinarySequence_5" value="ADC_CHANNEL_8"/>
+            <ParametersSub name="SamplingRate_OrdinarySequence_5" value="1.429"/>
         </Parameters>
     </ADC1>
     <CAN1>
@@ -87,19 +89,16 @@
         </Mode>
         <Parameters>
             <ParametersSub name="DividerValue" value="0x0"/>
-            <ParametersSub name="Period" value="1500"/>
+            <ParametersSub name="Period" value="1000"/>
             <ParametersSub name="RepetitionCounter" value="0x0"/>
             <ParametersSub name="DeadTime" value="30"/>
             <ParametersSub name="DeadTimeValue" value="125"/>
             <ParametersSub name="OCMode_1" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
             <ParametersSub name="ChannelData_1" value="200"/>
-            <ParametersSub name="OC1ImmediatelyMode_PWM" value="TRUE"/>
             <ParametersSub name="OCMode_2" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
             <ParametersSub name="ChannelData_2" value="200"/>
-            <ParametersSub name="OC2ImmediatelyMode_PWM" value="TRUE"/>
             <ParametersSub name="OCMode_3" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
             <ParametersSub name="ChannelData_3" value="200"/>
-            <ParametersSub name="OC3ImmediatelyMode_PWM" value="TRUE"/>
         </Parameters>
     </TMR1>
     <USBFS>
@@ -118,10 +117,10 @@
         </Parameters>
         <Tasks>
             <ParametersGroup>
-                <ParametersSub name="TaskName" value="MC_Task"/>
-                <ParametersSub name="TaskPriority" value="3"/>
+                <ParametersSub name="TaskName" value="Debug_Task"/>
+                <ParametersSub name="TaskPriority" value="0"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="MC_Task_func"/>
+                <ParametersSub name="TaskEntryFunction" value="Debug_Task_func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
                 <ParametersSub name="TaskParameters" value="NULL"/>
                 <ParametersSub name="TaskAllocation" value="Dynamic"/>
@@ -130,7 +129,7 @@
             </ParametersGroup>
             <ParametersGroup>
                 <ParametersSub name="TaskName" value="CANCom_Task"/>
-                <ParametersSub name="TaskPriority" value="2"/>
+                <ParametersSub name="TaskPriority" value="1"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
                 <ParametersSub name="TaskEntryFunction" value="CANCom_Task_func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
@@ -141,7 +140,7 @@
             </ParametersGroup>
             <ParametersGroup>
                 <ParametersSub name="TaskName" value="Monitor_Task"/>
-                <ParametersSub name="TaskPriority" value="1"/>
+                <ParametersSub name="TaskPriority" value="2"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
                 <ParametersSub name="TaskEntryFunction" value="Monitor_Task_func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
@@ -151,10 +150,10 @@
                 <ParametersSub name="TaskBuffer" value="NULL"/>
             </ParametersGroup>
             <ParametersGroup>
-                <ParametersSub name="TaskName" value="Debug_Task"/>
-                <ParametersSub name="TaskPriority" value="0"/>
+                <ParametersSub name="TaskName" value="MC_Task"/>
+                <ParametersSub name="TaskPriority" value="3"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="Debug_Task_func"/>
+                <ParametersSub name="TaskEntryFunction" value="Mc_Task_func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
                 <ParametersSub name="TaskParameters" value="NULL"/>
                 <ParametersSub name="TaskAllocation" value="Dynamic"/>
@@ -167,6 +166,9 @@
         <Mode>
             <ModeSub name="FS_Device" value="CDC"/>
         </Mode>
+        <Parameters>
+            <ParametersSub name="DEVICE_FS1_Product_CDC" value="Virtual Com Port"/>
+        </Parameters>
     </USB_DEVICE>
     <DMA>
         <ADC1>

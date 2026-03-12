@@ -99,7 +99,7 @@ extern "C" {
 /**
   * @brief support winusb
   */
-#define USBD_SUPPORT_WINUSB    1
+/*  #define USBD_SUPPORT_WINUSB    1  */
 
 void usb_delay_ms(uint32_t ms);
 void usb_delay_us(uint32_t us);
