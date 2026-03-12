@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
   28:project/src/cdc_desc.c **** #include "cdc_desc.h"
   29:project/src/cdc_desc.c **** 
   30:project/src/cdc_desc.c **** /** @addtogroup AT32F403A_407_middlewares_usbd_class
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 2
 
 
   31:project/src/cdc_desc.c ****   * @{
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
   85:project/src/cdc_desc.c **** ALIGNED_HEAD static uint8_t g_usbd_descriptor[USB_DEVICE_DESC_LEN] ALIGNED_TAIL =
   86:project/src/cdc_desc.c **** {
   87:project/src/cdc_desc.c ****   USB_DEVICE_DESC_LEN,                   /* bLength */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 3
 
 
   88:project/src/cdc_desc.c ****   USB_DESCIPTOR_TYPE_DEVICE,             /* bDescriptorType */
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  142:project/src/cdc_desc.c ****   0x05,                                  /* bFunctionLength: size of this descriptor in bytes */
  143:project/src/cdc_desc.c ****   USBD_CDC_CS_INTERFACE,                 /* bDescriptorType: CDC interface descriptor type */
  144:project/src/cdc_desc.c ****   USBD_CDC_SUBTYPE_CMF,                  /* bDescriptorSubtype: Call Management function descriptor
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 4
 
 
  145:project/src/cdc_desc.c ****   0x00,                                  /* bmCapabilities: 0x00*/
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  199:project/src/cdc_desc.c ****   #pragma data_alignment=4
  200:project/src/cdc_desc.c **** #endif
  201:project/src/cdc_desc.c **** ALIGNED_HEAD static uint8_t g_string_lang_id[USBD_CDC_SIZ_STRING_LANGID] ALIGNED_TAIL =
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 5
 
 
  202:project/src/cdc_desc.c **** {
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  256:project/src/cdc_desc.c ****   * @retval length
  257:project/src/cdc_desc.c ****   */
  258:project/src/cdc_desc.c **** static uint16_t usbd_unicode_convert(uint8_t *string, uint8_t *unicode_buf)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 6
 
 
  259:project/src/cdc_desc.c **** {
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
   72              	.LVL7:
   73              		.loc 1 267 28 view .LVU17
   74 0020 0021     		movs	r1, #0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 7
 
 
   75 0022 0EF80C10 		strb	r1, [lr, ip]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  277:project/src/cdc_desc.c **** /**
  278:project/src/cdc_desc.c ****   * @brief  usb int convert to unicode
  279:project/src/cdc_desc.c ****   * @param  value: int value
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 8
 
 
  280:project/src/cdc_desc.c ****   * @param  pbus: unicode buffer
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  150 0014 4FEA430C 		lsl	ip, r3, #1
  151              		.loc 1 301 18 view .LVU45
  152 0018 0CF1010C 		add	ip, ip, #1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 9
 
 
  153              		.loc 1 301 23 view .LVU46
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  304:project/src/cdc_desc.c **** 
  305:project/src/cdc_desc.c **** /**
  306:project/src/cdc_desc.c ****   * @brief  usb get serial number
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 10
 
 
  307:project/src/cdc_desc.c ****   * @param  none
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  235              		.loc 1 322 5 is_stmt 0 view .LVU72
  236 001a 0649     		ldr	r1, .L22+4
  237 001c FFF7FEFF 		bl	usbd_int_to_unicode
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 11
 
 
  238              	.LVL23:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  282              		.section	.text.get_device_qualifier,"ax",%progbits
  283              		.align	1
  284              		.syntax unified
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 12
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 12
 
 
  285              		.thumb
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  322 0004 00000000 		.word	config_descriptor
  323              		.cfi_endproc
  324              	.LFE142:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 13
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 13
 
 
  326              		.section	.text.get_device_other_speed,"ax",%progbits
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  363              	.L34:
  364              		.align	2
  365              	.L33:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 14
 
 
  366 0004 00000000 		.word	langid_descriptor
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  408              	.L38:
  409 0016 00BF     		.align	2
  410              	.L37:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 15
 
 
  411 0018 00000000 		.word	g_usbd_desc_buffer
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  400:project/src/cdc_desc.c **** }
  452              		.loc 1 400 1 is_stmt 0 view .LVU106
  453 0012 1846     		mov	r0, r3
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 16
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 16
 
 
  454 0014 10BD     		pop	{r4, pc}
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  498      436F6D50 
  498      6F727420 
  498      496E7465 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 17
 
 
  499              		.section	.text.get_device_interface_string,"ax",%progbits
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  543              		.align	2
  544              	.LC3:
  545 0000 56697274 		.ascii	"Virtual ComPort Config\000"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 18
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 18
 
 
  545      75616C20 
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  585 0020 00000000 		.word	vp_desc
  586              		.cfi_endproc
  587              	.LFE149:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 19
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 19
 
 
  589              		.section	.bss.vp_desc,"aw",%nobits
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  647      06000107 
  647      05820308 
  647      00FF
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 20
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 20
 
 
  648 002c 09040100 		.ascii	"\011\004\001\000\002\012\000\000\000\007\005\201\002"
@@ -1186,74 +1186,74 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 1
  683              		.file 4 "libraries/drivers/inc/at32f403a_407_tmr.h"
  684              		.file 5 "middlewares/usbd_drivers/inc/usbd_core.h"
  685              		.file 6 "project/inc/cdc_desc.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 21
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 cdc_desc.c
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:21     .text.usbd_unicode_convert:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:26     .text.usbd_unicode_convert:00000000 usbd_unicode_convert
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:111    .text.usbd_int_to_unicode:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:116    .text.usbd_int_to_unicode:00000000 usbd_int_to_unicode
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:191    .text.get_serial_num:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:196    .text.get_serial_num:00000000 get_serial_num
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:253    .text.get_serial_num:00000030 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:631    .data.g_string_serial:00000000 g_string_serial
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:259    .text.get_device_descriptor:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:264    .text.get_device_descriptor:00000000 get_device_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:278    .text.get_device_descriptor:00000004 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:623    .data.device_descriptor:00000000 device_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:283    .text.get_device_qualifier:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:288    .text.get_device_qualifier:00000000 get_device_qualifier
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:303    .text.get_device_configuration:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:308    .text.get_device_configuration:00000000 get_device_configuration
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:322    .text.get_device_configuration:00000004 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:615    .data.config_descriptor:00000000 config_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:327    .text.get_device_other_speed:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:332    .text.get_device_other_speed:00000000 get_device_other_speed
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:347    .text.get_device_lang_id:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:352    .text.get_device_lang_id:00000000 get_device_lang_id
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:366    .text.get_device_lang_id:00000004 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:607    .data.langid_descriptor:00000000 langid_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:371    .rodata.get_device_manufacturer_string.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:375    .text.get_device_manufacturer_string:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:380    .text.get_device_manufacturer_string:00000000 get_device_manufacturer_string
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:411    .text.get_device_manufacturer_string:00000018 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:677    .bss.g_usbd_desc_buffer:00000000 g_usbd_desc_buffer
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:593    .bss.vp_desc:00000000 vp_desc
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:418    .rodata.get_device_product_string.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:422    .text.get_device_product_string:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:427    .text.get_device_product_string:00000000 get_device_product_string
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:458    .text.get_device_product_string:00000018 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:465    .text.get_device_serial_string:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:470    .text.get_device_serial_string:00000000 get_device_serial_string
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:491    .text.get_device_serial_string:0000000c $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:599    .data.serial_descriptor:00000000 serial_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:496    .rodata.get_device_interface_string.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:500    .text.get_device_interface_string:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:505    .text.get_device_interface_string:00000000 get_device_interface_string
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:536    .text.get_device_interface_string:00000018 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:543    .rodata.get_device_config_string.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:547    .text.get_device_config_string:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:552    .text.get_device_config_string:00000000 get_device_config_string
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:583    .text.get_device_config_string:00000018 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:590    .bss.vp_desc:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:596    .data.serial_descriptor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:604    .data.langid_descriptor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:638    .data.g_string_lang_id:00000000 g_string_lang_id
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:612    .data.config_descriptor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:644    .data.g_usbd_configuration:00000000 g_usbd_configuration
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:620    .data.device_descriptor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:654    .data.g_usbd_descriptor:00000000 g_usbd_descriptor
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:628    .data.g_string_serial:00000000 $d
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpSNugi.s 			page 22
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:21     .text.usbd_unicode_convert:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:26     .text.usbd_unicode_convert:00000000 usbd_unicode_convert
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:111    .text.usbd_int_to_unicode:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:116    .text.usbd_int_to_unicode:00000000 usbd_int_to_unicode
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:191    .text.get_serial_num:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:196    .text.get_serial_num:00000000 get_serial_num
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:253    .text.get_serial_num:00000030 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:631    .data.g_string_serial:00000000 g_string_serial
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:259    .text.get_device_descriptor:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:264    .text.get_device_descriptor:00000000 get_device_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:278    .text.get_device_descriptor:00000004 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:623    .data.device_descriptor:00000000 device_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:283    .text.get_device_qualifier:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:288    .text.get_device_qualifier:00000000 get_device_qualifier
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:303    .text.get_device_configuration:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:308    .text.get_device_configuration:00000000 get_device_configuration
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:322    .text.get_device_configuration:00000004 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:615    .data.config_descriptor:00000000 config_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:327    .text.get_device_other_speed:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:332    .text.get_device_other_speed:00000000 get_device_other_speed
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:347    .text.get_device_lang_id:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:352    .text.get_device_lang_id:00000000 get_device_lang_id
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:366    .text.get_device_lang_id:00000004 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:607    .data.langid_descriptor:00000000 langid_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:371    .rodata.get_device_manufacturer_string.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:375    .text.get_device_manufacturer_string:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:380    .text.get_device_manufacturer_string:00000000 get_device_manufacturer_string
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:411    .text.get_device_manufacturer_string:00000018 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:677    .bss.g_usbd_desc_buffer:00000000 g_usbd_desc_buffer
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:593    .bss.vp_desc:00000000 vp_desc
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:418    .rodata.get_device_product_string.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:422    .text.get_device_product_string:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:427    .text.get_device_product_string:00000000 get_device_product_string
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:458    .text.get_device_product_string:00000018 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:465    .text.get_device_serial_string:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:470    .text.get_device_serial_string:00000000 get_device_serial_string
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:491    .text.get_device_serial_string:0000000c $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:599    .data.serial_descriptor:00000000 serial_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:496    .rodata.get_device_interface_string.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:500    .text.get_device_interface_string:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:505    .text.get_device_interface_string:00000000 get_device_interface_string
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:536    .text.get_device_interface_string:00000018 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:543    .rodata.get_device_config_string.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:547    .text.get_device_config_string:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:552    .text.get_device_config_string:00000000 get_device_config_string
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:583    .text.get_device_config_string:00000018 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:590    .bss.vp_desc:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:596    .data.serial_descriptor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:604    .data.langid_descriptor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:638    .data.g_string_lang_id:00000000 g_string_lang_id
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:612    .data.config_descriptor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:644    .data.g_usbd_configuration:00000000 g_usbd_configuration
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:620    .data.device_descriptor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:654    .data.g_usbd_descriptor:00000000 g_usbd_descriptor
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:628    .data.g_string_serial:00000000 $d
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s 			page 22
 
 
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:635    .data.g_string_lang_id:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:641    .data.g_usbd_configuration:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:651    .data.g_usbd_descriptor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:662    .data.cdc_desc_handler:00000000 cdc_desc_handler
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:659    .data.cdc_desc_handler:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccpSNugi.s:674    .bss.g_usbd_desc_buffer:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:635    .data.g_string_lang_id:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:641    .data.g_usbd_configuration:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:651    .data.g_usbd_descriptor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:662    .data.cdc_desc_handler:00000000 cdc_desc_handler
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:659    .data.cdc_desc_handler:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccsG4uOP.s:674    .bss.g_usbd_desc_buffer:00000000 $d
 
 NO UNDEFINED SYMBOLS

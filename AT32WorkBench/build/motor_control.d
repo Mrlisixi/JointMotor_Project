@@ -1,5 +1,5 @@
-build/motor_control.o: ../Core/src/motor_control.c \
- ../Core/inc/motor_control.h \
+build/motor_control.o: ../Motor_Control/src/motor_control.c \
+ ../Motor_Control/inc/motor_control.h ../Motor_Control/inc/motor_params.h \
  libraries/cmsis/cm4/device_support/at32f403a_407.h \
  libraries/cmsis/cm4/core_support/core_cm4.h \
  libraries/cmsis/cm4/core_support/cmsis_version.h \
@@ -22,11 +22,10 @@ build/motor_control.o: ../Core/src/motor_control.c \
  libraries/drivers/inc/at32f403a_407_pwc.h \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
- libraries/drivers/inc/at32f403a_407_usb.h ../Core/inc/can_cia402.h \
- ../Core/inc/motor_params.h ../Core/inc/motor_foc.h \
- ../Core/inc/motor_monitor.h ../Core/inc/can_cia402.h \
- ../Core/inc/motor_params.h ../Core/inc/motor_monitor.h
-../Core/inc/motor_control.h:
+ libraries/drivers/inc/at32f403a_407_usb.h project/inc/wk_tmr.h \
+ project/inc/at32f403a_407_wk_config.h project/inc/wk_system.h
+../Motor_Control/inc/motor_control.h:
+../Motor_Control/inc/motor_params.h:
 libraries/cmsis/cm4/device_support/at32f403a_407.h:
 libraries/cmsis/cm4/core_support/core_cm4.h:
 libraries/cmsis/cm4/core_support/cmsis_version.h:
@@ -50,10 +49,6 @@ libraries/drivers/inc/at32f403a_407_pwc.h:
 libraries/drivers/inc/at32f403a_407_spi.h:
 libraries/drivers/inc/at32f403a_407_tmr.h:
 libraries/drivers/inc/at32f403a_407_usb.h:
-../Core/inc/can_cia402.h:
-../Core/inc/motor_params.h:
-../Core/inc/motor_foc.h:
-../Core/inc/motor_monitor.h:
-../Core/inc/can_cia402.h:
-../Core/inc/motor_params.h:
-../Core/inc/motor_monitor.h:
+project/inc/wk_tmr.h:
+project/inc/at32f403a_407_wk_config.h:
+project/inc/wk_system.h:

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
   27:libraries/drivers/src/at32f403a_407_tmr.c **** 
   28:libraries/drivers/src/at32f403a_407_tmr.c **** /** @addtogroup AT32F403A_407_periph_driver
   29:libraries/drivers/src/at32f403a_407_tmr.c ****   * @{
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 2
 
 
   30:libraries/drivers/src/at32f403a_407_tmr.c ****   */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
   50              		.loc 1 63 10 is_stmt 0 view .LVU7
   51 000e 534B     		ldr	r3, .L30+4
   52 0010 9842     		cmp	r0, r3
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 3
 
 
   53 0012 3DD0     		beq	.L19
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
   92:libraries/drivers/src/at32f403a_407_tmr.c ****   }
   93:libraries/drivers/src/at32f403a_407_tmr.c ****   else if(tmr_x == TMR9)
   79              		.loc 1 93 8 is_stmt 1 view .LVU18
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 4
 
 
   80              		.loc 1 93 10 is_stmt 0 view .LVU19
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  119:libraries/drivers/src/at32f403a_407_tmr.c ****   {
  120:libraries/drivers/src/at32f403a_407_tmr.c ****     crm_periph_reset(CRM_TMR14_PERIPH_RESET, TRUE);
  109              		.loc 1 120 5 is_stmt 1 view .LVU30
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 5
 
 
  110 0056 0121     		movs	r1, #1
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  155              	.LVL12:
  156              	.L19:
   65:libraries/drivers/src/at32f403a_407_tmr.c ****     crm_periph_reset(CRM_TMR3_PERIPH_RESET, FALSE);
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 6
 
 
  157              		.loc 1 65 5 view .LVU41
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  202              		.loc 1 80 5 view .LVU50
  203 00c6 0121     		movs	r1, #1
  204 00c8 3548     		ldr	r0, .L30+72
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 7
 
 
  205              	.LVL25:
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  250              	.LVL37:
   95:libraries/drivers/src/at32f403a_407_tmr.c ****     crm_periph_reset(CRM_TMR9_PERIPH_RESET, FALSE);
  251              		.loc 1 95 5 is_stmt 0 view .LVU60
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 8
 
 
  252 0100 FFF7FEFF 		bl	crm_periph_reset
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  297 0136 FFF7FEFF 		bl	crm_periph_reset
  298              	.LVL50:
  111:libraries/drivers/src/at32f403a_407_tmr.c ****   }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 9
 
 
  299              		.loc 1 111 5 is_stmt 1 view .LVU70
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  350              	.LFE134:
  352              		.section	.text.tmr_counter_enable,"ax",%progbits
  353              		.align	1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 10
 
 
  354              		.global	tmr_counter_enable
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  387              		.loc 1 147 1 is_stmt 1 view -0
  388              		.cfi_startproc
  389              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 11
 
 
  390              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  429              		.loc 1 164 1 is_stmt 1 view -0
  430              		.cfi_startproc
  431              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 12
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 12
 
 
  432              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  472              		.loc 1 180 3 is_stmt 1 view .LVU107
  473              		.loc 1 180 34 is_stmt 0 view .LVU108
  474 0004 4370     		strb	r3, [r0, #1]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 13
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 13
 
 
  181:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_brkdt_struct->wp_level = TMR_WP_OFF;
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  202:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->pr = tmr_pr;
  510              		.loc 1 202 3 view .LVU121
  511              		.loc 1 202 13 is_stmt 0 view .LVU122
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 14
 
 
  512 0000 C162     		str	r1, [r0, #44]
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  543 0000 0368     		ldr	r3, [r0]
  544 0002 61F30923 		bfi	r3, r1, #8, #2
  545 0006 0360     		str	r3, [r0]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 15
 
 
  228:libraries/drivers/src/at32f403a_407_tmr.c **** }
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  581              		.thumb_func
  583              	tmr_repetition_counter_set:
  584              	.LVL63:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 16
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 16
 
 
  585              	.LFB142:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  614              		.cfi_startproc
  615              		@ args = 0, pretend = 0, frame = 0
  616              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 17
 
 
  617              		@ link register save eliminated.
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  659              	.LFB145:
  293:libraries/drivers/src/at32f403a_407_tmr.c **** 
  294:libraries/drivers/src/at32f403a_407_tmr.c **** /**
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 18
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 18
 
 
  295:libraries/drivers/src/at32f403a_407_tmr.c ****   * @brief  set tmr div value
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  691              	.LVL70:
  320:libraries/drivers/src/at32f403a_407_tmr.c **** }
  692              		.loc 1 320 1 view .LVU156
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 19
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 19
 
 
  693 0002 7047     		bx	lr
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  344:libraries/drivers/src/at32f403a_407_tmr.c ****   chcx_offset = (9 + tmr_channel);
  726              		.loc 1 344 3 is_stmt 1 view .LVU162
  727              		.loc 1 344 15 is_stmt 0 view .LVU163
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 20
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 20
 
 
  728 0006 01F10906 		add	r6, r1, #9
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  769 0034 23EA0503 		bic	r3, r3, r5
  770 0038 4360     		str	r3, [r0, #4]
  358:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->ctrl2 |= channel_index;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 21
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 21
 
 
  771              		.loc 1 358 3 is_stmt 1 view .LVU183
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  371:libraries/drivers/src/at32f403a_407_tmr.c ****     case TMR_SELECT_CHANNEL_1:
  372:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm1_output_bit.c1c = FALSE;
  373:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm1_output_bit.c1octrl = tmr_output_struct->oc_mode;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 22
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 22
 
 
  374:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  848 009c 8469     		ldr	r4, [r0, #24]
  849 009e 24F00304 		bic	r4, r4, #3
  850 00a2 8461     		str	r4, [r0, #24]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 23
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 23
 
 
  373:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  885              		.loc 1 405 16 view .LVU231
  886 00c6 25EA0C05 		bic	r5, r5, ip
  887 00ca 0562     		str	r5, [r0, #32]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 24
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 24
 
 
  406:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->cctrl |= channel_c_index;
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  928 00f6 9BB2     		uxth	r3, r3
  929              		.loc 1 419 16 view .LVU252
  930 00f8 2343     		orrs	r3, r3, r4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 25
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 25
 
 
  931              	.LVL95:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  428:libraries/drivers/src/at32f403a_407_tmr.c ****   *         this parameter can be one of the following values:
  429:libraries/drivers/src/at32f403a_407_tmr.c ****   *         TMR1, TMR2, TMR3, TMR4, TMR5, TMR8, TMR9, TMR10,
  430:libraries/drivers/src/at32f403a_407_tmr.c ****   *         TMR11, TMR12, TMR13, TMR14
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 26
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 26
 
 
  431:libraries/drivers/src/at32f403a_407_tmr.c ****   * @param  tmr_channel
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  993 0014 7047     		bx	lr
  994              	.L59:
  995 0016 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 27
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 27
 
 
  996              	.L54:
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1031              		.align	1
  1032              		.global	tmr_period_value_set
  1033              		.syntax unified
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 28
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 28
 
 
  1034              		.thumb
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  506:libraries/drivers/src/at32f403a_407_tmr.c **** {
  1063              		.loc 1 506 1 is_stmt 1 view -0
  1064              		.cfi_startproc
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 29
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 29
 
 
  1065              		@ args = 0, pretend = 0, frame = 0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  534:libraries/drivers/src/at32f403a_407_tmr.c ****   switch(channel)
  1094              		.loc 1 534 3 view .LVU294
  1095 0000 0429     		cmp	r1, #4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 30
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 30
 
 
  1096 0002 0DD0     		beq	.L64
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  538:libraries/drivers/src/at32f403a_407_tmr.c **** 
  1126              		.loc 1 538 7 is_stmt 1 view .LVU307
  1127 001e 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 31
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 31
 
 
  1128              	.L64:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1157 0002 0FD0     		beq	.L73
  1158 0004 06D8     		bhi	.L74
  1159 0006 59B1     		cbz	r1, .L75
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 32
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 32
 
 
  1160 0008 0229     		cmp	r1, #2
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1188              	.LVL110:
  1189              	.L80:
  579:libraries/drivers/src/at32f403a_407_tmr.c ****   {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 33
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 33
 
 
  1190              		.loc 1 579 3 view .LVU327
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1228              		@ link register save eliminated.
  614:libraries/drivers/src/at32f403a_407_tmr.c ****   /* tmr period buffer set */
  615:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->ctrl1_bit.prben = new_state;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 34
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 34
 
 
  1229              		.loc 1 615 3 view .LVU336
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1259 0004 08D8     		bhi	.L84
  1260 0006 79B1     		cbz	r1, .L85
  1261 0008 0229     		cmp	r1, #2
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 35
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 35
 
 
  1262 000a 04D1     		bne	.L89
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1292 002e 8361     		str	r3, [r0, #24]
  645:libraries/drivers/src/at32f403a_407_tmr.c **** 
  1293              		.loc 1 645 7 is_stmt 1 view .LVU354
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 36
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 36
 
 
  1294 0030 7047     		bx	lr
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  687:libraries/drivers/src/at32f403a_407_tmr.c ****   switch(channel)
  1323              		.loc 1 687 3 view .LVU361
  1324 0000 0429     		cmp	r1, #4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 37
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 37
 
 
  1325 0002 16D0     		beq	.L92
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  690:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
  1356              		.loc 1 690 36 is_stmt 0 view .LVU372
  1357 0028 8369     		ldr	r3, [r0, #24]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 38
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 38
 
 
  1358 002a 62F38203 		bfi	r3, r2, #2, #1
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  730:libraries/drivers/src/at32f403a_407_tmr.c ****   channel = tmr_channel;
  1389              		.loc 1 730 3 view .LVU379
  731:libraries/drivers/src/at32f403a_407_tmr.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 39
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 39
 
 
  732:libraries/drivers/src/at32f403a_407_tmr.c ****   /* get tmr channel value */
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1420 0026 7047     		bx	lr
  1421              	.L103:
  736:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 40
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 40
 
 
  1422              		.loc 1 736 7 is_stmt 1 view .LVU390
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1459 0006 0360     		str	r3, [r0]
  769:libraries/drivers/src/at32f403a_407_tmr.c **** }
  1460              		.loc 1 769 1 view .LVU399
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 41
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 41
 
 
  1461 0008 7047     		bx	lr
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1500 0018 000C0040 		.word	1073744896
  1501              		.cfi_endproc
  1502              	.LFE158:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 42
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 42
 
 
  1504              		.section	.text.tmr_overflow_request_source_set,"ax",%progbits
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  809:libraries/drivers/src/at32f403a_407_tmr.c ****   * @retval none
  810:libraries/drivers/src/at32f403a_407_tmr.c ****   */
  811:libraries/drivers/src/at32f403a_407_tmr.c **** void tmr_overflow_event_disable(tmr_type *tmr_x, confirm_state new_state)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 43
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 43
 
 
  812:libraries/drivers/src/at32f403a_407_tmr.c **** {
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  837:libraries/drivers/src/at32f403a_407_tmr.c ****   /* get channel selected */
  838:libraries/drivers/src/at32f403a_407_tmr.c ****   channel = input_struct->input_channel_select;
  1570              		.loc 1 838 3 view .LVU417
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 44
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 44
 
 
  1571              		.loc 1 838 25 is_stmt 0 view .LVU418
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1607              		.loc 1 856 49 is_stmt 0 view .LVU431
  1608 0036 91F802C0 		ldrb	ip, [r1, #2]	@ zero_extendqisi2
  1609              		.loc 1 856 35 view .LVU432
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 45
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 45
 
 
  1610 003a 8369     		ldr	r3, [r0, #24]
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1646 0066 23F48053 		bic	r3, r3, #4096
  1647 006a 0362     		str	r3, [r0, #32]
  1648              	.LVL131:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 46
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 46
 
 
  874:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cctrl_bit.c4p        = (uint32_t)input_struct->input_polarity_select;
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1690              		.loc 1 843 35 is_stmt 0 view .LVU463
  1691 00a2 036A     		ldr	r3, [r0, #32]
  1692              	.LVL134:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 47
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 47
 
 
  843:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cctrl_bit.c1p        = (uint32_t)input_struct->input_polarity_select;
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1731 00e0 62F38303 		bfi	r3, r2, #2, #2
  1732 00e4 8361     		str	r3, [r0, #24]
  849:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 48
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 48
 
 
  1733              		.loc 1 849 7 is_stmt 1 view .LVU480
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1772 0120 C361     		str	r3, [r0, #28]
  867:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm2_input_bit.c3idiv = divider_factor;
  1773              		.loc 1 867 7 is_stmt 1 view .LVU496
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 49
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 49
 
 
  867:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm2_input_bit.c3idiv = divider_factor;
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  902:libraries/drivers/src/at32f403a_407_tmr.c ****   * @retval none
  903:libraries/drivers/src/at32f403a_407_tmr.c ****   */
  904:libraries/drivers/src/at32f403a_407_tmr.c **** void tmr_channel_enable(tmr_type *tmr_x, tmr_channel_select_type tmr_channel, confirm_state new_sta
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 50
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 50
 
 
  905:libraries/drivers/src/at32f403a_407_tmr.c **** {
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  925:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cctrl_bit.c2cen        = new_state;
  926:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
  927:libraries/drivers/src/at32f403a_407_tmr.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 51
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 51
 
 
  928:libraries/drivers/src/at32f403a_407_tmr.c ****     case TMR_SELECT_CHANNEL_3:
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1878 0058 0362     		str	r3, [r0, #32]
  934:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
  1879              		.loc 1 934 7 is_stmt 1 view .LVU527
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 52
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 52
 
 
  1880 005a 7047     		bx	lr
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  963:libraries/drivers/src/at32f403a_407_tmr.c ****   uint16_t channel;
  1908              		.loc 1 963 3 view .LVU533
  964:libraries/drivers/src/at32f403a_407_tmr.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 53
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 53
 
 
  965:libraries/drivers/src/at32f403a_407_tmr.c ****   channel = tmr_channel;
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1938              	.L146:
  1939              		.loc 1 988 1 view .LVU544
  1940 0026 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 54
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 54
 
 
  1941              	.L141:
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  1971              		.cfi_startproc
  1972              		@ args = 0, pretend = 0, frame = 0
  1973              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 55
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 55
 
 
  1974              		@ link register save eliminated.
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2013 002c 0362     		str	r3, [r0, #32]
  2014              	.L152:
 1024:libraries/drivers/src/at32f403a_407_tmr.c ****       }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 56
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 56
 
 
 1025:libraries/drivers/src/at32f403a_407_tmr.c ****       else if(input_struct->input_polarity_select == TMR_INPUT_FALLING_EDGE)
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1053:libraries/drivers/src/at32f403a_407_tmr.c ****       /*set input ch1 and ch2 divider value*/
 1054:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm1_input_bit.c1idiv = divider_factor;
  2041              		.loc 1 1054 7 is_stmt 1 view .LVU579
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 57
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 57
 
 
  2042              		.loc 1 1054 35 is_stmt 0 view .LVU580
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2084              		.loc 1 1035 9 is_stmt 1 view .LVU595
 1035:libraries/drivers/src/at32f403a_407_tmr.c **** 
  2085              		.loc 1 1035 34 is_stmt 0 view .LVU596
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 58
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 58
 
 
  2086 008a 8369     		ldr	r3, [r0, #24]
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2129              		.loc 1 1064 9 view .LVU610
  2130 00d0 53BB     		cbnz	r3, .L155
 1065:libraries/drivers/src/at32f403a_407_tmr.c ****       {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 59
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 59
 
 
 1066:libraries/drivers/src/at32f403a_407_tmr.c ****         /* set channel polarity */
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2159 00f6 8361     		str	r3, [r0, #24]
 1092:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm1_input_bit.c2df = input_struct->input_filter_value;
  2160              		.loc 1 1092 7 is_stmt 1 view .LVU623
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 60
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 60
 
 
  2161              		.loc 1 1092 47 is_stmt 0 view .LVU624
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1073:libraries/drivers/src/at32f403a_407_tmr.c ****         tmr_x->cctrl_bit.c1p          = TMR_INPUT_RISING_EDGE;
  2200              		.loc 1 1073 9 is_stmt 1 view .LVU639
 1073:libraries/drivers/src/at32f403a_407_tmr.c ****         tmr_x->cctrl_bit.c1p          = TMR_INPUT_RISING_EDGE;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 61
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 61
 
 
  2201              		.loc 1 1073 39 is_stmt 0 view .LVU640
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2246              		.thumb
  2247              		.thumb_func
  2249              	tmr_channel1_input_select:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 62
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 62
 
 
  2250              	.LVL156:
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1135:libraries/drivers/src/at32f403a_407_tmr.c ****   * @param  divider_factor
 1136:libraries/drivers/src/at32f403a_407_tmr.c ****   *         this parameter can be one of the following values:
 1137:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_CHANNEL_INPUT_DIV_1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 63
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 63
 
 
 1138:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_CHANNEL_INPUT_DIV_2
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1164:libraries/drivers/src/at32f403a_407_tmr.c ****     case TMR_SELECT_CHANNEL_4:
 1165:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cm2_input_bit.c4idiv = divider_factor;
  2304              		.loc 1 1165 7 is_stmt 1 view .LVU663
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 64
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 64
 
 
  2305              		.loc 1 1165 35 is_stmt 0 view .LVU664
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1177:libraries/drivers/src/at32f403a_407_tmr.c ****   *         TMR1, TMR2, TMR3, TMR4, TMR5, TMR6, TMR7, TMR8
 1178:libraries/drivers/src/at32f403a_407_tmr.c ****   * @param  primary_mode
 1179:libraries/drivers/src/at32f403a_407_tmr.c ****   *         this parameter can be one of the following values:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 65
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 65
 
 
 1180:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_PRIMARY_SEL_RESET
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1211:libraries/drivers/src/at32f403a_407_tmr.c ****   */
 1212:libraries/drivers/src/at32f403a_407_tmr.c **** void tmr_sub_mode_select(tmr_type *tmr_x, tmr_sub_mode_select_type sub_mode)
 1213:libraries/drivers/src/at32f403a_407_tmr.c **** {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 66
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 66
 
 
  2369              		.loc 1 1213 1 is_stmt 1 view -0
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2407              	.LFE169:
  2409              		.section	.text.tmr_hall_select,"ax",%progbits
  2410              		.align	1
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 67
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 67
 
 
  2411              		.global	tmr_hall_select
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2444              		.loc 1 1255 1 is_stmt 1 view -0
  2445              		.cfi_startproc
  2446              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 68
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 68
 
 
  2447              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2479              		.loc 1 1279 1 view .LVU697
  2480 0008 7047     		bx	lr
  2481              		.cfi_endproc
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 69
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 69
 
 
  2482              	.LFE172:
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1301:libraries/drivers/src/at32f403a_407_tmr.c ****   *         this parameter can be one of the following values:
 1302:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_OVERFLOW_DMA_REQUEST
 1303:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_C1_DMA_REQUEST
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 70
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 70
 
 
 1304:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_C2_DMA_REQUEST
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2550              		.cfi_endproc
  2551              	.LFE174:
  2553              		.section	.text.tmr_interrupt_enable,"ax",%progbits
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 71
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 71
 
 
  2554              		.align	1
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2580 000c C360     		str	r3, [r0, #12]
  2581              	.L184:
 1352:libraries/drivers/src/at32f403a_407_tmr.c ****   }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 72
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 72
 
 
 1353:libraries/drivers/src/at32f403a_407_tmr.c **** }
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1377:libraries/drivers/src/at32f403a_407_tmr.c ****   if((tmr_x->ists & tmr_flag) && (tmr_x->iden & tmr_flag))
  2611              		.loc 1 1377 3 view .LVU729
  2612              		.loc 1 1377 12 is_stmt 0 view .LVU730
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 73
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 73
 
 
  2613 0000 0369     		ldr	r3, [r0, #16]
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1391:libraries/drivers/src/at32f403a_407_tmr.c ****   * @param  tmr_x: select the tmr peripheral.
 1392:libraries/drivers/src/at32f403a_407_tmr.c ****   *         this parameter can be one of the following values:
 1393:libraries/drivers/src/at32f403a_407_tmr.c ****   *         TMR1, TMR2, TMR3, TMR4, TMR5, TMR6, TMR7, TMR8,
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 74
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 74
 
 
 1394:libraries/drivers/src/at32f403a_407_tmr.c ****   *         TMR9, TMR10, TMR11, TMR12, TMR13, TMR14
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1425:libraries/drivers/src/at32f403a_407_tmr.c **** }
  2678              		.loc 1 1425 1 is_stmt 0 view .LVU750
  2679 000c 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 75
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 75
 
 
  2680              		.cfi_endproc
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2710              		.align	1
  2711              		.global	tmr_event_sw_trigger
  2712              		.syntax unified
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 76
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 76
 
 
  2713              		.thumb
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1476:libraries/drivers/src/at32f403a_407_tmr.c **** 
 1477:libraries/drivers/src/at32f403a_407_tmr.c **** /**
 1478:libraries/drivers/src/at32f403a_407_tmr.c ****   * @brief  tmr output enable(oen),this function is important for advtm output enable
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 77
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 77
 
 
 1479:libraries/drivers/src/at32f403a_407_tmr.c ****   * @param  tmr_x: select the tmr peripheral.
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1500:libraries/drivers/src/at32f403a_407_tmr.c **** }
  2782              		.loc 1 1500 1 view .LVU769
  2783 0008 7047     		bx	lr
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 78
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 78
 
 
  2784              		.cfi_endproc
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2810 000a 0229     		cmp	r1, #2
  2811 000c 12D0     		beq	.L203
  2812 000e 21B9     		cbnz	r1, .L209
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 79
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 79
 
 
 1531:libraries/drivers/src/at32f403a_407_tmr.c ****   {
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1545:libraries/drivers/src/at32f403a_407_tmr.c ****       tmr_x->cctrl_bit.c4p = (uint32_t)oc_polarity;
  2849              		.loc 1 1545 7 view .LVU785
  2850              		.loc 1 1545 28 is_stmt 0 view .LVU786
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 80
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 80
 
 
  2851 003e 036A     		ldr	r3, [r0, #32]
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2888              		.thumb
  2889              		.thumb_func
  2891              	tmr_external_clock_config:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 81
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 81
 
 
  2892              	.LVL185:
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2921 0018 8260     		str	r2, [r0, #8]
 1589:libraries/drivers/src/at32f403a_407_tmr.c **** }
  2922              		.loc 1 1589 1 view .LVU809
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 82
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 82
 
 
  2923 001a 7047     		bx	lr
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2955 000e A360     		str	r3, [r4, #8]
 1614:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->stctrl_bit.stis = TMR_SUB_INPUT_SEL_EXTIN;
  2956              		.loc 1 1614 3 is_stmt 1 view .LVU815
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 83
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 83
 
 
  2957              		.loc 1 1614 26 is_stmt 0 view .LVU816
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  2989 0004 FFF7FEFF 		bl	tmr_external_clock_config
  2990              	.LVL192:
 1639:libraries/drivers/src/at32f403a_407_tmr.c ****   tmr_x->stctrl_bit.ecmben = TRUE;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 84
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 84
 
 
  2991              		.loc 1 1639 3 view .LVU822
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  3019              		.loc 1 1667 3 is_stmt 1 view .LVU828
  3020              		.loc 1 1667 27 is_stmt 0 view .LVU829
  3021 0002 8168     		ldr	r1, [r0, #8]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 85
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 85
 
 
  3022              	.LVL194:
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  3063              	.LVL196:
  3064              		.loc 1 1680 25 view .LVU846
  3065 0044 016A     		ldr	r1, [r0, #32]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 86
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 86
 
 
  3066 0046 63F3C711 		bfi	r1, r3, #7, #1
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  3094              		.loc 1 1708 3 view .LVU852
 1709:libraries/drivers/src/at32f403a_407_tmr.c **** 
 1710:libraries/drivers/src/at32f403a_407_tmr.c ****   switch(channel)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 87
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 87
 
 
  3095              		.loc 1 1710 3 view .LVU853
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1713:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
  3127              		.loc 1 1713 7 is_stmt 1 view .LVU863
 1713:libraries/drivers/src/at32f403a_407_tmr.c ****       break;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 88
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 88
 
 
  3128              		.loc 1 1713 37 is_stmt 0 view .LVU864
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1757:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_CVAL_ADDRESS
 1758:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_DIV_ADDRESS
 1759:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_PR_ADDRESS
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 89
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 89
 
 
 1760:libraries/drivers/src/at32f403a_407_tmr.c ****   *         - TMR_RPR_ADDRESS
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
 1786:libraries/drivers/src/at32f403a_407_tmr.c **** {
  3185              		.loc 1 1786 1 is_stmt 1 view -0
  3186              		.cfi_startproc
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 90
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 90
 
 
  3187              		@ args = 0, pretend = 0, frame = 0
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  3234 003c 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
  3235              		.loc 1 1793 22 view .LVU896
  3236 003e 436C     		ldr	r3, [r0, #68]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 91
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 91
 
 
  3237 0040 62F30923 		bfi	r3, r2, #8, #2
@@ -5415,131 +5415,131 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 1
  3248              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
  3249              		.file 5 "libraries/drivers/inc/at32f403a_407_crm.h"
  3250              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 92
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 92
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 at32f403a_407_tmr.c
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:21     .text.tmr_reset:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:27     .text.tmr_reset:00000000 tmr_reset
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:323    .text.tmr_reset:00000158 $d
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:353    .text.tmr_counter_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:359    .text.tmr_counter_enable:00000000 tmr_counter_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:378    .text.tmr_output_default_para_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:384    .text.tmr_output_default_para_init:00000000 tmr_output_default_para_init
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:420    .text.tmr_input_default_para_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:426    .text.tmr_input_default_para_init:00000000 tmr_input_default_para_init
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:454    .text.tmr_brkdt_default_para_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:460    .text.tmr_brkdt_default_para_init:00000000 tmr_brkdt_default_para_init
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:496    .text.tmr_base_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:502    .text.tmr_base_init:00000000 tmr_base_init
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:527    .text.tmr_clock_source_div_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:533    .text.tmr_clock_source_div_set:00000000 tmr_clock_source_div_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:552    .text.tmr_cnt_dir_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:558    .text.tmr_cnt_dir_set:00000000 tmr_cnt_dir_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:577    .text.tmr_repetition_counter_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:583    .text.tmr_repetition_counter_set:00000000 tmr_repetition_counter_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:604    .text.tmr_counter_value_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:610    .text.tmr_counter_value_set:00000000 tmr_counter_value_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:627    .text.tmr_counter_value_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:633    .text.tmr_counter_value_get:00000000 tmr_counter_value_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:651    .text.tmr_div_value_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:657    .text.tmr_div_value_set:00000000 tmr_div_value_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:674    .text.tmr_div_value_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:680    .text.tmr_div_value_get:00000000 tmr_div_value_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:698    .text.tmr_output_channel_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:704    .text.tmr_output_channel_config:00000000 tmr_output_channel_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:964    .text.tmr_output_channel_mode_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:970    .text.tmr_output_channel_mode_select:00000000 tmr_output_channel_mode_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1031   .text.tmr_period_value_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1037   .text.tmr_period_value_set:00000000 tmr_period_value_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1054   .text.tmr_period_value_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1060   .text.tmr_period_value_get:00000000 tmr_period_value_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1078   .text.tmr_channel_value_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1084   .text.tmr_channel_value_set:00000000 tmr_channel_value_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1138   .text.tmr_channel_value_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1144   .text.tmr_channel_value_get:00000000 tmr_channel_value_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1215   .text.tmr_period_buffer_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1221   .text.tmr_period_buffer_enable:00000000 tmr_period_buffer_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1240   .text.tmr_output_channel_buffer_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1246   .text.tmr_output_channel_buffer_enable:00000000 tmr_output_channel_buffer_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1307   .text.tmr_output_channel_immediately_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1313   .text.tmr_output_channel_immediately_set:00000000 tmr_output_channel_immediately_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1374   .text.tmr_output_channel_switch_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1380   .text.tmr_output_channel_switch_set:00000000 tmr_output_channel_switch_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1441   .text.tmr_one_cycle_mode_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1447   .text.tmr_one_cycle_mode_enable:00000000 tmr_one_cycle_mode_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1466   .text.tmr_32_bit_function_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1472   .text.tmr_32_bit_function_enable:00000000 tmr_32_bit_function_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1500   .text.tmr_32_bit_function_enable:00000018 $d
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1505   .text.tmr_overflow_request_source_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1511   .text.tmr_overflow_request_source_set:00000000 tmr_overflow_request_source_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1530   .text.tmr_overflow_event_disable:00000000 $t
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 93
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:21     .text.tmr_reset:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:27     .text.tmr_reset:00000000 tmr_reset
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:323    .text.tmr_reset:00000158 $d
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:353    .text.tmr_counter_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:359    .text.tmr_counter_enable:00000000 tmr_counter_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:378    .text.tmr_output_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:384    .text.tmr_output_default_para_init:00000000 tmr_output_default_para_init
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:420    .text.tmr_input_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:426    .text.tmr_input_default_para_init:00000000 tmr_input_default_para_init
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:454    .text.tmr_brkdt_default_para_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:460    .text.tmr_brkdt_default_para_init:00000000 tmr_brkdt_default_para_init
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:496    .text.tmr_base_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:502    .text.tmr_base_init:00000000 tmr_base_init
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:527    .text.tmr_clock_source_div_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:533    .text.tmr_clock_source_div_set:00000000 tmr_clock_source_div_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:552    .text.tmr_cnt_dir_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:558    .text.tmr_cnt_dir_set:00000000 tmr_cnt_dir_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:577    .text.tmr_repetition_counter_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:583    .text.tmr_repetition_counter_set:00000000 tmr_repetition_counter_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:604    .text.tmr_counter_value_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:610    .text.tmr_counter_value_set:00000000 tmr_counter_value_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:627    .text.tmr_counter_value_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:633    .text.tmr_counter_value_get:00000000 tmr_counter_value_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:651    .text.tmr_div_value_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:657    .text.tmr_div_value_set:00000000 tmr_div_value_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:674    .text.tmr_div_value_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:680    .text.tmr_div_value_get:00000000 tmr_div_value_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:698    .text.tmr_output_channel_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:704    .text.tmr_output_channel_config:00000000 tmr_output_channel_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:964    .text.tmr_output_channel_mode_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:970    .text.tmr_output_channel_mode_select:00000000 tmr_output_channel_mode_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1031   .text.tmr_period_value_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1037   .text.tmr_period_value_set:00000000 tmr_period_value_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1054   .text.tmr_period_value_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1060   .text.tmr_period_value_get:00000000 tmr_period_value_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1078   .text.tmr_channel_value_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1084   .text.tmr_channel_value_set:00000000 tmr_channel_value_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1138   .text.tmr_channel_value_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1144   .text.tmr_channel_value_get:00000000 tmr_channel_value_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1215   .text.tmr_period_buffer_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1221   .text.tmr_period_buffer_enable:00000000 tmr_period_buffer_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1240   .text.tmr_output_channel_buffer_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1246   .text.tmr_output_channel_buffer_enable:00000000 tmr_output_channel_buffer_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1307   .text.tmr_output_channel_immediately_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1313   .text.tmr_output_channel_immediately_set:00000000 tmr_output_channel_immediately_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1374   .text.tmr_output_channel_switch_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1380   .text.tmr_output_channel_switch_set:00000000 tmr_output_channel_switch_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1441   .text.tmr_one_cycle_mode_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1447   .text.tmr_one_cycle_mode_enable:00000000 tmr_one_cycle_mode_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1466   .text.tmr_32_bit_function_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1472   .text.tmr_32_bit_function_enable:00000000 tmr_32_bit_function_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1500   .text.tmr_32_bit_function_enable:00000018 $d
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1505   .text.tmr_overflow_request_source_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1511   .text.tmr_overflow_request_source_set:00000000 tmr_overflow_request_source_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1530   .text.tmr_overflow_event_disable:00000000 $t
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 93
 
 
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1536   .text.tmr_overflow_event_disable:00000000 tmr_overflow_event_disable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1555   .text.tmr_input_channel_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1561   .text.tmr_input_channel_init:00000000 tmr_input_channel_init
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1797   .text.tmr_channel_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1803   .text.tmr_channel_enable:00000000 tmr_channel_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1894   .text.tmr_input_channel_filter_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1900   .text.tmr_input_channel_filter_set:00000000 tmr_input_channel_filter_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1961   .text.tmr_pwm_input_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:1967   .text.tmr_pwm_input_config:00000000 tmr_pwm_input_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2243   .text.tmr_channel1_input_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2249   .text.tmr_channel1_input_select:00000000 tmr_channel1_input_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2268   .text.tmr_input_channel_divider_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2274   .text.tmr_input_channel_divider_set:00000000 tmr_input_channel_divider_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2335   .text.tmr_primary_mode_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2341   .text.tmr_primary_mode_select:00000000 tmr_primary_mode_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2360   .text.tmr_sub_mode_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2366   .text.tmr_sub_mode_select:00000000 tmr_sub_mode_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2385   .text.tmr_channel_dma_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2391   .text.tmr_channel_dma_select:00000000 tmr_channel_dma_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2410   .text.tmr_hall_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2416   .text.tmr_hall_select:00000000 tmr_hall_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2435   .text.tmr_channel_buffer_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2441   .text.tmr_channel_buffer_enable:00000000 tmr_channel_buffer_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2460   .text.tmr_trigger_input_select:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2466   .text.tmr_trigger_input_select:00000000 tmr_trigger_input_select
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2485   .text.tmr_sub_sync_mode_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2491   .text.tmr_sub_sync_mode_set:00000000 tmr_sub_sync_mode_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2510   .text.tmr_dma_request_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2516   .text.tmr_dma_request_enable:00000000 tmr_dma_request_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2554   .text.tmr_interrupt_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2560   .text.tmr_interrupt_enable:00000000 tmr_interrupt_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2596   .text.tmr_interrupt_flag_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2602   .text.tmr_interrupt_flag_get:00000000 tmr_interrupt_flag_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2646   .text.tmr_flag_get:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2652   .text.tmr_flag_get:00000000 tmr_flag_get
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2684   .text.tmr_flag_clear:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2690   .text.tmr_flag_clear:00000000 tmr_flag_clear
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2710   .text.tmr_event_sw_trigger:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2716   .text.tmr_event_sw_trigger:00000000 tmr_event_sw_trigger
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2738   .text.tmr_output_enable:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2744   .text.tmr_output_enable:00000000 tmr_output_enable
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2763   .text.tmr_internal_clock_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2769   .text.tmr_internal_clock_set:00000000 tmr_internal_clock_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2788   .text.tmr_output_channel_polarity_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2794   .text.tmr_output_channel_polarity_set:00000000 tmr_output_channel_polarity_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2885   .text.tmr_external_clock_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2891   .text.tmr_external_clock_config:00000000 tmr_external_clock_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2928   .text.tmr_external_clock_mode1_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2934   .text.tmr_external_clock_mode1_config:00000000 tmr_external_clock_mode1_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2968   .text.tmr_external_clock_mode2_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:2974   .text.tmr_external_clock_mode2_config:00000000 tmr_external_clock_mode2_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3003   .text.tmr_encoder_mode_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3009   .text.tmr_encoder_mode_config:00000000 tmr_encoder_mode_config
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3079   .text.tmr_force_output_set:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3085   .text.tmr_force_output_set:00000000 tmr_force_output_set
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3146   .text.tmr_dma_control_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3152   .text.tmr_dma_control_config:00000000 tmr_dma_control_config
-ARM GAS  C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s 			page 94
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1536   .text.tmr_overflow_event_disable:00000000 tmr_overflow_event_disable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1555   .text.tmr_input_channel_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1561   .text.tmr_input_channel_init:00000000 tmr_input_channel_init
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1797   .text.tmr_channel_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1803   .text.tmr_channel_enable:00000000 tmr_channel_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1894   .text.tmr_input_channel_filter_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1900   .text.tmr_input_channel_filter_set:00000000 tmr_input_channel_filter_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1961   .text.tmr_pwm_input_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:1967   .text.tmr_pwm_input_config:00000000 tmr_pwm_input_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2243   .text.tmr_channel1_input_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2249   .text.tmr_channel1_input_select:00000000 tmr_channel1_input_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2268   .text.tmr_input_channel_divider_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2274   .text.tmr_input_channel_divider_set:00000000 tmr_input_channel_divider_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2335   .text.tmr_primary_mode_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2341   .text.tmr_primary_mode_select:00000000 tmr_primary_mode_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2360   .text.tmr_sub_mode_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2366   .text.tmr_sub_mode_select:00000000 tmr_sub_mode_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2385   .text.tmr_channel_dma_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2391   .text.tmr_channel_dma_select:00000000 tmr_channel_dma_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2410   .text.tmr_hall_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2416   .text.tmr_hall_select:00000000 tmr_hall_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2435   .text.tmr_channel_buffer_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2441   .text.tmr_channel_buffer_enable:00000000 tmr_channel_buffer_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2460   .text.tmr_trigger_input_select:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2466   .text.tmr_trigger_input_select:00000000 tmr_trigger_input_select
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2485   .text.tmr_sub_sync_mode_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2491   .text.tmr_sub_sync_mode_set:00000000 tmr_sub_sync_mode_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2510   .text.tmr_dma_request_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2516   .text.tmr_dma_request_enable:00000000 tmr_dma_request_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2554   .text.tmr_interrupt_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2560   .text.tmr_interrupt_enable:00000000 tmr_interrupt_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2596   .text.tmr_interrupt_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2602   .text.tmr_interrupt_flag_get:00000000 tmr_interrupt_flag_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2646   .text.tmr_flag_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2652   .text.tmr_flag_get:00000000 tmr_flag_get
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2684   .text.tmr_flag_clear:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2690   .text.tmr_flag_clear:00000000 tmr_flag_clear
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2710   .text.tmr_event_sw_trigger:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2716   .text.tmr_event_sw_trigger:00000000 tmr_event_sw_trigger
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2738   .text.tmr_output_enable:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2744   .text.tmr_output_enable:00000000 tmr_output_enable
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2763   .text.tmr_internal_clock_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2769   .text.tmr_internal_clock_set:00000000 tmr_internal_clock_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2788   .text.tmr_output_channel_polarity_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2794   .text.tmr_output_channel_polarity_set:00000000 tmr_output_channel_polarity_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2885   .text.tmr_external_clock_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2891   .text.tmr_external_clock_config:00000000 tmr_external_clock_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2928   .text.tmr_external_clock_mode1_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2934   .text.tmr_external_clock_mode1_config:00000000 tmr_external_clock_mode1_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2968   .text.tmr_external_clock_mode2_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:2974   .text.tmr_external_clock_mode2_config:00000000 tmr_external_clock_mode2_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3003   .text.tmr_encoder_mode_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3009   .text.tmr_encoder_mode_config:00000000 tmr_encoder_mode_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3079   .text.tmr_force_output_set:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3085   .text.tmr_force_output_set:00000000 tmr_force_output_set
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3146   .text.tmr_dma_control_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3152   .text.tmr_dma_control_config:00000000 tmr_dma_control_config
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccYVWih9.s 			page 94
 
 
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3176   .text.tmr_brkdt_config:00000000 $t
-C:\Users\10963\AppData\Local\Temp\cc2q5RZK.s:3182   .text.tmr_brkdt_config:00000000 tmr_brkdt_config
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3176   .text.tmr_brkdt_config:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccYVWih9.s:3182   .text.tmr_brkdt_config:00000000 tmr_brkdt_config
 
 UNDEFINED SYMBOLS
 crm_periph_reset

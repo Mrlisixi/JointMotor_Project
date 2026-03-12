@@ -41,6 +41,7 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
+#include "motor_control.h"
 
 /* add user code end private includes */
 
@@ -56,11 +57,14 @@
 
 /* private macro -------------------------------------------------------------*/
 /* add user code begin private macro */
-uint16_t adc_odt[20];
+uint16_t adc_data_buffer[DMA1_CHANNEL1_BUFFER_SIZE];
 /* add user code end private macro */
 
 /* private variables ---------------------------------------------------------*/
 /* add user code begin private variables */
+
+/* motor parameters structure */
+motor_params_t motor;
 
 /* add user code end private variables */
 
@@ -115,7 +119,7 @@ int main(void)
      and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL1, 
                         (uint32_t)&ADC1->odt, 
-                        (uint32_t)&adc_odt, 
+                        DMA1_CHANNEL1_MEMORY_BASE_ADDR, 
                         DMA1_CHANNEL1_BUFFER_SIZE);
   dma_channel_enable(DMA1_CHANNEL1, TRUE);
 
@@ -124,6 +128,9 @@ int main(void)
 
   /* init tmr1 function. */
   wk_tmr1_init();
+
+  /* init tmr5 function. */
+  wk_tmr5_init();
 
   /* init acc function. */
   wk_acc_init();
@@ -139,6 +146,7 @@ int main(void)
 
   /* add user code begin 2 */
 
+
   /* add user code end 2 */
 
   /* init freertos function. */
@@ -148,6 +156,9 @@ int main(void)
   {
     /* add user code begin 3 */
 
+    /* process motor control */
+    motor_control_process(&motor);
+    
     /* add user code end 3 */
   }
 }

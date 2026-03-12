@@ -24,13 +24,13 @@
         <Parameters>
             <ParametersSub name="OrdinaryTriggerSource" value="ADC12_ORDINARY_TRIG_SOFTWARE"/>
             <ParametersSub name="NbrOfOrdinarySequence" value="5"/>
-            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_0"/>
+            <ParametersSub name="Channel_OrdinarySequence_1" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_1" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_1"/>
+            <ParametersSub name="Channel_OrdinarySequence_2" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_2" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_2"/>
+            <ParametersSub name="Channel_OrdinarySequence_3" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_3" value="1.429"/>
-            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_3"/>
+            <ParametersSub name="Channel_OrdinarySequence_4" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_4" value="1.429"/>
             <ParametersSub name="Channel_OrdinarySequence_5" value="ADC_CHANNEL_8"/>
             <ParametersSub name="SamplingRate_OrdinarySequence_5" value="1.429"/>
@@ -88,19 +88,31 @@
             <ModeSub name="Activated" value="TRUE"/>
         </Mode>
         <Parameters>
-            <ParametersSub name="DividerValue" value="0x0"/>
-            <ParametersSub name="Period" value="1000"/>
-            <ParametersSub name="RepetitionCounter" value="0x0"/>
+            <ParametersSub name="Period" value="119"/>
+            <ParametersSub name="BreakState" value="TRUE"/>
+            <ParametersSub name="AutomaticOutput" value="TRUE"/>
             <ParametersSub name="DeadTime" value="30"/>
             <ParametersSub name="DeadTimeValue" value="125"/>
             <ParametersSub name="OCMode_1" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
-            <ParametersSub name="ChannelData_1" value="200"/>
+            <ParametersSub name="OC1ImmediatelyMode_PWM" value="TRUE"/>
             <ParametersSub name="OCMode_2" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
-            <ParametersSub name="ChannelData_2" value="200"/>
+            <ParametersSub name="OC2ImmediatelyMode_PWM" value="TRUE"/>
             <ParametersSub name="OCMode_3" value="TMR_OUTPUT_CONTROL_PWM_MODE_A"/>
-            <ParametersSub name="ChannelData_3" value="200"/>
+            <ParametersSub name="OC3ImmediatelyMode_PWM" value="TRUE"/>
         </Parameters>
     </TMR1>
+    <TMR5>
+        <Mode>
+            <ModeSub name="Activated" value="TRUE"/>
+        </Mode>
+        <Parameters>
+            <ParametersSub name="Period" value="2399"/>
+            <ParametersSub name="Overflow_Event" value="From_C"/>
+        </Parameters>
+        <Interrupts>
+            <InterruptsSub name="Interrupt_OVFIF" value="TRUE"/>
+        </Interrupts>
+    </TMR5>
     <USBFS>
         <Mode>
             <ModeSub name="Device" value="TRUE"/>
@@ -117,21 +129,10 @@
         </Parameters>
         <Tasks>
             <ParametersGroup>
-                <ParametersSub name="TaskName" value="Debug_Task"/>
+                <ParametersSub name="TaskName" value="MC_Task"/>
                 <ParametersSub name="TaskPriority" value="0"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="Debug_Task_func"/>
-                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
-                <ParametersSub name="TaskParameters" value="NULL"/>
-                <ParametersSub name="TaskAllocation" value="Dynamic"/>
-                <ParametersSub name="TaskStackBuffer" value="NULL"/>
-                <ParametersSub name="TaskBuffer" value="NULL"/>
-            </ParametersGroup>
-            <ParametersGroup>
-                <ParametersSub name="TaskName" value="CANCom_Task"/>
-                <ParametersSub name="TaskPriority" value="1"/>
-                <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="CANCom_Task_func"/>
+                <ParametersSub name="TaskEntryFunction" value="MC_Task_Func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
                 <ParametersSub name="TaskParameters" value="NULL"/>
                 <ParametersSub name="TaskAllocation" value="Dynamic"/>
@@ -140,9 +141,9 @@
             </ParametersGroup>
             <ParametersGroup>
                 <ParametersSub name="TaskName" value="Monitor_Task"/>
-                <ParametersSub name="TaskPriority" value="2"/>
+                <ParametersSub name="TaskPriority" value="0"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="Monitor_Task_func"/>
+                <ParametersSub name="TaskEntryFunction" value="Monitor_Task_Func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
                 <ParametersSub name="TaskParameters" value="NULL"/>
                 <ParametersSub name="TaskAllocation" value="Dynamic"/>
@@ -150,10 +151,21 @@
                 <ParametersSub name="TaskBuffer" value="NULL"/>
             </ParametersGroup>
             <ParametersGroup>
-                <ParametersSub name="TaskName" value="MC_Task"/>
-                <ParametersSub name="TaskPriority" value="3"/>
+                <ParametersSub name="TaskName" value="Community_Task"/>
+                <ParametersSub name="TaskPriority" value="0"/>
                 <ParametersSub name="TaskStackSize" value="512"/>
-                <ParametersSub name="TaskEntryFunction" value="Mc_Task_func"/>
+                <ParametersSub name="TaskEntryFunction" value="Community_Task_Func"/>
+                <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
+                <ParametersSub name="TaskParameters" value="NULL"/>
+                <ParametersSub name="TaskAllocation" value="Dynamic"/>
+                <ParametersSub name="TaskStackBuffer" value="NULL"/>
+                <ParametersSub name="TaskBuffer" value="NULL"/>
+            </ParametersGroup>
+            <ParametersGroup>
+                <ParametersSub name="TaskName" value="Debug_Task"/>
+                <ParametersSub name="TaskPriority" value="0"/>
+                <ParametersSub name="TaskStackSize" value="512"/>
+                <ParametersSub name="TaskEntryFunction" value="Debug_Task_Func"/>
                 <ParametersSub name="TaskCodeGenerationOption" value="Default"/>
                 <ParametersSub name="TaskParameters" value="NULL"/>
                 <ParametersSub name="TaskAllocation" value="Dynamic"/>
@@ -187,12 +199,13 @@
         <USBFS_L_CAN1_RX0_IRQHandler>0;5;0;1;0</USBFS_L_CAN1_RX0_IRQHandler>
         <CAN1_RX1_IRQHandler>0;5;0;1;0</CAN1_RX1_IRQHandler>
         <CAN1_SE_IRQHandler>0;5;0;1;0</CAN1_SE_IRQHandler>
-        <TMR1_BRK_TMR9_IRQHandler>1;5;0;1;0</TMR1_BRK_TMR9_IRQHandler>
-        <TMR1_OVF_TMR10_IRQHandler>1;5;0;1;0</TMR1_OVF_TMR10_IRQHandler>
-        <TMR1_TRG_HALL_TMR11_IRQHandler>1;5;0;1;0</TMR1_TRG_HALL_TMR11_IRQHandler>
+        <TMR1_BRK_TMR9_IRQHandler>0;5;0;1;0</TMR1_BRK_TMR9_IRQHandler>
+        <TMR1_OVF_TMR10_IRQHandler>0;5;0;1;0</TMR1_OVF_TMR10_IRQHandler>
+        <TMR1_TRG_HALL_TMR11_IRQHandler>0;5;0;1;0</TMR1_TRG_HALL_TMR11_IRQHandler>
         <TMR1_CH_IRQHandler>0;5;0;1;0</TMR1_CH_IRQHandler>
         <SPI1_IRQHandler>1;5;0;1;0</SPI1_IRQHandler>
         <USBFSWakeUp_IRQHandler>0;5;0;1;0</USBFSWakeUp_IRQHandler>
+        <TMR5_GLOBAL_IRQHandler>1;5;0;1;0</TMR5_GLOBAL_IRQHandler>
         <ACC_IRQHandler>0;5;0;1;0</ACC_IRQHandler>
         <USBFS_MAPH_IRQHandler>0;5;0;1;0</USBFS_MAPH_IRQHandler>
         <USBFS_MAPL_IRQHandler>1;5;0;1;0</USBFS_MAPL_IRQHandler>
@@ -202,19 +215,25 @@
             <Parameters name="Label" value="LED"/>
         </Signal>
         <Signal SignalName="ADC1_IN0" PinName="PA0">
-            <Parameters name="Label" value="CURR_PHASE_A_ADC_CH"/>
+            <Parameters name="Label" value="CURR_PHASE_A"/>
         </Signal>
         <Signal SignalName="ADC1_IN1" PinName="PA1">
-            <Parameters name="Label" value="CURR_PHASE_B_ADC_CH"/>
+            <Parameters name="Label" value="CURR_PHASE_B"/>
         </Signal>
         <Signal SignalName="ADC1_IN2" PinName="PA2">
-            <Parameters name="Label" value="CURR_PHASE_C_ADC_CH"/>
+            <Parameters name="Label" value="CURR_PHASE_C"/>
         </Signal>
         <Signal SignalName="ADC1_IN3" PinName="PA3">
-            <Parameters name="Label" value="VOLT_BUS_ADC_CH"/>
+            <Parameters name="Label" value="VOLT_BUS"/>
         </Signal>
         <Signal SignalName="ADC1_IN8" PinName="PB0">
-            <Parameters name="Label" value="MOS_TEMP_ADC_CH"/>
+            <Parameters name="Label" value="MOS_TEMP"/>
+        </Signal>
+        <Signal SignalName="TMR1_CH1C" PinName="PB13">
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
+        </Signal>
+        <Signal SignalName="TMR1_CH1" PinName="PA8">
+            <Parameters name="GPIO_DriverCapability" value="GPIO_DRIVE_STRENGTH_STRONGER"/>
         </Signal>
     </GPIO>
     <ClockConfiguration>
@@ -249,7 +268,7 @@
         <PinSub pinname="PA6" signalname="SPI1_MISO" signaltype="2"/>
         <PinSub pinname="PA7" signalname="SPI1_MOSI" signaltype="2"/>
         <PinSub pinname="PB0" signalname="ADC1_IN8" signaltype="3"/>
-        <PinSub pinname="PB13" signalname="TMR1_CH1C" signaltype="2"/>
+        <PinSub pinname="PB13" signalname="TMR1_CH1C" signaltype="3"/>
         <PinSub pinname="PB14" signalname="TMR1_CH2C" signaltype="2"/>
         <PinSub pinname="PB15" signalname="TMR1_CH3C" signaltype="2"/>
         <PinSub pinname="PA8" signalname="TMR1_CH1" signaltype="3"/>

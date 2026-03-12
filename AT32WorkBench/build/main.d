@@ -43,7 +43,8 @@ build/main.o: project/src/main.c project/inc/at32f403a_407_wk_config.h \
  middlewares/freertos/source/include/queue.h \
  middlewares/freertos/source/include/timers.h \
  middlewares/freertos/source/include/event_groups.h \
- middlewares/freertos/source/include/timers.h project/inc/wk_system.h
+ middlewares/freertos/source/include/timers.h project/inc/wk_system.h \
+ ../Motor_Control/inc/motor_control.h ../Motor_Control/inc/motor_params.h
 project/inc/at32f403a_407_wk_config.h:
 libraries/cmsis/cm4/device_support/at32f403a_407.h:
 libraries/cmsis/cm4/core_support/core_cm4.h:
@@ -99,3 +100,5 @@ middlewares/freertos/source/include/timers.h:
 middlewares/freertos/source/include/event_groups.h:
 middlewares/freertos/source/include/timers.h:
 project/inc/wk_system.h:
+../Motor_Control/inc/motor_control.h:
+../Motor_Control/inc/motor_params.h:

@@ -54,28 +54,28 @@ void wk_adc1_init(void)
   /*gpio--------------------------------------------------------------------*/ 
   /* configure the IN0 pin */
   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
-  gpio_init_struct.gpio_pins = CURR_PHASE_A_ADC_CH_PIN;
-  gpio_init(CURR_PHASE_A_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  gpio_init_struct.gpio_pins = CURR_PHASE_A_PIN;
+  gpio_init(CURR_PHASE_A_GPIO_PORT, &gpio_init_struct);
 
   /* configure the IN1 pin */
   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
-  gpio_init_struct.gpio_pins = CURR_PHASE_B_ADC_CH_PIN;
-  gpio_init(CURR_PHASE_B_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  gpio_init_struct.gpio_pins = CURR_PHASE_B_PIN;
+  gpio_init(CURR_PHASE_B_GPIO_PORT, &gpio_init_struct);
 
   /* configure the IN2 pin */
   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
-  gpio_init_struct.gpio_pins = CURR_PHASE_C_ADC_CH_PIN;
-  gpio_init(CURR_PHASE_C_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  gpio_init_struct.gpio_pins = CURR_PHASE_C_PIN;
+  gpio_init(CURR_PHASE_C_GPIO_PORT, &gpio_init_struct);
 
   /* configure the IN3 pin */
   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
-  gpio_init_struct.gpio_pins = VOLT_BUS_ADC_CH_PIN;
-  gpio_init(VOLT_BUS_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  gpio_init_struct.gpio_pins = VOLT_BUS_PIN;
+  gpio_init(VOLT_BUS_GPIO_PORT, &gpio_init_struct);
 
   /* configure the IN8 pin */
   gpio_init_struct.gpio_mode = GPIO_MODE_ANALOG;
-  gpio_init_struct.gpio_pins = MOS_TEMP_ADC_CH_PIN;
-  gpio_init(MOS_TEMP_ADC_CH_GPIO_PORT, &gpio_init_struct);
+  gpio_init_struct.gpio_pins = MOS_TEMP_PIN;
+  gpio_init(MOS_TEMP_GPIO_PORT, &gpio_init_struct);
 
   adc_reset(ADC1);
   crm_adc_clock_div_set(CRM_ADC_DIV_6);
@@ -92,10 +92,10 @@ void wk_adc1_init(void)
   adc_base_config(ADC1, &adc_base_struct);
 
   /* adc_ordinary_conversionmode-------------------------------------------- */
-  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_0, 1, ADC_SAMPLETIME_1_5);
-  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_1, 2, ADC_SAMPLETIME_1_5);
-  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_2, 3, ADC_SAMPLETIME_1_5);
-  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_3, 4, ADC_SAMPLETIME_1_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 1, ADC_SAMPLETIME_1_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 2, ADC_SAMPLETIME_1_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 3, ADC_SAMPLETIME_1_5);
+  adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 4, ADC_SAMPLETIME_1_5);
   adc_ordinary_channel_set(ADC1, ADC_CHANNEL_8, 5, ADC_SAMPLETIME_1_5);
 
   /* When "ADCx_ORDINARY_TRIG_SOFTWARE" is selected, user can only use software trigger. \

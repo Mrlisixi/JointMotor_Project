@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
   28:project/src/wk_tmr.c **** #include "wk_tmr.h"
   29:project/src/wk_tmr.c **** 
   30:project/src/wk_tmr.c **** /* add user code begin 0 */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 2
 
 
   31:project/src/wk_tmr.c **** 
@@ -118,13 +118,13 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
   57 000e 4FF40053 		mov	r3, #8192
   58 0012 0493     		str	r3, [sp, #16]
   57:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 3
 
 
   59              		.loc 1 57 3 is_stmt 1 view .LVU7
   60              		.loc 1 57 30 is_stmt 0 view .LVU8
-  61 0014 4FF00808 		mov	r8, #8
-  62 0018 8DF81680 		strb	r8, [sp, #22]
+  61 0014 4FF00809 		mov	r9, #8
+  62 0018 8DF81690 		strb	r9, [sp, #22]
   58:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   63              		.loc 1 58 3 is_stmt 1 view .LVU9
   64              		.loc 1 58 34 is_stmt 0 view .LVU10
@@ -133,18 +133,18 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
   59:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   67              		.loc 1 59 3 is_stmt 1 view .LVU11
   68              		.loc 1 59 30 is_stmt 0 view .LVU12
-  69 0022 0426     		movs	r6, #4
-  70 0024 8DF81560 		strb	r6, [sp, #21]
-  60:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
+  69 0022 0427     		movs	r7, #4
+  70 0024 8DF81570 		strb	r7, [sp, #21]
+  60:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
   71              		.loc 1 60 3 is_stmt 1 view .LVU13
   72              		.loc 1 60 40 is_stmt 0 view .LVU14
-  73 0028 0227     		movs	r7, #2
-  74 002a 8DF81770 		strb	r7, [sp, #23]
+  73 0028 0126     		movs	r6, #1
+  74 002a 8DF81760 		strb	r6, [sp, #23]
   61:project/src/wk_tmr.c ****   gpio_init(GPIOB, &gpio_init_struct);
   75              		.loc 1 61 3 is_stmt 1 view .LVU15
-  76 002e DFF8FC91 		ldr	r9, .L3+4
+  76 002e DFF8F8A1 		ldr	r10, .L3+4
   77 0032 2946     		mov	r1, r5
-  78 0034 4846     		mov	r0, r9
+  78 0034 5046     		mov	r0, r10
   79 0036 FFF7FEFF 		bl	gpio_init
   80              	.LVL1:
   62:project/src/wk_tmr.c **** 
@@ -157,7 +157,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
   65:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
   85              		.loc 1 65 3 is_stmt 1 view .LVU18
   86              		.loc 1 65 30 is_stmt 0 view .LVU19
-  87 0040 8DF81680 		strb	r8, [sp, #22]
+  87 0040 8DF81690 		strb	r9, [sp, #22]
   66:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
   88              		.loc 1 66 3 is_stmt 1 view .LVU20
   89              		.loc 1 66 34 is_stmt 0 view .LVU21
@@ -165,471 +165,592 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 1
   67:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
   91              		.loc 1 67 3 is_stmt 1 view .LVU22
   92              		.loc 1 67 30 is_stmt 0 view .LVU23
-  93 0048 8DF81560 		strb	r6, [sp, #21]
+  93 0048 8DF81570 		strb	r7, [sp, #21]
   68:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
   94              		.loc 1 68 3 is_stmt 1 view .LVU24
   95              		.loc 1 68 40 is_stmt 0 view .LVU25
-  96 004c 8DF81770 		strb	r7, [sp, #23]
+  96 004c 4FF00208 		mov	r8, #2
+  97 0050 8DF81780 		strb	r8, [sp, #23]
   69:project/src/wk_tmr.c ****   gpio_init(GPIOB, &gpio_init_struct);
-  97              		.loc 1 69 3 is_stmt 1 view .LVU26
-  98 0050 2946     		mov	r1, r5
-  99 0052 4846     		mov	r0, r9
- 100 0054 FFF7FEFF 		bl	gpio_init
- 101              	.LVL2:
+  98              		.loc 1 69 3 is_stmt 1 view .LVU26
+  99 0054 2946     		mov	r1, r5
+ 100 0056 5046     		mov	r0, r10
+ 101 0058 FFF7FEFF 		bl	gpio_init
+ 102              	.LVL2:
   70:project/src/wk_tmr.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 4
+
+
   71:project/src/wk_tmr.c ****   /* configure the CH3C pin */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 4
-
-
   72:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_15;
- 102              		.loc 1 72 3 view .LVU27
- 103              		.loc 1 72 30 is_stmt 0 view .LVU28
- 104 0058 4FF40043 		mov	r3, #32768
- 105 005c 0493     		str	r3, [sp, #16]
+ 103              		.loc 1 72 3 view .LVU27
+ 104              		.loc 1 72 30 is_stmt 0 view .LVU28
+ 105 005c 4FF40043 		mov	r3, #32768
+ 106 0060 0493     		str	r3, [sp, #16]
   73:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
- 106              		.loc 1 73 3 is_stmt 1 view .LVU29
- 107              		.loc 1 73 30 is_stmt 0 view .LVU30
- 108 005e 8DF81680 		strb	r8, [sp, #22]
+ 107              		.loc 1 73 3 is_stmt 1 view .LVU29
+ 108              		.loc 1 73 30 is_stmt 0 view .LVU30
+ 109 0062 8DF81690 		strb	r9, [sp, #22]
   74:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
- 109              		.loc 1 74 3 is_stmt 1 view .LVU31
- 110              		.loc 1 74 34 is_stmt 0 view .LVU32
- 111 0062 8DF81440 		strb	r4, [sp, #20]
+ 110              		.loc 1 74 3 is_stmt 1 view .LVU31
+ 111              		.loc 1 74 34 is_stmt 0 view .LVU32
+ 112 0066 8DF81440 		strb	r4, [sp, #20]
   75:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
- 112              		.loc 1 75 3 is_stmt 1 view .LVU33
- 113              		.loc 1 75 30 is_stmt 0 view .LVU34
- 114 0066 8DF81560 		strb	r6, [sp, #21]
+ 113              		.loc 1 75 3 is_stmt 1 view .LVU33
+ 114              		.loc 1 75 30 is_stmt 0 view .LVU34
+ 115 006a 8DF81570 		strb	r7, [sp, #21]
   76:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
- 115              		.loc 1 76 3 is_stmt 1 view .LVU35
- 116              		.loc 1 76 40 is_stmt 0 view .LVU36
- 117 006a 8DF81770 		strb	r7, [sp, #23]
+ 116              		.loc 1 76 3 is_stmt 1 view .LVU35
+ 117              		.loc 1 76 40 is_stmt 0 view .LVU36
+ 118 006e 8DF81780 		strb	r8, [sp, #23]
   77:project/src/wk_tmr.c ****   gpio_init(GPIOB, &gpio_init_struct);
- 118              		.loc 1 77 3 is_stmt 1 view .LVU37
- 119 006e 2946     		mov	r1, r5
- 120 0070 4846     		mov	r0, r9
- 121 0072 FFF7FEFF 		bl	gpio_init
- 122              	.LVL3:
+ 119              		.loc 1 77 3 is_stmt 1 view .LVU37
+ 120 0072 2946     		mov	r1, r5
+ 121 0074 5046     		mov	r0, r10
+ 122 0076 FFF7FEFF 		bl	gpio_init
+ 123              	.LVL3:
   78:project/src/wk_tmr.c **** 
   79:project/src/wk_tmr.c ****   /* configure the CH1 pin */
   80:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_8;
- 123              		.loc 1 80 3 view .LVU38
- 124              		.loc 1 80 30 is_stmt 0 view .LVU39
- 125 0076 4FF48073 		mov	r3, #256
- 126 007a 0493     		str	r3, [sp, #16]
+ 124              		.loc 1 80 3 view .LVU38
+ 125              		.loc 1 80 30 is_stmt 0 view .LVU39
+ 126 007a 4FF48073 		mov	r3, #256
+ 127 007e 0493     		str	r3, [sp, #16]
   81:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
- 127              		.loc 1 81 3 is_stmt 1 view .LVU40
- 128              		.loc 1 81 30 is_stmt 0 view .LVU41
- 129 007c 8DF81680 		strb	r8, [sp, #22]
+ 128              		.loc 1 81 3 is_stmt 1 view .LVU40
+ 129              		.loc 1 81 30 is_stmt 0 view .LVU41
+ 130 0080 8DF81690 		strb	r9, [sp, #22]
   82:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
- 130              		.loc 1 82 3 is_stmt 1 view .LVU42
- 131              		.loc 1 82 34 is_stmt 0 view .LVU43
- 132 0080 8DF81440 		strb	r4, [sp, #20]
+ 131              		.loc 1 82 3 is_stmt 1 view .LVU42
+ 132              		.loc 1 82 34 is_stmt 0 view .LVU43
+ 133 0084 8DF81440 		strb	r4, [sp, #20]
   83:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
- 133              		.loc 1 83 3 is_stmt 1 view .LVU44
- 134              		.loc 1 83 30 is_stmt 0 view .LVU45
- 135 0084 8DF81560 		strb	r6, [sp, #21]
-  84:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
- 136              		.loc 1 84 3 is_stmt 1 view .LVU46
- 137              		.loc 1 84 40 is_stmt 0 view .LVU47
- 138 0088 8DF81770 		strb	r7, [sp, #23]
+ 134              		.loc 1 83 3 is_stmt 1 view .LVU44
+ 135              		.loc 1 83 30 is_stmt 0 view .LVU45
+ 136 0088 8DF81570 		strb	r7, [sp, #21]
+  84:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+ 137              		.loc 1 84 3 is_stmt 1 view .LVU46
+ 138              		.loc 1 84 40 is_stmt 0 view .LVU47
+ 139 008c 8DF81760 		strb	r6, [sp, #23]
   85:project/src/wk_tmr.c ****   gpio_init(GPIOA, &gpio_init_struct);
- 139              		.loc 1 85 3 is_stmt 1 view .LVU48
- 140 008c A9F58069 		sub	r9, r9, #1024
- 141 0090 2946     		mov	r1, r5
- 142 0092 4846     		mov	r0, r9
- 143 0094 FFF7FEFF 		bl	gpio_init
- 144              	.LVL4:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 5
+ 140              		.loc 1 85 3 is_stmt 1 view .LVU48
+ 141 0090 AAF5806A 		sub	r10, r10, #1024
+ 142 0094 2946     		mov	r1, r5
+ 143 0096 5046     		mov	r0, r10
+ 144 0098 FFF7FEFF 		bl	gpio_init
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 5
 
 
+ 145              	.LVL4:
   86:project/src/wk_tmr.c **** 
   87:project/src/wk_tmr.c ****   /* configure the CH2 pin */
   88:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_9;
- 145              		.loc 1 88 3 view .LVU49
- 146              		.loc 1 88 30 is_stmt 0 view .LVU50
- 147 0098 4FF40073 		mov	r3, #512
- 148 009c 0493     		str	r3, [sp, #16]
+ 146              		.loc 1 88 3 view .LVU49
+ 147              		.loc 1 88 30 is_stmt 0 view .LVU50
+ 148 009c 4FF40073 		mov	r3, #512
+ 149 00a0 0493     		str	r3, [sp, #16]
   89:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
- 149              		.loc 1 89 3 is_stmt 1 view .LVU51
- 150              		.loc 1 89 30 is_stmt 0 view .LVU52
- 151 009e 8DF81680 		strb	r8, [sp, #22]
+ 150              		.loc 1 89 3 is_stmt 1 view .LVU51
+ 151              		.loc 1 89 30 is_stmt 0 view .LVU52
+ 152 00a2 8DF81690 		strb	r9, [sp, #22]
   90:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
- 152              		.loc 1 90 3 is_stmt 1 view .LVU53
- 153              		.loc 1 90 34 is_stmt 0 view .LVU54
- 154 00a2 8DF81440 		strb	r4, [sp, #20]
+ 153              		.loc 1 90 3 is_stmt 1 view .LVU53
+ 154              		.loc 1 90 34 is_stmt 0 view .LVU54
+ 155 00a6 8DF81440 		strb	r4, [sp, #20]
   91:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
- 155              		.loc 1 91 3 is_stmt 1 view .LVU55
- 156              		.loc 1 91 30 is_stmt 0 view .LVU56
- 157 00a6 8DF81560 		strb	r6, [sp, #21]
+ 156              		.loc 1 91 3 is_stmt 1 view .LVU55
+ 157              		.loc 1 91 30 is_stmt 0 view .LVU56
+ 158 00aa 8DF81570 		strb	r7, [sp, #21]
   92:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
- 158              		.loc 1 92 3 is_stmt 1 view .LVU57
- 159              		.loc 1 92 40 is_stmt 0 view .LVU58
- 160 00aa 8DF81770 		strb	r7, [sp, #23]
+ 159              		.loc 1 92 3 is_stmt 1 view .LVU57
+ 160              		.loc 1 92 40 is_stmt 0 view .LVU58
+ 161 00ae 8DF81780 		strb	r8, [sp, #23]
   93:project/src/wk_tmr.c ****   gpio_init(GPIOA, &gpio_init_struct);
- 161              		.loc 1 93 3 is_stmt 1 view .LVU59
- 162 00ae 2946     		mov	r1, r5
- 163 00b0 4846     		mov	r0, r9
- 164 00b2 FFF7FEFF 		bl	gpio_init
- 165              	.LVL5:
+ 162              		.loc 1 93 3 is_stmt 1 view .LVU59
+ 163 00b2 2946     		mov	r1, r5
+ 164 00b4 5046     		mov	r0, r10
+ 165 00b6 FFF7FEFF 		bl	gpio_init
+ 166              	.LVL5:
   94:project/src/wk_tmr.c **** 
   95:project/src/wk_tmr.c ****   /* configure the CH3 pin */
   96:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pins = GPIO_PINS_10;
- 166              		.loc 1 96 3 view .LVU60
- 167              		.loc 1 96 30 is_stmt 0 view .LVU61
- 168 00b6 4FF48063 		mov	r3, #1024
- 169 00ba 0493     		str	r3, [sp, #16]
+ 167              		.loc 1 96 3 view .LVU60
+ 168              		.loc 1 96 30 is_stmt 0 view .LVU61
+ 169 00ba 4FF48063 		mov	r3, #1024
+ 170 00be 0493     		str	r3, [sp, #16]
   97:project/src/wk_tmr.c ****   gpio_init_struct.gpio_mode = GPIO_MODE_MUX;
- 170              		.loc 1 97 3 is_stmt 1 view .LVU62
- 171              		.loc 1 97 30 is_stmt 0 view .LVU63
- 172 00bc 8DF81680 		strb	r8, [sp, #22]
+ 171              		.loc 1 97 3 is_stmt 1 view .LVU62
+ 172              		.loc 1 97 30 is_stmt 0 view .LVU63
+ 173 00c0 8DF81690 		strb	r9, [sp, #22]
   98:project/src/wk_tmr.c ****   gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
- 173              		.loc 1 98 3 is_stmt 1 view .LVU64
- 174              		.loc 1 98 34 is_stmt 0 view .LVU65
- 175 00c0 8DF81440 		strb	r4, [sp, #20]
+ 174              		.loc 1 98 3 is_stmt 1 view .LVU64
+ 175              		.loc 1 98 34 is_stmt 0 view .LVU65
+ 176 00c4 8DF81440 		strb	r4, [sp, #20]
   99:project/src/wk_tmr.c ****   gpio_init_struct.gpio_pull = GPIO_PULL_NONE;
- 176              		.loc 1 99 3 is_stmt 1 view .LVU66
- 177              		.loc 1 99 30 is_stmt 0 view .LVU67
- 178 00c4 8DF81560 		strb	r6, [sp, #21]
+ 177              		.loc 1 99 3 is_stmt 1 view .LVU66
+ 178              		.loc 1 99 30 is_stmt 0 view .LVU67
+ 179 00c8 8DF81570 		strb	r7, [sp, #21]
  100:project/src/wk_tmr.c ****   gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_MODERATE;
- 179              		.loc 1 100 3 is_stmt 1 view .LVU68
- 180              		.loc 1 100 40 is_stmt 0 view .LVU69
- 181 00c8 8DF81770 		strb	r7, [sp, #23]
+ 180              		.loc 1 100 3 is_stmt 1 view .LVU68
+ 181              		.loc 1 100 40 is_stmt 0 view .LVU69
+ 182 00cc 8DF81780 		strb	r8, [sp, #23]
  101:project/src/wk_tmr.c ****   gpio_init(GPIOA, &gpio_init_struct);
- 182              		.loc 1 101 3 is_stmt 1 view .LVU70
- 183 00cc 2946     		mov	r1, r5
- 184 00ce 4846     		mov	r0, r9
- 185 00d0 FFF7FEFF 		bl	gpio_init
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 6
+ 183              		.loc 1 101 3 is_stmt 1 view .LVU70
+ 184 00d0 2946     		mov	r1, r5
+ 185 00d2 5046     		mov	r0, r10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 6
 
 
- 186              	.LVL6:
+ 186 00d4 FFF7FEFF 		bl	gpio_init
+ 187              	.LVL6:
  102:project/src/wk_tmr.c **** 
  103:project/src/wk_tmr.c ****   /* configure counter settings */
  104:project/src/wk_tmr.c ****   tmr_cnt_dir_set(TMR1, TMR_COUNT_UP);
- 187              		.loc 1 104 3 view .LVU71
- 188 00d4 544D     		ldr	r5, .L3
- 189 00d6 2146     		mov	r1, r4
- 190 00d8 2846     		mov	r0, r5
- 191 00da FFF7FEFF 		bl	tmr_cnt_dir_set
- 192              	.LVL7:
+ 188              		.loc 1 104 3 view .LVU71
+ 189 00d8 524D     		ldr	r5, .L3
+ 190 00da 2146     		mov	r1, r4
+ 191 00dc 2846     		mov	r0, r5
+ 192 00de FFF7FEFF 		bl	tmr_cnt_dir_set
+ 193              	.LVL7:
  105:project/src/wk_tmr.c ****   tmr_clock_source_div_set(TMR1, TMR_CLOCK_DIV1);
- 193              		.loc 1 105 3 view .LVU72
- 194 00de 2146     		mov	r1, r4
- 195 00e0 2846     		mov	r0, r5
- 196 00e2 FFF7FEFF 		bl	tmr_clock_source_div_set
- 197              	.LVL8:
- 106:project/src/wk_tmr.c ****   tmr_repetition_counter_set(TMR1, 0x0);
- 198              		.loc 1 106 3 view .LVU73
- 199 00e6 2146     		mov	r1, r4
- 200 00e8 2846     		mov	r0, r5
- 201 00ea FFF7FEFF 		bl	tmr_repetition_counter_set
- 202              	.LVL9:
+ 194              		.loc 1 105 3 view .LVU72
+ 195 00e2 2146     		mov	r1, r4
+ 196 00e4 2846     		mov	r0, r5
+ 197 00e6 FFF7FEFF 		bl	tmr_clock_source_div_set
+ 198              	.LVL8:
+ 106:project/src/wk_tmr.c ****   tmr_repetition_counter_set(TMR1, 0);
+ 199              		.loc 1 106 3 view .LVU73
+ 200 00ea 2146     		mov	r1, r4
+ 201 00ec 2846     		mov	r0, r5
+ 202 00ee FFF7FEFF 		bl	tmr_repetition_counter_set
+ 203              	.LVL9:
  107:project/src/wk_tmr.c ****   tmr_period_buffer_enable(TMR1, FALSE);
- 203              		.loc 1 107 3 view .LVU74
- 204 00ee 2146     		mov	r1, r4
- 205 00f0 2846     		mov	r0, r5
- 206 00f2 FFF7FEFF 		bl	tmr_period_buffer_enable
- 207              	.LVL10:
- 108:project/src/wk_tmr.c ****   tmr_base_init(TMR1, 1000, 0x0);
- 208              		.loc 1 108 3 view .LVU75
- 209 00f6 2246     		mov	r2, r4
- 210 00f8 4FF47A71 		mov	r1, #1000
- 211 00fc 2846     		mov	r0, r5
- 212 00fe FFF7FEFF 		bl	tmr_base_init
- 213              	.LVL11:
+ 204              		.loc 1 107 3 view .LVU74
+ 205 00f2 2146     		mov	r1, r4
+ 206 00f4 2846     		mov	r0, r5
+ 207 00f6 FFF7FEFF 		bl	tmr_period_buffer_enable
+ 208              	.LVL10:
+ 108:project/src/wk_tmr.c ****   tmr_base_init(TMR1, 119, 0);
+ 209              		.loc 1 108 3 view .LVU75
+ 210 00fa 2246     		mov	r2, r4
+ 211 00fc 7721     		movs	r1, #119
+ 212 00fe 2846     		mov	r0, r5
+ 213 0100 FFF7FEFF 		bl	tmr_base_init
+ 214              	.LVL11:
  109:project/src/wk_tmr.c **** 
  110:project/src/wk_tmr.c ****   /* configure primary mode settings */
  111:project/src/wk_tmr.c ****   tmr_sub_sync_mode_set(TMR1, FALSE);
- 214              		.loc 1 111 3 view .LVU76
- 215 0102 2146     		mov	r1, r4
- 216 0104 2846     		mov	r0, r5
- 217 0106 FFF7FEFF 		bl	tmr_sub_sync_mode_set
- 218              	.LVL12:
+ 215              		.loc 1 111 3 view .LVU76
+ 216 0104 2146     		mov	r1, r4
+ 217 0106 2846     		mov	r0, r5
+ 218 0108 FFF7FEFF 		bl	tmr_sub_sync_mode_set
+ 219              	.LVL12:
  112:project/src/wk_tmr.c ****   tmr_primary_mode_select(TMR1, TMR_PRIMARY_SEL_RESET);
- 219              		.loc 1 112 3 view .LVU77
- 220 010a 2146     		mov	r1, r4
- 221 010c 2846     		mov	r0, r5
- 222 010e FFF7FEFF 		bl	tmr_primary_mode_select
- 223              	.LVL13:
+ 220              		.loc 1 112 3 view .LVU77
+ 221 010c 2146     		mov	r1, r4
+ 222 010e 2846     		mov	r0, r5
+ 223 0110 FFF7FEFF 		bl	tmr_primary_mode_select
+ 224              	.LVL13:
  113:project/src/wk_tmr.c **** 
  114:project/src/wk_tmr.c ****   /* configure channel 1 output settings */
  115:project/src/wk_tmr.c ****   tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
- 224              		.loc 1 115 3 view .LVU78
- 225              		.loc 1 115 29 is_stmt 0 view .LVU79
- 226 0112 4FF0060A 		mov	r10, #6
- 227 0116 8DF808A0 		strb	r10, [sp, #8]
+ 225              		.loc 1 115 3 view .LVU78
+ 226              		.loc 1 115 29 is_stmt 0 view .LVU79
+ 227 0114 4FF0060A 		mov	r10, #6
+ 228 0118 8DF808A0 		strb	r10, [sp, #8]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 7
+
+
  116:project/src/wk_tmr.c ****   tmr_output_struct.oc_output_state = TRUE;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 7
-
-
- 228              		.loc 1 116 3 is_stmt 1 view .LVU80
- 229              		.loc 1 116 37 is_stmt 0 view .LVU81
- 230 011a 4FF00108 		mov	r8, #1
- 231 011e 8DF80D80 		strb	r8, [sp, #13]
+ 229              		.loc 1 116 3 is_stmt 1 view .LVU80
+ 230              		.loc 1 116 37 is_stmt 0 view .LVU81
+ 231 011c 8DF80D60 		strb	r6, [sp, #13]
  117:project/src/wk_tmr.c ****   tmr_output_struct.occ_output_state = TRUE;
  232              		.loc 1 117 3 is_stmt 1 view .LVU82
  233              		.loc 1 117 38 is_stmt 0 view .LVU83
- 234 0122 8DF80E80 		strb	r8, [sp, #14]
+ 234 0120 8DF80E60 		strb	r6, [sp, #14]
  118:project/src/wk_tmr.c ****   tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  235              		.loc 1 118 3 is_stmt 1 view .LVU84
  236              		.loc 1 118 33 is_stmt 0 view .LVU85
- 237 0126 8DF80B40 		strb	r4, [sp, #11]
+ 237 0124 8DF80B40 		strb	r4, [sp, #11]
  119:project/src/wk_tmr.c ****   tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  238              		.loc 1 119 3 is_stmt 1 view .LVU86
  239              		.loc 1 119 34 is_stmt 0 view .LVU87
- 240 012a 8DF80C40 		strb	r4, [sp, #12]
+ 240 0128 8DF80C40 		strb	r4, [sp, #12]
  120:project/src/wk_tmr.c ****   tmr_output_struct.oc_idle_state = FALSE;
  241              		.loc 1 120 3 is_stmt 1 view .LVU88
  242              		.loc 1 120 35 is_stmt 0 view .LVU89
- 243 012e 8DF80940 		strb	r4, [sp, #9]
+ 243 012c 8DF80940 		strb	r4, [sp, #9]
  121:project/src/wk_tmr.c ****   tmr_output_struct.occ_idle_state = FALSE;
  244              		.loc 1 121 3 is_stmt 1 view .LVU90
  245              		.loc 1 121 36 is_stmt 0 view .LVU91
- 246 0132 8DF80A40 		strb	r4, [sp, #10]
+ 246 0130 8DF80A40 		strb	r4, [sp, #10]
  122:project/src/wk_tmr.c ****   tmr_output_channel_config(TMR1, TMR_SELECT_CHANNEL_1, &tmr_output_struct);
  247              		.loc 1 122 3 is_stmt 1 view .LVU92
- 248 0136 0DF10809 		add	r9, sp, #8
- 249 013a 4A46     		mov	r2, r9
- 250 013c 2146     		mov	r1, r4
- 251 013e 2846     		mov	r0, r5
- 252 0140 FFF7FEFF 		bl	tmr_output_channel_config
+ 248 0134 E944     		add	r9, sp, r9
+ 249 0136 4A46     		mov	r2, r9
+ 250 0138 2146     		mov	r1, r4
+ 251 013a 2846     		mov	r0, r5
+ 252 013c FFF7FEFF 		bl	tmr_output_channel_config
  253              	.LVL14:
- 123:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 200);
+ 123:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
  254              		.loc 1 123 3 view .LVU93
- 255 0144 C822     		movs	r2, #200
- 256 0146 2146     		mov	r1, r4
- 257 0148 2846     		mov	r0, r5
- 258 014a FFF7FEFF 		bl	tmr_channel_value_set
+ 255 0140 2246     		mov	r2, r4
+ 256 0142 2146     		mov	r1, r4
+ 257 0144 2846     		mov	r0, r5
+ 258 0146 FFF7FEFF 		bl	tmr_channel_value_set
  259              	.LVL15:
  124:project/src/wk_tmr.c ****   tmr_output_channel_buffer_enable(TMR1, TMR_SELECT_CHANNEL_1, FALSE);
  260              		.loc 1 124 3 view .LVU94
- 261 014e 2246     		mov	r2, r4
- 262 0150 2146     		mov	r1, r4
- 263 0152 2846     		mov	r0, r5
- 264 0154 FFF7FEFF 		bl	tmr_output_channel_buffer_enable
+ 261 014a 2246     		mov	r2, r4
+ 262 014c 2146     		mov	r1, r4
+ 263 014e 2846     		mov	r0, r5
+ 264 0150 FFF7FEFF 		bl	tmr_output_channel_buffer_enable
  265              	.LVL16:
  125:project/src/wk_tmr.c **** 
- 126:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_1, FALSE);
+ 126:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_1, TRUE);
  266              		.loc 1 126 3 view .LVU95
- 267 0158 2246     		mov	r2, r4
- 268 015a 2146     		mov	r1, r4
- 269 015c 2846     		mov	r0, r5
- 270 015e FFF7FEFF 		bl	tmr_output_channel_immediately_set
+ 267 0154 3246     		mov	r2, r6
+ 268 0156 2146     		mov	r1, r4
+ 269 0158 2846     		mov	r0, r5
+ 270 015a FFF7FEFF 		bl	tmr_output_channel_immediately_set
  271              	.LVL17:
  127:project/src/wk_tmr.c **** 
  128:project/src/wk_tmr.c ****   /* configure channel 2 output settings */
  129:project/src/wk_tmr.c ****   tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 8
 
 
  272              		.loc 1 129 3 view .LVU96
  273              		.loc 1 129 29 is_stmt 0 view .LVU97
- 274 0162 8DF808A0 		strb	r10, [sp, #8]
+ 274 015e 8DF808A0 		strb	r10, [sp, #8]
  130:project/src/wk_tmr.c ****   tmr_output_struct.oc_output_state = TRUE;
  275              		.loc 1 130 3 is_stmt 1 view .LVU98
  276              		.loc 1 130 37 is_stmt 0 view .LVU99
- 277 0166 8DF80D80 		strb	r8, [sp, #13]
+ 277 0162 8DF80D60 		strb	r6, [sp, #13]
  131:project/src/wk_tmr.c ****   tmr_output_struct.occ_output_state = TRUE;
  278              		.loc 1 131 3 is_stmt 1 view .LVU100
  279              		.loc 1 131 38 is_stmt 0 view .LVU101
- 280 016a 8DF80E80 		strb	r8, [sp, #14]
+ 280 0166 8DF80E60 		strb	r6, [sp, #14]
  132:project/src/wk_tmr.c ****   tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  281              		.loc 1 132 3 is_stmt 1 view .LVU102
  282              		.loc 1 132 33 is_stmt 0 view .LVU103
- 283 016e 8DF80B40 		strb	r4, [sp, #11]
+ 283 016a 8DF80B40 		strb	r4, [sp, #11]
  133:project/src/wk_tmr.c ****   tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  284              		.loc 1 133 3 is_stmt 1 view .LVU104
  285              		.loc 1 133 34 is_stmt 0 view .LVU105
- 286 0172 8DF80C40 		strb	r4, [sp, #12]
+ 286 016e 8DF80C40 		strb	r4, [sp, #12]
  134:project/src/wk_tmr.c ****   tmr_output_struct.oc_idle_state = FALSE;
  287              		.loc 1 134 3 is_stmt 1 view .LVU106
  288              		.loc 1 134 35 is_stmt 0 view .LVU107
- 289 0176 8DF80940 		strb	r4, [sp, #9]
+ 289 0172 8DF80940 		strb	r4, [sp, #9]
  135:project/src/wk_tmr.c ****   tmr_output_struct.occ_idle_state = FALSE;
  290              		.loc 1 135 3 is_stmt 1 view .LVU108
  291              		.loc 1 135 36 is_stmt 0 view .LVU109
- 292 017a 8DF80A40 		strb	r4, [sp, #10]
+ 292 0176 8DF80A40 		strb	r4, [sp, #10]
  136:project/src/wk_tmr.c ****   tmr_output_channel_config(TMR1, TMR_SELECT_CHANNEL_2, &tmr_output_struct);
  293              		.loc 1 136 3 is_stmt 1 view .LVU110
- 294 017e 4A46     		mov	r2, r9
- 295 0180 3946     		mov	r1, r7
- 296 0182 2846     		mov	r0, r5
- 297 0184 FFF7FEFF 		bl	tmr_output_channel_config
+ 294 017a 4A46     		mov	r2, r9
+ 295 017c 4146     		mov	r1, r8
+ 296 017e 2846     		mov	r0, r5
+ 297 0180 FFF7FEFF 		bl	tmr_output_channel_config
  298              	.LVL18:
- 137:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 200);
+ 137:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
  299              		.loc 1 137 3 view .LVU111
- 300 0188 C822     		movs	r2, #200
- 301 018a 3946     		mov	r1, r7
- 302 018c 2846     		mov	r0, r5
- 303 018e FFF7FEFF 		bl	tmr_channel_value_set
+ 300 0184 2246     		mov	r2, r4
+ 301 0186 4146     		mov	r1, r8
+ 302 0188 2846     		mov	r0, r5
+ 303 018a FFF7FEFF 		bl	tmr_channel_value_set
  304              	.LVL19:
  138:project/src/wk_tmr.c ****   tmr_output_channel_buffer_enable(TMR1, TMR_SELECT_CHANNEL_2, FALSE);
  305              		.loc 1 138 3 view .LVU112
- 306 0192 2246     		mov	r2, r4
- 307 0194 3946     		mov	r1, r7
- 308 0196 2846     		mov	r0, r5
- 309 0198 FFF7FEFF 		bl	tmr_output_channel_buffer_enable
+ 306 018e 2246     		mov	r2, r4
+ 307 0190 4146     		mov	r1, r8
+ 308 0192 2846     		mov	r0, r5
+ 309 0194 FFF7FEFF 		bl	tmr_output_channel_buffer_enable
  310              	.LVL20:
  139:project/src/wk_tmr.c **** 
- 140:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_2, FALSE);
+ 140:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_2, TRUE);
  311              		.loc 1 140 3 view .LVU113
- 312 019c 2246     		mov	r2, r4
- 313 019e 3946     		mov	r1, r7
- 314 01a0 2846     		mov	r0, r5
- 315 01a2 FFF7FEFF 		bl	tmr_output_channel_immediately_set
+ 312 0198 3246     		mov	r2, r6
+ 313 019a 4146     		mov	r1, r8
+ 314 019c 2846     		mov	r0, r5
+ 315 019e FFF7FEFF 		bl	tmr_output_channel_immediately_set
  316              	.LVL21:
  141:project/src/wk_tmr.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 9
 
 
  142:project/src/wk_tmr.c ****   /* configure channel 3 output settings */
  143:project/src/wk_tmr.c ****   tmr_output_struct.oc_mode = TMR_OUTPUT_CONTROL_PWM_MODE_A;
  317              		.loc 1 143 3 view .LVU114
  318              		.loc 1 143 29 is_stmt 0 view .LVU115
- 319 01a6 8DF808A0 		strb	r10, [sp, #8]
+ 319 01a2 8DF808A0 		strb	r10, [sp, #8]
  144:project/src/wk_tmr.c ****   tmr_output_struct.oc_output_state = TRUE;
  320              		.loc 1 144 3 is_stmt 1 view .LVU116
  321              		.loc 1 144 37 is_stmt 0 view .LVU117
- 322 01aa 8DF80D80 		strb	r8, [sp, #13]
+ 322 01a6 8DF80D60 		strb	r6, [sp, #13]
  145:project/src/wk_tmr.c ****   tmr_output_struct.occ_output_state = TRUE;
  323              		.loc 1 145 3 is_stmt 1 view .LVU118
  324              		.loc 1 145 38 is_stmt 0 view .LVU119
- 325 01ae 8DF80E80 		strb	r8, [sp, #14]
+ 325 01aa 8DF80E60 		strb	r6, [sp, #14]
  146:project/src/wk_tmr.c ****   tmr_output_struct.oc_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  326              		.loc 1 146 3 is_stmt 1 view .LVU120
  327              		.loc 1 146 33 is_stmt 0 view .LVU121
- 328 01b2 8DF80B40 		strb	r4, [sp, #11]
+ 328 01ae 8DF80B40 		strb	r4, [sp, #11]
  147:project/src/wk_tmr.c ****   tmr_output_struct.occ_polarity = TMR_OUTPUT_ACTIVE_HIGH;
  329              		.loc 1 147 3 is_stmt 1 view .LVU122
  330              		.loc 1 147 34 is_stmt 0 view .LVU123
- 331 01b6 8DF80C40 		strb	r4, [sp, #12]
+ 331 01b2 8DF80C40 		strb	r4, [sp, #12]
  148:project/src/wk_tmr.c ****   tmr_output_struct.oc_idle_state = FALSE;
  332              		.loc 1 148 3 is_stmt 1 view .LVU124
  333              		.loc 1 148 35 is_stmt 0 view .LVU125
- 334 01ba 8DF80940 		strb	r4, [sp, #9]
+ 334 01b6 8DF80940 		strb	r4, [sp, #9]
  149:project/src/wk_tmr.c ****   tmr_output_struct.occ_idle_state = FALSE;
  335              		.loc 1 149 3 is_stmt 1 view .LVU126
  336              		.loc 1 149 36 is_stmt 0 view .LVU127
- 337 01be 8DF80A40 		strb	r4, [sp, #10]
+ 337 01ba 8DF80A40 		strb	r4, [sp, #10]
  150:project/src/wk_tmr.c ****   tmr_output_channel_config(TMR1, TMR_SELECT_CHANNEL_3, &tmr_output_struct);
  338              		.loc 1 150 3 is_stmt 1 view .LVU128
- 339 01c2 4A46     		mov	r2, r9
- 340 01c4 3146     		mov	r1, r6
- 341 01c6 2846     		mov	r0, r5
- 342 01c8 FFF7FEFF 		bl	tmr_output_channel_config
+ 339 01be 4A46     		mov	r2, r9
+ 340 01c0 3946     		mov	r1, r7
+ 341 01c2 2846     		mov	r0, r5
+ 342 01c4 FFF7FEFF 		bl	tmr_output_channel_config
  343              	.LVL22:
- 151:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 200);
+ 151:project/src/wk_tmr.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
  344              		.loc 1 151 3 view .LVU129
- 345 01cc C822     		movs	r2, #200
- 346 01ce 3146     		mov	r1, r6
- 347 01d0 2846     		mov	r0, r5
- 348 01d2 FFF7FEFF 		bl	tmr_channel_value_set
+ 345 01c8 2246     		mov	r2, r4
+ 346 01ca 3946     		mov	r1, r7
+ 347 01cc 2846     		mov	r0, r5
+ 348 01ce FFF7FEFF 		bl	tmr_channel_value_set
  349              	.LVL23:
  152:project/src/wk_tmr.c ****   tmr_output_channel_buffer_enable(TMR1, TMR_SELECT_CHANNEL_3, FALSE);
  350              		.loc 1 152 3 view .LVU130
- 351 01d6 2246     		mov	r2, r4
- 352 01d8 3146     		mov	r1, r6
- 353 01da 2846     		mov	r0, r5
- 354 01dc FFF7FEFF 		bl	tmr_output_channel_buffer_enable
+ 351 01d2 2246     		mov	r2, r4
+ 352 01d4 3946     		mov	r1, r7
+ 353 01d6 2846     		mov	r0, r5
+ 354 01d8 FFF7FEFF 		bl	tmr_output_channel_buffer_enable
  355              	.LVL24:
  153:project/src/wk_tmr.c **** 
- 154:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_3, FALSE);
+ 154:project/src/wk_tmr.c ****   tmr_output_channel_immediately_set(TMR1, TMR_SELECT_CHANNEL_3, TRUE);
  356              		.loc 1 154 3 view .LVU131
- 357 01e0 2246     		mov	r2, r4
- 358 01e2 3146     		mov	r1, r6
- 359 01e4 2846     		mov	r0, r5
- 360 01e6 FFF7FEFF 		bl	tmr_output_channel_immediately_set
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 10
+ 357 01dc 3246     		mov	r2, r6
+ 358 01de 3946     		mov	r1, r7
+ 359 01e0 2846     		mov	r0, r5
+ 360 01e2 FFF7FEFF 		bl	tmr_output_channel_immediately_set
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 10
 
 
  361              	.LVL25:
  155:project/src/wk_tmr.c **** 
  156:project/src/wk_tmr.c ****   /* configure break and dead-time settings */
- 157:project/src/wk_tmr.c ****   tmr_brkdt_struct.brk_enable = FALSE;
+ 157:project/src/wk_tmr.c ****   tmr_brkdt_struct.brk_enable = TRUE;
  362              		.loc 1 157 3 view .LVU132
  363              		.loc 1 157 31 is_stmt 0 view .LVU133
- 364 01ea 8DF80640 		strb	r4, [sp, #6]
- 158:project/src/wk_tmr.c ****   tmr_brkdt_struct.auto_output_enable = FALSE;
+ 364 01e6 8DF80660 		strb	r6, [sp, #6]
+ 158:project/src/wk_tmr.c ****   tmr_brkdt_struct.auto_output_enable = TRUE;
  365              		.loc 1 158 3 is_stmt 1 view .LVU134
  366              		.loc 1 158 39 is_stmt 0 view .LVU135
- 367 01ee 8DF80340 		strb	r4, [sp, #3]
+ 367 01ea 8DF80360 		strb	r6, [sp, #3]
  159:project/src/wk_tmr.c ****   tmr_brkdt_struct.brk_polarity = TMR_BRK_INPUT_ACTIVE_LOW;
  368              		.loc 1 159 3 is_stmt 1 view .LVU136
  369              		.loc 1 159 33 is_stmt 0 view .LVU137
- 370 01f2 8DF80140 		strb	r4, [sp, #1]
+ 370 01ee 8DF80140 		strb	r4, [sp, #1]
  160:project/src/wk_tmr.c ****   tmr_brkdt_struct.fcsoen_state = FALSE;
  371              		.loc 1 160 3 is_stmt 1 view .LVU138
  372              		.loc 1 160 33 is_stmt 0 view .LVU139
- 373 01f6 8DF80440 		strb	r4, [sp, #4]
+ 373 01f2 8DF80440 		strb	r4, [sp, #4]
  161:project/src/wk_tmr.c ****   tmr_brkdt_struct.fcsodis_state = FALSE;
  374              		.loc 1 161 3 is_stmt 1 view .LVU140
  375              		.loc 1 161 34 is_stmt 0 view .LVU141
- 376 01fa 8DF80540 		strb	r4, [sp, #5]
+ 376 01f6 8DF80540 		strb	r4, [sp, #5]
  162:project/src/wk_tmr.c ****   tmr_brkdt_struct.wp_level = TMR_WP_OFF;
  377              		.loc 1 162 3 is_stmt 1 view .LVU142
  378              		.loc 1 162 29 is_stmt 0 view .LVU143
- 379 01fe 8DF80240 		strb	r4, [sp, #2]
+ 379 01fa 8DF80240 		strb	r4, [sp, #2]
  163:project/src/wk_tmr.c ****   tmr_brkdt_struct.deadtime = 30;
  380              		.loc 1 163 3 is_stmt 1 view .LVU144
  381              		.loc 1 163 29 is_stmt 0 view .LVU145
- 382 0202 1E23     		movs	r3, #30
- 383 0204 8DF80030 		strb	r3, [sp]
+ 382 01fe 1E23     		movs	r3, #30
+ 383 0200 8DF80030 		strb	r3, [sp]
  164:project/src/wk_tmr.c ****   tmr_brkdt_config(TMR1, &tmr_brkdt_struct);
  384              		.loc 1 164 3 is_stmt 1 view .LVU146
- 385 0208 6946     		mov	r1, sp
- 386 020a 2846     		mov	r0, r5
- 387 020c FFF7FEFF 		bl	tmr_brkdt_config
+ 385 0204 6946     		mov	r1, sp
+ 386 0206 2846     		mov	r0, r5
+ 387 0208 FFF7FEFF 		bl	tmr_brkdt_config
  388              	.LVL26:
  165:project/src/wk_tmr.c **** 
  166:project/src/wk_tmr.c **** 
  167:project/src/wk_tmr.c ****   tmr_output_enable(TMR1, TRUE);
  389              		.loc 1 167 3 view .LVU147
- 390 0210 4146     		mov	r1, r8
- 391 0212 2846     		mov	r0, r5
- 392 0214 FFF7FEFF 		bl	tmr_output_enable
+ 390 020c 3146     		mov	r1, r6
+ 391 020e 2846     		mov	r0, r5
+ 392 0210 FFF7FEFF 		bl	tmr_output_enable
  393              	.LVL27:
  168:project/src/wk_tmr.c **** 
  169:project/src/wk_tmr.c ****   tmr_counter_enable(TMR1, TRUE);
  394              		.loc 1 169 3 view .LVU148
- 395 0218 4146     		mov	r1, r8
- 396 021a 2846     		mov	r0, r5
- 397 021c FFF7FEFF 		bl	tmr_counter_enable
+ 395 0214 3146     		mov	r1, r6
+ 396 0216 2846     		mov	r0, r5
+ 397 0218 FFF7FEFF 		bl	tmr_counter_enable
  398              	.LVL28:
  170:project/src/wk_tmr.c **** 
  171:project/src/wk_tmr.c ****   /* add user code begin tmr1_init 2 */
  172:project/src/wk_tmr.c **** 
  173:project/src/wk_tmr.c ****   /* add user code end tmr1_init 2 */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 11
 
 
  174:project/src/wk_tmr.c **** }
  399              		.loc 1 174 1 is_stmt 0 view .LVU149
- 400 0220 06B0     		add	sp, sp, #24
+ 400 021c 06B0     		add	sp, sp, #24
  401              	.LCFI2:
  402              		.cfi_def_cfa_offset 32
  403              		@ sp needed
- 404 0222 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 404 021e BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
  405              	.L4:
- 406 0226 00BF     		.align	2
+ 406 0222 00BF     		.align	2
  407              	.L3:
- 408 0228 002C0140 		.word	1073818624
- 409 022c 000C0140 		.word	1073810432
+ 408 0224 002C0140 		.word	1073818624
+ 409 0228 000C0140 		.word	1073810432
  410              		.cfi_endproc
  411              	.LFE137:
- 413              		.text
- 414              	.Letext0:
- 415              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 416              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 417              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
- 418              		.file 5 "libraries/drivers/inc/at32f403a_407_gpio.h"
- 419              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s 			page 12
+ 413              		.section	.text.wk_tmr5_init,"ax",%progbits
+ 414              		.align	1
+ 415              		.global	wk_tmr5_init
+ 416              		.syntax unified
+ 417              		.thumb
+ 418              		.thumb_func
+ 420              	wk_tmr5_init:
+ 421              	.LFB138:
+ 175:project/src/wk_tmr.c **** 
+ 176:project/src/wk_tmr.c **** /**
+ 177:project/src/wk_tmr.c ****   * @brief  init tmr5 function.
+ 178:project/src/wk_tmr.c ****   * @param  none
+ 179:project/src/wk_tmr.c ****   * @retval none
+ 180:project/src/wk_tmr.c ****   */
+ 181:project/src/wk_tmr.c **** void wk_tmr5_init(void)
+ 182:project/src/wk_tmr.c **** {
+ 422              		.loc 1 182 1 is_stmt 1 view -0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 0
+ 425              		@ frame_needed = 0, uses_anonymous_args = 0
+ 426 0000 10B5     		push	{r4, lr}
+ 427              	.LCFI3:
+ 428              		.cfi_def_cfa_offset 8
+ 429              		.cfi_offset 4, -8
+ 430              		.cfi_offset 14, -4
+ 183:project/src/wk_tmr.c ****   /* add user code begin tmr5_init 0 */
+ 184:project/src/wk_tmr.c **** 
+ 185:project/src/wk_tmr.c ****   /* add user code end tmr5_init 0 */
+ 186:project/src/wk_tmr.c **** 
+ 187:project/src/wk_tmr.c **** 
+ 188:project/src/wk_tmr.c ****   /* add user code begin tmr5_init 1 */
+ 189:project/src/wk_tmr.c **** 
+ 190:project/src/wk_tmr.c ****   /* add user code end tmr5_init 1 */
+ 191:project/src/wk_tmr.c **** 
+ 192:project/src/wk_tmr.c ****   /* configure counter settings */
+ 193:project/src/wk_tmr.c ****   tmr_cnt_dir_set(TMR5, TMR_COUNT_UP);
+ 431              		.loc 1 193 3 view .LVU151
+ 432 0002 144C     		ldr	r4, .L7
+ 433 0004 0021     		movs	r1, #0
+ 434 0006 2046     		mov	r0, r4
+ 435 0008 FFF7FEFF 		bl	tmr_cnt_dir_set
+ 436              	.LVL29:
+ 194:project/src/wk_tmr.c ****   tmr_clock_source_div_set(TMR5, TMR_CLOCK_DIV1);
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 12
+
+
+ 437              		.loc 1 194 3 view .LVU152
+ 438 000c 0021     		movs	r1, #0
+ 439 000e 2046     		mov	r0, r4
+ 440 0010 FFF7FEFF 		bl	tmr_clock_source_div_set
+ 441              	.LVL30:
+ 195:project/src/wk_tmr.c ****   tmr_period_buffer_enable(TMR5, FALSE);
+ 442              		.loc 1 195 3 view .LVU153
+ 443 0014 0021     		movs	r1, #0
+ 444 0016 2046     		mov	r0, r4
+ 445 0018 FFF7FEFF 		bl	tmr_period_buffer_enable
+ 446              	.LVL31:
+ 196:project/src/wk_tmr.c ****   tmr_base_init(TMR5, 2399, 0);
+ 447              		.loc 1 196 3 view .LVU154
+ 448 001c 0022     		movs	r2, #0
+ 449 001e 40F65F11 		movw	r1, #2399
+ 450 0022 2046     		mov	r0, r4
+ 451 0024 FFF7FEFF 		bl	tmr_base_init
+ 452              	.LVL32:
+ 197:project/src/wk_tmr.c **** 
+ 198:project/src/wk_tmr.c ****   /* configure primary mode settings */
+ 199:project/src/wk_tmr.c ****   tmr_sub_sync_mode_set(TMR5, FALSE);
+ 453              		.loc 1 199 3 view .LVU155
+ 454 0028 0021     		movs	r1, #0
+ 455 002a 2046     		mov	r0, r4
+ 456 002c FFF7FEFF 		bl	tmr_sub_sync_mode_set
+ 457              	.LVL33:
+ 200:project/src/wk_tmr.c ****   tmr_primary_mode_select(TMR5, TMR_PRIMARY_SEL_RESET);
+ 458              		.loc 1 200 3 view .LVU156
+ 459 0030 0021     		movs	r1, #0
+ 460 0032 2046     		mov	r0, r4
+ 461 0034 FFF7FEFF 		bl	tmr_primary_mode_select
+ 462              	.LVL34:
+ 201:project/src/wk_tmr.c **** 
+ 202:project/src/wk_tmr.c ****   /* configure overflow event */
+ 203:project/src/wk_tmr.c ****   tmr_overflow_request_source_set(TMR5, TRUE);
+ 463              		.loc 1 203 3 view .LVU157
+ 464 0038 0121     		movs	r1, #1
+ 465 003a 2046     		mov	r0, r4
+ 466 003c FFF7FEFF 		bl	tmr_overflow_request_source_set
+ 467              	.LVL35:
+ 204:project/src/wk_tmr.c **** 
+ 205:project/src/wk_tmr.c ****   tmr_counter_enable(TMR5, TRUE);
+ 468              		.loc 1 205 3 view .LVU158
+ 469 0040 0121     		movs	r1, #1
+ 470 0042 2046     		mov	r0, r4
+ 471 0044 FFF7FEFF 		bl	tmr_counter_enable
+ 472              	.LVL36:
+ 206:project/src/wk_tmr.c **** 
+ 207:project/src/wk_tmr.c ****   /* enable ovfien interrupt */
+ 208:project/src/wk_tmr.c ****   tmr_interrupt_enable(TMR5, TMR_OVF_INT, TRUE);
+ 473              		.loc 1 208 3 view .LVU159
+ 474 0048 0122     		movs	r2, #1
+ 475 004a 1146     		mov	r1, r2
+ 476 004c 2046     		mov	r0, r4
+ 477 004e FFF7FEFF 		bl	tmr_interrupt_enable
+ 478              	.LVL37:
+ 209:project/src/wk_tmr.c **** 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 13
+
+
+ 210:project/src/wk_tmr.c ****   /* add user code begin tmr5_init 2 */
+ 211:project/src/wk_tmr.c **** 
+ 212:project/src/wk_tmr.c ****   /* add user code end tmr5_init 2 */
+ 213:project/src/wk_tmr.c **** }
+ 479              		.loc 1 213 1 is_stmt 0 view .LVU160
+ 480 0052 10BD     		pop	{r4, pc}
+ 481              	.L8:
+ 482              		.align	2
+ 483              	.L7:
+ 484 0054 000C0040 		.word	1073744896
+ 485              		.cfi_endproc
+ 486              	.LFE138:
+ 488              		.text
+ 489              	.Letext0:
+ 490              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 491              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 492              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 493              		.file 5 "libraries/drivers/inc/at32f403a_407_gpio.h"
+ 494              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 wk_tmr.c
-C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s:21     .text.wk_tmr1_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s:27     .text.wk_tmr1_init:00000000 wk_tmr1_init
-C:\Users\10963\AppData\Local\Temp\ccRh4xrT.s:408    .text.wk_tmr1_init:00000228 $d
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:21     .text.wk_tmr1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:27     .text.wk_tmr1_init:00000000 wk_tmr1_init
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:408    .text.wk_tmr1_init:00000224 $d
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:414    .text.wk_tmr5_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:420    .text.wk_tmr5_init:00000000 wk_tmr5_init
+C:\Users\10963\AppData\Local\Temp\ccg8ra0i.s:484    .text.wk_tmr5_init:00000054 $d
 
 UNDEFINED SYMBOLS
 gpio_default_para_init
@@ -648,3 +769,5 @@ tmr_output_channel_immediately_set
 tmr_brkdt_config
 tmr_output_enable
 tmr_counter_enable
+tmr_overflow_request_source_set
+tmr_interrupt_enable

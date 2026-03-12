@@ -40,15 +40,7 @@ build/freertos_app.o: project/src/freertos_app.c \
  libraries/drivers/inc/at32f403a_407_spi.h \
  libraries/drivers/inc/at32f403a_407_tmr.h \
  libraries/drivers/inc/at32f403a_407_usb.h project/inc/usb_app.h \
- project/inc/at32f403a_407_wk_config.h project/inc/wk_gpio.h \
- project/inc/at32f403a_407_wk_config.h project/inc/wk_tmr.h \
- ../Core/inc/can_cia402.h ../Core/inc/motor_params.h \
- ../Core/inc/motor_control.h ../Core/inc/can_cia402.h \
- ../Core/inc/motor_params.h ../Core/inc/motor_foc.h \
- ../Core/inc/motor_monitor.h ../Core/inc/motor_foc.h \
- ../Core/inc/motor_monitor.h ../Common/inc/modbus_protocol.h \
- ../Common/inc/usb_cdc.h middlewares/usbd_drivers/inc/usbd_core.h \
- project/inc/usb_conf.h middlewares/usbd_drivers/inc/usb_std.h
+ ../Motor_Control/inc/motor_control.h ../Motor_Control/inc/motor_params.h
 project/inc/freertos_app.h:
 middlewares/freertos/source/include/FreeRTOS.h:
 project/inc/FreeRTOSConfig.h:
@@ -92,21 +84,5 @@ libraries/drivers/inc/at32f403a_407_spi.h:
 libraries/drivers/inc/at32f403a_407_tmr.h:
 libraries/drivers/inc/at32f403a_407_usb.h:
 project/inc/usb_app.h:
-project/inc/at32f403a_407_wk_config.h:
-project/inc/wk_gpio.h:
-project/inc/at32f403a_407_wk_config.h:
-project/inc/wk_tmr.h:
-../Core/inc/can_cia402.h:
-../Core/inc/motor_params.h:
-../Core/inc/motor_control.h:
-../Core/inc/can_cia402.h:
-../Core/inc/motor_params.h:
-../Core/inc/motor_foc.h:
-../Core/inc/motor_monitor.h:
-../Core/inc/motor_foc.h:
-../Core/inc/motor_monitor.h:
-../Common/inc/modbus_protocol.h:
-../Common/inc/usb_cdc.h:
-middlewares/usbd_drivers/inc/usbd_core.h:
-project/inc/usb_conf.h:
-middlewares/usbd_drivers/inc/usb_std.h:
+../Motor_Control/inc/motor_control.h:
+../Motor_Control/inc/motor_params.h:

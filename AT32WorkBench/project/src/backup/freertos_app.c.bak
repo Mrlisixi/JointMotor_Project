@@ -12,18 +12,6 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
-#include "at32f403a_407_wk_config.h"
-#include "wk_gpio.h"
-#include "at32f403a_407_adc.h"
-#include "at32f403a_407_dma.h"
-#include "at32f403a_407_gpio.h"
-#include "can_cia402.h"
-#include "motor_params.h"
-#include "motor_control.h"
-#include "motor_foc.h"
-#include "motor_monitor.h"
-#include "modbus_protocol.h"
-#include "usbd_core.h"
 
 /* add user code end private includes */
 
@@ -39,7 +27,7 @@
 
 /* private macro -------------------------------------------------------------*/
 /* add user code begin private macro */
-motor_params_t motor;
+
 /* add user code end private macro */
 
 /* private variables ---------------------------------------------------------*/
@@ -58,10 +46,7 @@ motor_params_t motor;
 /* add user code end 0 */
 
 /* task handler */
-TaskHandle_t MC_Task_handle;
-TaskHandle_t CANCom_Task_handle;
-TaskHandle_t Monitor_Task_handle;
-TaskHandle_t Debug_Task_handle;
+TaskHandle_t my_task01_handle;
 
 /* Idle task control block and stack */
 static StackType_t idle_task_stack[configMINIMAL_STACK_SIZE];
@@ -106,37 +91,13 @@ void vApplicationGetTimerTaskMemory( StaticTask_t ** ppxTimerTaskTCBBuffer, Stac
   */
 void freertos_task_create(void)
 {
-  /* create MC_Task task */
-  xTaskCreate(MC_Task_func,
-              "MC_Task",
-              512,
-              NULL,
-              3,
-              &MC_Task_handle);
-
-  /* create CANCom_Task task */
-  xTaskCreate(CANCom_Task_func,
-              "CANCom_Task",
-              512,
-              NULL,
-              2,
-              &CANCom_Task_handle);
-
-  /* create Monitor_Task task */
-  xTaskCreate(Monitor_Task_func,
-              "Monitor_Task",
-              512,
-              NULL,
-              1,
-              &Monitor_Task_handle);
-
-  /* create Debug_Task task */
-  xTaskCreate(Debug_Task_func,
-              "Debug_Task",
-              512,
+  /* create my_task01 task */
+  xTaskCreate(my_task01_func,
+              "my_task01",
+              128,
               NULL,
               0,
-              &Debug_Task_handle);
+              &my_task01_handle);
 }
 
 /**
@@ -147,7 +108,7 @@ void freertos_task_create(void)
 void wk_freertos_init(void)
 {
   /* add user code begin freertos_init 0 */
-
+  
   /* add user code end freertos_init 0 */
 
   /* enter critical */
@@ -167,22 +128,19 @@ void wk_freertos_init(void)
 }
 
 /**
-  * @brief MC_Task function.
+  * @brief my_task01 function.
   * @param  none
   * @retval none
   */
-void MC_Task_func(void *pvParameters)
+void my_task01_func(void *pvParameters)
 {
-  /* add user code begin MC_Task_func 0 */
-  /* 简单的电机驱动程序，不使用FOC算法 */
-  uint16_t pwm_duty = 750; // 适中的占空比
-  uint8_t phase = 0; // 相位
+  /* add user code begin my_task01_func 0 */
 
-  /* add user code end MC_Task_func 0 */
+  /* add user code end my_task01_func 0 */
 
-  /* add user code begin MC_Task_func 2 */
+  /* add user code begin my_task01_func 2 */
 
-  /* add user code end MC_Task_func 2 */
+  /* add user code end my_task01_func 2 */
 
   /* Infinite loop */
   while(1)
@@ -191,226 +149,11 @@ void MC_Task_func(void *pvParameters)
        which is the usb application layer code that users can improve themselves */
     wk_usb_app_task();
 
-  /* add user code begin MC_Task_func 1 */
-    /* 简单的三相PWM驱动，产生旋转磁场 - 使用标准6步换向序列 */
-    switch(phase) {
-      case 0:
-        // U相高，V相低，W相低
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
-        break;
-      case 1:
-        // U相高，V相高，W相低
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
-        break;
-      case 2:
-        // U相低，V相高，W相低
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
-        break;
-      case 3:
-        // U相低，V相高，W相高
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, pwm_duty);
-        break;
-      case 4:
-        // U相低，V相低，W相高
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, pwm_duty);
-        break;
-      case 5:
-        // U相高，V相低，W相高
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, pwm_duty);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
-        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, pwm_duty);
-        break;
-    }
-    
-    // 递增相位，产生旋转磁场
-    phase = (phase + 1) % 6;
-    
-    // 控制转速，增加延迟时间，降低换向频率
-    vTaskDelay(5);
-
-  /* add user code end MC_Task_func 1 */
-  }
-}
-
-
-/**
-  * @brief CANCom_Task function.
-  * @param  none
-  * @retval none
-  */
-void CANCom_Task_func(void *pvParameters)
-{
-  /* add user code begin CANCom_Task_func 0 */
-
-  /* add user code end CANCom_Task_func 0 */
-
-  /* add user code begin CANCom_Task_func 2 */
-
-  /* add user code end CANCom_Task_func 2 */
-
-  /* Infinite loop */
-  while(1)
-  {
-  /* add user code begin CANCom_Task_func 1 */
+  /* add user code begin my_task01_func 1 */
 
     vTaskDelay(1);
 
-  /* add user code end CANCom_Task_func 1 */
-  }
-}
-
-
-/**
-  * @brief Monitor_Task function.
-  * @param  none
-  * @retval none
-  */
-void Monitor_Task_func(void *pvParameters)
-{
-  /* add user code begin Monitor_Task_func 0 */
-  uvw_t uvw_iamps;
-  uvw_t current_uvw;
-  uint16_t adc_voltage;
-  volatile uint16_t adc_temp;
-  float voltage;
-  volatile float temperature;
-  uint32_t timeout;
-  /* add user code end Monitor_Task_func 0 */
-
-  /* add user code begin Monitor_Task_func 2 */
-
-  /* add user code end Monitor_Task_func 2 */
-
-  /* Infinite loop */
-  while(1)
-  {
-  /* add user code begin Monitor_Task_func 1 */
-    /* 这里需要根据实际硬件连接获取ADC值并更新监控模块 */
-    /* 触发ADC转换 */
-    adc_ordinary_software_trigger_enable(ADC1, TRUE); 
-     
-    /* 等待转换完成，添加超时保护 */
-    timeout = 100;
-    for(uint32_t i = 0; i < timeout; i++) {
-        if(dma_flag_get(DMA1_FDT1_FLAG) != RESET) {
-            dma_flag_clear(DMA1_FDT1_FLAG);
-            break;
-        }
-        /* 短暂延迟，避免忙等 */
-        for(uint32_t j = 0; j < 100; j++) {
-            __NOP();
-        }
-    }
-    /* 无论是否超时，都继续执行，避免任务阻塞 */
-    
-    /* 从ADC缓冲区读取值 */
-    extern uint16_t adc_odt[20];
-    uvw_iamps.u = adc_odt[0];  /* 从ADC获取 */
-    uvw_iamps.v = adc_odt[1];  /* 从ADC获取 */
-    uvw_iamps.w = adc_odt[2];  /* 从ADC获取 */
-    adc_voltage = adc_odt[3];  /* 从ADC获取 */
-    adc_temp = adc_odt[4];  /* 从ADC获取 */
-    
-    /* 使用motor_monitor模块的ADC转换函数将模拟值转换为工程值 */
-    current_uvw.u = motor_monitor_convert_adc_to_current(&motor, uvw_iamps.u);
-    current_uvw.v = motor_monitor_convert_adc_to_current(&motor, uvw_iamps.v);
-    current_uvw.w = motor_monitor_convert_adc_to_current(&motor, uvw_iamps.w);
-    /* 使用motor_monitor模块的ADC转换函数将模拟值转换为工程值 */
-    voltage = motor_monitor_convert_adc_to_voltage(&motor, adc_voltage);
-    /* 使用motor_monitor模块的ADC转换函数将模拟值转换为工程值 */
-    temperature = motor_monitor_convert_adc_to_temperature(&motor, adc_temp);
-    
-    /* 更新传感器数据到电机控制模块（包含FOC模块电流更新） */
-    motor_control_update_sensor_data(&motor, current_uvw.u, current_uvw.v, current_uvw.w, voltage, temperature, 0.0f, 0.0f);
-    motor_monitor_process(&motor);
-    vTaskDelay(1);
-
-  /* add user code end Monitor_Task_func 1 */
-  }
-}
-
-
-/**
-  * @brief Debug_Task function.
-  * @param  none
-  * @retval none
-  */
-void Debug_Task_func(void *pvParameters)
-{
-  /* add user code begin Debug_Task_func 0 */
-  uint16_t debug_counter = 0;
-  /* add user code end Debug_Task_func 0 */
-
-  /* add user code begin Debug_Task_func 2 */
-  modbus_protocol_init();
-  /* add user code end Debug_Task_func 2 */
-
-  /* Infinite loop */
-  while(1)
-  {
-  /* add user code begin Debug_Task_func 1 */
-    gpio_bits_toggle(LED_GPIO_PORT, LED_PIN);
-    
-    /* 检查USB连接状态 */
-    extern usbd_core_type usb_core_dev;
-    usbd_conn_state conn_state = usbd_connect_state_get(&usb_core_dev);
-    if (conn_state == USB_CONN_STATE_CONFIGURED) {
-      cdc_dev.is_connected = 1;
-    } else {
-      cdc_dev.is_connected = 0;
-    }
-    
-    modbus_protocol_process();
-
-    // 每100个循环输出一次PWM值（暂时减少输出频率，避免干扰通信协议测试）
-    if (debug_counter % 100 == 0) {
-      printf("FOC enabled: %d, Control mode: %d\r\n", 
-            motor.foc.enabled, 
-            motor.foc.control_mode);
-      printf("PWM U: %d, V: %d, W: %d\r\n", 
-            (int)(motor.foc.pwm.u * 1000), 
-            (int)(motor.foc.pwm.v * 1000), 
-            (int)(motor.foc.pwm.w * 1000));
-      
-      // 通过USB CDC发送调试信息（暂时注释掉，避免干扰通信协议测试）
-      /*
-      if (cdc_is_connected()) {
-        char cdc_tx_buffer[512];
-        uint16_t len = sprintf(cdc_tx_buffer, "FOC enabled: %d, Control mode: %d\r\nPWM U: %d, V: %d, W: %d\r\n", 
-                              motor.foc.enabled, 
-                              motor.foc.control_mode, 
-                              (int)(motor.foc.pwm.u * 1000), 
-                              (int)(motor.foc.pwm.v * 1000), 
-                              (int)(motor.foc.pwm.w * 1000));
-        cdc_send_data((uint8_t *)cdc_tx_buffer, len);
-        vTaskDelay(100);
-
-        uint16_t len1 = sprintf(cdc_tx_buffer, "VBUS: %d, Temperature: %d\r\nCurrent U: %d, Current V: %d, Current W: %d\r\n", 
-          (int)(motor.monitor.bus_voltage * 1000),
-          (int)(motor.monitor.temperature * 1000),
-          (int)(motor.monitor.u_phase_current * 1000),
-          (int)(motor.monitor.v_phase_current * 1000),
-          (int)(motor.monitor.w_phase_current * 1000));
-        cdc_send_data((uint8_t *)cdc_tx_buffer, len1);
-      }
-      */
-    }
-    
-    debug_counter++;
-
-    vTaskDelay(100);
-
-  /* add user code end Debug_Task_func 1 */
+  /* add user code end my_task01_func 1 */
   }
 }
 
