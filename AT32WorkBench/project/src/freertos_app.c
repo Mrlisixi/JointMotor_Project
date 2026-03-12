@@ -173,7 +173,7 @@ void MC_Task_Func(void *pvParameters)
   motor_control_init(&motor);
   
   /* start motor with default speed and direction */
-  motor_start(&motor, 100, MOTOR_DIR_CW);
+  motor_start(&motor, 50, MOTOR_DIR_CW);
 
   /* add user code end MC_Task_Func 0 */
 
@@ -207,6 +207,7 @@ void MC_Task_Func(void *pvParameters)
 void Monitor_Task_Func(void *pvParameters)
 {
   /* add user code begin Monitor_Task_Func 0 */
+  motor_monitor_data_t monitor_data;
 
   /* add user code end Monitor_Task_Func 0 */
 
@@ -218,8 +219,21 @@ void Monitor_Task_Func(void *pvParameters)
   while(1)
   {
   /* add user code begin Monitor_Task_Func 1 */
+    /* Get monitoring data */
+    motor_monitor_get_data(&motor, &monitor_data);
+    
+    /* Add monitoring logic here */
+    /* For example: check for overcurrent, overvoltage, over temperature */
+    
+    /* Print monitoring data (for debugging) */
+    // printf("Current A: %.2f A, Current B: %.2f A, Current C: %.2f A\n", 
+    //        monitor_data.phase_current[0], monitor_data.phase_current[1], monitor_data.phase_current[2]);
+    // printf("Voltage A: %.2f V, Voltage B: %.2f V, Voltage C: %.2f V\n", 
+    //        monitor_data.phase_voltage[0], monitor_data.phase_voltage[1], monitor_data.phase_voltage[2]);
+    // printf("DC Link Voltage: %.2f V, MOS Temperature: %.2f °C\n", 
+    //        monitor_data.dc_link_voltage, monitor_data.mos_temperature);
 
-    vTaskDelay(1);
+    vTaskDelay(100); /* 100ms delay for monitoring */
 
   /* add user code end Monitor_Task_Func 1 */
   }

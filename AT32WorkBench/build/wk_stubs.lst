@@ -1,0 +1,358 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"wk_stubs.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../Motor_Control/src/wk_stubs.c"
+  20              		.section	.text.wk_timebase_increase,"ax",%progbits
+  21              		.align	1
+  22              		.global	wk_timebase_increase
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	wk_timebase_increase:
+  28              	.LFB134:
+   1:../Motor_Control/src/wk_stubs.c **** /* Includes ------------------------------------------------------------------*/
+   2:../Motor_Control/src/wk_stubs.c **** #include "at32f403a_407.h"
+   3:../Motor_Control/src/wk_stubs.c **** 
+   4:../Motor_Control/src/wk_stubs.c **** /* global variable */
+   5:../Motor_Control/src/wk_stubs.c **** volatile uint32_t timebase_ticks;
+   6:../Motor_Control/src/wk_stubs.c **** 
+   7:../Motor_Control/src/wk_stubs.c **** /* Function stubs for missing wk_* functions */
+   8:../Motor_Control/src/wk_stubs.c **** 
+   9:../Motor_Control/src/wk_stubs.c **** /**
+  10:../Motor_Control/src/wk_stubs.c ****   * @brief  this function is called to increment a global variable "timebase_ticks"
+  11:../Motor_Control/src/wk_stubs.c ****   *         used as application time base.
+  12:../Motor_Control/src/wk_stubs.c ****   * @param  none
+  13:../Motor_Control/src/wk_stubs.c ****   * @retval none
+  14:../Motor_Control/src/wk_stubs.c ****   */
+  15:../Motor_Control/src/wk_stubs.c **** void wk_timebase_increase(void)
+  16:../Motor_Control/src/wk_stubs.c **** {
+  29              		.loc 1 16 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  17:../Motor_Control/src/wk_stubs.c ****   timebase_ticks++;
+  34              		.loc 1 17 3 view .LVU1
+  35              		.loc 1 17 17 is_stmt 0 view .LVU2
+  36 0000 024A     		ldr	r2, .L2
+  37 0002 1368     		ldr	r3, [r2]
+  38 0004 0133     		adds	r3, r3, #1
+  39 0006 1360     		str	r3, [r2]
+  18:../Motor_Control/src/wk_stubs.c **** }
+  40              		.loc 1 18 1 view .LVU3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 2
+
+
+  41 0008 7047     		bx	lr
+  42              	.L3:
+  43 000a 00BF     		.align	2
+  44              	.L2:
+  45 000c 00000000 		.word	timebase_ticks
+  46              		.cfi_endproc
+  47              	.LFE134:
+  49              		.section	.text.wk_timebase_get,"ax",%progbits
+  50              		.align	1
+  51              		.global	wk_timebase_get
+  52              		.syntax unified
+  53              		.thumb
+  54              		.thumb_func
+  56              	wk_timebase_get:
+  57              	.LFB135:
+  19:../Motor_Control/src/wk_stubs.c **** 
+  20:../Motor_Control/src/wk_stubs.c **** /**
+  21:../Motor_Control/src/wk_stubs.c ****   * @brief  provides a tick value in millisecond.
+  22:../Motor_Control/src/wk_stubs.c ****   * @param  none
+  23:../Motor_Control/src/wk_stubs.c ****   * @retval tick value
+  24:../Motor_Control/src/wk_stubs.c ****   */
+  25:../Motor_Control/src/wk_stubs.c **** uint32_t wk_timebase_get(void)
+  26:../Motor_Control/src/wk_stubs.c **** {
+  58              		.loc 1 26 1 is_stmt 1 view -0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              		@ link register save eliminated.
+  27:../Motor_Control/src/wk_stubs.c ****   return timebase_ticks;
+  63              		.loc 1 27 3 view .LVU5
+  64              		.loc 1 27 10 is_stmt 0 view .LVU6
+  65 0000 014B     		ldr	r3, .L5
+  66 0002 1868     		ldr	r0, [r3]
+  28:../Motor_Control/src/wk_stubs.c **** }
+  67              		.loc 1 28 1 view .LVU7
+  68 0004 7047     		bx	lr
+  69              	.L6:
+  70 0006 00BF     		.align	2
+  71              	.L5:
+  72 0008 00000000 		.word	timebase_ticks
+  73              		.cfi_endproc
+  74              	.LFE135:
+  76              		.section	.text.wk_delay_ms,"ax",%progbits
+  77              		.align	1
+  78              		.global	wk_delay_ms
+  79              		.syntax unified
+  80              		.thumb
+  81              		.thumb_func
+  83              	wk_delay_ms:
+  84              	.LVL0:
+  85              	.LFB136:
+  29:../Motor_Control/src/wk_stubs.c **** 
+  30:../Motor_Control/src/wk_stubs.c **** /**
+  31:../Motor_Control/src/wk_stubs.c ****   * @brief  this function provides minimum delay (in milliseconds) based
+  32:../Motor_Control/src/wk_stubs.c ****   *         on variable incremented.
+  33:../Motor_Control/src/wk_stubs.c ****   * @param  delay variable specifies the delay time length, in milliseconds.
+  34:../Motor_Control/src/wk_stubs.c ****   * @retval none
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 3
+
+
+  35:../Motor_Control/src/wk_stubs.c ****   */
+  36:../Motor_Control/src/wk_stubs.c **** void wk_delay_ms(uint32_t delay)
+  37:../Motor_Control/src/wk_stubs.c **** {
+  86              		.loc 1 37 1 is_stmt 1 view -0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 0
+  89              		@ frame_needed = 0, uses_anonymous_args = 0
+  90              		.loc 1 37 1 is_stmt 0 view .LVU9
+  91 0000 38B5     		push	{r3, r4, r5, lr}
+  92              	.LCFI0:
+  93              		.cfi_def_cfa_offset 16
+  94              		.cfi_offset 3, -16
+  95              		.cfi_offset 4, -12
+  96              		.cfi_offset 5, -8
+  97              		.cfi_offset 14, -4
+  98 0002 0446     		mov	r4, r0
+  38:../Motor_Control/src/wk_stubs.c ****   uint32_t start_tick = wk_timebase_get();
+  99              		.loc 1 38 3 is_stmt 1 view .LVU10
+ 100              		.loc 1 38 25 is_stmt 0 view .LVU11
+ 101 0004 FFF7FEFF 		bl	wk_timebase_get
+ 102              	.LVL1:
+ 103              		.loc 1 38 25 view .LVU12
+ 104 0008 0546     		mov	r5, r0
+ 105              	.LVL2:
+  39:../Motor_Control/src/wk_stubs.c **** 
+  40:../Motor_Control/src/wk_stubs.c ****   if(delay < 0xFFFFFFFFU)
+ 106              		.loc 1 40 3 is_stmt 1 view .LVU13
+ 107              		.loc 1 40 5 is_stmt 0 view .LVU14
+ 108 000a B4F1FF3F 		cmp	r4, #-1
+ 109 000e 00D0     		beq	.L9
+  41:../Motor_Control/src/wk_stubs.c ****   {
+  42:../Motor_Control/src/wk_stubs.c ****     delay += 1;
+ 110              		.loc 1 42 5 is_stmt 1 view .LVU15
+ 111              		.loc 1 42 11 is_stmt 0 view .LVU16
+ 112 0010 0134     		adds	r4, r4, #1
+ 113              	.LVL3:
+ 114              	.L9:
+  43:../Motor_Control/src/wk_stubs.c ****   }
+  44:../Motor_Control/src/wk_stubs.c **** 
+  45:../Motor_Control/src/wk_stubs.c ****   while((wk_timebase_get() - start_tick) < delay)
+  46:../Motor_Control/src/wk_stubs.c ****   {
+  47:../Motor_Control/src/wk_stubs.c ****   }
+ 115              		.loc 1 47 3 is_stmt 1 view .LVU17
+  45:../Motor_Control/src/wk_stubs.c ****   {
+ 116              		.loc 1 45 42 discriminator 2 view .LVU18
+  45:../Motor_Control/src/wk_stubs.c ****   {
+ 117              		.loc 1 45 10 is_stmt 0 discriminator 2 view .LVU19
+ 118 0012 FFF7FEFF 		bl	wk_timebase_get
+ 119              	.LVL4:
+  45:../Motor_Control/src/wk_stubs.c ****   {
+ 120              		.loc 1 45 28 discriminator 2 view .LVU20
+ 121 0016 401B     		subs	r0, r0, r5
+  45:../Motor_Control/src/wk_stubs.c ****   {
+ 122              		.loc 1 45 42 discriminator 2 view .LVU21
+ 123 0018 A042     		cmp	r0, r4
+ 124 001a FAD3     		bcc	.L9
+  48:../Motor_Control/src/wk_stubs.c **** }
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 4
+
+
+ 125              		.loc 1 48 1 view .LVU22
+ 126 001c 38BD     		pop	{r3, r4, r5, pc}
+ 127              		.loc 1 48 1 view .LVU23
+ 128              		.cfi_endproc
+ 129              	.LFE136:
+ 131              		.section	.text.wk_timebase_init,"ax",%progbits
+ 132              		.align	1
+ 133              		.global	wk_timebase_init
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 138              	wk_timebase_init:
+ 139              	.LFB137:
+  49:../Motor_Control/src/wk_stubs.c **** 
+  50:../Motor_Control/src/wk_stubs.c **** /**
+  51:../Motor_Control/src/wk_stubs.c ****   * @brief  this function configures the source of the time base
+  52:../Motor_Control/src/wk_stubs.c ****   *         the time source is configured to have 1ms time base
+  53:../Motor_Control/src/wk_stubs.c ****   * @param  none
+  54:../Motor_Control/src/wk_stubs.c ****   * @retval none
+  55:../Motor_Control/src/wk_stubs.c ****   */
+  56:../Motor_Control/src/wk_stubs.c **** void wk_timebase_init(void)
+  57:../Motor_Control/src/wk_stubs.c **** {
+ 140              		.loc 1 57 1 is_stmt 1 view -0
+ 141              		.cfi_startproc
+ 142              		@ args = 0, pretend = 0, frame = 24
+ 143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144 0000 10B5     		push	{r4, lr}
+ 145              	.LCFI1:
+ 146              		.cfi_def_cfa_offset 8
+ 147              		.cfi_offset 4, -8
+ 148              		.cfi_offset 14, -4
+ 149 0002 86B0     		sub	sp, sp, #24
+ 150              	.LCFI2:
+ 151              		.cfi_def_cfa_offset 32
+  58:../Motor_Control/src/wk_stubs.c ****   crm_clocks_freq_type crm_clocks;
+ 152              		.loc 1 58 3 view .LVU25
+  59:../Motor_Control/src/wk_stubs.c ****   uint32_t frequency = 0;
+ 153              		.loc 1 59 3 view .LVU26
+ 154              	.LVL5:
+  60:../Motor_Control/src/wk_stubs.c **** 
+  61:../Motor_Control/src/wk_stubs.c ****   /* get crm_clocks */
+  62:../Motor_Control/src/wk_stubs.c ****   crm_clocks_freq_get(&crm_clocks);
+ 155              		.loc 1 62 3 view .LVU27
+ 156 0004 01A8     		add	r0, sp, #4
+ 157 0006 FFF7FEFF 		bl	crm_clocks_freq_get
+ 158              	.LVL6:
+  63:../Motor_Control/src/wk_stubs.c **** 
+  64:../Motor_Control/src/wk_stubs.c ****   frequency = crm_clocks.ahb_freq;
+ 159              		.loc 1 64 3 view .LVU28
+ 160              		.loc 1 64 13 is_stmt 0 view .LVU29
+ 161 000a 029C     		ldr	r4, [sp, #8]
+ 162              	.LVL7:
+  65:../Motor_Control/src/wk_stubs.c ****   /* config systick clock source */
+  66:../Motor_Control/src/wk_stubs.c ****   systick_clock_source_config(SYSTICK_CLOCK_SOURCE_AHBCLK_NODIV);
+ 163              		.loc 1 66 3 is_stmt 1 view .LVU30
+ 164 000c 0420     		movs	r0, #4
+ 165 000e FFF7FEFF 		bl	systick_clock_source_config
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 5
+
+
+ 166              	.LVL8:
+  67:../Motor_Control/src/wk_stubs.c ****   /* system tick config */
+  68:../Motor_Control/src/wk_stubs.c ****   SysTick->LOAD  = (uint32_t)((frequency / 1000) - 1UL);
+ 167              		.loc 1 68 3 view .LVU31
+ 168              		.loc 1 68 42 is_stmt 0 view .LVU32
+ 169 0012 084B     		ldr	r3, .L13
+ 170 0014 A3FB0434 		umull	r3, r4, r3, r4
+ 171              	.LVL9:
+ 172              		.loc 1 68 42 view .LVU33
+ 173 0018 A409     		lsrs	r4, r4, #6
+ 174              		.loc 1 68 20 view .LVU34
+ 175 001a 013C     		subs	r4, r4, #1
+ 176              		.loc 1 68 18 view .LVU35
+ 177 001c 4FF0E023 		mov	r3, #-536813568
+ 178 0020 5C61     		str	r4, [r3, #20]
+  69:../Motor_Control/src/wk_stubs.c ****   SysTick->VAL   = 0UL;
+ 179              		.loc 1 69 3 is_stmt 1 view .LVU36
+ 180              		.loc 1 69 18 is_stmt 0 view .LVU37
+ 181 0022 0022     		movs	r2, #0
+ 182 0024 9A61     		str	r2, [r3, #24]
+  70:../Motor_Control/src/wk_stubs.c ****   SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk |
+ 183              		.loc 1 70 3 is_stmt 1 view .LVU38
+ 184              		.loc 1 70 10 is_stmt 0 view .LVU39
+ 185 0026 1A69     		ldr	r2, [r3, #16]
+ 186              		.loc 1 70 17 view .LVU40
+ 187 0028 42F00302 		orr	r2, r2, #3
+ 188 002c 1A61     		str	r2, [r3, #16]
+  71:../Motor_Control/src/wk_stubs.c ****                    SysTick_CTRL_ENABLE_Msk;
+  72:../Motor_Control/src/wk_stubs.c **** }
+ 189              		.loc 1 72 1 view .LVU41
+ 190 002e 06B0     		add	sp, sp, #24
+ 191              	.LCFI3:
+ 192              		.cfi_def_cfa_offset 8
+ 193              		@ sp needed
+ 194 0030 10BD     		pop	{r4, pc}
+ 195              	.L14:
+ 196 0032 00BF     		.align	2
+ 197              	.L13:
+ 198 0034 D34D6210 		.word	274877907
+ 199              		.cfi_endproc
+ 200              	.LFE137:
+ 202              		.section	.text.wk_timebase_handler,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	wk_timebase_handler
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	wk_timebase_handler:
+ 210              	.LFB138:
+  73:../Motor_Control/src/wk_stubs.c **** 
+  74:../Motor_Control/src/wk_stubs.c **** /**
+  75:../Motor_Control/src/wk_stubs.c ****   * @brief  this function is called at timebase handler, eg: SysTick_Handler
+  76:../Motor_Control/src/wk_stubs.c ****   * @param  none
+  77:../Motor_Control/src/wk_stubs.c ****   * @retval none
+  78:../Motor_Control/src/wk_stubs.c ****   */
+  79:../Motor_Control/src/wk_stubs.c **** void wk_timebase_handler(void)
+  80:../Motor_Control/src/wk_stubs.c **** {
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 6
+
+
+ 211              		.loc 1 80 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 08B5     		push	{r3, lr}
+ 216              	.LCFI4:
+ 217              		.cfi_def_cfa_offset 8
+ 218              		.cfi_offset 3, -8
+ 219              		.cfi_offset 14, -4
+  81:../Motor_Control/src/wk_stubs.c ****   wk_timebase_increase();
+ 220              		.loc 1 81 3 view .LVU43
+ 221 0002 FFF7FEFF 		bl	wk_timebase_increase
+ 222              	.LVL10:
+  82:../Motor_Control/src/wk_stubs.c **** }
+ 223              		.loc 1 82 1 is_stmt 0 view .LVU44
+ 224 0006 08BD     		pop	{r3, pc}
+ 225              		.cfi_endproc
+ 226              	.LFE138:
+ 228              		.global	timebase_ticks
+ 229              		.section	.bss.timebase_ticks,"aw",%nobits
+ 230              		.align	2
+ 233              	timebase_ticks:
+ 234 0000 00000000 		.space	4
+ 235              		.text
+ 236              	.Letext0:
+ 237              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 238              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 239              		.file 4 "libraries/cmsis/cm4/core_support/core_cm4.h"
+ 240              		.file 5 "libraries/drivers/inc/at32f403a_407_crm.h"
+ 241              		.file 6 "libraries/drivers/inc/at32f403a_407_misc.h"
+ 242              		.file 7 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 wk_stubs.c
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:21     .text.wk_timebase_increase:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:27     .text.wk_timebase_increase:00000000 wk_timebase_increase
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:45     .text.wk_timebase_increase:0000000c $d
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:233    .bss.timebase_ticks:00000000 timebase_ticks
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:50     .text.wk_timebase_get:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:56     .text.wk_timebase_get:00000000 wk_timebase_get
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:72     .text.wk_timebase_get:00000008 $d
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:77     .text.wk_delay_ms:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:83     .text.wk_delay_ms:00000000 wk_delay_ms
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:132    .text.wk_timebase_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:138    .text.wk_timebase_init:00000000 wk_timebase_init
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:198    .text.wk_timebase_init:00000034 $d
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:203    .text.wk_timebase_handler:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:209    .text.wk_timebase_handler:00000000 wk_timebase_handler
+C:\Users\10963\AppData\Local\Temp\ccJYnN7K.s:230    .bss.timebase_ticks:00000000 $d
+
+UNDEFINED SYMBOLS
+crm_clocks_freq_get
+systick_clock_source_config

@@ -1,0 +1,288 @@
+/* add user code begin Header */
+/**
+  **************************************************************************
+  * @file     motor_control.c
+  * @brief    motor control implementation file
+  **************************************************************************
+  * Copyright (c) 2025, Artery Technology, All rights reserved.
+  *
+  * The software Board Support Package (BSP) that is made available to
+  * download from Artery official website is the copyrighted work of Artery.
+  * Artery authorizes customers to use, copy, and distribute the BSP
+  * software and its related documentation for the purpose of design and
+  * development in conjunction with Artery microcontrollers. Use of the
+  * software is governed by this copyright notice and the following disclaimer.
+  *
+  * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  *
+  **************************************************************************
+  */
+/* add user code end Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "motor_control.h"
+#include "wk_tmr.h"
+#include "wk_system.h"
+
+/* private variables ---------------------------------------------------------*/
+
+/* six-step commutation sequence */
+static const uint8_t commutation_sequence[6][6] = {
+  /* A+  A-  B+  B-  C+  C- */
+  {1,  0,  0,  1,  0,  0},  /* State 1: A+ B- */
+  {1,  0,  0,  0,  0,  1},  /* State 2: A+ C- */
+  {0,  0,  1,  0,  0,  1},  /* State 3: B+ C- */
+  {0,  1,  1,  0,  0,  0},  /* State 4: B+ A- */
+  {0,  1,  0,  0,  1,  0},  /* State 5: C+ A- */
+  {0,  0,  0,  1,  1,  0}   /* State 6: C+ B- */
+};
+
+/* private function prototypes -----------------------------------------------*/
+static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state);
+static void motor_next_commutation_state(motor_params_t *motor);
+static uint32_t calculate_commutation_interval(uint16_t speed);
+
+/**
+  * @brief  motor control initialization
+  * @param  motor: motor parameters structure
+  * @retval none
+  */
+void motor_control_init(motor_params_t *motor)
+{
+  /* initialize motor parameters */
+  motor->state = MOTOR_STATE_IDLE;
+  motor->direction = MOTOR_DIR_CW;
+  motor->comm_state = COMMUTATION_STATE_1;
+  motor->speed = 0;
+  motor->duty_cycle = 0;
+  motor->commutation_interval = 0;
+  motor->last_commutation_time = 0;
+  
+  /* set initial commutation state */
+  motor_set_commutation_state(motor, motor->comm_state);
+}
+
+/**
+  * @brief  motor control process
+  * @param  motor: motor parameters structure
+  * @retval none
+  */
+void motor_control_process(motor_params_t *motor)
+{
+  uint32_t current_time;
+  
+  /* process only if motor is running */
+  if (motor->state == MOTOR_STATE_RUNNING)
+  {
+    /* get current time */
+    current_time = wk_timebase_get();
+    
+    /* check if commutation is needed */
+    if (current_time - motor->last_commutation_time >= motor->commutation_interval)
+    {
+      /* update last commutation time */
+      motor->last_commutation_time = current_time;
+      
+      /* advance to next commutation state */
+      motor_next_commutation_state(motor);
+    }
+  }
+}
+
+/**
+  * @brief  start motor
+  * @param  motor: motor parameters structure
+  * @param  speed: target speed (RPM)
+  * @param  direction: motor direction
+  * @retval none
+  */
+void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direction)
+{
+  /* set motor parameters */
+  motor->speed = speed;
+  motor->direction = direction;
+  motor->duty_cycle = MIN_DUTY_CYCLE;
+  motor->commutation_interval = calculate_commutation_interval(speed);
+  motor->last_commutation_time = wk_timebase_get();
+  motor->state = MOTOR_STATE_RUNNING;
+  
+  /* set initial commutation state */
+  motor_set_commutation_state(motor, motor->comm_state);
+}
+
+/**
+  * @brief  stop motor
+  * @param  motor: motor parameters structure
+  * @retval none
+  */
+void motor_stop(motor_params_t *motor)
+{
+  /* set all outputs to low */
+  tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, 0);
+  tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, 0);
+  tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, 0);
+  
+  /* update motor state */
+  motor->state = MOTOR_STATE_IDLE;
+  motor->speed = 0;
+  motor->duty_cycle = 0;
+}
+
+/**
+  * @brief  set motor speed
+  * @param  motor: motor parameters structure
+  * @param  speed: target speed (RPM)
+  * @retval none
+  */
+void motor_set_speed(motor_params_t *motor, uint16_t speed)
+{
+  motor->speed = speed;
+  motor->commutation_interval = calculate_commutation_interval(speed);
+}
+
+/**
+  * @brief  set motor duty cycle
+  * @param  motor: motor parameters structure
+  * @param  duty_cycle: PWM duty cycle
+  * @retval none
+  */
+void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle)
+{
+  /* limit duty cycle */
+  if (duty_cycle > MAX_DUTY_CYCLE)
+  {
+    duty_cycle = MAX_DUTY_CYCLE;
+  }
+  else if (duty_cycle < MIN_DUTY_CYCLE)
+  {
+    duty_cycle = MIN_DUTY_CYCLE;
+  }
+  
+  motor->duty_cycle = duty_cycle;
+  
+  /* update PWM duty cycle based on current commutation state */
+  motor_set_commutation_state(motor, motor->comm_state);
+}
+
+/**
+  * @brief  set commutation state
+  * @param  motor: motor parameters structure
+  * @param  state: commutation state
+  * @retval none
+  */
+static void motor_set_commutation_state(motor_params_t *motor, commutation_state_t state)
+{
+  /* update commutation state */
+  motor->comm_state = state;
+  
+  /* set all channels to low first to avoid transient states */
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_LOW);
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_LOW);
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
+  tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+  
+  /* set PWM outputs based on commutation state */
+  switch(state)
+  {
+    case COMMUTATION_STATE_1: /* A+ B- */
+      /* A+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+      /* B- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+      break;
+    case COMMUTATION_STATE_2: /* A+ C- */
+      /* A+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, motor->duty_cycle);
+      /* C- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+      break;
+    case COMMUTATION_STATE_3: /* B+ C- */
+      /* B+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+      /* C- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3C, motor->duty_cycle);
+      break;
+    case COMMUTATION_STATE_4: /* B+ A- */
+      /* B+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, motor->duty_cycle);
+      /* A- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+      break;
+    case COMMUTATION_STATE_5: /* C+ A- */
+      /* C+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+      /* A- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1C, motor->duty_cycle);
+      break;
+    case COMMUTATION_STATE_6: /* C+ B- */
+      /* C+ */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, motor->duty_cycle);
+      /* B- */
+      tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+      tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2C, motor->duty_cycle);
+      break;
+    default:
+      /* all outputs already set to low */
+      break;
+  }
+}
+
+/**
+  * @brief  advance to next commutation state
+  * @param  motor: motor parameters structure
+  * @retval none
+  */
+static void motor_next_commutation_state(motor_params_t *motor)
+{
+  if (motor->direction == MOTOR_DIR_CW)
+  {
+    /* clockwise direction: increment state */
+    motor->comm_state = (commutation_state_t)((motor->comm_state + 1) % COMMUTATION_STATE_MAX);
+  } else {
+    /* counter-clockwise direction: decrement state */
+    if (motor->comm_state == 0)
+    {
+      motor->comm_state = COMMUTATION_STATE_MAX - 1;
+    } else {
+      motor->comm_state = (commutation_state_t)(motor->comm_state - 1);
+    }
+  }
+  
+  /* set new commutation state */
+  motor_set_commutation_state(motor, motor->comm_state);
+}
+
+/**
+  * @brief  calculate commutation interval based on speed
+  * @param  speed: motor speed (RPM)
+  * @retval commutation interval (ms)
+  */
+static uint32_t calculate_commutation_interval(uint16_t speed)
+{
+  if (speed == 0)
+  {
+    return 0;
+  }
+  
+  /* calculate commutation interval in milliseconds */
+  /* formula: interval = 60,000 / (speed * pole_pairs * 6) */
+  return (uint32_t)(60000.0f / (speed * MOTOR_POLE_PAIRS * 6.0f));
+}
