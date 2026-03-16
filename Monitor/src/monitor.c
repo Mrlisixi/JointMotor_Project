@@ -139,9 +139,9 @@ void monitor_update(monitor_data_t *data)
   
   /* Convert ADC raw data to actual values */
   /* Current sensors use 1.65V reference */
-  data->phase_current[0] = hal_adc_convert(adc_raw_data[0], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
-  data->phase_current[1] = hal_adc_convert(adc_raw_data[1], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
-  data->phase_current[2] = hal_adc_convert(adc_raw_data[2], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+  data->phase_current[0] = hal_adc_convert(adc_raw_data[0], CURRENT_SENSOR_GAIN_A, CURRENT_SENSOR_OFFSET_A, 1.65f);
+  data->phase_current[1] = hal_adc_convert(adc_raw_data[1], CURRENT_SENSOR_GAIN_B, CURRENT_SENSOR_OFFSET_B, 1.65f);
+  data->phase_current[2] = hal_adc_convert(adc_raw_data[2], CURRENT_SENSOR_GAIN_C, CURRENT_SENSOR_OFFSET_C, 1.65f);
   
   /* Convert DC link voltage using 3.3V reference */
   data->dc_link_voltage = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
@@ -153,6 +153,13 @@ void monitor_update(monitor_data_t *data)
   
   /* Convert MOS temperature using Steinhart-Hart equation */
   data->mos_temperature = hal_adc_convert_temperature(adc_raw_data[5]);
+  
+  /* Store raw ADC values for debugging */
+  data->adc_raw[0] = adc_raw_data[0]; /* Phase A current */
+  data->adc_raw[1] = adc_raw_data[1]; /* Phase B current */
+  data->adc_raw[2] = adc_raw_data[2]; /* Phase C current */
+  data->adc_raw[3] = adc_raw_data[3]; /* DC link voltage */
+  data->adc_raw[4] = adc_raw_data[5]; /* MOS temperature */
   
   /* Update timestamp - using xTaskGetTickCount() which returns tick count */
   /* Note: Tick count unit depends on configTICK_RATE_HZ setting */

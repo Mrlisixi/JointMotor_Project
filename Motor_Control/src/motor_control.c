@@ -27,10 +27,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "motor_control.h"
 #include "monitor.h"
+#include "foc.h"
 #include "wk_tmr.h"
 #include "wk_system.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include <stdlib.h>
 
 
 
@@ -61,6 +63,8 @@ void motor_control_init(motor_params_t *motor)
   motor->duty_cycle = 0;
   motor->commutation_interval = 0;
   motor->last_commutation_time = 0;
+  motor->control_mode = 0; /* Default to six-step control */
+  motor->foc_state = NULL;
   
   /* set all outputs to low */
   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_LOW);
@@ -69,6 +73,40 @@ void motor_control_init(motor_params_t *motor)
   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_LOW);
   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_LOW);
   tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_LOW);
+}
+
+/**
+  * @brief  Initialize FOC control
+  * @param  motor: motor parameters structure
+  * @retval none
+  */
+void motor_foc_init(motor_params_t *motor)
+{
+  /* Allocate FOC state structure */
+  motor->foc_state = (foc_state_t *)malloc(sizeof(foc_state_t));
+  if (motor->foc_state != NULL)
+  {
+    /* Initialize FOC state */
+    foc_init((foc_state_t *)motor->foc_state);
+    /* Set control mode to FOC */
+    motor->control_mode = 1;
+  }
+}
+
+/**
+  * @brief  FOC control process
+  * @param  motor: motor parameters structure
+  * @param  phase_current: Phase currents (A)
+  * @param  angle: Rotor angle (rad)
+  * @retval none
+  */
+void motor_foc_control(motor_params_t *motor, float *phase_current, float angle)
+{
+  if (motor->foc_state != NULL && motor->control_mode == 1)
+  {
+    /* Execute FOC control */
+    foc_control((foc_state_t *)motor->foc_state, phase_current, angle);
+  }
 }
 
 /**
@@ -83,17 +121,27 @@ void motor_control_process(motor_params_t *motor)
   /* process only if motor is running */
   if (motor->state == MOTOR_STATE_RUNNING)
   {
-    /* get current time */
-    current_time = wk_timebase_get();
-    
-    /* check if commutation is needed */
-    if (current_time - motor->last_commutation_time >= motor->commutation_interval)
+    if (motor->control_mode == 0)
     {
-      /* update last commutation time */
-      motor->last_commutation_time = current_time;
+      /* Six-step commutation mode */
+      /* get current time */
+      current_time = wk_timebase_get();
       
-      /* advance to next commutation state */
-      motor_next_commutation_state(motor);
+      /* check if commutation is needed */
+      if (current_time - motor->last_commutation_time >= motor->commutation_interval)
+      {
+        /* update last commutation time */
+        motor->last_commutation_time = current_time;
+        
+        /* advance to next commutation state */
+        motor_next_commutation_state(motor);
+      }
+    }
+    else if (motor->control_mode == 1)
+    {
+      /* FOC control mode */
+      /* FOC control is handled externally with sensor feedback */
+      /* This function can be used to trigger FOC control periodically */
     }
   }
 }
@@ -110,12 +158,20 @@ void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direct
   /* set motor parameters */
   motor->speed = speed;
   motor->direction = direction;
-  motor->duty_cycle = MIN_DUTY_CYCLE;
+  motor->duty_cycle = 250; /* Set initial duty cycle to 250 */
   motor->commutation_interval = calculate_commutation_interval(speed);
   motor->last_commutation_time = wk_timebase_get();
   motor->state = MOTOR_STATE_RUNNING;
   
-  /* set initial commutation state */
+  /* set initial commutation state with minimum duty cycle */
+  motor->duty_cycle = MIN_DUTY_CYCLE;
+  motor_set_commutation_state(motor, motor->comm_state);
+  
+  /* delay to ensure motor starts */
+  vTaskDelay(pdMS_TO_TICKS(50));
+  
+  /* increase duty cycle to desired value */
+  motor->duty_cycle = 250;
   motor_set_commutation_state(motor, motor->comm_state);
 }
 

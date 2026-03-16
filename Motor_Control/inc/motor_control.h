@@ -38,6 +38,10 @@ void motor_stop(motor_params_t *motor);
 void motor_set_speed(motor_params_t *motor, uint16_t speed);
 void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle);
 
+/* FOC control functions */
+void motor_foc_init(motor_params_t *motor);
+void motor_foc_control(motor_params_t *motor, float *phase_current, float angle);
+
 /* monitoring functions -------------------------------------------------------*/
 /* Moved to Monitor module */
 

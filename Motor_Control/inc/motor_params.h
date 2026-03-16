@@ -46,10 +46,10 @@
 #define MOTOR_POLE_PAIRS          21         /* Number of pole pairs */
 
 /* motor control parameters ---------------------------------------------------*/
-#define PWM_PERIOD                1499       /* PWM period (1500 counts) */
-#define PWM_FREQUENCY             50000      /* PWM frequency (50kHz) */
-#define MAX_DUTY_CYCLE            1400       /* Maximum duty cycle (93.3%) */
-#define MIN_DUTY_CYCLE            100        /* Minimum duty cycle (6.7%) */
+#define PWM_PERIOD                749        /* PWM period (750 counts) */
+#define PWM_FREQUENCY             100000     /* PWM frequency (100kHz) */
+#define MAX_DUTY_CYCLE            700        /* Maximum duty cycle (93.3%) */
+#define MIN_DUTY_CYCLE            50         /* Minimum duty cycle (6.7%) */
 
 /* sensor parameters ---------------------------------------------------------*/
 /* Moved to Monitor module */
@@ -90,6 +90,10 @@ typedef struct {
   uint16_t duty_cycle;              /* PWM duty cycle */
   uint32_t commutation_interval;    /* Commutation interval (ms) */
   uint32_t last_commutation_time;   /* Last commutation time (ms) */
+  
+  /* FOC control variables */
+  void *foc_state;                  /* FOC state structure */
+  uint8_t control_mode;             /* Control mode: 0 = six-step, 1 = FOC */
 } motor_params_t;
 
 #endif /* MOTOR_PARAMS_H */

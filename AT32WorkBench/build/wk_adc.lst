@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
   28:project/src/wk_adc.c **** #include "wk_adc.h"
   29:project/src/wk_adc.c **** 
   30:project/src/wk_adc.c **** /* add user code begin 0 */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 2
 
 
   31:project/src/wk_adc.c **** 
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
   57 000e 0327     		movs	r7, #3
   58 0010 8DF80E70 		strb	r7, [sp, #14]
   57:project/src/wk_adc.c ****   gpio_init_struct.gpio_pins = CURR_PHASE_A_PIN;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 3
 
 
   59              		.loc 1 57 3 is_stmt 1 view .LVU6
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
   98 004e 0823     		movs	r3, #8
   99 0050 0293     		str	r3, [sp, #8]
   73:project/src/wk_adc.c ****   gpio_init(VOLT_BUS_GPIO_PORT, &gpio_init_struct);
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 4
 
 
  100              		.loc 1 73 3 is_stmt 1 view .LVU23
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
  138              		.loc 1 89 31 is_stmt 0 view .LVU36
  139 008a 0025     		movs	r5, #0
  140 008c 8DF80550 		strb	r5, [sp, #5]
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 5
 
 
   90:project/src/wk_adc.c ****   adc_base_struct.data_align = ADC_RIGHT_ALIGNMENT;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
  185 00da 2046     		mov	r0, r4
  186 00dc FFF7FEFF 		bl	adc_ordinary_channel_set
  187              	.LVL15:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 6
 
 
  100:project/src/wk_adc.c **** 
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
  224              	.LVL22:
  118:project/src/wk_adc.c ****   while(adc_calibration_status_get(ADC1));
  225              		.loc 1 118 3 view .LVU55
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 7
 
 
  226              	.L3:
@@ -395,14 +395,14 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 1
  253              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
  254              		.file 6 "libraries/drivers/inc/at32f403a_407_crm.h"
  255              		.file 7 "libraries/drivers/inc/at32f403a_407_gpio.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 wk_adc.c
-C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s:21     .text.wk_adc1_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s:27     .text.wk_adc1_init:00000000 wk_adc1_init
-C:\Users\10963\AppData\Local\Temp\ccZ9xfrV.s:242    .text.wk_adc1_init:00000128 $d
+C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s:21     .text.wk_adc1_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s:27     .text.wk_adc1_init:00000000 wk_adc1_init
+C:\Users\10963\AppData\Local\Temp\ccbS2s8E.s:242    .text.wk_adc1_init:00000128 $d
 
 UNDEFINED SYMBOLS
 gpio_default_para_init

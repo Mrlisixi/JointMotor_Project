@@ -1,0 +1,2007 @@
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"foc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "../Motor_Control/src/foc.c"
+  20              		.section	.text.svpwm_calculate_sector,"ax",%progbits
+  21              		.align	1
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	svpwm_calculate_sector:
+  27              	.LVL0:
+  28              	.LFB142:
+   1:../Motor_Control/src/foc.c **** /* add user code begin Header */
+   2:../Motor_Control/src/foc.c **** /**
+   3:../Motor_Control/src/foc.c ****   **************************************************************************
+   4:../Motor_Control/src/foc.c ****   * @file     foc.c
+   5:../Motor_Control/src/foc.c ****   * @brief    FOC control implementation file
+   6:../Motor_Control/src/foc.c ****   **************************************************************************
+   7:../Motor_Control/src/foc.c ****   * Copyright (c) 2025, Artery Technology, All rights reserved.
+   8:../Motor_Control/src/foc.c ****   *
+   9:../Motor_Control/src/foc.c ****   * The software Board Support Package (BSP) that is made available to
+  10:../Motor_Control/src/foc.c ****   * download from Artery official website is the copyrighted work of Artery.
+  11:../Motor_Control/src/foc.c ****   * Artery authorizes customers to use, copy, and distribute the BSP
+  12:../Motor_Control/src/foc.c ****   * software and its related documentation for the purpose of design and
+  13:../Motor_Control/src/foc.c ****   * development in conjunction with Artery microcontrollers. Use of the
+  14:../Motor_Control/src/foc.c ****   * software is governed by this copyright notice and the following disclaimer.
+  15:../Motor_Control/src/foc.c ****   *
+  16:../Motor_Control/src/foc.c ****   * THIS SOFTWARE IS PROVIDED ON "AS IS" BASIS WITHOUT WARRANTIES,
+  17:../Motor_Control/src/foc.c ****   * GUARANTEES OR REPRESENTATIONS OF ANY KIND. ARTERY EXPRESSLY DISCLAIMS,
+  18:../Motor_Control/src/foc.c ****   * TO THE FULLEST EXTENT PERMITTED BY LAW, ALL EXPRESS, IMPLIED OR
+  19:../Motor_Control/src/foc.c ****   * STATUTORY OR OTHER WARRANTIES, GUARANTEES OR REPRESENTATIONS,
+  20:../Motor_Control/src/foc.c ****   * INCLUDING BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY,
+  21:../Motor_Control/src/foc.c ****   * FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+  22:../Motor_Control/src/foc.c ****   *
+  23:../Motor_Control/src/foc.c ****   **************************************************************************
+  24:../Motor_Control/src/foc.c ****   */
+  25:../Motor_Control/src/foc.c **** /* add user code end Header */
+  26:../Motor_Control/src/foc.c **** 
+  27:../Motor_Control/src/foc.c **** /* Includes ------------------------------------------------------------------*/
+  28:../Motor_Control/src/foc.c **** #include "foc.h"
+  29:../Motor_Control/src/foc.c **** #include "wk_tmr.h"
+  30:../Motor_Control/src/foc.c **** #include <math.h>
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 2
+
+
+  31:../Motor_Control/src/foc.c **** 
+  32:../Motor_Control/src/foc.c **** /* private function prototypes -----------------------------------------------*/
+  33:../Motor_Control/src/foc.c **** static uint8_t svpwm_calculate_sector(float v_alpha, float v_beta);
+  34:../Motor_Control/src/foc.c **** 
+  35:../Motor_Control/src/foc.c **** /**
+  36:../Motor_Control/src/foc.c ****   * @brief  Initialize FOC control
+  37:../Motor_Control/src/foc.c ****   * @param  foc: FOC state structure
+  38:../Motor_Control/src/foc.c ****   * @retval none
+  39:../Motor_Control/src/foc.c ****   */
+  40:../Motor_Control/src/foc.c **** void foc_init(foc_state_t *foc)
+  41:../Motor_Control/src/foc.c **** {
+  42:../Motor_Control/src/foc.c ****   /* Initialize state variables */
+  43:../Motor_Control/src/foc.c ****   foc->phase_current[0] = 0.0f;
+  44:../Motor_Control/src/foc.c ****   foc->phase_current[1] = 0.0f;
+  45:../Motor_Control/src/foc.c ****   foc->phase_current[2] = 0.0f;
+  46:../Motor_Control/src/foc.c ****   foc->phase_voltage[0] = 0.0f;
+  47:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = 0.0f;
+  48:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = 0.0f;
+  49:../Motor_Control/src/foc.c ****   foc->i_alpha = 0.0f;
+  50:../Motor_Control/src/foc.c ****   foc->i_beta = 0.0f;
+  51:../Motor_Control/src/foc.c ****   foc->i_d = 0.0f;
+  52:../Motor_Control/src/foc.c ****   foc->i_q = 0.0f;
+  53:../Motor_Control/src/foc.c ****   foc->v_d = 0.0f;
+  54:../Motor_Control/src/foc.c ****   foc->v_q = 0.0f;
+  55:../Motor_Control/src/foc.c ****   foc->v_alpha = 0.0f;
+  56:../Motor_Control/src/foc.c ****   foc->v_beta = 0.0f;
+  57:../Motor_Control/src/foc.c ****   foc->angle = 0.0f;
+  58:../Motor_Control/src/foc.c ****   foc->speed = 0.0f;
+  59:../Motor_Control/src/foc.c ****   foc->target_speed = 0.0f;
+  60:../Motor_Control/src/foc.c ****   
+  61:../Motor_Control/src/foc.c ****   /* Initialize controller variables */
+  62:../Motor_Control/src/foc.c ****   foc->i_d_error = 0.0f;
+  63:../Motor_Control/src/foc.c ****   foc->i_q_error = 0.0f;
+  64:../Motor_Control/src/foc.c ****   foc->i_d_integral = 0.0f;
+  65:../Motor_Control/src/foc.c ****   foc->i_q_integral = 0.0f;
+  66:../Motor_Control/src/foc.c ****   foc->speed_error = 0.0f;
+  67:../Motor_Control/src/foc.c ****   foc->speed_integral = 0.0f;
+  68:../Motor_Control/src/foc.c ****   
+  69:../Motor_Control/src/foc.c ****   /* Initialize SVPWM variables */
+  70:../Motor_Control/src/foc.c ****   foc->t1 = 0.0f;
+  71:../Motor_Control/src/foc.c ****   foc->t2 = 0.0f;
+  72:../Motor_Control/src/foc.c ****   foc->t0 = 0.0f;
+  73:../Motor_Control/src/foc.c ****   foc->sector = 0;
+  74:../Motor_Control/src/foc.c **** }
+  75:../Motor_Control/src/foc.c **** 
+  76:../Motor_Control/src/foc.c **** /**
+  77:../Motor_Control/src/foc.c ****   * @brief  FOC control process
+  78:../Motor_Control/src/foc.c ****   * @param  foc: FOC state structure
+  79:../Motor_Control/src/foc.c ****   * @param  phase_current: Phase currents (A)
+  80:../Motor_Control/src/foc.c ****   * @param  angle: Rotor angle (rad)
+  81:../Motor_Control/src/foc.c ****   * @retval none
+  82:../Motor_Control/src/foc.c ****   */
+  83:../Motor_Control/src/foc.c **** void foc_control(foc_state_t *foc, float *phase_current, float angle)
+  84:../Motor_Control/src/foc.c **** {
+  85:../Motor_Control/src/foc.c ****   /* Update phase currents */
+  86:../Motor_Control/src/foc.c ****   foc->phase_current[0] = phase_current[0];
+  87:../Motor_Control/src/foc.c ****   foc->phase_current[1] = phase_current[1];
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 3
+
+
+  88:../Motor_Control/src/foc.c ****   foc->phase_current[2] = phase_current[2];
+  89:../Motor_Control/src/foc.c ****   
+  90:../Motor_Control/src/foc.c ****   /* Update rotor angle */
+  91:../Motor_Control/src/foc.c ****   foc->angle = angle;
+  92:../Motor_Control/src/foc.c ****   
+  93:../Motor_Control/src/foc.c ****   /* Clark transform: 3-phase current to alpha-beta */
+  94:../Motor_Control/src/foc.c ****   clark_transform(foc->phase_current[0], foc->phase_current[1], foc->phase_current[2], &foc->i_alph
+  95:../Motor_Control/src/foc.c ****   
+  96:../Motor_Control/src/foc.c ****   /* Park transform: alpha-beta to d-q */
+  97:../Motor_Control/src/foc.c ****   park_transform(foc->i_alpha, foc->i_beta, foc->angle, &foc->i_d, &foc->i_q);
+  98:../Motor_Control/src/foc.c ****   
+  99:../Motor_Control/src/foc.c ****   /* Speed controller */
+ 100:../Motor_Control/src/foc.c ****   foc->speed_error = foc->target_speed - foc->speed;
+ 101:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 102:../Motor_Control/src/foc.c ****   
+ 103:../Motor_Control/src/foc.c ****   /* Limit integral windup */
+ 104:../Motor_Control/src/foc.c ****   if (foc->speed_integral > 10.0f)
+ 105:../Motor_Control/src/foc.c ****     foc->speed_integral = 10.0f;
+ 106:../Motor_Control/src/foc.c ****   if (foc->speed_integral < -10.0f)
+ 107:../Motor_Control/src/foc.c ****     foc->speed_integral = -10.0f;
+ 108:../Motor_Control/src/foc.c ****   
+ 109:../Motor_Control/src/foc.c ****   /* Calculate q-axis current reference */
+ 110:../Motor_Control/src/foc.c ****   float i_q_ref = FOC_SPEED_KP * foc->speed_error + FOC_SPEED_KI * foc->speed_integral;
+ 111:../Motor_Control/src/foc.c ****   
+ 112:../Motor_Control/src/foc.c ****   /* Limit q-axis current */
+ 113:../Motor_Control/src/foc.c ****   if (i_q_ref > MOTOR_PEAK_CURRENT)
+ 114:../Motor_Control/src/foc.c ****     i_q_ref = MOTOR_PEAK_CURRENT;
+ 115:../Motor_Control/src/foc.c ****   if (i_q_ref < -MOTOR_PEAK_CURRENT)
+ 116:../Motor_Control/src/foc.c ****     i_q_ref = -MOTOR_PEAK_CURRENT;
+ 117:../Motor_Control/src/foc.c ****   
+ 118:../Motor_Control/src/foc.c ****   /* d-axis current reference (usually 0 for surface mount PMSM) */
+ 119:../Motor_Control/src/foc.c ****   float i_d_ref = 0.0f;
+ 120:../Motor_Control/src/foc.c ****   
+ 121:../Motor_Control/src/foc.c ****   /* Current controllers */
+ 122:../Motor_Control/src/foc.c ****   foc->i_d_error = i_d_ref - foc->i_d;
+ 123:../Motor_Control/src/foc.c ****   foc->i_q_error = i_q_ref - foc->i_q;
+ 124:../Motor_Control/src/foc.c ****   
+ 125:../Motor_Control/src/foc.c ****   foc->i_d_integral += foc->i_d_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 126:../Motor_Control/src/foc.c ****   foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 127:../Motor_Control/src/foc.c ****   
+ 128:../Motor_Control/src/foc.c ****   /* Limit integral windup */
+ 129:../Motor_Control/src/foc.c ****   if (foc->i_d_integral > 10.0f)
+ 130:../Motor_Control/src/foc.c ****     foc->i_d_integral = 10.0f;
+ 131:../Motor_Control/src/foc.c ****   if (foc->i_d_integral < -10.0f)
+ 132:../Motor_Control/src/foc.c ****     foc->i_d_integral = -10.0f;
+ 133:../Motor_Control/src/foc.c ****   if (foc->i_q_integral > 10.0f)
+ 134:../Motor_Control/src/foc.c ****     foc->i_q_integral = 10.0f;
+ 135:../Motor_Control/src/foc.c ****   if (foc->i_q_integral < -10.0f)
+ 136:../Motor_Control/src/foc.c ****     foc->i_q_integral = -10.0f;
+ 137:../Motor_Control/src/foc.c ****   
+ 138:../Motor_Control/src/foc.c ****   /* Calculate d-q voltages */
+ 139:../Motor_Control/src/foc.c ****   foc->v_d = FOC_CURRENT_KP * foc->i_d_error + FOC_CURRENT_KI * foc->i_d_integral;
+ 140:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 141:../Motor_Control/src/foc.c ****   
+ 142:../Motor_Control/src/foc.c ****   /* Inverse Park transform: d-q to alpha-beta */
+ 143:../Motor_Control/src/foc.c ****   inverse_park_transform(foc->v_d, foc->v_q, foc->angle, &foc->v_alpha, &foc->v_beta);
+ 144:../Motor_Control/src/foc.c ****   
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 4
+
+
+ 145:../Motor_Control/src/foc.c ****   /* SVPWM calculation */
+ 146:../Motor_Control/src/foc.c ****   uint16_t duty_a, duty_b, duty_c;
+ 147:../Motor_Control/src/foc.c ****   svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+ 148:../Motor_Control/src/foc.c ****   
+ 149:../Motor_Control/src/foc.c ****   /* Update phase voltages */
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[0] = (float)duty_a * 3.3f / (float)PWM_PERIOD;
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 152:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 153:../Motor_Control/src/foc.c ****   
+ 154:../Motor_Control/src/foc.c ****   /* Set PWM duty cycles */
+ 155:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
+ 156:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+ 157:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+ 158:../Motor_Control/src/foc.c **** }
+ 159:../Motor_Control/src/foc.c **** 
+ 160:../Motor_Control/src/foc.c **** /**
+ 161:../Motor_Control/src/foc.c ****   * @brief  Clark transform: 3-phase current to alpha-beta
+ 162:../Motor_Control/src/foc.c ****   * @param  i_a: Phase A current (A)
+ 163:../Motor_Control/src/foc.c ****   * @param  i_b: Phase B current (A)
+ 164:../Motor_Control/src/foc.c ****   * @param  i_c: Phase C current (A)
+ 165:../Motor_Control/src/foc.c ****   * @param  i_alpha: Alpha axis current (A)
+ 166:../Motor_Control/src/foc.c ****   * @param  i_beta: Beta axis current (A)
+ 167:../Motor_Control/src/foc.c ****   * @retval none
+ 168:../Motor_Control/src/foc.c ****   */
+ 169:../Motor_Control/src/foc.c **** void clark_transform(float i_a, float i_b, float i_c, float *i_alpha, float *i_beta)
+ 170:../Motor_Control/src/foc.c **** {
+ 171:../Motor_Control/src/foc.c ****   /* Clark transform assuming balanced 3-phase system (i_a + i_b + i_c = 0) */
+ 172:../Motor_Control/src/foc.c ****   *i_alpha = i_a;
+ 173:../Motor_Control/src/foc.c ****   *i_beta = (i_a + 2.0f * i_b) / sqrtf(3.0f);
+ 174:../Motor_Control/src/foc.c **** }
+ 175:../Motor_Control/src/foc.c **** 
+ 176:../Motor_Control/src/foc.c **** /**
+ 177:../Motor_Control/src/foc.c ****   * @brief  Park transform: alpha-beta to d-q
+ 178:../Motor_Control/src/foc.c ****   * @param  i_alpha: Alpha axis current (A)
+ 179:../Motor_Control/src/foc.c ****   * @param  i_beta: Beta axis current (A)
+ 180:../Motor_Control/src/foc.c ****   * @param  angle: Rotor angle (rad)
+ 181:../Motor_Control/src/foc.c ****   * @param  i_d: D axis current (A)
+ 182:../Motor_Control/src/foc.c ****   * @param  i_q: Q axis current (A)
+ 183:../Motor_Control/src/foc.c ****   * @retval none
+ 184:../Motor_Control/src/foc.c ****   */
+ 185:../Motor_Control/src/foc.c **** void park_transform(float i_alpha, float i_beta, float angle, float *i_d, float *i_q)
+ 186:../Motor_Control/src/foc.c **** {
+ 187:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 188:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 189:../Motor_Control/src/foc.c ****   
+ 190:../Motor_Control/src/foc.c ****   *i_d = i_alpha * cos_theta + i_beta * sin_theta;
+ 191:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 192:../Motor_Control/src/foc.c **** }
+ 193:../Motor_Control/src/foc.c **** 
+ 194:../Motor_Control/src/foc.c **** /**
+ 195:../Motor_Control/src/foc.c ****   * @brief  Inverse Park transform: d-q to alpha-beta
+ 196:../Motor_Control/src/foc.c ****   * @param  v_d: D axis voltage (V)
+ 197:../Motor_Control/src/foc.c ****   * @param  v_q: Q axis voltage (V)
+ 198:../Motor_Control/src/foc.c ****   * @param  angle: Rotor angle (rad)
+ 199:../Motor_Control/src/foc.c ****   * @param  v_alpha: Alpha axis voltage (V)
+ 200:../Motor_Control/src/foc.c ****   * @param  v_beta: Beta axis voltage (V)
+ 201:../Motor_Control/src/foc.c ****   * @retval none
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 5
+
+
+ 202:../Motor_Control/src/foc.c ****   */
+ 203:../Motor_Control/src/foc.c **** void inverse_park_transform(float v_d, float v_q, float angle, float *v_alpha, float *v_beta)
+ 204:../Motor_Control/src/foc.c **** {
+ 205:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 206:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 207:../Motor_Control/src/foc.c ****   
+ 208:../Motor_Control/src/foc.c ****   *v_alpha = v_d * cos_theta - v_q * sin_theta;
+ 209:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 210:../Motor_Control/src/foc.c **** }
+ 211:../Motor_Control/src/foc.c **** 
+ 212:../Motor_Control/src/foc.c **** /**
+ 213:../Motor_Control/src/foc.c ****   * @brief  Calculate SVPWM sector
+ 214:../Motor_Control/src/foc.c ****   * @param  v_alpha: Alpha axis voltage (V)
+ 215:../Motor_Control/src/foc.c ****   * @param  v_beta: Beta axis voltage (V)
+ 216:../Motor_Control/src/foc.c ****   * @retval Sector number (0-5)
+ 217:../Motor_Control/src/foc.c ****   */
+ 218:../Motor_Control/src/foc.c **** static uint8_t svpwm_calculate_sector(float v_alpha, float v_beta)
+ 219:../Motor_Control/src/foc.c **** {
+  29              		.loc 1 219 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 220:../Motor_Control/src/foc.c ****   uint8_t sector = 0;
+  34              		.loc 1 220 3 view .LVU1
+ 221:../Motor_Control/src/foc.c ****   float v0 = v_beta;
+  35              		.loc 1 221 3 view .LVU2
+ 222:../Motor_Control/src/foc.c ****   float v1 = (sqrtf(3.0f) * v_alpha - v_beta) / 2.0f;
+  36              		.loc 1 222 3 view .LVU3
+  37              		.loc 1 222 27 is_stmt 0 view .LVU4
+  38 0000 DFED137A 		vldr.32	s15, .L11
+  39 0004 20EE270A 		vmul.f32	s0, s0, s15
+  40              	.LVL1:
+  41              		.loc 1 222 37 view .LVU5
+  42 0008 70EE607A 		vsub.f32	s15, s0, s1
+  43              		.loc 1 222 9 view .LVU6
+  44 000c B6EE007A 		vmov.f32	s14, #5.0e-1
+  45 0010 67EE877A 		vmul.f32	s15, s15, s14
+  46              	.LVL2:
+ 223:../Motor_Control/src/foc.c ****   float v2 = (-sqrtf(3.0f) * v_alpha - v_beta) / 2.0f;
+  47              		.loc 1 223 3 is_stmt 1 view .LVU7
+  48              		.loc 1 223 38 is_stmt 0 view .LVU8
+  49 0014 B1EE400A 		vneg.f32	s0, s0
+  50 0018 30EE600A 		vsub.f32	s0, s0, s1
+  51              		.loc 1 223 9 view .LVU9
+  52 001c 20EE070A 		vmul.f32	s0, s0, s14
+  53              	.LVL3:
+ 224:../Motor_Control/src/foc.c ****   
+ 225:../Motor_Control/src/foc.c ****   if (v0 > 0) sector |= 1;
+  54              		.loc 1 225 3 is_stmt 1 view .LVU10
+  55              		.loc 1 225 6 is_stmt 0 view .LVU11
+  56 0020 F5EEC00A 		vcmpe.f32	s1, #0
+  57 0024 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  58 0028 0FDD     		ble	.L10
+  59              		.loc 1 225 22 discriminator 1 view .LVU12
+  60 002a 0120     		movs	r0, #1
+  61              	.L2:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 6
+
+
+  62              	.LVL4:
+ 226:../Motor_Control/src/foc.c ****   if (v1 > 0) sector |= 2;
+  63              		.loc 1 226 3 is_stmt 1 view .LVU13
+  64              		.loc 1 226 6 is_stmt 0 view .LVU14
+  65 002c F5EEC07A 		vcmpe.f32	s15, #0
+  66 0030 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  67 0034 01DD     		ble	.L3
+  68              		.loc 1 226 15 is_stmt 1 discriminator 1 view .LVU15
+  69              		.loc 1 226 22 is_stmt 0 discriminator 1 view .LVU16
+  70 0036 40F00200 		orr	r0, r0, #2
+  71              	.LVL5:
+  72              	.L3:
+ 227:../Motor_Control/src/foc.c ****   if (v2 > 0) sector |= 4;
+  73              		.loc 1 227 3 is_stmt 1 view .LVU17
+  74              		.loc 1 227 6 is_stmt 0 view .LVU18
+  75 003a B5EEC00A 		vcmpe.f32	s0, #0
+  76 003e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  77 0042 01DD     		ble	.L5
+  78              		.loc 1 227 15 is_stmt 1 discriminator 1 view .LVU19
+  79              		.loc 1 227 22 is_stmt 0 discriminator 1 view .LVU20
+  80 0044 40F00400 		orr	r0, r0, #4
+  81              	.LVL6:
+  82              	.L5:
+ 228:../Motor_Control/src/foc.c ****   
+ 229:../Motor_Control/src/foc.c ****   return sector;
+  83              		.loc 1 229 3 is_stmt 1 view .LVU21
+ 230:../Motor_Control/src/foc.c **** }
+  84              		.loc 1 230 1 is_stmt 0 view .LVU22
+  85 0048 7047     		bx	lr
+  86              	.LVL7:
+  87              	.L10:
+ 220:../Motor_Control/src/foc.c ****   float v0 = v_beta;
+  88              		.loc 1 220 11 view .LVU23
+  89 004a 0020     		movs	r0, #0
+  90 004c EEE7     		b	.L2
+  91              	.L12:
+  92 004e 00BF     		.align	2
+  93              	.L11:
+  94 0050 D7B3DD3F 		.word	1071494103
+  95              		.cfi_endproc
+  96              	.LFE142:
+  98              		.section	.text.foc_init,"ax",%progbits
+  99              		.align	1
+ 100              		.global	foc_init
+ 101              		.syntax unified
+ 102              		.thumb
+ 103              		.thumb_func
+ 105              	foc_init:
+ 106              	.LVL8:
+ 107              	.LFB137:
+  41:../Motor_Control/src/foc.c ****   /* Initialize state variables */
+ 108              		.loc 1 41 1 is_stmt 1 view -0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+  43:../Motor_Control/src/foc.c ****   foc->phase_current[1] = 0.0f;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 7
+
+
+ 113              		.loc 1 43 3 view .LVU25
+  43:../Motor_Control/src/foc.c ****   foc->phase_current[1] = 0.0f;
+ 114              		.loc 1 43 25 is_stmt 0 view .LVU26
+ 115 0000 0023     		movs	r3, #0
+ 116 0002 0360     		str	r3, [r0]	@ float
+  44:../Motor_Control/src/foc.c ****   foc->phase_current[2] = 0.0f;
+ 117              		.loc 1 44 3 is_stmt 1 view .LVU27
+  44:../Motor_Control/src/foc.c ****   foc->phase_current[2] = 0.0f;
+ 118              		.loc 1 44 25 is_stmt 0 view .LVU28
+ 119 0004 4360     		str	r3, [r0, #4]	@ float
+  45:../Motor_Control/src/foc.c ****   foc->phase_voltage[0] = 0.0f;
+ 120              		.loc 1 45 3 is_stmt 1 view .LVU29
+  45:../Motor_Control/src/foc.c ****   foc->phase_voltage[0] = 0.0f;
+ 121              		.loc 1 45 25 is_stmt 0 view .LVU30
+ 122 0006 8360     		str	r3, [r0, #8]	@ float
+  46:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = 0.0f;
+ 123              		.loc 1 46 3 is_stmt 1 view .LVU31
+  46:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = 0.0f;
+ 124              		.loc 1 46 25 is_stmt 0 view .LVU32
+ 125 0008 C360     		str	r3, [r0, #12]	@ float
+  47:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = 0.0f;
+ 126              		.loc 1 47 3 is_stmt 1 view .LVU33
+  47:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = 0.0f;
+ 127              		.loc 1 47 25 is_stmt 0 view .LVU34
+ 128 000a 0361     		str	r3, [r0, #16]	@ float
+  48:../Motor_Control/src/foc.c ****   foc->i_alpha = 0.0f;
+ 129              		.loc 1 48 3 is_stmt 1 view .LVU35
+  48:../Motor_Control/src/foc.c ****   foc->i_alpha = 0.0f;
+ 130              		.loc 1 48 25 is_stmt 0 view .LVU36
+ 131 000c 4361     		str	r3, [r0, #20]	@ float
+  49:../Motor_Control/src/foc.c ****   foc->i_beta = 0.0f;
+ 132              		.loc 1 49 3 is_stmt 1 view .LVU37
+  49:../Motor_Control/src/foc.c ****   foc->i_beta = 0.0f;
+ 133              		.loc 1 49 16 is_stmt 0 view .LVU38
+ 134 000e 8361     		str	r3, [r0, #24]	@ float
+  50:../Motor_Control/src/foc.c ****   foc->i_d = 0.0f;
+ 135              		.loc 1 50 3 is_stmt 1 view .LVU39
+  50:../Motor_Control/src/foc.c ****   foc->i_d = 0.0f;
+ 136              		.loc 1 50 15 is_stmt 0 view .LVU40
+ 137 0010 C361     		str	r3, [r0, #28]	@ float
+  51:../Motor_Control/src/foc.c ****   foc->i_q = 0.0f;
+ 138              		.loc 1 51 3 is_stmt 1 view .LVU41
+  51:../Motor_Control/src/foc.c ****   foc->i_q = 0.0f;
+ 139              		.loc 1 51 12 is_stmt 0 view .LVU42
+ 140 0012 0362     		str	r3, [r0, #32]	@ float
+  52:../Motor_Control/src/foc.c ****   foc->v_d = 0.0f;
+ 141              		.loc 1 52 3 is_stmt 1 view .LVU43
+  52:../Motor_Control/src/foc.c ****   foc->v_d = 0.0f;
+ 142              		.loc 1 52 12 is_stmt 0 view .LVU44
+ 143 0014 4362     		str	r3, [r0, #36]	@ float
+  53:../Motor_Control/src/foc.c ****   foc->v_q = 0.0f;
+ 144              		.loc 1 53 3 is_stmt 1 view .LVU45
+  53:../Motor_Control/src/foc.c ****   foc->v_q = 0.0f;
+ 145              		.loc 1 53 12 is_stmt 0 view .LVU46
+ 146 0016 8362     		str	r3, [r0, #40]	@ float
+  54:../Motor_Control/src/foc.c ****   foc->v_alpha = 0.0f;
+ 147              		.loc 1 54 3 is_stmt 1 view .LVU47
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 8
+
+
+  54:../Motor_Control/src/foc.c ****   foc->v_alpha = 0.0f;
+ 148              		.loc 1 54 12 is_stmt 0 view .LVU48
+ 149 0018 C362     		str	r3, [r0, #44]	@ float
+  55:../Motor_Control/src/foc.c ****   foc->v_beta = 0.0f;
+ 150              		.loc 1 55 3 is_stmt 1 view .LVU49
+  55:../Motor_Control/src/foc.c ****   foc->v_beta = 0.0f;
+ 151              		.loc 1 55 16 is_stmt 0 view .LVU50
+ 152 001a 0363     		str	r3, [r0, #48]	@ float
+  56:../Motor_Control/src/foc.c ****   foc->angle = 0.0f;
+ 153              		.loc 1 56 3 is_stmt 1 view .LVU51
+  56:../Motor_Control/src/foc.c ****   foc->angle = 0.0f;
+ 154              		.loc 1 56 15 is_stmt 0 view .LVU52
+ 155 001c 4363     		str	r3, [r0, #52]	@ float
+  57:../Motor_Control/src/foc.c ****   foc->speed = 0.0f;
+ 156              		.loc 1 57 3 is_stmt 1 view .LVU53
+  57:../Motor_Control/src/foc.c ****   foc->speed = 0.0f;
+ 157              		.loc 1 57 14 is_stmt 0 view .LVU54
+ 158 001e 8363     		str	r3, [r0, #56]	@ float
+  58:../Motor_Control/src/foc.c ****   foc->target_speed = 0.0f;
+ 159              		.loc 1 58 3 is_stmt 1 view .LVU55
+  58:../Motor_Control/src/foc.c ****   foc->target_speed = 0.0f;
+ 160              		.loc 1 58 14 is_stmt 0 view .LVU56
+ 161 0020 C363     		str	r3, [r0, #60]	@ float
+  59:../Motor_Control/src/foc.c ****   
+ 162              		.loc 1 59 3 is_stmt 1 view .LVU57
+  59:../Motor_Control/src/foc.c ****   
+ 163              		.loc 1 59 21 is_stmt 0 view .LVU58
+ 164 0022 0364     		str	r3, [r0, #64]	@ float
+  62:../Motor_Control/src/foc.c ****   foc->i_q_error = 0.0f;
+ 165              		.loc 1 62 3 is_stmt 1 view .LVU59
+  62:../Motor_Control/src/foc.c ****   foc->i_q_error = 0.0f;
+ 166              		.loc 1 62 18 is_stmt 0 view .LVU60
+ 167 0024 4364     		str	r3, [r0, #68]	@ float
+  63:../Motor_Control/src/foc.c ****   foc->i_d_integral = 0.0f;
+ 168              		.loc 1 63 3 is_stmt 1 view .LVU61
+  63:../Motor_Control/src/foc.c ****   foc->i_d_integral = 0.0f;
+ 169              		.loc 1 63 18 is_stmt 0 view .LVU62
+ 170 0026 8364     		str	r3, [r0, #72]	@ float
+  64:../Motor_Control/src/foc.c ****   foc->i_q_integral = 0.0f;
+ 171              		.loc 1 64 3 is_stmt 1 view .LVU63
+  64:../Motor_Control/src/foc.c ****   foc->i_q_integral = 0.0f;
+ 172              		.loc 1 64 21 is_stmt 0 view .LVU64
+ 173 0028 C364     		str	r3, [r0, #76]	@ float
+  65:../Motor_Control/src/foc.c ****   foc->speed_error = 0.0f;
+ 174              		.loc 1 65 3 is_stmt 1 view .LVU65
+  65:../Motor_Control/src/foc.c ****   foc->speed_error = 0.0f;
+ 175              		.loc 1 65 21 is_stmt 0 view .LVU66
+ 176 002a 0365     		str	r3, [r0, #80]	@ float
+  66:../Motor_Control/src/foc.c ****   foc->speed_integral = 0.0f;
+ 177              		.loc 1 66 3 is_stmt 1 view .LVU67
+  66:../Motor_Control/src/foc.c ****   foc->speed_integral = 0.0f;
+ 178              		.loc 1 66 20 is_stmt 0 view .LVU68
+ 179 002c 4365     		str	r3, [r0, #84]	@ float
+  67:../Motor_Control/src/foc.c ****   
+ 180              		.loc 1 67 3 is_stmt 1 view .LVU69
+  67:../Motor_Control/src/foc.c ****   
+ 181              		.loc 1 67 23 is_stmt 0 view .LVU70
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 9
+
+
+ 182 002e 8365     		str	r3, [r0, #88]	@ float
+  70:../Motor_Control/src/foc.c ****   foc->t2 = 0.0f;
+ 183              		.loc 1 70 3 is_stmt 1 view .LVU71
+  70:../Motor_Control/src/foc.c ****   foc->t2 = 0.0f;
+ 184              		.loc 1 70 11 is_stmt 0 view .LVU72
+ 185 0030 C365     		str	r3, [r0, #92]	@ float
+  71:../Motor_Control/src/foc.c ****   foc->t0 = 0.0f;
+ 186              		.loc 1 71 3 is_stmt 1 view .LVU73
+  71:../Motor_Control/src/foc.c ****   foc->t0 = 0.0f;
+ 187              		.loc 1 71 11 is_stmt 0 view .LVU74
+ 188 0032 0366     		str	r3, [r0, #96]	@ float
+  72:../Motor_Control/src/foc.c ****   foc->sector = 0;
+ 189              		.loc 1 72 3 is_stmt 1 view .LVU75
+  72:../Motor_Control/src/foc.c ****   foc->sector = 0;
+ 190              		.loc 1 72 11 is_stmt 0 view .LVU76
+ 191 0034 4366     		str	r3, [r0, #100]	@ float
+  73:../Motor_Control/src/foc.c **** }
+ 192              		.loc 1 73 3 is_stmt 1 view .LVU77
+  73:../Motor_Control/src/foc.c **** }
+ 193              		.loc 1 73 15 is_stmt 0 view .LVU78
+ 194 0036 0023     		movs	r3, #0
+ 195 0038 80F86830 		strb	r3, [r0, #104]
+  74:../Motor_Control/src/foc.c **** 
+ 196              		.loc 1 74 1 view .LVU79
+ 197 003c 7047     		bx	lr
+ 198              		.cfi_endproc
+ 199              	.LFE137:
+ 201              		.section	.text.clark_transform,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	clark_transform
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 208              	clark_transform:
+ 209              	.LVL9:
+ 210              	.LFB139:
+ 170:../Motor_Control/src/foc.c ****   /* Clark transform assuming balanced 3-phase system (i_a + i_b + i_c = 0) */
+ 211              		.loc 1 170 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 172:../Motor_Control/src/foc.c ****   *i_beta = (i_a + 2.0f * i_b) / sqrtf(3.0f);
+ 216              		.loc 1 172 3 view .LVU81
+ 172:../Motor_Control/src/foc.c ****   *i_beta = (i_a + 2.0f * i_b) / sqrtf(3.0f);
+ 217              		.loc 1 172 12 is_stmt 0 view .LVU82
+ 218 0000 80ED000A 		vstr.32	s0, [r0]
+ 173:../Motor_Control/src/foc.c **** }
+ 219              		.loc 1 173 3 is_stmt 1 view .LVU83
+ 173:../Motor_Control/src/foc.c **** }
+ 220              		.loc 1 173 25 is_stmt 0 view .LVU84
+ 221 0004 70EEA00A 		vadd.f32	s1, s1, s1
+ 222              	.LVL10:
+ 173:../Motor_Control/src/foc.c **** }
+ 223              		.loc 1 173 18 view .LVU85
+ 224 0008 30EE800A 		vadd.f32	s0, s1, s0
+ 225              	.LVL11:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 10
+
+
+ 173:../Motor_Control/src/foc.c **** }
+ 226              		.loc 1 173 32 view .LVU86
+ 227 000c 9FED037A 		vldr.32	s14, .L15
+ 228 0010 C0EE077A 		vdiv.f32	s15, s0, s14
+ 173:../Motor_Control/src/foc.c **** }
+ 229              		.loc 1 173 11 view .LVU87
+ 230 0014 C1ED007A 		vstr.32	s15, [r1]
+ 231              	.LVL12:
+ 174:../Motor_Control/src/foc.c **** 
+ 232              		.loc 1 174 1 view .LVU88
+ 233 0018 7047     		bx	lr
+ 234              	.L16:
+ 235 001a 00BF     		.align	2
+ 236              	.L15:
+ 237 001c D7B3DD3F 		.word	1071494103
+ 238              		.cfi_endproc
+ 239              	.LFE139:
+ 241              		.section	.text.park_transform,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	park_transform
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	park_transform:
+ 249              	.LVL13:
+ 250              	.LFB140:
+ 186:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 251              		.loc 1 186 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 255              		.loc 1 186 1 is_stmt 0 view .LVU90
+ 256 0000 38B5     		push	{r3, r4, r5, lr}
+ 257              	.LCFI0:
+ 258              		.cfi_def_cfa_offset 16
+ 259              		.cfi_offset 3, -16
+ 260              		.cfi_offset 4, -12
+ 261              		.cfi_offset 5, -8
+ 262              		.cfi_offset 14, -4
+ 263 0002 2DED048B 		vpush.64	{d8, d9}
+ 264              	.LCFI1:
+ 265              		.cfi_def_cfa_offset 32
+ 266              		.cfi_offset 80, -32
+ 267              		.cfi_offset 81, -28
+ 268              		.cfi_offset 82, -24
+ 269              		.cfi_offset 83, -20
+ 270 0006 B0EE408A 		vmov.f32	s16, s0
+ 271 000a B0EE609A 		vmov.f32	s18, s1
+ 272 000e F0EE419A 		vmov.f32	s19, s2
+ 273 0012 0546     		mov	r5, r0
+ 274 0014 0C46     		mov	r4, r1
+ 187:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 275              		.loc 1 187 3 is_stmt 1 view .LVU91
+ 187:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 276              		.loc 1 187 21 is_stmt 0 view .LVU92
+ 277 0016 B0EE410A 		vmov.f32	s0, s2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 11
+
+
+ 278              	.LVL14:
+ 187:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 279              		.loc 1 187 21 view .LVU93
+ 280 001a FFF7FEFF 		bl	cosf
+ 281              	.LVL15:
+ 187:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 282              		.loc 1 187 21 view .LVU94
+ 283 001e F0EE408A 		vmov.f32	s17, s0
+ 284              	.LVL16:
+ 188:../Motor_Control/src/foc.c ****   
+ 285              		.loc 1 188 3 is_stmt 1 view .LVU95
+ 188:../Motor_Control/src/foc.c ****   
+ 286              		.loc 1 188 21 is_stmt 0 view .LVU96
+ 287 0022 B0EE690A 		vmov.f32	s0, s19
+ 288              	.LVL17:
+ 188:../Motor_Control/src/foc.c ****   
+ 289              		.loc 1 188 21 view .LVU97
+ 290 0026 FFF7FEFF 		bl	sinf
+ 291              	.LVL18:
+ 190:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 292              		.loc 1 190 3 is_stmt 1 view .LVU98
+ 190:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 293              		.loc 1 190 18 is_stmt 0 view .LVU99
+ 294 002a 68EE887A 		vmul.f32	s15, s17, s16
+ 190:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 295              		.loc 1 190 39 view .LVU100
+ 296 002e 20EE097A 		vmul.f32	s14, s0, s18
+ 190:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 297              		.loc 1 190 30 view .LVU101
+ 298 0032 77EE877A 		vadd.f32	s15, s15, s14
+ 190:../Motor_Control/src/foc.c ****   *i_q = -i_alpha * sin_theta + i_beta * cos_theta;
+ 299              		.loc 1 190 8 view .LVU102
+ 300 0036 C5ED007A 		vstr.32	s15, [r5]
+ 191:../Motor_Control/src/foc.c **** }
+ 301              		.loc 1 191 3 is_stmt 1 view .LVU103
+ 191:../Motor_Control/src/foc.c **** }
+ 302              		.loc 1 191 19 is_stmt 0 view .LVU104
+ 303 003a 28EE408A 		vnmul.f32	s16, s16, s0
+ 304              	.LVL19:
+ 191:../Motor_Control/src/foc.c **** }
+ 305              		.loc 1 191 40 view .LVU105
+ 306 003e 68EE898A 		vmul.f32	s17, s17, s18
+ 307              	.LVL20:
+ 191:../Motor_Control/src/foc.c **** }
+ 308              		.loc 1 191 31 view .LVU106
+ 309 0042 38EE288A 		vadd.f32	s16, s16, s17
+ 191:../Motor_Control/src/foc.c **** }
+ 310              		.loc 1 191 8 view .LVU107
+ 311 0046 84ED008A 		vstr.32	s16, [r4]
+ 192:../Motor_Control/src/foc.c **** 
+ 312              		.loc 1 192 1 view .LVU108
+ 313 004a BDEC048B 		vldm	sp!, {d8-d9}
+ 314              	.LCFI2:
+ 315              		.cfi_restore 82
+ 316              		.cfi_restore 83
+ 317              		.cfi_restore 80
+ 318              		.cfi_restore 81
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 12
+
+
+ 319              		.cfi_def_cfa_offset 16
+ 320              	.LVL21:
+ 192:../Motor_Control/src/foc.c **** 
+ 321              		.loc 1 192 1 view .LVU109
+ 322 004e 38BD     		pop	{r3, r4, r5, pc}
+ 192:../Motor_Control/src/foc.c **** 
+ 323              		.loc 1 192 1 view .LVU110
+ 324              		.cfi_endproc
+ 325              	.LFE140:
+ 327              		.section	.text.inverse_park_transform,"ax",%progbits
+ 328              		.align	1
+ 329              		.global	inverse_park_transform
+ 330              		.syntax unified
+ 331              		.thumb
+ 332              		.thumb_func
+ 334              	inverse_park_transform:
+ 335              	.LVL22:
+ 336              	.LFB141:
+ 204:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 337              		.loc 1 204 1 is_stmt 1 view -0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204:../Motor_Control/src/foc.c ****   float cos_theta = cosf(angle);
+ 341              		.loc 1 204 1 is_stmt 0 view .LVU112
+ 342 0000 38B5     		push	{r3, r4, r5, lr}
+ 343              	.LCFI3:
+ 344              		.cfi_def_cfa_offset 16
+ 345              		.cfi_offset 3, -16
+ 346              		.cfi_offset 4, -12
+ 347              		.cfi_offset 5, -8
+ 348              		.cfi_offset 14, -4
+ 349 0002 2DED048B 		vpush.64	{d8, d9}
+ 350              	.LCFI4:
+ 351              		.cfi_def_cfa_offset 32
+ 352              		.cfi_offset 80, -32
+ 353              		.cfi_offset 81, -28
+ 354              		.cfi_offset 82, -24
+ 355              		.cfi_offset 83, -20
+ 356 0006 B0EE409A 		vmov.f32	s18, s0
+ 357 000a F0EE608A 		vmov.f32	s17, s1
+ 358 000e F0EE419A 		vmov.f32	s19, s2
+ 359 0012 0546     		mov	r5, r0
+ 360 0014 0C46     		mov	r4, r1
+ 205:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 361              		.loc 1 205 3 is_stmt 1 view .LVU113
+ 205:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 362              		.loc 1 205 21 is_stmt 0 view .LVU114
+ 363 0016 B0EE410A 		vmov.f32	s0, s2
+ 364              	.LVL23:
+ 205:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 365              		.loc 1 205 21 view .LVU115
+ 366 001a FFF7FEFF 		bl	cosf
+ 367              	.LVL24:
+ 205:../Motor_Control/src/foc.c ****   float sin_theta = sinf(angle);
+ 368              		.loc 1 205 21 view .LVU116
+ 369 001e B0EE408A 		vmov.f32	s16, s0
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 13
+
+
+ 370              	.LVL25:
+ 206:../Motor_Control/src/foc.c ****   
+ 371              		.loc 1 206 3 is_stmt 1 view .LVU117
+ 206:../Motor_Control/src/foc.c ****   
+ 372              		.loc 1 206 21 is_stmt 0 view .LVU118
+ 373 0022 B0EE690A 		vmov.f32	s0, s19
+ 374              	.LVL26:
+ 206:../Motor_Control/src/foc.c ****   
+ 375              		.loc 1 206 21 view .LVU119
+ 376 0026 FFF7FEFF 		bl	sinf
+ 377              	.LVL27:
+ 208:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 378              		.loc 1 208 3 is_stmt 1 view .LVU120
+ 208:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 379              		.loc 1 208 18 is_stmt 0 view .LVU121
+ 380 002a 28EE097A 		vmul.f32	s14, s16, s18
+ 208:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 381              		.loc 1 208 36 view .LVU122
+ 382 002e 60EE286A 		vmul.f32	s13, s0, s17
+ 208:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 383              		.loc 1 208 30 view .LVU123
+ 384 0032 37EE667A 		vsub.f32	s14, s14, s13
+ 208:../Motor_Control/src/foc.c ****   *v_beta = v_d * sin_theta + v_q * cos_theta;
+ 385              		.loc 1 208 12 view .LVU124
+ 386 0036 85ED007A 		vstr.32	s14, [r5]
+ 209:../Motor_Control/src/foc.c **** }
+ 387              		.loc 1 209 3 is_stmt 1 view .LVU125
+ 209:../Motor_Control/src/foc.c **** }
+ 388              		.loc 1 209 17 is_stmt 0 view .LVU126
+ 389 003a 60EE097A 		vmul.f32	s15, s0, s18
+ 209:../Motor_Control/src/foc.c **** }
+ 390              		.loc 1 209 35 view .LVU127
+ 391 003e 28EE288A 		vmul.f32	s16, s16, s17
+ 392              	.LVL28:
+ 209:../Motor_Control/src/foc.c **** }
+ 393              		.loc 1 209 29 view .LVU128
+ 394 0042 77EE887A 		vadd.f32	s15, s15, s16
+ 209:../Motor_Control/src/foc.c **** }
+ 395              		.loc 1 209 11 view .LVU129
+ 396 0046 C4ED007A 		vstr.32	s15, [r4]
+ 210:../Motor_Control/src/foc.c **** 
+ 397              		.loc 1 210 1 view .LVU130
+ 398 004a BDEC048B 		vldm	sp!, {d8-d9}
+ 399              	.LCFI5:
+ 400              		.cfi_restore 82
+ 401              		.cfi_restore 83
+ 402              		.cfi_restore 80
+ 403              		.cfi_restore 81
+ 404              		.cfi_def_cfa_offset 16
+ 405              	.LVL29:
+ 210:../Motor_Control/src/foc.c **** 
+ 406              		.loc 1 210 1 view .LVU131
+ 407 004e 38BD     		pop	{r3, r4, r5, pc}
+ 210:../Motor_Control/src/foc.c **** 
+ 408              		.loc 1 210 1 view .LVU132
+ 409              		.cfi_endproc
+ 410              	.LFE141:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 14
+
+
+ 412              		.section	.text.svpwm_calculate,"ax",%progbits
+ 413              		.align	1
+ 414              		.global	svpwm_calculate
+ 415              		.syntax unified
+ 416              		.thumb
+ 417              		.thumb_func
+ 419              	svpwm_calculate:
+ 420              	.LVL30:
+ 421              	.LFB143:
+ 231:../Motor_Control/src/foc.c **** 
+ 232:../Motor_Control/src/foc.c **** /**
+ 233:../Motor_Control/src/foc.c ****   * @brief  SVPWM calculation
+ 234:../Motor_Control/src/foc.c ****   * @param  v_alpha: Alpha axis voltage (V)
+ 235:../Motor_Control/src/foc.c ****   * @param  v_beta: Beta axis voltage (V)
+ 236:../Motor_Control/src/foc.c ****   * @param  duty_a: Duty cycle for phase A
+ 237:../Motor_Control/src/foc.c ****   * @param  duty_b: Duty cycle for phase B
+ 238:../Motor_Control/src/foc.c ****   * @param  duty_c: Duty cycle for phase C
+ 239:../Motor_Control/src/foc.c ****   * @retval none
+ 240:../Motor_Control/src/foc.c ****   */
+ 241:../Motor_Control/src/foc.c **** void svpwm_calculate(float v_alpha, float v_beta, uint16_t *duty_a, uint16_t *duty_b, uint16_t *dut
+ 242:../Motor_Control/src/foc.c **** {
+ 422              		.loc 1 242 1 is_stmt 1 view -0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 0
+ 425              		@ frame_needed = 0, uses_anonymous_args = 0
+ 426              		.loc 1 242 1 is_stmt 0 view .LVU134
+ 427 0000 70B5     		push	{r4, r5, r6, lr}
+ 428              	.LCFI6:
+ 429              		.cfi_def_cfa_offset 16
+ 430              		.cfi_offset 4, -16
+ 431              		.cfi_offset 5, -12
+ 432              		.cfi_offset 6, -8
+ 433              		.cfi_offset 14, -4
+ 434 0002 2DED028B 		vpush.64	{d8}
+ 435              	.LCFI7:
+ 436              		.cfi_def_cfa_offset 24
+ 437              		.cfi_offset 80, -24
+ 438              		.cfi_offset 81, -20
+ 439 0006 0646     		mov	r6, r0
+ 440 0008 0D46     		mov	r5, r1
+ 441 000a 1446     		mov	r4, r2
+ 243:../Motor_Control/src/foc.c ****   float vdc = 3.3f; /* DC link voltage */
+ 442              		.loc 1 243 3 is_stmt 1 view .LVU135
+ 443              	.LVL31:
+ 244:../Motor_Control/src/foc.c ****   float Ts = 1.0f / PWM_FREQUENCY; /* PWM period */
+ 444              		.loc 1 244 3 view .LVU136
+ 245:../Motor_Control/src/foc.c ****   
+ 246:../Motor_Control/src/foc.c ****   /* Calculate normalized voltages */
+ 247:../Motor_Control/src/foc.c ****   float v_alpha_norm = v_alpha / vdc;
+ 445              		.loc 1 247 3 view .LVU137
+ 446              		.loc 1 247 9 is_stmt 0 view .LVU138
+ 447 000c DFED8B7A 		vldr.32	s15, .L50
+ 448 0010 C0EE278A 		vdiv.f32	s17, s0, s15
+ 449              	.LVL32:
+ 248:../Motor_Control/src/foc.c ****   float v_beta_norm = v_beta / vdc;
+ 450              		.loc 1 248 3 is_stmt 1 view .LVU139
+ 451              		.loc 1 248 9 is_stmt 0 view .LVU140
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 15
+
+
+ 452 0014 80EEA78A 		vdiv.f32	s16, s1, s15
+ 453              	.LVL33:
+ 249:../Motor_Control/src/foc.c ****   
+ 250:../Motor_Control/src/foc.c ****   /* Calculate sector */
+ 251:../Motor_Control/src/foc.c ****   uint8_t sector = svpwm_calculate_sector(v_alpha_norm, v_beta_norm);
+ 454              		.loc 1 251 3 is_stmt 1 view .LVU141
+ 455              		.loc 1 251 20 is_stmt 0 view .LVU142
+ 456 0018 F0EE480A 		vmov.f32	s1, s16
+ 457              	.LVL34:
+ 458              		.loc 1 251 20 view .LVU143
+ 459 001c B0EE680A 		vmov.f32	s0, s17
+ 460              	.LVL35:
+ 461              		.loc 1 251 20 view .LVU144
+ 462 0020 FFF7FEFF 		bl	svpwm_calculate_sector
+ 463              	.LVL36:
+ 252:../Motor_Control/src/foc.c ****   
+ 253:../Motor_Control/src/foc.c ****   /* Calculate time for vectors */
+ 254:../Motor_Control/src/foc.c ****   float t1 = 0.0f, t2 = 0.0f;
+ 464              		.loc 1 254 3 is_stmt 1 view .LVU145
+ 255:../Motor_Control/src/foc.c ****   
+ 256:../Motor_Control/src/foc.c ****   switch (sector)
+ 465              		.loc 1 256 3 view .LVU146
+ 466 0024 0328     		cmp	r0, #3
+ 467 0026 00F09380 		beq	.L22
+ 468 002a 67D8     		bhi	.L23
+ 469 002c 0128     		cmp	r0, #1
+ 470 002e 79D0     		beq	.L24
+ 471 0030 0228     		cmp	r0, #2
+ 472 0032 00F08280 		beq	.L25
+ 473 0036 0028     		cmp	r0, #0
+ 474 0038 5BD1     		bne	.L45
+ 257:../Motor_Control/src/foc.c ****   {
+ 258:../Motor_Control/src/foc.c ****     case 0: /* Sector 1 */
+ 259:../Motor_Control/src/foc.c ****       t1 = sqrtf(3.0f) * v_alpha_norm + v_beta_norm;
+ 475              		.loc 1 259 7 view .LVU147
+ 476              		.loc 1 259 24 is_stmt 0 view .LVU148
+ 477 003a 9FED817A 		vldr.32	s14, .L50+4
+ 478 003e 28EE877A 		vmul.f32	s14, s17, s14
+ 479              		.loc 1 259 10 view .LVU149
+ 480 0042 37EE087A 		vadd.f32	s14, s14, s16
+ 481              	.LVL37:
+ 260:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_beta_norm;
+ 482              		.loc 1 260 7 is_stmt 1 view .LVU150
+ 483              		.loc 1 260 10 is_stmt 0 view .LVU151
+ 484 0046 78EE080A 		vadd.f32	s1, s16, s16
+ 485              	.LVL38:
+ 261:../Motor_Control/src/foc.c ****       break;
+ 486              		.loc 1 261 7 is_stmt 1 view .LVU152
+ 487              	.L27:
+ 262:../Motor_Control/src/foc.c ****     case 1: /* Sector 2 */
+ 263:../Motor_Control/src/foc.c ****       t1 = sqrtf(3.0f) * v_alpha_norm - v_beta_norm;
+ 264:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 265:../Motor_Control/src/foc.c ****       break;
+ 266:../Motor_Control/src/foc.c ****     case 2: /* Sector 3 */
+ 267:../Motor_Control/src/foc.c ****       t1 = -sqrtf(3.0f) * v_alpha_norm + v_beta_norm;
+ 268:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_beta_norm;
+ 269:../Motor_Control/src/foc.c ****       break;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 16
+
+
+ 270:../Motor_Control/src/foc.c ****     case 3: /* Sector 4 */
+ 271:../Motor_Control/src/foc.c ****       t1 = -sqrtf(3.0f) * v_alpha_norm - v_beta_norm;
+ 272:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_alpha_norm;
+ 273:../Motor_Control/src/foc.c ****       break;
+ 274:../Motor_Control/src/foc.c ****     case 4: /* Sector 5 */
+ 275:../Motor_Control/src/foc.c ****       t1 = sqrtf(3.0f) * v_alpha_norm - v_beta_norm;
+ 276:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_beta_norm;
+ 277:../Motor_Control/src/foc.c ****       break;
+ 278:../Motor_Control/src/foc.c ****     case 5: /* Sector 6 */
+ 279:../Motor_Control/src/foc.c ****       t1 = sqrtf(3.0f) * v_alpha_norm + v_beta_norm;
+ 280:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 281:../Motor_Control/src/foc.c ****       break;
+ 282:../Motor_Control/src/foc.c ****     default:
+ 283:../Motor_Control/src/foc.c ****       t1 = 0.0f;
+ 284:../Motor_Control/src/foc.c ****       t2 = 0.0f;
+ 285:../Motor_Control/src/foc.c ****       break;
+ 286:../Motor_Control/src/foc.c ****   }
+ 287:../Motor_Control/src/foc.c ****   
+ 288:../Motor_Control/src/foc.c ****   /* Calculate zero vector time */
+ 289:../Motor_Control/src/foc.c ****   float t0 = Ts - t1 - t2;
+ 488              		.loc 1 289 3 view .LVU153
+ 489              		.loc 1 289 17 is_stmt 0 view .LVU154
+ 490 004a DFED7E7A 		vldr.32	s15, .L50+8
+ 491 004e 77EEC77A 		vsub.f32	s15, s15, s14
+ 492              		.loc 1 289 9 view .LVU155
+ 493 0052 77EEE07A 		vsub.f32	s15, s15, s1
+ 494              	.LVL39:
+ 290:../Motor_Control/src/foc.c ****   
+ 291:../Motor_Control/src/foc.c ****   /* Limit times to prevent overmodulation */
+ 292:../Motor_Control/src/foc.c ****   if (t0 < 0.0f)
+ 495              		.loc 1 292 3 is_stmt 1 view .LVU156
+ 496              		.loc 1 292 6 is_stmt 0 view .LVU157
+ 497 0056 F5EEC07A 		vcmpe.f32	s15, #0
+ 498 005a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 499 005e 00F18980 		bmi	.L46
+ 500              	.LVL40:
+ 501              	.L30:
+ 293:../Motor_Control/src/foc.c ****   {
+ 294:../Motor_Control/src/foc.c ****     float scale = Ts / (t1 + t2);
+ 295:../Motor_Control/src/foc.c ****     t1 *= scale;
+ 296:../Motor_Control/src/foc.c ****     t2 *= scale;
+ 297:../Motor_Control/src/foc.c ****     t0 = 0.0f;
+ 298:../Motor_Control/src/foc.c ****   }
+ 299:../Motor_Control/src/foc.c ****   
+ 300:../Motor_Control/src/foc.c ****   /* Calculate duty cycles */
+ 301:../Motor_Control/src/foc.c ****   float ta, tb, tc;
+ 502              		.loc 1 301 3 is_stmt 1 view .LVU158
+ 302:../Motor_Control/src/foc.c ****   
+ 303:../Motor_Control/src/foc.c ****   switch (sector)
+ 503              		.loc 1 303 3 view .LVU159
+ 504 0062 0328     		cmp	r0, #3
+ 505 0064 00F0CE80 		beq	.L32
+ 506              		.loc 1 303 3 is_stmt 0 view .LVU160
+ 507 0068 00F29880 		bhi	.L33
+ 508 006c 0128     		cmp	r0, #1
+ 509 006e 00F0AF80 		beq	.L34
+ 510 0072 0228     		cmp	r0, #2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 17
+
+
+ 511 0074 00F0B980 		beq	.L35
+ 512 0078 0028     		cmp	r0, #0
+ 513 007a 40F08880 		bne	.L47
+ 304:../Motor_Control/src/foc.c ****   {
+ 305:../Motor_Control/src/foc.c ****     case 0: /* Sector 1 */
+ 306:../Motor_Control/src/foc.c ****       ta = (t0 + t1 + t2) / 2.0f;
+ 514              		.loc 1 306 7 is_stmt 1 view .LVU161
+ 515              		.loc 1 306 16 is_stmt 0 view .LVU162
+ 516 007e 37EE277A 		vadd.f32	s14, s14, s15
+ 517              	.LVL41:
+ 518              		.loc 1 306 21 view .LVU163
+ 519 0082 37EE207A 		vadd.f32	s14, s14, s1
+ 520              		.loc 1 306 10 view .LVU164
+ 521 0086 F6EE005A 		vmov.f32	s11, #5.0e-1
+ 522 008a 67EE256A 		vmul.f32	s13, s14, s11
+ 523              	.LVL42:
+ 307:../Motor_Control/src/foc.c ****       tb = (t0 + t2) / 2.0f;
+ 524              		.loc 1 307 7 is_stmt 1 view .LVU165
+ 525              		.loc 1 307 16 is_stmt 0 view .LVU166
+ 526 008e 70EEA70A 		vadd.f32	s1, s1, s15
+ 527              	.LVL43:
+ 528              		.loc 1 307 10 view .LVU167
+ 529 0092 20EEA56A 		vmul.f32	s12, s1, s11
+ 530              	.LVL44:
+ 308:../Motor_Control/src/foc.c ****       tc = t0 / 2.0f;
+ 531              		.loc 1 308 7 is_stmt 1 view .LVU168
+ 532              		.loc 1 308 10 is_stmt 0 view .LVU169
+ 533 0096 67EEA57A 		vmul.f32	s15, s15, s11
+ 534              	.LVL45:
+ 309:../Motor_Control/src/foc.c ****       break;
+ 535              		.loc 1 309 7 is_stmt 1 view .LVU170
+ 536              	.L37:
+ 310:../Motor_Control/src/foc.c ****     case 1: /* Sector 2 */
+ 311:../Motor_Control/src/foc.c ****       ta = (t0 + t1) / 2.0f;
+ 312:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 313:../Motor_Control/src/foc.c ****       tc = t0 / 2.0f;
+ 314:../Motor_Control/src/foc.c ****       break;
+ 315:../Motor_Control/src/foc.c ****     case 2: /* Sector 3 */
+ 316:../Motor_Control/src/foc.c ****       ta = t0 / 2.0f;
+ 317:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 318:../Motor_Control/src/foc.c ****       tc = (t0 + t1) / 2.0f;
+ 319:../Motor_Control/src/foc.c ****       break;
+ 320:../Motor_Control/src/foc.c ****     case 3: /* Sector 4 */
+ 321:../Motor_Control/src/foc.c ****       ta = t0 / 2.0f;
+ 322:../Motor_Control/src/foc.c ****       tb = (t0 + t1) / 2.0f;
+ 323:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 324:../Motor_Control/src/foc.c ****       break;
+ 325:../Motor_Control/src/foc.c ****     case 4: /* Sector 5 */
+ 326:../Motor_Control/src/foc.c ****       ta = (t0 + t2) / 2.0f;
+ 327:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 328:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 329:../Motor_Control/src/foc.c ****       break;
+ 330:../Motor_Control/src/foc.c ****     case 5: /* Sector 6 */
+ 331:../Motor_Control/src/foc.c ****       ta = (t0 + t1 + t2) / 2.0f;
+ 332:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 333:../Motor_Control/src/foc.c ****       tc = (t0 + t2) / 2.0f;
+ 334:../Motor_Control/src/foc.c ****       break;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 18
+
+
+ 335:../Motor_Control/src/foc.c ****     default:
+ 336:../Motor_Control/src/foc.c ****       ta = 0.5f;
+ 337:../Motor_Control/src/foc.c ****       tb = 0.5f;
+ 338:../Motor_Control/src/foc.c ****       tc = 0.5f;
+ 339:../Motor_Control/src/foc.c ****       break;
+ 340:../Motor_Control/src/foc.c ****   }
+ 341:../Motor_Control/src/foc.c ****   
+ 342:../Motor_Control/src/foc.c ****   /* Convert to duty cycle counts */
+ 343:../Motor_Control/src/foc.c ****   *duty_a = (uint16_t)(ta * PWM_PERIOD);
+ 537              		.loc 1 343 3 view .LVU171
+ 538              		.loc 1 343 27 is_stmt 0 view .LVU172
+ 539 009a DFED6B5A 		vldr.32	s11, .L50+12
+ 540 009e 26EEA57A 		vmul.f32	s14, s13, s11
+ 541              		.loc 1 343 13 view .LVU173
+ 542 00a2 BCEEC77A 		vcvt.u32.f32	s14, s14
+ 543              		.loc 1 343 11 view .LVU174
+ 544 00a6 17EE103A 		vmov	r3, s14	@ int
+ 545 00aa 3380     		strh	r3, [r6]	@ movhi
+ 344:../Motor_Control/src/foc.c ****   *duty_b = (uint16_t)(tb * PWM_PERIOD);
+ 546              		.loc 1 344 3 is_stmt 1 view .LVU175
+ 547              		.loc 1 344 27 is_stmt 0 view .LVU176
+ 548 00ac 26EE257A 		vmul.f32	s14, s12, s11
+ 549              		.loc 1 344 13 view .LVU177
+ 550 00b0 BCEEC77A 		vcvt.u32.f32	s14, s14
+ 551              		.loc 1 344 11 view .LVU178
+ 552 00b4 17EE103A 		vmov	r3, s14	@ int
+ 553 00b8 2B80     		strh	r3, [r5]	@ movhi
+ 345:../Motor_Control/src/foc.c ****   *duty_c = (uint16_t)(tc * PWM_PERIOD);
+ 554              		.loc 1 345 3 is_stmt 1 view .LVU179
+ 555              		.loc 1 345 27 is_stmt 0 view .LVU180
+ 556 00ba 67EEA57A 		vmul.f32	s15, s15, s11
+ 557              	.LVL46:
+ 558              		.loc 1 345 13 view .LVU181
+ 559 00be FCEEE77A 		vcvt.u32.f32	s15, s15
+ 560              		.loc 1 345 11 view .LVU182
+ 561 00c2 17EE903A 		vmov	r3, s15	@ int
+ 562 00c6 2380     		strh	r3, [r4]	@ movhi
+ 346:../Motor_Control/src/foc.c ****   
+ 347:../Motor_Control/src/foc.c ****   /* Limit duty cycles */
+ 348:../Motor_Control/src/foc.c ****   if (*duty_a > PWM_PERIOD)
+ 563              		.loc 1 348 3 is_stmt 1 view .LVU183
+ 564              		.loc 1 348 7 is_stmt 0 view .LVU184
+ 565 00c8 3288     		ldrh	r2, [r6]
+ 566              		.loc 1 348 6 view .LVU185
+ 567 00ca 40F2ED23 		movw	r3, #749
+ 568 00ce 9A42     		cmp	r2, r3
+ 569 00d0 00D9     		bls	.L40
+ 349:../Motor_Control/src/foc.c ****     *duty_a = PWM_PERIOD;
+ 570              		.loc 1 349 5 is_stmt 1 view .LVU186
+ 571              		.loc 1 349 13 is_stmt 0 view .LVU187
+ 572 00d2 3380     		strh	r3, [r6]	@ movhi
+ 573              	.L40:
+ 350:../Motor_Control/src/foc.c ****   if (*duty_a < 0)
+ 574              		.loc 1 350 3 is_stmt 1 view .LVU188
+ 351:../Motor_Control/src/foc.c ****     *duty_a = 0;
+ 352:../Motor_Control/src/foc.c ****   if (*duty_b > PWM_PERIOD)
+ 575              		.loc 1 352 3 view .LVU189
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 19
+
+
+ 576              		.loc 1 352 7 is_stmt 0 view .LVU190
+ 577 00d4 2A88     		ldrh	r2, [r5]
+ 578              		.loc 1 352 6 view .LVU191
+ 579 00d6 40F2ED23 		movw	r3, #749
+ 580 00da 9A42     		cmp	r2, r3
+ 581 00dc 00D9     		bls	.L41
+ 353:../Motor_Control/src/foc.c ****     *duty_b = PWM_PERIOD;
+ 582              		.loc 1 353 5 is_stmt 1 view .LVU192
+ 583              		.loc 1 353 13 is_stmt 0 view .LVU193
+ 584 00de 2B80     		strh	r3, [r5]	@ movhi
+ 585              	.L41:
+ 354:../Motor_Control/src/foc.c ****   if (*duty_b < 0)
+ 586              		.loc 1 354 3 is_stmt 1 view .LVU194
+ 355:../Motor_Control/src/foc.c ****     *duty_b = 0;
+ 356:../Motor_Control/src/foc.c ****   if (*duty_c > PWM_PERIOD)
+ 587              		.loc 1 356 3 view .LVU195
+ 588              		.loc 1 356 7 is_stmt 0 view .LVU196
+ 589 00e0 2288     		ldrh	r2, [r4]
+ 590              		.loc 1 356 6 view .LVU197
+ 591 00e2 40F2ED23 		movw	r3, #749
+ 592 00e6 9A42     		cmp	r2, r3
+ 593 00e8 00D9     		bls	.L21
+ 357:../Motor_Control/src/foc.c ****     *duty_c = PWM_PERIOD;
+ 594              		.loc 1 357 5 is_stmt 1 view .LVU198
+ 595              		.loc 1 357 13 is_stmt 0 view .LVU199
+ 596 00ea 2380     		strh	r3, [r4]	@ movhi
+ 358:../Motor_Control/src/foc.c ****   if (*duty_c < 0)
+ 597              		.loc 1 358 3 is_stmt 1 view .LVU200
+ 598              	.L21:
+ 359:../Motor_Control/src/foc.c ****     *duty_c = 0;
+ 360:../Motor_Control/src/foc.c **** }
+ 599              		.loc 1 360 1 is_stmt 0 view .LVU201
+ 600 00ec BDEC028B 		vldm	sp!, {d8}
+ 601              	.LCFI8:
+ 602              		.cfi_remember_state
+ 603              		.cfi_restore 80
+ 604              		.cfi_restore 81
+ 605              		.cfi_def_cfa_offset 16
+ 606              	.LVL47:
+ 607              		.loc 1 360 1 view .LVU202
+ 608 00f0 70BD     		pop	{r4, r5, r6, pc}
+ 609              	.LVL48:
+ 610              	.L45:
+ 611              	.LCFI9:
+ 612              		.cfi_restore_state
+ 256:../Motor_Control/src/foc.c ****   {
+ 613              		.loc 1 256 3 view .LVU203
+ 614 00f2 DFED560A 		vldr.32	s1, .L50+16
+ 615 00f6 B0EE607A 		vmov.f32	s14, s1
+ 616 00fa A6E7     		b	.L27
+ 617              	.L23:
+ 618 00fc 0428     		cmp	r0, #4
+ 619 00fe 30D0     		beq	.L28
+ 620 0100 0528     		cmp	r0, #5
+ 621 0102 0AD1     		bne	.L48
+ 279:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 622              		.loc 1 279 7 is_stmt 1 view .LVU204
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 20
+
+
+ 279:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 623              		.loc 1 279 24 is_stmt 0 view .LVU205
+ 624 0104 9FED4E7A 		vldr.32	s14, .L50+4
+ 625 0108 28EE877A 		vmul.f32	s14, s17, s14
+ 279:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 626              		.loc 1 279 10 view .LVU206
+ 627 010c 37EE087A 		vadd.f32	s14, s14, s16
+ 628              	.LVL49:
+ 280:../Motor_Control/src/foc.c ****       break;
+ 629              		.loc 1 280 7 is_stmt 1 view .LVU207
+ 280:../Motor_Control/src/foc.c ****       break;
+ 630              		.loc 1 280 10 is_stmt 0 view .LVU208
+ 631 0110 F8EE000A 		vmov.f32	s1, #-2.0e+0
+ 632 0114 68EEA00A 		vmul.f32	s1, s17, s1
+ 633              	.LVL50:
+ 281:../Motor_Control/src/foc.c ****     default:
+ 634              		.loc 1 281 7 is_stmt 1 view .LVU209
+ 635 0118 97E7     		b	.L27
+ 636              	.LVL51:
+ 637              	.L48:
+ 256:../Motor_Control/src/foc.c ****   {
+ 638              		.loc 1 256 3 is_stmt 0 view .LVU210
+ 639 011a DFED4C0A 		vldr.32	s1, .L50+16
+ 640 011e B0EE607A 		vmov.f32	s14, s1
+ 641 0122 92E7     		b	.L27
+ 642              	.L24:
+ 263:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 643              		.loc 1 263 7 is_stmt 1 view .LVU211
+ 263:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 644              		.loc 1 263 24 is_stmt 0 view .LVU212
+ 645 0124 9FED467A 		vldr.32	s14, .L50+4
+ 646 0128 28EE877A 		vmul.f32	s14, s17, s14
+ 263:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_alpha_norm;
+ 647              		.loc 1 263 10 view .LVU213
+ 648 012c 37EE487A 		vsub.f32	s14, s14, s16
+ 649              	.LVL52:
+ 264:../Motor_Control/src/foc.c ****       break;
+ 650              		.loc 1 264 7 is_stmt 1 view .LVU214
+ 264:../Motor_Control/src/foc.c ****       break;
+ 651              		.loc 1 264 10 is_stmt 0 view .LVU215
+ 652 0130 F8EE000A 		vmov.f32	s1, #-2.0e+0
+ 653 0134 68EEA00A 		vmul.f32	s1, s17, s1
+ 654              	.LVL53:
+ 265:../Motor_Control/src/foc.c ****     case 2: /* Sector 3 */
+ 655              		.loc 1 265 7 is_stmt 1 view .LVU216
+ 656 0138 87E7     		b	.L27
+ 657              	.LVL54:
+ 658              	.L25:
+ 267:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_beta_norm;
+ 659              		.loc 1 267 7 view .LVU217
+ 267:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_beta_norm;
+ 660              		.loc 1 267 25 is_stmt 0 view .LVU218
+ 661 013a 9FED457A 		vldr.32	s14, .L50+20
+ 662 013e 28EE877A 		vmul.f32	s14, s17, s14
+ 267:../Motor_Control/src/foc.c ****       t2 = -2.0f * v_beta_norm;
+ 663              		.loc 1 267 10 view .LVU219
+ 664 0142 37EE087A 		vadd.f32	s14, s14, s16
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 21
+
+
+ 665              	.LVL55:
+ 268:../Motor_Control/src/foc.c ****       break;
+ 666              		.loc 1 268 7 is_stmt 1 view .LVU220
+ 268:../Motor_Control/src/foc.c ****       break;
+ 667              		.loc 1 268 10 is_stmt 0 view .LVU221
+ 668 0146 F8EE007A 		vmov.f32	s15, #-2.0e+0
+ 669 014a 68EE270A 		vmul.f32	s1, s16, s15
+ 670              	.LVL56:
+ 269:../Motor_Control/src/foc.c ****     case 3: /* Sector 4 */
+ 671              		.loc 1 269 7 is_stmt 1 view .LVU222
+ 672 014e 7CE7     		b	.L27
+ 673              	.LVL57:
+ 674              	.L22:
+ 271:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_alpha_norm;
+ 675              		.loc 1 271 7 view .LVU223
+ 271:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_alpha_norm;
+ 676              		.loc 1 271 25 is_stmt 0 view .LVU224
+ 677 0150 9FED3F7A 		vldr.32	s14, .L50+20
+ 678 0154 28EE877A 		vmul.f32	s14, s17, s14
+ 271:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_alpha_norm;
+ 679              		.loc 1 271 10 view .LVU225
+ 680 0158 37EE487A 		vsub.f32	s14, s14, s16
+ 681              	.LVL58:
+ 272:../Motor_Control/src/foc.c ****       break;
+ 682              		.loc 1 272 7 is_stmt 1 view .LVU226
+ 272:../Motor_Control/src/foc.c ****       break;
+ 683              		.loc 1 272 10 is_stmt 0 view .LVU227
+ 684 015c 78EEA80A 		vadd.f32	s1, s17, s17
+ 685              	.LVL59:
+ 273:../Motor_Control/src/foc.c ****     case 4: /* Sector 5 */
+ 686              		.loc 1 273 7 is_stmt 1 view .LVU228
+ 687 0160 73E7     		b	.L27
+ 688              	.LVL60:
+ 689              	.L28:
+ 275:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_beta_norm;
+ 690              		.loc 1 275 7 view .LVU229
+ 275:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_beta_norm;
+ 691              		.loc 1 275 24 is_stmt 0 view .LVU230
+ 692 0162 9FED377A 		vldr.32	s14, .L50+4
+ 693 0166 28EE877A 		vmul.f32	s14, s17, s14
+ 275:../Motor_Control/src/foc.c ****       t2 = 2.0f * v_beta_norm;
+ 694              		.loc 1 275 10 view .LVU231
+ 695 016a 37EE487A 		vsub.f32	s14, s14, s16
+ 696              	.LVL61:
+ 276:../Motor_Control/src/foc.c ****       break;
+ 697              		.loc 1 276 7 is_stmt 1 view .LVU232
+ 276:../Motor_Control/src/foc.c ****       break;
+ 698              		.loc 1 276 10 is_stmt 0 view .LVU233
+ 699 016e 78EE080A 		vadd.f32	s1, s16, s16
+ 700              	.LVL62:
+ 277:../Motor_Control/src/foc.c ****     case 5: /* Sector 6 */
+ 701              		.loc 1 277 7 is_stmt 1 view .LVU234
+ 702 0172 6AE7     		b	.L27
+ 703              	.LVL63:
+ 704              	.L46:
+ 705              	.LBB2:
+ 294:../Motor_Control/src/foc.c ****     t1 *= scale;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 22
+
+
+ 706              		.loc 1 294 5 view .LVU235
+ 294:../Motor_Control/src/foc.c ****     t1 *= scale;
+ 707              		.loc 1 294 28 is_stmt 0 view .LVU236
+ 708 0174 77EE206A 		vadd.f32	s13, s14, s1
+ 294:../Motor_Control/src/foc.c ****     t1 *= scale;
+ 709              		.loc 1 294 11 view .LVU237
+ 710 0178 9FED326A 		vldr.32	s12, .L50+8
+ 711 017c C6EE267A 		vdiv.f32	s15, s12, s13
+ 712              	.LVL64:
+ 295:../Motor_Control/src/foc.c ****     t2 *= scale;
+ 713              		.loc 1 295 5 is_stmt 1 view .LVU238
+ 295:../Motor_Control/src/foc.c ****     t2 *= scale;
+ 714              		.loc 1 295 8 is_stmt 0 view .LVU239
+ 715 0180 27EE277A 		vmul.f32	s14, s14, s15
+ 716              	.LVL65:
+ 296:../Motor_Control/src/foc.c ****     t0 = 0.0f;
+ 717              		.loc 1 296 5 is_stmt 1 view .LVU240
+ 296:../Motor_Control/src/foc.c ****     t0 = 0.0f;
+ 718              		.loc 1 296 8 is_stmt 0 view .LVU241
+ 719 0184 60EEA70A 		vmul.f32	s1, s1, s15
+ 720              	.LVL66:
+ 297:../Motor_Control/src/foc.c ****   }
+ 721              		.loc 1 297 5 is_stmt 1 view .LVU242
+ 297:../Motor_Control/src/foc.c ****   }
+ 722              		.loc 1 297 8 is_stmt 0 view .LVU243
+ 723 0188 DFED307A 		vldr.32	s15, .L50+16
+ 724              	.LVL67:
+ 297:../Motor_Control/src/foc.c ****   }
+ 725              		.loc 1 297 8 view .LVU244
+ 726 018c 69E7     		b	.L30
+ 727              	.LVL68:
+ 728              	.L47:
+ 297:../Motor_Control/src/foc.c ****   }
+ 729              		.loc 1 297 8 view .LVU245
+ 730              	.LBE2:
+ 303:../Motor_Control/src/foc.c ****   {
+ 731              		.loc 1 303 3 view .LVU246
+ 732 018e F6EE007A 		vmov.f32	s15, #5.0e-1
+ 733              	.LVL69:
+ 303:../Motor_Control/src/foc.c ****   {
+ 734              		.loc 1 303 3 view .LVU247
+ 735 0192 B0EE676A 		vmov.f32	s12, s15
+ 736 0196 F0EE676A 		vmov.f32	s13, s15
+ 737 019a 7EE7     		b	.L37
+ 738              	.LVL70:
+ 739              	.L33:
+ 303:../Motor_Control/src/foc.c ****   {
+ 740              		.loc 1 303 3 view .LVU248
+ 741 019c 0428     		cmp	r0, #4
+ 742 019e 3ED0     		beq	.L38
+ 743 01a0 0528     		cmp	r0, #5
+ 744 01a2 0ED1     		bne	.L49
+ 331:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 745              		.loc 1 331 7 is_stmt 1 view .LVU249
+ 331:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 746              		.loc 1 331 16 is_stmt 0 view .LVU250
+ 747 01a4 37EE277A 		vadd.f32	s14, s14, s15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 23
+
+
+ 748              	.LVL71:
+ 331:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 749              		.loc 1 331 21 view .LVU251
+ 750 01a8 37EE207A 		vadd.f32	s14, s14, s1
+ 331:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 751              		.loc 1 331 10 view .LVU252
+ 752 01ac F6EE005A 		vmov.f32	s11, #5.0e-1
+ 753 01b0 67EE256A 		vmul.f32	s13, s14, s11
+ 754              	.LVL72:
+ 332:../Motor_Control/src/foc.c ****       tc = (t0 + t2) / 2.0f;
+ 755              		.loc 1 332 7 is_stmt 1 view .LVU253
+ 332:../Motor_Control/src/foc.c ****       tc = (t0 + t2) / 2.0f;
+ 756              		.loc 1 332 10 is_stmt 0 view .LVU254
+ 757 01b4 27EEA56A 		vmul.f32	s12, s15, s11
+ 758              	.LVL73:
+ 333:../Motor_Control/src/foc.c ****       break;
+ 759              		.loc 1 333 7 is_stmt 1 view .LVU255
+ 333:../Motor_Control/src/foc.c ****       break;
+ 760              		.loc 1 333 16 is_stmt 0 view .LVU256
+ 761 01b8 70EEA70A 		vadd.f32	s1, s1, s15
+ 762              	.LVL74:
+ 333:../Motor_Control/src/foc.c ****       break;
+ 763              		.loc 1 333 10 view .LVU257
+ 764 01bc 60EEA57A 		vmul.f32	s15, s1, s11
+ 765              	.LVL75:
+ 334:../Motor_Control/src/foc.c ****     default:
+ 766              		.loc 1 334 7 is_stmt 1 view .LVU258
+ 767 01c0 6BE7     		b	.L37
+ 768              	.LVL76:
+ 769              	.L49:
+ 303:../Motor_Control/src/foc.c ****   {
+ 770              		.loc 1 303 3 is_stmt 0 view .LVU259
+ 771 01c2 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 772              	.LVL77:
+ 303:../Motor_Control/src/foc.c ****   {
+ 773              		.loc 1 303 3 view .LVU260
+ 774 01c6 B0EE676A 		vmov.f32	s12, s15
+ 775 01ca F0EE676A 		vmov.f32	s13, s15
+ 776 01ce 64E7     		b	.L37
+ 777              	.LVL78:
+ 778              	.L34:
+ 311:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 779              		.loc 1 311 7 is_stmt 1 view .LVU261
+ 311:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 780              		.loc 1 311 16 is_stmt 0 view .LVU262
+ 781 01d0 37EE277A 		vadd.f32	s14, s14, s15
+ 782              	.LVL79:
+ 311:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 783              		.loc 1 311 10 view .LVU263
+ 784 01d4 F6EE005A 		vmov.f32	s11, #5.0e-1
+ 785 01d8 67EE256A 		vmul.f32	s13, s14, s11
+ 786              	.LVL80:
+ 312:../Motor_Control/src/foc.c ****       tc = t0 / 2.0f;
+ 787              		.loc 1 312 7 is_stmt 1 view .LVU264
+ 312:../Motor_Control/src/foc.c ****       tc = t0 / 2.0f;
+ 788              		.loc 1 312 21 is_stmt 0 view .LVU265
+ 789 01dc 37EE207A 		vadd.f32	s14, s14, s1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 24
+
+
+ 312:../Motor_Control/src/foc.c ****       tc = t0 / 2.0f;
+ 790              		.loc 1 312 10 view .LVU266
+ 791 01e0 27EE256A 		vmul.f32	s12, s14, s11
+ 792              	.LVL81:
+ 313:../Motor_Control/src/foc.c ****       break;
+ 793              		.loc 1 313 7 is_stmt 1 view .LVU267
+ 313:../Motor_Control/src/foc.c ****       break;
+ 794              		.loc 1 313 10 is_stmt 0 view .LVU268
+ 795 01e4 67EEA57A 		vmul.f32	s15, s15, s11
+ 796              	.LVL82:
+ 314:../Motor_Control/src/foc.c ****     case 2: /* Sector 3 */
+ 797              		.loc 1 314 7 is_stmt 1 view .LVU269
+ 798 01e8 57E7     		b	.L37
+ 799              	.LVL83:
+ 800              	.L35:
+ 316:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 801              		.loc 1 316 7 view .LVU270
+ 316:../Motor_Control/src/foc.c ****       tb = (t0 + t1 + t2) / 2.0f;
+ 802              		.loc 1 316 10 is_stmt 0 view .LVU271
+ 803 01ea F6EE005A 		vmov.f32	s11, #5.0e-1
+ 804 01ee 67EEA56A 		vmul.f32	s13, s15, s11
+ 805              	.LVL84:
+ 317:../Motor_Control/src/foc.c ****       tc = (t0 + t1) / 2.0f;
+ 806              		.loc 1 317 7 is_stmt 1 view .LVU272
+ 317:../Motor_Control/src/foc.c ****       tc = (t0 + t1) / 2.0f;
+ 807              		.loc 1 317 16 is_stmt 0 view .LVU273
+ 808 01f2 37EE277A 		vadd.f32	s14, s14, s15
+ 809              	.LVL85:
+ 317:../Motor_Control/src/foc.c ****       tc = (t0 + t1) / 2.0f;
+ 810              		.loc 1 317 21 view .LVU274
+ 811 01f6 77EE200A 		vadd.f32	s1, s14, s1
+ 812              	.LVL86:
+ 317:../Motor_Control/src/foc.c ****       tc = (t0 + t1) / 2.0f;
+ 813              		.loc 1 317 10 view .LVU275
+ 814 01fa 20EEA56A 		vmul.f32	s12, s1, s11
+ 815              	.LVL87:
+ 318:../Motor_Control/src/foc.c ****       break;
+ 816              		.loc 1 318 7 is_stmt 1 view .LVU276
+ 318:../Motor_Control/src/foc.c ****       break;
+ 817              		.loc 1 318 10 is_stmt 0 view .LVU277
+ 818 01fe 67EE257A 		vmul.f32	s15, s14, s11
+ 819              	.LVL88:
+ 319:../Motor_Control/src/foc.c ****     case 3: /* Sector 4 */
+ 820              		.loc 1 319 7 is_stmt 1 view .LVU278
+ 821 0202 4AE7     		b	.L37
+ 822              	.LVL89:
+ 823              	.L32:
+ 321:../Motor_Control/src/foc.c ****       tb = (t0 + t1) / 2.0f;
+ 824              		.loc 1 321 7 view .LVU279
+ 321:../Motor_Control/src/foc.c ****       tb = (t0 + t1) / 2.0f;
+ 825              		.loc 1 321 10 is_stmt 0 view .LVU280
+ 826 0204 F6EE005A 		vmov.f32	s11, #5.0e-1
+ 827 0208 67EEA56A 		vmul.f32	s13, s15, s11
+ 828              	.LVL90:
+ 322:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 829              		.loc 1 322 7 is_stmt 1 view .LVU281
+ 322:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 25
+
+
+ 830              		.loc 1 322 16 is_stmt 0 view .LVU282
+ 831 020c 37EE277A 		vadd.f32	s14, s14, s15
+ 832              	.LVL91:
+ 322:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 833              		.loc 1 322 10 view .LVU283
+ 834 0210 27EE256A 		vmul.f32	s12, s14, s11
+ 835              	.LVL92:
+ 323:../Motor_Control/src/foc.c ****       break;
+ 836              		.loc 1 323 7 is_stmt 1 view .LVU284
+ 323:../Motor_Control/src/foc.c ****       break;
+ 837              		.loc 1 323 21 is_stmt 0 view .LVU285
+ 838 0214 37EE207A 		vadd.f32	s14, s14, s1
+ 323:../Motor_Control/src/foc.c ****       break;
+ 839              		.loc 1 323 10 view .LVU286
+ 840 0218 67EE257A 		vmul.f32	s15, s14, s11
+ 841              	.LVL93:
+ 324:../Motor_Control/src/foc.c ****     case 4: /* Sector 5 */
+ 842              		.loc 1 324 7 is_stmt 1 view .LVU287
+ 843 021c 3DE7     		b	.L37
+ 844              	.LVL94:
+ 845              	.L38:
+ 326:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 846              		.loc 1 326 7 view .LVU288
+ 326:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 847              		.loc 1 326 16 is_stmt 0 view .LVU289
+ 848 021e 70EEA76A 		vadd.f32	s13, s1, s15
+ 326:../Motor_Control/src/foc.c ****       tb = t0 / 2.0f;
+ 849              		.loc 1 326 10 view .LVU290
+ 850 0222 F6EE005A 		vmov.f32	s11, #5.0e-1
+ 851 0226 66EEA56A 		vmul.f32	s13, s13, s11
+ 852              	.LVL95:
+ 327:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 853              		.loc 1 327 7 is_stmt 1 view .LVU291
+ 327:../Motor_Control/src/foc.c ****       tc = (t0 + t1 + t2) / 2.0f;
+ 854              		.loc 1 327 10 is_stmt 0 view .LVU292
+ 855 022a 27EEA56A 		vmul.f32	s12, s15, s11
+ 856              	.LVL96:
+ 328:../Motor_Control/src/foc.c ****       break;
+ 857              		.loc 1 328 7 is_stmt 1 view .LVU293
+ 328:../Motor_Control/src/foc.c ****       break;
+ 858              		.loc 1 328 16 is_stmt 0 view .LVU294
+ 859 022e 37EE277A 		vadd.f32	s14, s14, s15
+ 860              	.LVL97:
+ 328:../Motor_Control/src/foc.c ****       break;
+ 861              		.loc 1 328 21 view .LVU295
+ 862 0232 37EE207A 		vadd.f32	s14, s14, s1
+ 328:../Motor_Control/src/foc.c ****       break;
+ 863              		.loc 1 328 10 view .LVU296
+ 864 0236 67EE257A 		vmul.f32	s15, s14, s11
+ 865              	.LVL98:
+ 329:../Motor_Control/src/foc.c ****     case 5: /* Sector 6 */
+ 866              		.loc 1 329 7 is_stmt 1 view .LVU297
+ 867 023a 2EE7     		b	.L37
+ 868              	.L51:
+ 869              		.align	2
+ 870              	.L50:
+ 871 023c 33335340 		.word	1079194419
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 26
+
+
+ 872 0240 D7B3DD3F 		.word	1071494103
+ 873 0244 ACC52737 		.word	925353388
+ 874 0248 00403B44 		.word	1144733696
+ 875 024c 00000000 		.word	0
+ 876 0250 D7B3DDBF 		.word	-1075989545
+ 877              		.cfi_endproc
+ 878              	.LFE143:
+ 880              		.section	.text.foc_control,"ax",%progbits
+ 881              		.align	1
+ 882              		.global	foc_control
+ 883              		.syntax unified
+ 884              		.thumb
+ 885              		.thumb_func
+ 887              	foc_control:
+ 888              	.LVL99:
+ 889              	.LFB138:
+  84:../Motor_Control/src/foc.c ****   /* Update phase currents */
+ 890              		.loc 1 84 1 view -0
+ 891              		.cfi_startproc
+ 892              		@ args = 0, pretend = 0, frame = 8
+ 893              		@ frame_needed = 0, uses_anonymous_args = 0
+  84:../Motor_Control/src/foc.c ****   /* Update phase currents */
+ 894              		.loc 1 84 1 is_stmt 0 view .LVU299
+ 895 0000 10B5     		push	{r4, lr}
+ 896              	.LCFI10:
+ 897              		.cfi_def_cfa_offset 8
+ 898              		.cfi_offset 4, -8
+ 899              		.cfi_offset 14, -4
+ 900 0002 82B0     		sub	sp, sp, #8
+ 901              	.LCFI11:
+ 902              		.cfi_def_cfa_offset 16
+ 903 0004 0446     		mov	r4, r0
+  86:../Motor_Control/src/foc.c ****   foc->phase_current[1] = phase_current[1];
+ 904              		.loc 1 86 3 is_stmt 1 view .LVU300
+  86:../Motor_Control/src/foc.c ****   foc->phase_current[1] = phase_current[1];
+ 905              		.loc 1 86 40 is_stmt 0 view .LVU301
+ 906 0006 D1ED007A 		vldr.32	s15, [r1]
+  86:../Motor_Control/src/foc.c ****   foc->phase_current[1] = phase_current[1];
+ 907              		.loc 1 86 25 view .LVU302
+ 908 000a C0ED007A 		vstr.32	s15, [r0]
+  87:../Motor_Control/src/foc.c ****   foc->phase_current[2] = phase_current[2];
+ 909              		.loc 1 87 3 is_stmt 1 view .LVU303
+  87:../Motor_Control/src/foc.c ****   foc->phase_current[2] = phase_current[2];
+ 910              		.loc 1 87 25 is_stmt 0 view .LVU304
+ 911 000e D1ED010A 		vldr.32	s1, [r1, #4]
+ 912 0012 C0ED010A 		vstr.32	s1, [r0, #4]
+  88:../Motor_Control/src/foc.c ****   
+ 913              		.loc 1 88 3 is_stmt 1 view .LVU305
+  88:../Motor_Control/src/foc.c ****   
+ 914              		.loc 1 88 25 is_stmt 0 view .LVU306
+ 915 0016 91ED021A 		vldr.32	s2, [r1, #8]
+ 916 001a 80ED021A 		vstr.32	s2, [r0, #8]
+  91:../Motor_Control/src/foc.c ****   
+ 917              		.loc 1 91 3 is_stmt 1 view .LVU307
+  91:../Motor_Control/src/foc.c ****   
+ 918              		.loc 1 91 14 is_stmt 0 view .LVU308
+ 919 001e 80ED0E0A 		vstr.32	s0, [r0, #56]
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 27
+
+
+  94:../Motor_Control/src/foc.c ****   
+ 920              		.loc 1 94 3 is_stmt 1 view .LVU309
+ 921 0022 00F11C01 		add	r1, r0, #28
+ 922              	.LVL100:
+  94:../Motor_Control/src/foc.c ****   
+ 923              		.loc 1 94 3 is_stmt 0 view .LVU310
+ 924 0026 1830     		adds	r0, r0, #24
+ 925              	.LVL101:
+  94:../Motor_Control/src/foc.c ****   
+ 926              		.loc 1 94 3 view .LVU311
+ 927 0028 B0EE670A 		vmov.f32	s0, s15
+ 928              	.LVL102:
+  94:../Motor_Control/src/foc.c ****   
+ 929              		.loc 1 94 3 view .LVU312
+ 930 002c FFF7FEFF 		bl	clark_transform
+ 931              	.LVL103:
+  97:../Motor_Control/src/foc.c ****   
+ 932              		.loc 1 97 3 is_stmt 1 view .LVU313
+ 933 0030 04F12401 		add	r1, r4, #36
+ 934 0034 04F12000 		add	r0, r4, #32
+ 935 0038 94ED0E1A 		vldr.32	s2, [r4, #56]
+ 936 003c D4ED070A 		vldr.32	s1, [r4, #28]
+ 937 0040 94ED060A 		vldr.32	s0, [r4, #24]
+ 938 0044 FFF7FEFF 		bl	park_transform
+ 939              	.LVL104:
+ 100:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 940              		.loc 1 100 3 view .LVU314
+ 100:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 941              		.loc 1 100 25 is_stmt 0 view .LVU315
+ 942 0048 D4ED100A 		vldr.32	s1, [r4, #64]
+ 100:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 943              		.loc 1 100 45 view .LVU316
+ 944 004c D4ED0F7A 		vldr.32	s15, [r4, #60]
+ 100:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 945              		.loc 1 100 40 view .LVU317
+ 946 0050 70EEE70A 		vsub.f32	s1, s1, s15
+ 100:../Motor_Control/src/foc.c ****   foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 947              		.loc 1 100 20 view .LVU318
+ 948 0054 C4ED150A 		vstr.32	s1, [r4, #84]
+ 101:../Motor_Control/src/foc.c ****   
+ 949              		.loc 1 101 3 is_stmt 1 view .LVU319
+ 101:../Motor_Control/src/foc.c ****   
+ 950              		.loc 1 101 6 is_stmt 0 view .LVU320
+ 951 0058 D4ED167A 		vldr.32	s15, [r4, #88]
+ 101:../Motor_Control/src/foc.c ****   
+ 952              		.loc 1 101 43 view .LVU321
+ 953 005c 9FED747A 		vldr.32	s14, .L75
+ 954 0060 20EE877A 		vmul.f32	s14, s1, s14
+ 101:../Motor_Control/src/foc.c ****   
+ 955              		.loc 1 101 23 view .LVU322
+ 956 0064 77EE877A 		vadd.f32	s15, s15, s14
+ 957 0068 C4ED167A 		vstr.32	s15, [r4, #88]
+ 104:../Motor_Control/src/foc.c ****     foc->speed_integral = 10.0f;
+ 958              		.loc 1 104 3 is_stmt 1 view .LVU323
+ 104:../Motor_Control/src/foc.c ****     foc->speed_integral = 10.0f;
+ 959              		.loc 1 104 6 is_stmt 0 view .LVU324
+ 960 006c B2EE047A 		vmov.f32	s14, #1.0e+1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 28
+
+
+ 961 0070 F4EEC77A 		vcmpe.f32	s15, s14
+ 962 0074 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 963 0078 01DD     		ble	.L53
+ 105:../Motor_Control/src/foc.c ****   if (foc->speed_integral < -10.0f)
+ 964              		.loc 1 105 5 is_stmt 1 view .LVU325
+ 105:../Motor_Control/src/foc.c ****   if (foc->speed_integral < -10.0f)
+ 965              		.loc 1 105 25 is_stmt 0 view .LVU326
+ 966 007a 84ED167A 		vstr.32	s14, [r4, #88]
+ 967              	.L53:
+ 106:../Motor_Control/src/foc.c ****     foc->speed_integral = -10.0f;
+ 968              		.loc 1 106 3 is_stmt 1 view .LVU327
+ 106:../Motor_Control/src/foc.c ****     foc->speed_integral = -10.0f;
+ 969              		.loc 1 106 10 is_stmt 0 view .LVU328
+ 970 007e 94ED167A 		vldr.32	s14, [r4, #88]
+ 106:../Motor_Control/src/foc.c ****     foc->speed_integral = -10.0f;
+ 971              		.loc 1 106 6 view .LVU329
+ 972 0082 FAEE047A 		vmov.f32	s15, #-1.0e+1
+ 973 0086 B4EEE77A 		vcmpe.f32	s14, s15
+ 974 008a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 975 008e 01D5     		bpl	.L55
+ 107:../Motor_Control/src/foc.c ****   
+ 976              		.loc 1 107 5 is_stmt 1 view .LVU330
+ 107:../Motor_Control/src/foc.c ****   
+ 977              		.loc 1 107 25 is_stmt 0 view .LVU331
+ 978 0090 C4ED167A 		vstr.32	s15, [r4, #88]
+ 979              	.L55:
+ 110:../Motor_Control/src/foc.c ****   
+ 980              		.loc 1 110 3 is_stmt 1 view .LVU332
+ 110:../Motor_Control/src/foc.c ****   
+ 981              		.loc 1 110 32 is_stmt 0 view .LVU333
+ 982 0094 F6EE007A 		vmov.f32	s15, #5.0e-1
+ 983 0098 60EEA70A 		vmul.f32	s1, s1, s15
+ 110:../Motor_Control/src/foc.c ****   
+ 984              		.loc 1 110 71 view .LVU334
+ 985 009c D4ED167A 		vldr.32	s15, [r4, #88]
+ 110:../Motor_Control/src/foc.c ****   
+ 986              		.loc 1 110 66 view .LVU335
+ 987 00a0 9FED647A 		vldr.32	s14, .L75+4
+ 988 00a4 67EE877A 		vmul.f32	s15, s15, s14
+ 110:../Motor_Control/src/foc.c ****   
+ 989              		.loc 1 110 9 view .LVU336
+ 990 00a8 70EEA70A 		vadd.f32	s1, s1, s15
+ 991              	.LVL105:
+ 113:../Motor_Control/src/foc.c ****     i_q_ref = MOTOR_PEAK_CURRENT;
+ 992              		.loc 1 113 3 is_stmt 1 view .LVU337
+ 113:../Motor_Control/src/foc.c ****     i_q_ref = MOTOR_PEAK_CURRENT;
+ 993              		.loc 1 113 6 is_stmt 0 view .LVU338
+ 994 00ac F3EE007A 		vmov.f32	s15, #1.6e+1
+ 995 00b0 F4EEE70A 		vcmpe.f32	s1, s15
+ 996 00b4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 997 00b8 09DC     		bgt	.L66
+ 115:../Motor_Control/src/foc.c ****     i_q_ref = -MOTOR_PEAK_CURRENT;
+ 998              		.loc 1 115 3 is_stmt 1 view .LVU339
+ 115:../Motor_Control/src/foc.c ****     i_q_ref = -MOTOR_PEAK_CURRENT;
+ 999              		.loc 1 115 6 is_stmt 0 view .LVU340
+ 1000 00ba FBEE007A 		vmov.f32	s15, #-1.6e+1
+ 1001 00be F4EEE70A 		vcmpe.f32	s1, s15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 29
+
+
+ 1002 00c2 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1003 00c6 04D5     		bpl	.L57
+ 116:../Motor_Control/src/foc.c ****   
+ 1004              		.loc 1 116 13 view .LVU341
+ 1005 00c8 FBEE000A 		vmov.f32	s1, #-1.6e+1
+ 1006              	.LVL106:
+ 116:../Motor_Control/src/foc.c ****   
+ 1007              		.loc 1 116 13 view .LVU342
+ 1008 00cc 01E0     		b	.L57
+ 1009              	.LVL107:
+ 1010              	.L66:
+ 114:../Motor_Control/src/foc.c ****   if (i_q_ref < -MOTOR_PEAK_CURRENT)
+ 1011              		.loc 1 114 13 view .LVU343
+ 1012 00ce F3EE000A 		vmov.f32	s1, #1.6e+1
+ 1013              	.LVL108:
+ 1014              	.L57:
+ 119:../Motor_Control/src/foc.c ****   
+ 1015              		.loc 1 119 3 is_stmt 1 view .LVU344
+ 122:../Motor_Control/src/foc.c ****   foc->i_q_error = i_q_ref - foc->i_q;
+ 1016              		.loc 1 122 3 view .LVU345
+ 122:../Motor_Control/src/foc.c ****   foc->i_q_error = i_q_ref - foc->i_q;
+ 1017              		.loc 1 122 33 is_stmt 0 view .LVU346
+ 1018 00d2 D4ED087A 		vldr.32	s15, [r4, #32]
+ 122:../Motor_Control/src/foc.c ****   foc->i_q_error = i_q_ref - foc->i_q;
+ 1019              		.loc 1 122 28 view .LVU347
+ 1020 00d6 9FED580A 		vldr.32	s0, .L75+8
+ 1021 00da 30EE670A 		vsub.f32	s0, s0, s15
+ 122:../Motor_Control/src/foc.c ****   foc->i_q_error = i_q_ref - foc->i_q;
+ 1022              		.loc 1 122 18 view .LVU348
+ 1023 00de 84ED110A 		vstr.32	s0, [r4, #68]
+ 123:../Motor_Control/src/foc.c ****   
+ 1024              		.loc 1 123 3 is_stmt 1 view .LVU349
+ 123:../Motor_Control/src/foc.c ****   
+ 1025              		.loc 1 123 33 is_stmt 0 view .LVU350
+ 1026 00e2 D4ED097A 		vldr.32	s15, [r4, #36]
+ 123:../Motor_Control/src/foc.c ****   
+ 1027              		.loc 1 123 28 view .LVU351
+ 1028 00e6 70EEE70A 		vsub.f32	s1, s1, s15
+ 1029              	.LVL109:
+ 123:../Motor_Control/src/foc.c ****   
+ 1030              		.loc 1 123 18 view .LVU352
+ 1031 00ea C4ED120A 		vstr.32	s1, [r4, #72]
+ 125:../Motor_Control/src/foc.c ****   foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 1032              		.loc 1 125 3 is_stmt 1 view .LVU353
+ 125:../Motor_Control/src/foc.c ****   foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 1033              		.loc 1 125 6 is_stmt 0 view .LVU354
+ 1034 00ee 94ED137A 		vldr.32	s14, [r4, #76]
+ 125:../Motor_Control/src/foc.c ****   foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 1035              		.loc 1 125 39 view .LVU355
+ 1036 00f2 DFED4F6A 		vldr.32	s13, .L75
+ 1037 00f6 60EE267A 		vmul.f32	s15, s0, s13
+ 125:../Motor_Control/src/foc.c ****   foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+ 1038              		.loc 1 125 21 view .LVU356
+ 1039 00fa 37EE277A 		vadd.f32	s14, s14, s15
+ 1040 00fe 84ED137A 		vstr.32	s14, [r4, #76]
+ 126:../Motor_Control/src/foc.c ****   
+ 1041              		.loc 1 126 3 is_stmt 1 view .LVU357
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 30
+
+
+ 126:../Motor_Control/src/foc.c ****   
+ 1042              		.loc 1 126 6 is_stmt 0 view .LVU358
+ 1043 0102 D4ED147A 		vldr.32	s15, [r4, #80]
+ 126:../Motor_Control/src/foc.c ****   
+ 1044              		.loc 1 126 39 view .LVU359
+ 1045 0106 60EEA66A 		vmul.f32	s13, s1, s13
+ 126:../Motor_Control/src/foc.c ****   
+ 1046              		.loc 1 126 21 view .LVU360
+ 1047 010a 77EEA67A 		vadd.f32	s15, s15, s13
+ 1048 010e C4ED147A 		vstr.32	s15, [r4, #80]
+ 129:../Motor_Control/src/foc.c ****     foc->i_d_integral = 10.0f;
+ 1049              		.loc 1 129 3 is_stmt 1 view .LVU361
+ 129:../Motor_Control/src/foc.c ****     foc->i_d_integral = 10.0f;
+ 1050              		.loc 1 129 6 is_stmt 0 view .LVU362
+ 1051 0112 F2EE046A 		vmov.f32	s13, #1.0e+1
+ 1052 0116 B4EEE67A 		vcmpe.f32	s14, s13
+ 1053 011a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1054 011e 01DD     		ble	.L58
+ 130:../Motor_Control/src/foc.c ****   if (foc->i_d_integral < -10.0f)
+ 1055              		.loc 1 130 5 is_stmt 1 view .LVU363
+ 130:../Motor_Control/src/foc.c ****   if (foc->i_d_integral < -10.0f)
+ 1056              		.loc 1 130 23 is_stmt 0 view .LVU364
+ 1057 0120 C4ED136A 		vstr.32	s13, [r4, #76]
+ 1058              	.L58:
+ 131:../Motor_Control/src/foc.c ****     foc->i_d_integral = -10.0f;
+ 1059              		.loc 1 131 3 is_stmt 1 view .LVU365
+ 131:../Motor_Control/src/foc.c ****     foc->i_d_integral = -10.0f;
+ 1060              		.loc 1 131 10 is_stmt 0 view .LVU366
+ 1061 0124 D4ED136A 		vldr.32	s13, [r4, #76]
+ 131:../Motor_Control/src/foc.c ****     foc->i_d_integral = -10.0f;
+ 1062              		.loc 1 131 6 view .LVU367
+ 1063 0128 BAEE047A 		vmov.f32	s14, #-1.0e+1
+ 1064 012c F4EEC76A 		vcmpe.f32	s13, s14
+ 1065 0130 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1066 0134 01D5     		bpl	.L60
+ 132:../Motor_Control/src/foc.c ****   if (foc->i_q_integral > 10.0f)
+ 1067              		.loc 1 132 5 is_stmt 1 view .LVU368
+ 132:../Motor_Control/src/foc.c ****   if (foc->i_q_integral > 10.0f)
+ 1068              		.loc 1 132 23 is_stmt 0 view .LVU369
+ 1069 0136 84ED137A 		vstr.32	s14, [r4, #76]
+ 1070              	.L60:
+ 133:../Motor_Control/src/foc.c ****     foc->i_q_integral = 10.0f;
+ 1071              		.loc 1 133 3 is_stmt 1 view .LVU370
+ 133:../Motor_Control/src/foc.c ****     foc->i_q_integral = 10.0f;
+ 1072              		.loc 1 133 6 is_stmt 0 view .LVU371
+ 1073 013a B2EE047A 		vmov.f32	s14, #1.0e+1
+ 1074 013e F4EEC77A 		vcmpe.f32	s15, s14
+ 1075 0142 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1076 0146 01DD     		ble	.L62
+ 134:../Motor_Control/src/foc.c ****   if (foc->i_q_integral < -10.0f)
+ 1077              		.loc 1 134 5 is_stmt 1 view .LVU372
+ 134:../Motor_Control/src/foc.c ****   if (foc->i_q_integral < -10.0f)
+ 1078              		.loc 1 134 23 is_stmt 0 view .LVU373
+ 1079 0148 84ED147A 		vstr.32	s14, [r4, #80]
+ 1080              	.L62:
+ 135:../Motor_Control/src/foc.c ****     foc->i_q_integral = -10.0f;
+ 1081              		.loc 1 135 3 is_stmt 1 view .LVU374
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 31
+
+
+ 135:../Motor_Control/src/foc.c ****     foc->i_q_integral = -10.0f;
+ 1082              		.loc 1 135 10 is_stmt 0 view .LVU375
+ 1083 014c 94ED147A 		vldr.32	s14, [r4, #80]
+ 135:../Motor_Control/src/foc.c ****     foc->i_q_integral = -10.0f;
+ 1084              		.loc 1 135 6 view .LVU376
+ 1085 0150 FAEE047A 		vmov.f32	s15, #-1.0e+1
+ 1086 0154 B4EEE77A 		vcmpe.f32	s14, s15
+ 1087 0158 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 1088 015c 01D5     		bpl	.L64
+ 136:../Motor_Control/src/foc.c ****   
+ 1089              		.loc 1 136 5 is_stmt 1 view .LVU377
+ 136:../Motor_Control/src/foc.c ****   
+ 1090              		.loc 1 136 23 is_stmt 0 view .LVU378
+ 1091 015e C4ED147A 		vstr.32	s15, [r4, #80]
+ 1092              	.L64:
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1093              		.loc 1 139 3 is_stmt 1 view .LVU379
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1094              		.loc 1 139 29 is_stmt 0 view .LVU380
+ 1095 0162 DFED366A 		vldr.32	s13, .L75+12
+ 1096 0166 20EE260A 		vmul.f32	s0, s0, s13
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1097              		.loc 1 139 68 view .LVU381
+ 1098 016a D4ED137A 		vldr.32	s15, [r4, #76]
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1099              		.loc 1 139 63 view .LVU382
+ 1100 016e 9FED347A 		vldr.32	s14, .L75+16
+ 1101 0172 67EE877A 		vmul.f32	s15, s15, s14
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1102              		.loc 1 139 46 view .LVU383
+ 1103 0176 30EE270A 		vadd.f32	s0, s0, s15
+ 139:../Motor_Control/src/foc.c ****   foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+ 1104              		.loc 1 139 12 view .LVU384
+ 1105 017a 84ED0A0A 		vstr.32	s0, [r4, #40]
+ 140:../Motor_Control/src/foc.c ****   
+ 1106              		.loc 1 140 3 is_stmt 1 view .LVU385
+ 140:../Motor_Control/src/foc.c ****   
+ 1107              		.loc 1 140 29 is_stmt 0 view .LVU386
+ 1108 017e 60EEA60A 		vmul.f32	s1, s1, s13
+ 140:../Motor_Control/src/foc.c ****   
+ 1109              		.loc 1 140 68 view .LVU387
+ 1110 0182 D4ED147A 		vldr.32	s15, [r4, #80]
+ 140:../Motor_Control/src/foc.c ****   
+ 1111              		.loc 1 140 63 view .LVU388
+ 1112 0186 67EE877A 		vmul.f32	s15, s15, s14
+ 140:../Motor_Control/src/foc.c ****   
+ 1113              		.loc 1 140 46 view .LVU389
+ 1114 018a 70EEA70A 		vadd.f32	s1, s1, s15
+ 140:../Motor_Control/src/foc.c ****   
+ 1115              		.loc 1 140 12 view .LVU390
+ 1116 018e C4ED0B0A 		vstr.32	s1, [r4, #44]
+ 143:../Motor_Control/src/foc.c ****   
+ 1117              		.loc 1 143 3 is_stmt 1 view .LVU391
+ 1118 0192 04F13401 		add	r1, r4, #52
+ 1119 0196 04F13000 		add	r0, r4, #48
+ 1120 019a 94ED0E1A 		vldr.32	s2, [r4, #56]
+ 1121 019e FFF7FEFF 		bl	inverse_park_transform
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 32
+
+
+ 1122              	.LVL110:
+ 146:../Motor_Control/src/foc.c ****   svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+ 1123              		.loc 1 146 3 view .LVU392
+ 147:../Motor_Control/src/foc.c ****   
+ 1124              		.loc 1 147 3 view .LVU393
+ 1125 01a2 0DF10202 		add	r2, sp, #2
+ 1126 01a6 01A9     		add	r1, sp, #4
+ 1127 01a8 0DF10600 		add	r0, sp, #6
+ 1128 01ac D4ED0D0A 		vldr.32	s1, [r4, #52]
+ 1129 01b0 94ED0C0A 		vldr.32	s0, [r4, #48]
+ 1130 01b4 FFF7FEFF 		bl	svpwm_calculate
+ 1131              	.LVL111:
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 1132              		.loc 1 150 3 view .LVU394
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 1133              		.loc 1 150 27 is_stmt 0 view .LVU395
+ 1134 01b8 BDF80620 		ldrh	r2, [sp, #6]
+ 1135 01bc 07EE902A 		vmov	s15, r2	@ int
+ 1136 01c0 F8EE677A 		vcvt.f32.u32	s15, s15
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 1137              		.loc 1 150 41 view .LVU396
+ 1138 01c4 DFED1F6A 		vldr.32	s13, .L75+20
+ 1139 01c8 67EEA67A 		vmul.f32	s15, s15, s13
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 1140              		.loc 1 150 48 view .LVU397
+ 1141 01cc 9FED1E7A 		vldr.32	s14, .L75+24
+ 1142 01d0 87EE876A 		vdiv.f32	s12, s15, s14
+ 150:../Motor_Control/src/foc.c ****   foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
+ 1143              		.loc 1 150 25 view .LVU398
+ 1144 01d4 84ED036A 		vstr.32	s12, [r4, #12]
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 1145              		.loc 1 151 3 is_stmt 1 view .LVU399
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 1146              		.loc 1 151 27 is_stmt 0 view .LVU400
+ 1147 01d8 BDF80430 		ldrh	r3, [sp, #4]
+ 1148 01dc 07EE903A 		vmov	s15, r3	@ int
+ 1149 01e0 F8EE677A 		vcvt.f32.u32	s15, s15
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 1150              		.loc 1 151 41 view .LVU401
+ 1151 01e4 67EEA67A 		vmul.f32	s15, s15, s13
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 1152              		.loc 1 151 48 view .LVU402
+ 1153 01e8 87EE876A 		vdiv.f32	s12, s15, s14
+ 151:../Motor_Control/src/foc.c ****   foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+ 1154              		.loc 1 151 25 view .LVU403
+ 1155 01ec 84ED046A 		vstr.32	s12, [r4, #16]
+ 152:../Motor_Control/src/foc.c ****   
+ 1156              		.loc 1 152 3 is_stmt 1 view .LVU404
+ 152:../Motor_Control/src/foc.c ****   
+ 1157              		.loc 1 152 27 is_stmt 0 view .LVU405
+ 1158 01f0 BDF80230 		ldrh	r3, [sp, #2]
+ 1159 01f4 07EE903A 		vmov	s15, r3	@ int
+ 1160 01f8 F8EE677A 		vcvt.f32.u32	s15, s15
+ 152:../Motor_Control/src/foc.c ****   
+ 1161              		.loc 1 152 41 view .LVU406
+ 1162 01fc 67EEA67A 		vmul.f32	s15, s15, s13
+ 152:../Motor_Control/src/foc.c ****   
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 33
+
+
+ 1163              		.loc 1 152 48 view .LVU407
+ 1164 0200 C7EE876A 		vdiv.f32	s13, s15, s14
+ 152:../Motor_Control/src/foc.c ****   
+ 1165              		.loc 1 152 25 view .LVU408
+ 1166 0204 C4ED056A 		vstr.32	s13, [r4, #20]
+ 155:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+ 1167              		.loc 1 155 3 is_stmt 1 view .LVU409
+ 1168 0208 104C     		ldr	r4, .L75+28
+ 1169              	.LVL112:
+ 155:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+ 1170              		.loc 1 155 3 is_stmt 0 view .LVU410
+ 1171 020a 0021     		movs	r1, #0
+ 1172 020c 2046     		mov	r0, r4
+ 1173 020e FFF7FEFF 		bl	tmr_channel_value_set
+ 1174              	.LVL113:
+ 156:../Motor_Control/src/foc.c ****   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+ 1175              		.loc 1 156 3 is_stmt 1 view .LVU411
+ 1176 0212 BDF80420 		ldrh	r2, [sp, #4]
+ 1177 0216 0221     		movs	r1, #2
+ 1178 0218 2046     		mov	r0, r4
+ 1179 021a FFF7FEFF 		bl	tmr_channel_value_set
+ 1180              	.LVL114:
+ 157:../Motor_Control/src/foc.c **** }
+ 1181              		.loc 1 157 3 view .LVU412
+ 1182 021e BDF80220 		ldrh	r2, [sp, #2]
+ 1183 0222 0421     		movs	r1, #4
+ 1184 0224 2046     		mov	r0, r4
+ 1185 0226 FFF7FEFF 		bl	tmr_channel_value_set
+ 1186              	.LVL115:
+ 158:../Motor_Control/src/foc.c **** 
+ 1187              		.loc 1 158 1 is_stmt 0 view .LVU413
+ 1188 022a 02B0     		add	sp, sp, #8
+ 1189              	.LCFI12:
+ 1190              		.cfi_def_cfa_offset 8
+ 1191              		@ sp needed
+ 1192 022c 10BD     		pop	{r4, pc}
+ 1193              	.L76:
+ 1194 022e 00BF     		.align	2
+ 1195              	.L75:
+ 1196 0230 17B7D138 		.word	953267991
+ 1197 0234 CDCC4C3D 		.word	1028443341
+ 1198 0238 00000000 		.word	0
+ 1199 023c CDCCCC3D 		.word	1036831949
+ 1200 0240 0AD7233C 		.word	1008981770
+ 1201 0244 33335340 		.word	1079194419
+ 1202 0248 00403B44 		.word	1144733696
+ 1203 024c 002C0140 		.word	1073818624
+ 1204              		.cfi_endproc
+ 1205              	.LFE138:
+ 1207              		.text
+ 1208              	.Letext0:
+ 1209              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1210              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1211              		.file 4 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 1212              		.file 5 "../Motor_Control/inc/foc.h"
+ 1213              		.file 6 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s 			page 34
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 foc.c
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:21     .text.svpwm_calculate_sector:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:26     .text.svpwm_calculate_sector:00000000 svpwm_calculate_sector
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:94     .text.svpwm_calculate_sector:00000050 $d
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:99     .text.foc_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:105    .text.foc_init:00000000 foc_init
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:202    .text.clark_transform:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:208    .text.clark_transform:00000000 clark_transform
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:237    .text.clark_transform:0000001c $d
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:242    .text.park_transform:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:248    .text.park_transform:00000000 park_transform
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:328    .text.inverse_park_transform:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:334    .text.inverse_park_transform:00000000 inverse_park_transform
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:413    .text.svpwm_calculate:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:419    .text.svpwm_calculate:00000000 svpwm_calculate
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:871    .text.svpwm_calculate:0000023c $d
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:881    .text.foc_control:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:887    .text.foc_control:00000000 foc_control
+C:\Users\10963\AppData\Local\Temp\cc3DHeWe.s:1196   .text.foc_control:00000230 $d
+
+UNDEFINED SYMBOLS
+cosf
+sinf
+tmr_channel_value_set

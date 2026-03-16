@@ -67,6 +67,7 @@ libraries/drivers/src/at32f403a_407_acc.c \
 libraries/drivers/src/at32f403a_407_can.c \
 libraries/drivers/src/at32f403a_407_debug.c \
 ../Motor_Control/src/motor_control.c \
+../Motor_Control/src/foc.c \
 ../Monitor/src/monitor.c \
 ../USB_Debug/src/usb_printf.c \
 ../USB_Debug/src/wk_stubs.c \

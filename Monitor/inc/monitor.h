@@ -36,7 +36,12 @@
 /* Voltage across shunt: V = I * R = I * 0.001Ω */
 /* Op-amp output: Vout = Gain * (SL_C - PGND) = 30.3 * I * 0.001 = I * 0.0303 */
 /* So I = Vout / 0.0303 ≈ Vout * 33 */
-#define CURRENT_SENSOR_GAIN       31.3f      /* Current sensor gain (A/V) */
+#define CURRENT_SENSOR_GAIN_A     31.3f      /* Current sensor gain for phase A (A/V) */
+#define CURRENT_SENSOR_GAIN_B     15.6f      /* Current sensor gain for phase B (A/V) - reduced due to overcurrent */
+#define CURRENT_SENSOR_GAIN_C     31.3f      /* Current sensor gain for phase C (A/V) */
+#define CURRENT_SENSOR_OFFSET_A   0.0f       /* Current sensor offset for phase A (A) */
+#define CURRENT_SENSOR_OFFSET_B   0.0f       /* Current sensor offset for phase B (A) */
+#define CURRENT_SENSOR_OFFSET_C   0.0f       /* Current sensor offset for phase C (A) */
 
 /* Voltage sensor: 18K+1K resistor divider */
 /* Vout = Vin * (1K / (18K + 1K)) = Vin * (1/19) ≈ Vin * 0.05263 */
@@ -66,6 +71,7 @@ typedef struct {
   float phase_voltage[3];    /* Phase voltages (V) */
   float dc_link_voltage;     /* DC link voltage (V) */
   float mos_temperature;     /* MOSFET temperature (°C) */
+  uint16_t adc_raw[5];       /* ADC raw data: phase A, B, C current, DC link voltage, MOS temperature */
   uint32_t timestamp;        /* Timestamp (ms) */
 } monitor_data_t;
 

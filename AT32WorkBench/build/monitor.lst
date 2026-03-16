@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
   28:../Monitor/src/monitor.c **** #include "monitor.h"
   29:../Monitor/src/monitor.c **** #include "wk_adc.h"
   30:../Monitor/src/monitor.c **** #include "FreeRTOS.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 2
 
 
   31:../Monitor/src/monitor.c **** #include "task.h"
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
   85:../Monitor/src/monitor.c ****   * @param  gain: Sensor gain
   86:../Monitor/src/monitor.c ****   * @param  offset: Sensor offset
   87:../Monitor/src/monitor.c ****   * @param  vref: Reference voltage (V)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 3
 
 
   88:../Monitor/src/monitor.c ****   * @retval Converted value
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
   73              		.loc 1 54 1 is_stmt 1 view -0
   74              		.cfi_startproc
   75              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 4
 
 
   76              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  123              		.loc 1 72 19 view .LVU20
  124 000c 5980     		strh	r1, [r3, #2]	@ movhi
   73:../Monitor/src/monitor.c ****   adc_raw_data[3] = adc_data_buffer[3]; /* DC link voltage */
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 5
 
 
  125              		.loc 1 73 3 is_stmt 1 view .LVU21
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  100:../Monitor/src/monitor.c **** /**
  101:../Monitor/src/monitor.c ****   * @brief  Convert ADC raw data to temperature using Steinhart-Hart equation
  102:../Monitor/src/monitor.c ****   * @param  raw_value: ADC raw value
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 6
 
 
  103:../Monitor/src/monitor.c ****   * @retval Temperature in °C
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  212 003e 9FED0C7A 		vldr.32	s14, .L14+16
  213 0042 C0EE077A 		vdiv.f32	s15, s0, s14
  214              		.loc 1 112 11 discriminator 1 view .LVU47
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 7
 
 
  215 0046 9FED0B7A 		vldr.32	s14, .L14+20
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  124:../Monitor/src/monitor.c **** void monitor_init(void)
  125:../Monitor/src/monitor.c **** {
  260              		.loc 1 125 1 is_stmt 1 view -0
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 8
 
 
  261              		.cfi_startproc
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  306 0006 0446     		mov	r4, r0
  137:../Monitor/src/monitor.c ****   /* Read ADC data */
  138:../Monitor/src/monitor.c ****   hal_adc_read();
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 9
 
 
  307              		.loc 1 138 3 is_stmt 1 view .LVU60
@@ -487,38 +487,38 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  139:../Monitor/src/monitor.c ****   
  140:../Monitor/src/monitor.c ****   /* Convert ADC raw data to actual values */
  141:../Monitor/src/monitor.c ****   /* Current sensors use 1.65V reference */
- 142:../Monitor/src/monitor.c ****   data->phase_current[0] = hal_adc_convert(adc_raw_data[0], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 142:../Monitor/src/monitor.c ****   data->phase_current[0] = hal_adc_convert(adc_raw_data[0], CURRENT_SENSOR_GAIN_A, CURRENT_SENSOR_O
  310              		.loc 1 142 3 view .LVU61
  311              		.loc 1 142 28 is_stmt 0 view .LVU62
- 312 000c 9FED219A 		vldr.32	s18, .L20
- 313 0010 9FED218A 		vldr.32	s16, .L20+4
- 314 0014 DFED218A 		vldr.32	s17, .L20+8
- 315 0018 214D     		ldr	r5, .L20+12
- 316 001a B0EE491A 		vmov.f32	s2, s18
+ 312 000c DFED268A 		vldr.32	s17, .L20
+ 313 0010 9FED268A 		vldr.32	s16, .L20+4
+ 314 0014 9FED269A 		vldr.32	s18, .L20+8
+ 315 0018 264D     		ldr	r5, .L20+12
+ 316 001a B0EE681A 		vmov.f32	s2, s17
  317 001e F0EE480A 		vmov.f32	s1, s16
- 318 0022 B0EE680A 		vmov.f32	s0, s17
+ 318 0022 B0EE490A 		vmov.f32	s0, s18
  319 0026 2888     		ldrh	r0, [r5]
  320 0028 FFF7FEFF 		bl	hal_adc_convert
  321              	.LVL19:
  322              		.loc 1 142 26 discriminator 1 view .LVU63
  323 002c 84ED000A 		vstr.32	s0, [r4]
- 143:../Monitor/src/monitor.c ****   data->phase_current[1] = hal_adc_convert(adc_raw_data[1], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 143:../Monitor/src/monitor.c ****   data->phase_current[1] = hal_adc_convert(adc_raw_data[1], CURRENT_SENSOR_GAIN_B, CURRENT_SENSOR_O
  324              		.loc 1 143 3 is_stmt 1 view .LVU64
  325              		.loc 1 143 28 is_stmt 0 view .LVU65
- 326 0030 B0EE491A 		vmov.f32	s2, s18
+ 326 0030 B0EE681A 		vmov.f32	s2, s17
  327 0034 F0EE480A 		vmov.f32	s1, s16
- 328 0038 B0EE680A 		vmov.f32	s0, s17
+ 328 0038 9FED1F0A 		vldr.32	s0, .L20+16
  329 003c 6888     		ldrh	r0, [r5, #2]
  330 003e FFF7FEFF 		bl	hal_adc_convert
  331              	.LVL20:
  332              		.loc 1 143 26 discriminator 1 view .LVU66
  333 0042 84ED010A 		vstr.32	s0, [r4, #4]
- 144:../Monitor/src/monitor.c ****   data->phase_current[2] = hal_adc_convert(adc_raw_data[2], CURRENT_SENSOR_GAIN, 0.0f, 1.65f);
+ 144:../Monitor/src/monitor.c ****   data->phase_current[2] = hal_adc_convert(adc_raw_data[2], CURRENT_SENSOR_GAIN_C, CURRENT_SENSOR_O
  334              		.loc 1 144 3 is_stmt 1 view .LVU67
  335              		.loc 1 144 28 is_stmt 0 view .LVU68
- 336 0046 B0EE491A 		vmov.f32	s2, s18
+ 336 0046 B0EE681A 		vmov.f32	s2, s17
  337 004a F0EE480A 		vmov.f32	s1, s16
- 338 004e B0EE680A 		vmov.f32	s0, s17
+ 338 004e B0EE490A 		vmov.f32	s0, s18
  339 0052 A888     		ldrh	r0, [r5, #4]
  340 0054 FFF7FEFF 		bl	hal_adc_convert
  341              	.LVL21:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  352              		.loc 1 147 25 discriminator 1 view .LVU72
  353 006e 84ED060A 		vstr.32	s0, [r4, #24]
  148:../Monitor/src/monitor.c ****   
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 10
 
 
  149:../Monitor/src/monitor.c ****   /* Use DC link voltage for all phases */
@@ -565,80 +565,113 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 1
  368              		.loc 1 155 25 discriminator 1 view .LVU81
  369 0084 84ED070A 		vstr.32	s0, [r4, #28]
  156:../Monitor/src/monitor.c ****   
- 157:../Monitor/src/monitor.c ****   /* Update timestamp - using xTaskGetTickCount() which returns tick count */
- 158:../Monitor/src/monitor.c ****   /* Note: Tick count unit depends on configTICK_RATE_HZ setting */
- 159:../Monitor/src/monitor.c ****   data->timestamp = xTaskGetTickCount();
- 370              		.loc 1 159 3 is_stmt 1 view .LVU82
- 371              		.loc 1 159 21 is_stmt 0 view .LVU83
- 372 0088 FFF7FEFF 		bl	xTaskGetTickCount
- 373              	.LVL24:
- 374              		.loc 1 159 19 discriminator 1 view .LVU84
- 375 008c 2062     		str	r0, [r4, #32]
- 160:../Monitor/src/monitor.c **** }
- 376              		.loc 1 160 1 view .LVU85
- 377 008e BDEC048B 		vldm	sp!, {d8-d9}
- 378              	.LCFI8:
- 379              		.cfi_restore 82
- 380              		.cfi_restore 83
- 381              		.cfi_restore 80
- 382              		.cfi_restore 81
- 383              		.cfi_def_cfa_offset 16
- 384 0092 38BD     		pop	{r3, r4, r5, pc}
- 385              	.LVL25:
- 386              	.L21:
- 387              		.loc 1 160 1 view .LVU86
- 388              		.align	2
- 389              	.L20:
- 390 0094 3333D33F 		.word	1070805811
- 391 0098 00000000 		.word	0
- 392 009c 6666FA41 		.word	1106929254
- 393 00a0 00000000 		.word	adc_raw_data
- 394              		.cfi_endproc
- 395              	.LFE146:
- 397              		.section	.bss.adc_raw_data,"aw",%nobits
- 398              		.align	2
- 401              	adc_raw_data:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 11
+ 157:../Monitor/src/monitor.c ****   /* Store raw ADC values for debugging */
+ 158:../Monitor/src/monitor.c ****   data->adc_raw[0] = adc_raw_data[0]; /* Phase A current */
+ 370              		.loc 1 158 3 is_stmt 1 view .LVU82
+ 371              		.loc 1 158 34 is_stmt 0 view .LVU83
+ 372 0088 2B88     		ldrh	r3, [r5]
+ 373              		.loc 1 158 20 view .LVU84
+ 374 008a 2384     		strh	r3, [r4, #32]	@ movhi
+ 159:../Monitor/src/monitor.c ****   data->adc_raw[1] = adc_raw_data[1]; /* Phase B current */
+ 375              		.loc 1 159 3 is_stmt 1 view .LVU85
+ 376              		.loc 1 159 34 is_stmt 0 view .LVU86
+ 377 008c 6B88     		ldrh	r3, [r5, #2]
+ 378              		.loc 1 159 20 view .LVU87
+ 379 008e 6384     		strh	r3, [r4, #34]	@ movhi
+ 160:../Monitor/src/monitor.c ****   data->adc_raw[2] = adc_raw_data[2]; /* Phase C current */
+ 380              		.loc 1 160 3 is_stmt 1 view .LVU88
+ 381              		.loc 1 160 34 is_stmt 0 view .LVU89
+ 382 0090 AB88     		ldrh	r3, [r5, #4]
+ 383              		.loc 1 160 20 view .LVU90
+ 384 0092 A384     		strh	r3, [r4, #36]	@ movhi
+ 161:../Monitor/src/monitor.c ****   data->adc_raw[3] = adc_raw_data[3]; /* DC link voltage */
+ 385              		.loc 1 161 3 is_stmt 1 view .LVU91
+ 386              		.loc 1 161 34 is_stmt 0 view .LVU92
+ 387 0094 EB88     		ldrh	r3, [r5, #6]
+ 388              		.loc 1 161 20 view .LVU93
+ 389 0096 E384     		strh	r3, [r4, #38]	@ movhi
+ 162:../Monitor/src/monitor.c ****   data->adc_raw[4] = adc_raw_data[5]; /* MOS temperature */
+ 390              		.loc 1 162 3 is_stmt 1 view .LVU94
+ 391              		.loc 1 162 34 is_stmt 0 view .LVU95
+ 392 0098 6B89     		ldrh	r3, [r5, #10]
+ 393              		.loc 1 162 20 view .LVU96
+ 394 009a 2385     		strh	r3, [r4, #40]	@ movhi
+ 163:../Monitor/src/monitor.c ****   
+ 164:../Monitor/src/monitor.c ****   /* Update timestamp - using xTaskGetTickCount() which returns tick count */
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 11
 
 
- 402 0000 00000000 		.space	12
- 402      00000000 
- 402      00000000 
- 403              		.text
- 404              	.Letext0:
- 405              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 406              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 407              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
- 408              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
- 409              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
- 410              		.file 7 "../Monitor/inc/monitor.h"
- 411              		.file 8 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
- 412              		.file 9 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 413              		.file 10 "middlewares/freertos/source/include/task.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s 			page 12
+ 165:../Monitor/src/monitor.c ****   /* Note: Tick count unit depends on configTICK_RATE_HZ setting */
+ 166:../Monitor/src/monitor.c ****   data->timestamp = xTaskGetTickCount();
+ 395              		.loc 1 166 3 is_stmt 1 view .LVU97
+ 396              		.loc 1 166 21 is_stmt 0 view .LVU98
+ 397 009c FFF7FEFF 		bl	xTaskGetTickCount
+ 398              	.LVL24:
+ 399              		.loc 1 166 19 discriminator 1 view .LVU99
+ 400 00a0 E062     		str	r0, [r4, #44]
+ 167:../Monitor/src/monitor.c **** }
+ 401              		.loc 1 167 1 view .LVU100
+ 402 00a2 BDEC048B 		vldm	sp!, {d8-d9}
+ 403              	.LCFI8:
+ 404              		.cfi_restore 82
+ 405              		.cfi_restore 83
+ 406              		.cfi_restore 80
+ 407              		.cfi_restore 81
+ 408              		.cfi_def_cfa_offset 16
+ 409 00a6 38BD     		pop	{r3, r4, r5, pc}
+ 410              	.LVL25:
+ 411              	.L21:
+ 412              		.loc 1 167 1 view .LVU101
+ 413              		.align	2
+ 414              	.L20:
+ 415 00a8 3333D33F 		.word	1070805811
+ 416 00ac 00000000 		.word	0
+ 417 00b0 6666FA41 		.word	1106929254
+ 418 00b4 00000000 		.word	adc_raw_data
+ 419 00b8 9A997941 		.word	1098488218
+ 420              		.cfi_endproc
+ 421              	.LFE146:
+ 423              		.section	.bss.adc_raw_data,"aw",%nobits
+ 424              		.align	2
+ 427              	adc_raw_data:
+ 428 0000 00000000 		.space	12
+ 428      00000000 
+ 428      00000000 
+ 429              		.text
+ 430              	.Letext0:
+ 431              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 432              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 433              		.file 4 "libraries/cmsis/cm4/device_support/at32f403a_407.h"
+ 434              		.file 5 "libraries/drivers/inc/at32f403a_407_adc.h"
+ 435              		.file 6 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 436              		.file 7 "../Monitor/inc/monitor.h"
+ 437              		.file 8 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
+ 438              		.file 9 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 439              		.file 10 "middlewares/freertos/source/include/task.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cclTH0Je.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 monitor.c
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:21     .text.hal_adc_convert:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:26     .text.hal_adc_convert:00000000 hal_adc_convert
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:60     .text.hal_adc_convert:00000028 $d
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:66     .text.hal_adc_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:71     .text.hal_adc_init:00000000 hal_adc_init
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:92     .text.hal_adc_init:0000000c $d
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:97     .text.hal_adc_read:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:102    .text.hal_adc_read:00000000 hal_adc_read
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:153    .text.hal_adc_read:00000028 $d
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:401    .bss.adc_raw_data:00000000 adc_raw_data
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:160    .text.hal_adc_convert_temperature:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:165    .text.hal_adc_convert_temperature:00000000 hal_adc_convert_temperature
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:241    .text.hal_adc_convert_temperature:00000060 $d
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:252    .text.monitor_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:258    .text.monitor_init:00000000 monitor_init
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:278    .text.monitor_update:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:284    .text.monitor_update:00000000 monitor_update
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:390    .text.monitor_update:00000094 $d
-C:\Users\10963\AppData\Local\Temp\ccIzRR1J.s:398    .bss.adc_raw_data:00000000 $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:21     .text.hal_adc_convert:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:26     .text.hal_adc_convert:00000000 hal_adc_convert
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:60     .text.hal_adc_convert:00000028 $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:66     .text.hal_adc_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:71     .text.hal_adc_init:00000000 hal_adc_init
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:92     .text.hal_adc_init:0000000c $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:97     .text.hal_adc_read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:102    .text.hal_adc_read:00000000 hal_adc_read
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:153    .text.hal_adc_read:00000028 $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:427    .bss.adc_raw_data:00000000 adc_raw_data
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:160    .text.hal_adc_convert_temperature:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:165    .text.hal_adc_convert_temperature:00000000 hal_adc_convert_temperature
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:241    .text.hal_adc_convert_temperature:00000060 $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:252    .text.monitor_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:258    .text.monitor_init:00000000 monitor_init
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:278    .text.monitor_update:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:284    .text.monitor_update:00000000 monitor_update
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:415    .text.monitor_update:000000a8 $d
+C:\Users\10963\AppData\Local\Temp\cclTH0Je.s:424    .bss.adc_raw_data:00000000 $d
 
 UNDEFINED SYMBOLS
 adc_ordinary_software_trigger_enable

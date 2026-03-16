@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
   28:project/src/syscalls.c **** #include <stdlib.h>
   29:project/src/syscalls.c **** #include <errno.h>
   30:project/src/syscalls.c **** #include <stdio.h>
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 2
 
 
   31:project/src/syscalls.c **** #include <signal.h>
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
   62              		.global	_kill
   63              		.syntax unified
   64              		.thumb
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 3
 
 
   65              		.thumb_func
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  111 0000 08B5     		push	{r3, lr}
  112              	.LCFI1:
  113              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 4
 
 
  114              		.cfi_offset 3, -8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  160              	.LVL6:
  161              	.L10:
   76:project/src/syscalls.c ****   {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 5
 
 
   77:project/src/syscalls.c ****     *ptr++ = __io_getchar();
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  208              		.cfi_offset 4, -16
  209              		.cfi_offset 5, -12
  210              		.cfi_offset 6, -8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 6
 
 
  211              		.cfi_offset 14, -4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
   94:project/src/syscalls.c **** 
   95:project/src/syscalls.c **** int _close(int file)
   96:project/src/syscalls.c **** {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 7
 
 
  256              		.loc 1 96 1 is_stmt 1 view -0
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  302              		.global	_isatty
  303              		.syntax unified
  304              		.thumb
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 8
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 8
 
 
  305              		.thumb_func
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  348 0002 7047     		bx	lr
  349              		.cfi_endproc
  350              	.LFE34:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 9
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 9
 
 
  352              		.section	.text._open,"ax",%progbits
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  130:project/src/syscalls.c **** 
  131:project/src/syscalls.c **** int _wait(int *status)
  132:project/src/syscalls.c **** {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 10
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 10
 
 
  401              		.loc 1 132 1 is_stmt 1 view -0
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  448              	.LVL31:
  449              		.loc 1 141 9 is_stmt 0 discriminator 1 view .LVU93
  450 0006 0223     		movs	r3, #2
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 11
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 11
 
 
  451 0008 0360     		str	r3, [r0]
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  498              		@ link register save eliminated.
  153:project/src/syscalls.c ****   (void)file;
  499              		.loc 1 153 3 view .LVU102
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 12
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 12
 
 
  154:project/src/syscalls.c ****   st->st_mode = S_IFCHR;
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  545              		.cfi_endproc
  546              	.LFE40:
  548              		.section	.text._fork,"ax",%progbits
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 13
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 13
 
 
  549              		.align	1
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  597              		.cfi_offset 3, -8
  598              		.cfi_offset 14, -4
  174:project/src/syscalls.c ****   (void)name;
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 14
 
 
  599              		.loc 1 174 3 is_stmt 1 view .LVU123
@@ -823,51 +823,51 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 1
  638              		.file 7 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  639              		.file 8 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
  640              		.file 9 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s 			page 15
+ARM GAS  C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 syscalls.c
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:21     .text.initialise_monitor_handles:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:27     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:40     .text._getpid:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:46     .text._getpid:00000000 _getpid
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:61     .text._kill:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:67     .text._kill:00000000 _kill
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:96     .text._exit:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:102    .text._exit:00000000 _exit
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:129    .text._read:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:135    .text._read:00000000 _read
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:191    .text._write:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:197    .text._write:00000000 _write
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:247    .text._close:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:253    .text._close:00000000 _close
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:272    .text._fstat:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:278    .text._fstat:00000000 _fstat
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:301    .text._isatty:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:307    .text._isatty:00000000 _isatty
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:326    .text._lseek:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:332    .text._lseek:00000000 _lseek
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:353    .text._open:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:359    .text._open:00000000 _open
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:392    .text._wait:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:398    .text._wait:00000000 _wait
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:426    .text._unlink:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:432    .text._unlink:00000000 _unlink
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:460    .text._times:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:466    .text._times:00000000 _times
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:485    .text._stat:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:491    .text._stat:00000000 _stat
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:514    .text._link:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:520    .text._link:00000000 _link
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:549    .text._fork:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:555    .text._fork:00000000 _fork
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:580    .text._execve:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:586    .text._execve:00000000 _execve
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:620    .data.environ:00000000 environ
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:617    .data.environ:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:627    .bss.__env:00000000 __env
-C:\Users\10963\AppData\Local\Temp\ccK0RU3s.s:624    .bss.__env:00000000 $d
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:21     .text.initialise_monitor_handles:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:27     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:40     .text._getpid:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:46     .text._getpid:00000000 _getpid
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:61     .text._kill:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:67     .text._kill:00000000 _kill
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:96     .text._exit:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:102    .text._exit:00000000 _exit
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:129    .text._read:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:135    .text._read:00000000 _read
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:191    .text._write:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:197    .text._write:00000000 _write
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:247    .text._close:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:253    .text._close:00000000 _close
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:272    .text._fstat:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:278    .text._fstat:00000000 _fstat
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:301    .text._isatty:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:307    .text._isatty:00000000 _isatty
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:326    .text._lseek:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:332    .text._lseek:00000000 _lseek
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:353    .text._open:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:359    .text._open:00000000 _open
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:392    .text._wait:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:398    .text._wait:00000000 _wait
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:426    .text._unlink:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:432    .text._unlink:00000000 _unlink
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:460    .text._times:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:466    .text._times:00000000 _times
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:485    .text._stat:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:491    .text._stat:00000000 _stat
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:514    .text._link:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:520    .text._link:00000000 _link
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:549    .text._fork:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:555    .text._fork:00000000 _fork
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:580    .text._execve:00000000 $t
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:586    .text._execve:00000000 _execve
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:620    .data.environ:00000000 environ
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:617    .data.environ:00000000 $d
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:627    .bss.__env:00000000 __env
+C:\Users\10963\AppData\Local\Temp\cc4XIb6J.s:624    .bss.__env:00000000 $d
 
 UNDEFINED SYMBOLS
 __errno

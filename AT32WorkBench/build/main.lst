@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
   28:project/src/main.c **** #include "at32f403a_407_wk_config.h"
   29:project/src/main.c **** #include "wk_acc.h"
   30:project/src/main.c **** #include "wk_adc.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 2
 
 
   31:project/src/main.c **** #include "wk_can.h"
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
   85:project/src/main.c ****   */
   86:project/src/main.c **** int main(void)
   87:project/src/main.c **** {
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 3
 
 
   29              		.loc 1 87 1 view -0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
   57              		.loc 1 113 3 view .LVU7
   58 001a FFF7FEFF 		bl	wk_adc1_init
   59              	.LVL6:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 4
 
 
  114:project/src/main.c **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
   88              		.loc 1 139 3 view .LVU15
   89 0048 FFF7FEFF 		bl	wk_usbfs_init
   90              	.LVL14:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 5
 
 
  140:project/src/main.c **** 
@@ -292,15 +292,16 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
  115              		.section	.bss.motor,"aw",%nobits
  116              		.align	2
  119              	motor:
- 120 0000 00000000 		.space	16
+ 120 0000 00000000 		.space	24
+ 120      00000000 
  120      00000000 
  120      00000000 
  120      00000000 
  121              		.global	adc_data_buffer
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 6
+
+
  122              		.section	.bss.adc_data_buffer,"aw",%nobits
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 6
-
-
  123              		.align	2
  126              	adc_data_buffer:
  127 0000 00000000 		.space	40
@@ -330,18 +331,18 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 1
  147              		.file 19 "project/inc/wk_system.h"
  148              		.file 20 "project/inc/at32f403a_407_wk_config.h"
  149              		.file 21 "project/inc/wk_debug.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccXnipJI.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:21     .text.main:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:27     .text.main:00000000 main
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:108    .text.main:0000005c $d
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:126    .bss.adc_data_buffer:00000000 adc_data_buffer
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:119    .bss.motor:00000000 motor
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:116    .bss.motor:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccXnipJI.s:123    .bss.adc_data_buffer:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:21     .text.main:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:27     .text.main:00000000 main
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:108    .text.main:0000005c $d
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:126    .bss.adc_data_buffer:00000000 adc_data_buffer
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:119    .bss.motor:00000000 motor
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:116    .bss.motor:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccpnLHYS.s:123    .bss.adc_data_buffer:00000000 $d
 
 UNDEFINED SYMBOLS
 wk_system_clock_config

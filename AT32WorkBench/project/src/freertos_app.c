@@ -192,7 +192,7 @@ void MC_Task_Func(void *pvParameters)
   motor_control_init(&motor);
   
   /* start motor with default speed and direction */
-  motor_start(&motor, 80, MOTOR_DIR_CCW);
+  motor_start(&motor, 50, MOTOR_DIR_CCW);
 
   /* add user code end MC_Task_Func 0 */
 
@@ -301,11 +301,7 @@ void Monitor_Task_Func(void *pvParameters)
     if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
     {
       usb_send_string("=== Motor Monitoring Data ===\n");
-      
-      usb_send_string("Test float: ");
-      usb_send_float(3.14159, 2);
-      usb_send_string(" A\n");
-      
+           
       usb_send_string("Phase Currents: A=");
       usb_send_float(monitor_data.phase_current[0], 2);
       usb_send_string(" A, B=");
@@ -350,6 +346,25 @@ void Monitor_Task_Func(void *pvParameters)
       char state_buf[10];
       sprintf(state_buf, "%d", motor.state);
       usb_send_string(state_buf);
+      usb_send_string("\n");
+      
+      /* Print raw ADC values for debugging */
+      usb_send_string("Raw ADC Values: A=");
+      char adc_buf[10];
+      sprintf(adc_buf, "%d", monitor_data.adc_raw[0]);
+      usb_send_string(adc_buf);
+      usb_send_string(", B=");
+      sprintf(adc_buf, "%d", monitor_data.adc_raw[1]);
+      usb_send_string(adc_buf);
+      usb_send_string(", C=");
+      sprintf(adc_buf, "%d", monitor_data.adc_raw[2]);
+      usb_send_string(adc_buf);
+      usb_send_string(", Vbus=");
+      sprintf(adc_buf, "%d", monitor_data.adc_raw[3]);
+      usb_send_string(adc_buf);
+      usb_send_string(", Temp=");
+      sprintf(adc_buf, "%d", monitor_data.adc_raw[4]);
+      usb_send_string(adc_buf);
       usb_send_string("\n");
       
       usb_send_string("============================\n\n");

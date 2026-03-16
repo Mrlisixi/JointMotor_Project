@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
   27:project/src/freertos_app.c **** /* private define ------------------------------------------------------------*/
   28:project/src/freertos_app.c **** /* add user code begin private define */
   29:project/src/freertos_app.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 2
 
 
   30:project/src/freertos_app.c **** /* add user code end private define */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
   84:project/src/freertos_app.c **** static StaticTask_t idle_task_tcb;
   85:project/src/freertos_app.c **** static StaticTask_t timer_task_tcb;
   86:project/src/freertos_app.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 3
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 3
 
 
   87:project/src/freertos_app.c **** /* External Idle and Timer task static memory allocation functions */
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  141:project/src/freertos_app.c ****               "Community_Task",
  142:project/src/freertos_app.c ****               512,
  143:project/src/freertos_app.c ****               NULL,
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 4
 
 
  144:project/src/freertos_app.c ****               0,
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
   38              		.cfi_def_cfa_offset 8
   39              		.cfi_offset 3, -8
   40              		.cfi_offset 14, -4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 5
 
 
  190:project/src/freertos_app.c ****   /* add user code begin MC_Task_Func 0 */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
   70 0026 00BF     		.align	2
   71              	.L4:
   72 0028 00000000 		.word	motor
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 6
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 6
 
 
   73              		.cfi_endproc
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  258:project/src/freertos_app.c ****     for (int i = 0; i < 3; i++)
  259:project/src/freertos_app.c ****     {
  260:project/src/freertos_app.c ****       if (monitor_data.phase_current[i] > OVERCURRENT_THRESHOLD)
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 7
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 7
 
 
  261:project/src/freertos_app.c ****       {
@@ -404,97 +404,112 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  301:project/src/freertos_app.c ****     if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
  302:project/src/freertos_app.c ****     {
  303:project/src/freertos_app.c ****       usb_send_string("=== Motor Monitoring Data ===\n");
- 304:project/src/freertos_app.c ****       
- 305:project/src/freertos_app.c ****       usb_send_string("Test float: ");
- 306:project/src/freertos_app.c ****       usb_send_float(3.14159, 2);
- 307:project/src/freertos_app.c ****       usb_send_string(" A\n");
- 308:project/src/freertos_app.c ****       
- 309:project/src/freertos_app.c ****       usb_send_string("Phase Currents: A=");
- 310:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[0], 2);
- 311:project/src/freertos_app.c ****       usb_send_string(" A, B=");
- 312:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[1], 2);
- 313:project/src/freertos_app.c ****       usb_send_string(" A, C=");
- 314:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[2], 2);
- 315:project/src/freertos_app.c ****       usb_send_string(" A\n");
- 316:project/src/freertos_app.c ****       
- 317:project/src/freertos_app.c ****       usb_send_string("Phase Voltages: A=");
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 8
+ 304:project/src/freertos_app.c ****            
+ 305:project/src/freertos_app.c ****       usb_send_string("Phase Currents: A=");
+ 306:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[0], 2);
+ 307:project/src/freertos_app.c ****       usb_send_string(" A, B=");
+ 308:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[1], 2);
+ 309:project/src/freertos_app.c ****       usb_send_string(" A, C=");
+ 310:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[2], 2);
+ 311:project/src/freertos_app.c ****       usb_send_string(" A\n");
+ 312:project/src/freertos_app.c ****       
+ 313:project/src/freertos_app.c ****       usb_send_string("Phase Voltages: A=");
+ 314:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[0], 2);
+ 315:project/src/freertos_app.c ****       usb_send_string(" V, B=");
+ 316:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[1], 2);
+ 317:project/src/freertos_app.c ****       usb_send_string(" V, C=");
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 8
 
 
- 318:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[0], 2);
- 319:project/src/freertos_app.c ****       usb_send_string(" V, B=");
- 320:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[1], 2);
- 321:project/src/freertos_app.c ****       usb_send_string(" V, C=");
- 322:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[2], 2);
+ 318:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[2], 2);
+ 319:project/src/freertos_app.c ****       usb_send_string(" V\n");
+ 320:project/src/freertos_app.c ****       
+ 321:project/src/freertos_app.c ****       usb_send_string("DC Link Voltage: ");
+ 322:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
  323:project/src/freertos_app.c ****       usb_send_string(" V\n");
  324:project/src/freertos_app.c ****       
- 325:project/src/freertos_app.c ****       usb_send_string("DC Link Voltage: ");
- 326:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
- 327:project/src/freertos_app.c ****       usb_send_string(" V\n");
+ 325:project/src/freertos_app.c ****       usb_send_string("MOS Temperature: ");
+ 326:project/src/freertos_app.c ****       usb_send_float(monitor_data.mos_temperature, 2);
+ 327:project/src/freertos_app.c ****       usb_send_string(" °C\n");
  328:project/src/freertos_app.c ****       
- 329:project/src/freertos_app.c ****       usb_send_string("MOS Temperature: ");
- 330:project/src/freertos_app.c ****       usb_send_float(monitor_data.mos_temperature, 2);
- 331:project/src/freertos_app.c ****       usb_send_string(" °C\n");
- 332:project/src/freertos_app.c ****       
- 333:project/src/freertos_app.c ****       usb_send_string("Motor Speed: ");
- 334:project/src/freertos_app.c ****       char speed_buf[10];
- 335:project/src/freertos_app.c ****       sprintf(speed_buf, "%d", motor.speed);
- 336:project/src/freertos_app.c ****       usb_send_string(speed_buf);
- 337:project/src/freertos_app.c ****       usb_send_string(" RPM\n");
- 338:project/src/freertos_app.c ****       
- 339:project/src/freertos_app.c ****       usb_send_string("Commutation State: ");
- 340:project/src/freertos_app.c ****       char comm_buf[10];
- 341:project/src/freertos_app.c ****       sprintf(comm_buf, "%d", motor.comm_state);
- 342:project/src/freertos_app.c ****       usb_send_string(comm_buf);
+ 329:project/src/freertos_app.c ****       usb_send_string("Motor Speed: ");
+ 330:project/src/freertos_app.c ****       char speed_buf[10];
+ 331:project/src/freertos_app.c ****       sprintf(speed_buf, "%d", motor.speed);
+ 332:project/src/freertos_app.c ****       usb_send_string(speed_buf);
+ 333:project/src/freertos_app.c ****       usb_send_string(" RPM\n");
+ 334:project/src/freertos_app.c ****       
+ 335:project/src/freertos_app.c ****       usb_send_string("Commutation State: ");
+ 336:project/src/freertos_app.c ****       char comm_buf[10];
+ 337:project/src/freertos_app.c ****       sprintf(comm_buf, "%d", motor.comm_state);
+ 338:project/src/freertos_app.c ****       usb_send_string(comm_buf);
+ 339:project/src/freertos_app.c ****       usb_send_string("\n");
+ 340:project/src/freertos_app.c ****       
+ 341:project/src/freertos_app.c ****       usb_send_string("Motor Direction: ");
+ 342:project/src/freertos_app.c ****       usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
  343:project/src/freertos_app.c ****       usb_send_string("\n");
  344:project/src/freertos_app.c ****       
- 345:project/src/freertos_app.c ****       usb_send_string("Motor Direction: ");
- 346:project/src/freertos_app.c ****       usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
- 347:project/src/freertos_app.c ****       usb_send_string("\n");
- 348:project/src/freertos_app.c ****       
- 349:project/src/freertos_app.c ****       usb_send_string("Motor State: ");
- 350:project/src/freertos_app.c ****       char state_buf[10];
- 351:project/src/freertos_app.c ****       sprintf(state_buf, "%d", motor.state);
- 352:project/src/freertos_app.c ****       usb_send_string(state_buf);
- 353:project/src/freertos_app.c ****       usb_send_string("\n");
- 354:project/src/freertos_app.c ****       
- 355:project/src/freertos_app.c ****       usb_send_string("============================\n\n");
- 356:project/src/freertos_app.c ****       
- 357:project/src/freertos_app.c ****       last_print_time = current_time;
- 358:project/src/freertos_app.c ****     }
- 359:project/src/freertos_app.c ****     
- 360:project/src/freertos_app.c ****     /* If error detected, take action */
- 361:project/src/freertos_app.c ****     if (error_flag)
- 362:project/src/freertos_app.c ****     {
- 363:project/src/freertos_app.c ****       /* For now, just print error messages, can add more actions later */
- 364:project/src/freertos_app.c ****       usb_send_string("Taking protective action...\n");
- 365:project/src/freertos_app.c ****       /* Example: motor_stop(&motor); */
- 366:project/src/freertos_app.c ****     }
- 367:project/src/freertos_app.c **** 
- 368:project/src/freertos_app.c ****     vTaskDelay(500); /* 100ms delay for monitoring */
- 369:project/src/freertos_app.c **** 
- 370:project/src/freertos_app.c ****   /* add user code end Monitor_Task_Func 1 */
- 371:project/src/freertos_app.c ****   }
- 372:project/src/freertos_app.c **** }
- 373:project/src/freertos_app.c **** 
- 374:project/src/freertos_app.c **** 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 9
+ 345:project/src/freertos_app.c ****       usb_send_string("Motor State: ");
+ 346:project/src/freertos_app.c ****       char state_buf[10];
+ 347:project/src/freertos_app.c ****       sprintf(state_buf, "%d", motor.state);
+ 348:project/src/freertos_app.c ****       usb_send_string(state_buf);
+ 349:project/src/freertos_app.c ****       usb_send_string("\n");
+ 350:project/src/freertos_app.c ****       
+ 351:project/src/freertos_app.c ****       /* Print raw ADC values for debugging */
+ 352:project/src/freertos_app.c ****       usb_send_string("Raw ADC Values: A=");
+ 353:project/src/freertos_app.c ****       char adc_buf[10];
+ 354:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[0]);
+ 355:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 356:project/src/freertos_app.c ****       usb_send_string(", B=");
+ 357:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[1]);
+ 358:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 359:project/src/freertos_app.c ****       usb_send_string(", C=");
+ 360:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[2]);
+ 361:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 362:project/src/freertos_app.c ****       usb_send_string(", Vbus=");
+ 363:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[3]);
+ 364:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 365:project/src/freertos_app.c ****       usb_send_string(", Temp=");
+ 366:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[4]);
+ 367:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 368:project/src/freertos_app.c ****       usb_send_string("\n");
+ 369:project/src/freertos_app.c ****       
+ 370:project/src/freertos_app.c ****       usb_send_string("============================\n\n");
+ 371:project/src/freertos_app.c ****       
+ 372:project/src/freertos_app.c ****       last_print_time = current_time;
+ 373:project/src/freertos_app.c ****     }
+ 374:project/src/freertos_app.c ****     
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 9
 
 
- 375:project/src/freertos_app.c **** /**
- 376:project/src/freertos_app.c ****   * @brief Community_Task function.
- 377:project/src/freertos_app.c ****   * @param  none
- 378:project/src/freertos_app.c ****   * @retval none
- 379:project/src/freertos_app.c ****   */
- 380:project/src/freertos_app.c **** void Community_Task_Func(void *pvParameters)
- 381:project/src/freertos_app.c **** {
-  85              		.loc 1 381 1 view -0
+ 375:project/src/freertos_app.c ****     /* If error detected, take action */
+ 376:project/src/freertos_app.c ****     if (error_flag)
+ 377:project/src/freertos_app.c ****     {
+ 378:project/src/freertos_app.c ****       /* For now, just print error messages, can add more actions later */
+ 379:project/src/freertos_app.c ****       usb_send_string("Taking protective action...\n");
+ 380:project/src/freertos_app.c ****       /* Example: motor_stop(&motor); */
+ 381:project/src/freertos_app.c ****     }
+ 382:project/src/freertos_app.c **** 
+ 383:project/src/freertos_app.c ****     vTaskDelay(500); /* 100ms delay for monitoring */
+ 384:project/src/freertos_app.c **** 
+ 385:project/src/freertos_app.c ****   /* add user code end Monitor_Task_Func 1 */
+ 386:project/src/freertos_app.c ****   }
+ 387:project/src/freertos_app.c **** }
+ 388:project/src/freertos_app.c **** 
+ 389:project/src/freertos_app.c **** 
+ 390:project/src/freertos_app.c **** /**
+ 391:project/src/freertos_app.c ****   * @brief Community_Task function.
+ 392:project/src/freertos_app.c ****   * @param  none
+ 393:project/src/freertos_app.c ****   * @retval none
+ 394:project/src/freertos_app.c ****   */
+ 395:project/src/freertos_app.c **** void Community_Task_Func(void *pvParameters)
+ 396:project/src/freertos_app.c **** {
+  85              		.loc 1 396 1 view -0
   86              		.cfi_startproc
   87              		@ Volatile: function does not return.
   88              		@ args = 0, pretend = 0, frame = 0
   89              		@ frame_needed = 0, uses_anonymous_args = 0
   90              	.LVL7:
-  91              		.loc 1 381 1 is_stmt 0 view .LVU11
+  91              		.loc 1 396 1 is_stmt 0 view .LVU11
   92 0000 08B5     		push	{r3, lr}
   93              	.LCFI1:
   94              		.cfi_def_cfa_offset 8
@@ -502,27 +517,30 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
   96              		.cfi_offset 14, -4
   97              	.LVL8:
   98              	.L7:
- 382:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 0 */
- 383:project/src/freertos_app.c **** 
- 384:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 0 */
- 385:project/src/freertos_app.c **** 
- 386:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 2 */
- 387:project/src/freertos_app.c **** 
- 388:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 2 */
- 389:project/src/freertos_app.c **** 
- 390:project/src/freertos_app.c ****   /* Infinite loop */
- 391:project/src/freertos_app.c ****   while(1)
-  99              		.loc 1 391 3 is_stmt 1 view .LVU12
- 392:project/src/freertos_app.c ****   {
- 393:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 1 */
- 394:project/src/freertos_app.c **** 
- 395:project/src/freertos_app.c ****     vTaskDelay(1);
- 100              		.loc 1 395 5 discriminator 2 view .LVU13
+ 397:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 0 */
+ 398:project/src/freertos_app.c **** 
+ 399:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 0 */
+ 400:project/src/freertos_app.c **** 
+ 401:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 2 */
+ 402:project/src/freertos_app.c **** 
+ 403:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 2 */
+ 404:project/src/freertos_app.c **** 
+ 405:project/src/freertos_app.c ****   /* Infinite loop */
+ 406:project/src/freertos_app.c ****   while(1)
+  99              		.loc 1 406 3 is_stmt 1 view .LVU12
+ 407:project/src/freertos_app.c ****   {
+ 408:project/src/freertos_app.c ****   /* add user code begin Community_Task_Func 1 */
+ 409:project/src/freertos_app.c **** 
+ 410:project/src/freertos_app.c ****     vTaskDelay(1);
+ 100              		.loc 1 410 5 discriminator 2 view .LVU13
  101 0002 0120     		movs	r0, #1
  102 0004 FFF7FEFF 		bl	vTaskDelay
  103              	.LVL9:
- 391:project/src/freertos_app.c ****   {
- 104              		.loc 1 391 8 view .LVU14
+ 406:project/src/freertos_app.c ****   {
+ 104              		.loc 1 406 8 view .LVU14
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 10
+
+
  105 0008 FBE7     		b	.L7
  106              		.cfi_endproc
  107              	.LFE147:
@@ -534,29 +552,26 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  114              		.thumb_func
  116              	Debug_Task_Func:
  117              	.LFB148:
- 396:project/src/freertos_app.c **** 
- 397:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 1 */
- 398:project/src/freertos_app.c ****   }
- 399:project/src/freertos_app.c **** }
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 10
-
-
- 400:project/src/freertos_app.c **** 
- 401:project/src/freertos_app.c **** 
- 402:project/src/freertos_app.c **** /**
- 403:project/src/freertos_app.c ****   * @brief Debug_Task function.
- 404:project/src/freertos_app.c ****   * @param  none
- 405:project/src/freertos_app.c ****   * @retval none
- 406:project/src/freertos_app.c ****   */
- 407:project/src/freertos_app.c **** void Debug_Task_Func(void *pvParameters)
- 408:project/src/freertos_app.c **** {
- 118              		.loc 1 408 1 view -0
+ 411:project/src/freertos_app.c **** 
+ 412:project/src/freertos_app.c ****   /* add user code end Community_Task_Func 1 */
+ 413:project/src/freertos_app.c ****   }
+ 414:project/src/freertos_app.c **** }
+ 415:project/src/freertos_app.c **** 
+ 416:project/src/freertos_app.c **** 
+ 417:project/src/freertos_app.c **** /**
+ 418:project/src/freertos_app.c ****   * @brief Debug_Task function.
+ 419:project/src/freertos_app.c ****   * @param  none
+ 420:project/src/freertos_app.c ****   * @retval none
+ 421:project/src/freertos_app.c ****   */
+ 422:project/src/freertos_app.c **** void Debug_Task_Func(void *pvParameters)
+ 423:project/src/freertos_app.c **** {
+ 118              		.loc 1 423 1 view -0
  119              		.cfi_startproc
  120              		@ Volatile: function does not return.
  121              		@ args = 0, pretend = 0, frame = 0
  122              		@ frame_needed = 0, uses_anonymous_args = 0
  123              	.LVL10:
- 124              		.loc 1 408 1 is_stmt 0 view .LVU16
+ 124              		.loc 1 423 1 is_stmt 0 view .LVU16
  125 0000 08B5     		push	{r3, lr}
  126              	.LCFI2:
  127              		.cfi_def_cfa_offset 8
@@ -564,27 +579,30 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  129              		.cfi_offset 14, -4
  130              	.LVL11:
  131              	.L10:
- 409:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 0 */
- 410:project/src/freertos_app.c **** 
- 411:project/src/freertos_app.c ****   /* add user code end Debug_Task_Func 0 */
- 412:project/src/freertos_app.c **** 
- 413:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 2 */
- 414:project/src/freertos_app.c **** 
- 415:project/src/freertos_app.c ****   /* add user code end Debug_Task_Func 2 */
- 416:project/src/freertos_app.c **** 
- 417:project/src/freertos_app.c ****   /* Infinite loop */
- 418:project/src/freertos_app.c ****   while(1)
- 132              		.loc 1 418 3 is_stmt 1 view .LVU17
- 419:project/src/freertos_app.c ****   {
- 420:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 1 */
- 421:project/src/freertos_app.c **** 
- 422:project/src/freertos_app.c ****     vTaskDelay(1);
- 133              		.loc 1 422 5 discriminator 2 view .LVU18
+ 424:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 0 */
+ 425:project/src/freertos_app.c **** 
+ 426:project/src/freertos_app.c ****   /* add user code end Debug_Task_Func 0 */
+ 427:project/src/freertos_app.c **** 
+ 428:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 2 */
+ 429:project/src/freertos_app.c **** 
+ 430:project/src/freertos_app.c ****   /* add user code end Debug_Task_Func 2 */
+ 431:project/src/freertos_app.c **** 
+ 432:project/src/freertos_app.c ****   /* Infinite loop */
+ 433:project/src/freertos_app.c ****   while(1)
+ 132              		.loc 1 433 3 is_stmt 1 view .LVU17
+ 434:project/src/freertos_app.c ****   {
+ 435:project/src/freertos_app.c ****   /* add user code begin Debug_Task_Func 1 */
+ 436:project/src/freertos_app.c **** 
+ 437:project/src/freertos_app.c ****     vTaskDelay(1);
+ 133              		.loc 1 437 5 discriminator 2 view .LVU18
  134 0002 0120     		movs	r0, #1
  135 0004 FFF7FEFF 		bl	vTaskDelay
  136              	.LVL12:
- 418:project/src/freertos_app.c ****   {
- 137              		.loc 1 418 8 view .LVU19
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 11
+
+
+ 433:project/src/freertos_app.c ****   {
+ 137              		.loc 1 433 8 view .LVU19
  138 0008 FBE7     		b	.L10
  139              		.cfi_endproc
  140              	.LFE148:
@@ -598,9 +616,6 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  149              		.align	2
  150              	.LC2:
  151 0008 4552524F 		.ascii	"ERROR: Phase \000"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 11
-
-
  151      523A2050 
  151      68617365 
  151      2000
@@ -643,6 +658,9 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  172      0A00
  173 0096 0000     		.align	2
  174              	.LC10:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 12
+
+
  175 0098 3D3D3D20 		.ascii	"=== Motor Monitoring Data ===\012\000"
  175      4D6F746F 
  175      72204D6F 
@@ -650,1114 +668,1215 @@ ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 1
  175      72696E67 
  176 00b7 00       		.align	2
  177              	.LC11:
- 178 00b8 54657374 		.ascii	"Test float: \000"
- 178      20666C6F 
- 178      61743A20 
- 178      00
- 179 00c5 000000   		.align	2
+ 178 00b8 50686173 		.ascii	"Phase Currents: A=\000"
+ 178      65204375 
+ 178      7272656E 
+ 178      74733A20 
+ 178      413D00
+ 179 00cb 00       		.align	2
  180              	.LC12:
- 181 00c8 50686173 		.ascii	"Phase Currents: A=\000"
- 181      65204375 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 12
-
-
- 181      7272656E 
- 181      74733A20 
- 181      413D00
- 182 00db 00       		.align	2
+ 181 00cc 20412C20 		.ascii	" A, B=\000"
+ 181      423D00
+ 182 00d3 00       		.align	2
  183              	.LC13:
- 184 00dc 20412C20 		.ascii	" A, B=\000"
- 184      423D00
- 185 00e3 00       		.align	2
+ 184 00d4 20412C20 		.ascii	" A, C=\000"
+ 184      433D00
+ 185 00db 00       		.align	2
  186              	.LC14:
- 187 00e4 20412C20 		.ascii	" A, C=\000"
- 187      433D00
- 188 00eb 00       		.align	2
+ 187 00dc 50686173 		.ascii	"Phase Voltages: A=\000"
+ 187      6520566F 
+ 187      6C746167 
+ 187      65733A20 
+ 187      413D00
+ 188 00ef 00       		.align	2
  189              	.LC15:
- 190 00ec 50686173 		.ascii	"Phase Voltages: A=\000"
- 190      6520566F 
- 190      6C746167 
- 190      65733A20 
- 190      413D00
- 191 00ff 00       		.align	2
+ 190 00f0 20562C20 		.ascii	" V, B=\000"
+ 190      423D00
+ 191 00f7 00       		.align	2
  192              	.LC16:
- 193 0100 20562C20 		.ascii	" V, B=\000"
- 193      423D00
- 194 0107 00       		.align	2
+ 193 00f8 20562C20 		.ascii	" V, C=\000"
+ 193      433D00
+ 194 00ff 00       		.align	2
  195              	.LC17:
- 196 0108 20562C20 		.ascii	" V, C=\000"
- 196      433D00
- 197 010f 00       		.align	2
+ 196 0100 4443204C 		.ascii	"DC Link Voltage: \000"
+ 196      696E6B20 
+ 196      566F6C74 
+ 196      6167653A 
+ 196      2000
+ 197 0112 0000     		.align	2
  198              	.LC18:
- 199 0110 4443204C 		.ascii	"DC Link Voltage: \000"
- 199      696E6B20 
- 199      566F6C74 
- 199      6167653A 
+ 199 0114 4D4F5320 		.ascii	"MOS Temperature: \000"
+ 199      54656D70 
+ 199      65726174 
+ 199      7572653A 
  199      2000
- 200 0122 0000     		.align	2
+ 200 0126 0000     		.align	2
  201              	.LC19:
- 202 0124 4D4F5320 		.ascii	"MOS Temperature: \000"
- 202      54656D70 
- 202      65726174 
- 202      7572653A 
+ 202 0128 4D6F746F 		.ascii	"Motor Speed: \000"
+ 202      72205370 
+ 202      6565643A 
  202      2000
  203 0136 0000     		.align	2
  204              	.LC20:
- 205 0138 4D6F746F 		.ascii	"Motor Speed: \000"
- 205      72205370 
- 205      6565643A 
- 205      2000
- 206 0146 0000     		.align	2
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 13
+
+
+ 205 0138 256400   		.ascii	"%d\000"
+ 206 013b 00       		.align	2
  207              	.LC21:
- 208 0148 256400   		.ascii	"%d\000"
- 209 014b 00       		.align	2
+ 208 013c 2052504D 		.ascii	" RPM\012\000"
+ 208      0A00
+ 209 0142 0000     		.align	2
  210              	.LC22:
- 211 014c 2052504D 		.ascii	" RPM\012\000"
- 211      0A00
- 212 0152 0000     		.align	2
+ 211 0144 436F6D6D 		.ascii	"Commutation State: \000"
+ 211      75746174 
+ 211      696F6E20 
+ 211      53746174 
+ 211      653A2000 
+ 212              		.align	2
  213              	.LC23:
- 214 0154 436F6D6D 		.ascii	"Commutation State: \000"
- 214      75746174 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 13
-
-
- 214      696F6E20 
- 214      53746174 
- 214      653A2000 
- 215              		.align	2
+ 214 0158 0A00     		.ascii	"\012\000"
+ 215 015a 0000     		.align	2
  216              	.LC24:
- 217 0168 0A00     		.ascii	"\012\000"
- 218 016a 0000     		.align	2
+ 217 015c 4D6F746F 		.ascii	"Motor Direction: \000"
+ 217      72204469 
+ 217      72656374 
+ 217      696F6E3A 
+ 217      2000
+ 218 016e 0000     		.align	2
  219              	.LC25:
- 220 016c 4D6F746F 		.ascii	"Motor Direction: \000"
- 220      72204469 
- 220      72656374 
- 220      696F6E3A 
+ 220 0170 4D6F746F 		.ascii	"Motor State: \000"
+ 220      72205374 
+ 220      6174653A 
  220      2000
  221 017e 0000     		.align	2
  222              	.LC26:
- 223 0180 4D6F746F 		.ascii	"Motor State: \000"
- 223      72205374 
- 223      6174653A 
- 223      2000
- 224 018e 0000     		.align	2
+ 223 0180 52617720 		.ascii	"Raw ADC Values: A=\000"
+ 223      41444320 
+ 223      56616C75 
+ 223      65733A20 
+ 223      413D00
+ 224 0193 00       		.align	2
  225              	.LC27:
- 226 0190 3D3D3D3D 		.ascii	"============================\012\012\000"
- 226      3D3D3D3D 
- 226      3D3D3D3D 
- 226      3D3D3D3D 
- 226      3D3D3D3D 
- 227 01af 00       		.align	2
+ 226 0194 2C20423D 		.ascii	", B=\000"
+ 226      00
+ 227 0199 000000   		.align	2
  228              	.LC28:
- 229 01b0 54616B69 		.ascii	"Taking protective action...\012\000"
- 229      6E672070 
- 229      726F7465 
- 229      63746976 
- 229      65206163 
- 230              		.section	.text.Monitor_Task_Func,"ax",%progbits
- 231              		.align	1
- 232              		.global	Monitor_Task_Func
- 233              		.syntax unified
- 234              		.thumb
- 235              		.thumb_func
- 237              	Monitor_Task_Func:
- 238              	.LVL13:
- 239              	.LFB146:
- 226:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_Func 0 */
- 240              		.loc 1 226 1 view -0
- 241              		.cfi_startproc
- 242              		@ args = 0, pretend = 0, frame = 72
- 243              		@ frame_needed = 0, uses_anonymous_args = 0
- 226:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_Func 0 */
- 244              		.loc 1 226 1 is_stmt 0 view .LVU21
- 245 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 246              	.LCFI3:
- 247              		.cfi_def_cfa_offset 24
- 248              		.cfi_offset 4, -24
- 249              		.cfi_offset 5, -20
- 250              		.cfi_offset 6, -16
- 251              		.cfi_offset 7, -12
- 252              		.cfi_offset 8, -8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 14
+ 229 019c 2C20433D 		.ascii	", C=\000"
+ 229      00
+ 230 01a1 000000   		.align	2
+ 231              	.LC29:
+ 232 01a4 2C205662 		.ascii	", Vbus=\000"
+ 232      75733D00 
+ 233              		.align	2
+ 234              	.LC30:
+ 235 01ac 2C205465 		.ascii	", Temp=\000"
+ 235      6D703D00 
+ 236              		.align	2
+ 237              	.LC31:
+ 238 01b4 3D3D3D3D 		.ascii	"============================\012\012\000"
+ 238      3D3D3D3D 
+ 238      3D3D3D3D 
+ 238      3D3D3D3D 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 14
 
 
- 253              		.cfi_offset 14, -4
- 254 0004 92B0     		sub	sp, sp, #72
- 255              	.LCFI4:
- 256              		.cfi_def_cfa_offset 96
+ 238      3D3D3D3D 
+ 239 01d3 00       		.align	2
+ 240              	.LC32:
+ 241 01d4 54616B69 		.ascii	"Taking protective action...\012\000"
+ 241      6E672070 
+ 241      726F7465 
+ 241      63746976 
+ 241      65206163 
+ 242              		.section	.text.Monitor_Task_Func,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	Monitor_Task_Func
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	Monitor_Task_Func:
+ 250              	.LVL13:
+ 251              	.LFB146:
+ 226:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_Func 0 */
+ 252              		.loc 1 226 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 96
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226:project/src/freertos_app.c ****   /* add user code begin Monitor_Task_Func 0 */
+ 256              		.loc 1 226 1 is_stmt 0 view .LVU21
+ 257 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 258              	.LCFI3:
+ 259              		.cfi_def_cfa_offset 24
+ 260              		.cfi_offset 4, -24
+ 261              		.cfi_offset 5, -20
+ 262              		.cfi_offset 6, -16
+ 263              		.cfi_offset 7, -12
+ 264              		.cfi_offset 8, -8
+ 265              		.cfi_offset 14, -4
+ 266 0004 98B0     		sub	sp, sp, #96
+ 267              	.LCFI4:
+ 268              		.cfi_def_cfa_offset 120
  228:project/src/freertos_app.c ****   uint32_t last_print_time = 0;
- 257              		.loc 1 228 3 is_stmt 1 view .LVU22
+ 269              		.loc 1 228 3 is_stmt 1 view .LVU22
  229:project/src/freertos_app.c ****   const uint32_t print_interval = 1000; /* 1 second */
- 258              		.loc 1 229 3 view .LVU23
- 259              	.LVL14:
+ 270              		.loc 1 229 3 view .LVU23
+ 271              	.LVL14:
  230:project/src/freertos_app.c ****   
- 260              		.loc 1 230 3 view .LVU24
+ 272              		.loc 1 230 3 view .LVU24
  233:project/src/freertos_app.c ****   const float OVERVOLTAGE_THRESHOLD = 36.0f; /* 36V */
- 261              		.loc 1 233 3 view .LVU25
+ 273              		.loc 1 233 3 view .LVU25
  234:project/src/freertos_app.c ****   const float UNDERVOLTAGE_THRESHOLD = 10.0f; /* 10V */
- 262              		.loc 1 234 3 view .LVU26
+ 274              		.loc 1 234 3 view .LVU26
  235:project/src/freertos_app.c ****   const float OVERTEMP_THRESHOLD = 80.0f; /* 80°C */
- 263              		.loc 1 235 3 view .LVU27
+ 275              		.loc 1 235 3 view .LVU27
  236:project/src/freertos_app.c ****   
- 264              		.loc 1 236 3 view .LVU28
+ 276              		.loc 1 236 3 view .LVU28
  239:project/src/freertos_app.c **** 
- 265              		.loc 1 239 3 view .LVU29
- 266 0006 FFF7FEFF 		bl	monitor_init
- 267              	.LVL15:
+ 277              		.loc 1 239 3 view .LVU29
+ 278 0006 FFF7FEFF 		bl	monitor_init
+ 279              	.LVL15:
  229:project/src/freertos_app.c ****   const uint32_t print_interval = 1000; /* 1 second */
- 268              		.loc 1 229 12 is_stmt 0 view .LVU30
- 269 000a 0026     		movs	r6, #0
- 270 000c 55E0     		b	.L26
- 271              	.LVL16:
- 272              	.L34:
- 273              	.LBB2:
- 274              	.LBB3:
- 275              	.LBB4:
+ 280              		.loc 1 229 12 is_stmt 0 view .LVU30
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 15
+
+
+ 281 000a 0025     		movs	r5, #0
+ 282 000c 55E0     		b	.L26
+ 283              	.LVL16:
+ 284              	.L34:
+ 285              	.LBB2:
+ 286              	.LBB3:
+ 287              	.LBB4:
  262:project/src/freertos_app.c ****         char phase_buf[2] = {'A' + i, 0};
- 276              		.loc 1 262 9 is_stmt 1 view .LVU31
- 277 000e 9148     		ldr	r0, .L39
- 278 0010 FFF7FEFF 		bl	usb_send_string
- 279              	.LVL17:
+ 288              		.loc 1 262 9 is_stmt 1 view .LVU31
+ 289 000e AC48     		ldr	r0, .L39
+ 290 0010 FFF7FEFF 		bl	usb_send_string
+ 291              	.LVL17:
  263:project/src/freertos_app.c ****         usb_send_string(phase_buf);
- 280              		.loc 1 263 9 view .LVU32
+ 292              		.loc 1 263 9 view .LVU32
  263:project/src/freertos_app.c ****         usb_send_string(phase_buf);
- 281              		.loc 1 263 34 is_stmt 0 view .LVU33
- 282 0014 04F14103 		add	r3, r4, #65
+ 293              		.loc 1 263 34 is_stmt 0 view .LVU33
+ 294 0014 04F14103 		add	r3, r4, #65
  263:project/src/freertos_app.c ****         usb_send_string(phase_buf);
- 283              		.loc 1 263 14 view .LVU34
- 284 0018 8DF81830 		strb	r3, [sp, #24]
- 285 001c 0023     		movs	r3, #0
- 286 001e 8DF81930 		strb	r3, [sp, #25]
+ 295              		.loc 1 263 14 view .LVU34
+ 296 0018 8DF82430 		strb	r3, [sp, #36]
+ 297 001c 0023     		movs	r3, #0
+ 298 001e 8DF82530 		strb	r3, [sp, #37]
  264:project/src/freertos_app.c ****         usb_send_string(" overcurrent: ");
- 287              		.loc 1 264 9 is_stmt 1 view .LVU35
- 288 0022 06A8     		add	r0, sp, #24
- 289 0024 FFF7FEFF 		bl	usb_send_string
- 290              	.LVL18:
+ 299              		.loc 1 264 9 is_stmt 1 view .LVU35
+ 300 0022 09A8     		add	r0, sp, #36
+ 301 0024 FFF7FEFF 		bl	usb_send_string
+ 302              	.LVL18:
  265:project/src/freertos_app.c ****         usb_send_float(monitor_data.phase_current[i], 2);
- 291              		.loc 1 265 9 view .LVU36
- 292 0028 8B48     		ldr	r0, .L39+4
- 293 002a FFF7FEFF 		bl	usb_send_string
- 294              	.LVL19:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 15
-
-
+ 303              		.loc 1 265 9 view .LVU36
+ 304 0028 A648     		ldr	r0, .L39+4
+ 305 002a FFF7FEFF 		bl	usb_send_string
+ 306              	.LVL19:
  266:project/src/freertos_app.c ****         usb_send_string(" A\n");
- 295              		.loc 1 266 9 view .LVU37
- 296 002e 0220     		movs	r0, #2
- 297 0030 12AB     		add	r3, sp, #72
- 298 0032 03EB8403 		add	r3, r3, r4, lsl #2
- 299 0036 13ED090A 		vldr.32	s0, [r3, #-36]
- 300 003a FFF7FEFF 		bl	usb_send_float
- 301              	.LVL20:
+ 307              		.loc 1 266 9 view .LVU37
+ 308 002e 0220     		movs	r0, #2
+ 309 0030 18AB     		add	r3, sp, #96
+ 310 0032 03EB8403 		add	r3, r3, r4, lsl #2
+ 311 0036 13ED0C0A 		vldr.32	s0, [r3, #-48]
+ 312 003a FFF7FEFF 		bl	usb_send_float
+ 313              	.LVL20:
  267:project/src/freertos_app.c ****         error_flag = 1;
- 302              		.loc 1 267 9 view .LVU38
- 303 003e 8748     		ldr	r0, .L39+8
- 304 0040 FFF7FEFF 		bl	usb_send_string
- 305              	.LVL21:
+ 314              		.loc 1 267 9 view .LVU38
+ 315 003e A248     		ldr	r0, .L39+8
+ 316 0040 FFF7FEFF 		bl	usb_send_string
+ 317              	.LVL21:
  268:project/src/freertos_app.c ****       }
- 306              		.loc 1 268 9 view .LVU39
+ 318              		.loc 1 268 9 view .LVU39
  268:project/src/freertos_app.c ****       }
- 307              		.loc 1 268 20 is_stmt 0 view .LVU40
- 308 0044 0125     		movs	r5, #1
- 309              	.LVL22:
- 310              	.L14:
+ 319              		.loc 1 268 20 is_stmt 0 view .LVU40
+ 320 0044 0127     		movs	r7, #1
+ 321              	.LVL22:
+ 322              	.L14:
  268:project/src/freertos_app.c ****       }
- 311              		.loc 1 268 20 view .LVU41
- 312              	.LBE4:
+ 323              		.loc 1 268 20 view .LVU41
+ 324              	.LBE4:
  258:project/src/freertos_app.c ****     {
- 313              		.loc 1 258 29 is_stmt 1 discriminator 2 view .LVU42
- 314 0046 0134     		adds	r4, r4, #1
- 315              	.LVL23:
- 316              	.L13:
+ 325              		.loc 1 258 29 is_stmt 1 discriminator 2 view .LVU42
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 16
+
+
+ 326 0046 0134     		adds	r4, r4, #1
+ 327              	.LVL23:
+ 328              	.L13:
  258:project/src/freertos_app.c ****     {
- 317              		.loc 1 258 23 discriminator 1 view .LVU43
- 318 0048 022C     		cmp	r4, #2
- 319 004a 0CDC     		bgt	.L33
+ 329              		.loc 1 258 23 discriminator 1 view .LVU43
+ 330 0048 022C     		cmp	r4, #2
+ 331 004a 0CDC     		bgt	.L33
  260:project/src/freertos_app.c ****       {
- 320              		.loc 1 260 7 view .LVU44
+ 332              		.loc 1 260 7 view .LVU44
  260:project/src/freertos_app.c ****       {
- 321              		.loc 1 260 37 is_stmt 0 view .LVU45
- 322 004c 12AB     		add	r3, sp, #72
- 323 004e 03EB8403 		add	r3, r3, r4, lsl #2
- 324 0052 13ED097A 		vldr.32	s14, [r3, #-36]
+ 333              		.loc 1 260 37 is_stmt 0 view .LVU45
+ 334 004c 18AB     		add	r3, sp, #96
+ 335 004e 03EB8403 		add	r3, r3, r4, lsl #2
+ 336 0052 13ED0C7A 		vldr.32	s14, [r3, #-48]
  260:project/src/freertos_app.c ****       {
- 325              		.loc 1 260 10 view .LVU46
- 326 0056 F2EE047A 		vmov.f32	s15, #1.0e+1
- 327 005a B4EEE77A 		vcmpe.f32	s14, s15
- 328 005e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 329 0062 F0DD     		ble	.L14
- 330 0064 D3E7     		b	.L34
- 331              	.L33:
- 332              	.LBE3:
+ 337              		.loc 1 260 10 view .LVU46
+ 338 0056 F2EE047A 		vmov.f32	s15, #1.0e+1
+ 339 005a B4EEE77A 		vcmpe.f32	s14, s15
+ 340 005e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 341 0062 F0DD     		ble	.L14
+ 342 0064 D3E7     		b	.L34
+ 343              	.L33:
+ 344              	.LBE3:
  273:project/src/freertos_app.c ****     {
- 333              		.loc 1 273 5 is_stmt 1 view .LVU47
+ 345              		.loc 1 273 5 is_stmt 1 view .LVU47
  273:project/src/freertos_app.c ****     {
- 334              		.loc 1 273 8 is_stmt 0 view .LVU48
- 335 0066 9DED0F7A 		vldr.32	s14, [sp, #60]
- 336 006a DFED7D7A 		vldr.32	s15, .L39+12
- 337 006e B4EEE77A 		vcmpe.f32	s14, s15
- 338 0072 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 339 0076 26DC     		bgt	.L35
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 16
-
-
- 340              	.LVL24:
- 341              	.L17:
+ 346              		.loc 1 273 8 is_stmt 0 view .LVU48
+ 347 0066 9DED127A 		vldr.32	s14, [sp, #72]
+ 348 006a DFED987A 		vldr.32	s15, .L39+12
+ 349 006e B4EEE77A 		vcmpe.f32	s14, s15
+ 350 0072 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 351 0076 26DC     		bgt	.L35
+ 352              	.LVL24:
+ 353              	.L17:
  282:project/src/freertos_app.c ****     {
- 342              		.loc 1 282 5 is_stmt 1 view .LVU49
+ 354              		.loc 1 282 5 is_stmt 1 view .LVU49
  282:project/src/freertos_app.c ****     {
- 343              		.loc 1 282 8 is_stmt 0 view .LVU50
- 344 0078 9DED0F7A 		vldr.32	s14, [sp, #60]
- 345 007c F2EE047A 		vmov.f32	s15, #1.0e+1
- 346 0080 B4EEE77A 		vcmpe.f32	s14, s15
- 347 0084 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 348 0088 2AD4     		bmi	.L36
- 349              	.LVL25:
- 350              	.L19:
+ 355              		.loc 1 282 8 is_stmt 0 view .LVU50
+ 356 0078 9DED127A 		vldr.32	s14, [sp, #72]
+ 357 007c F2EE047A 		vmov.f32	s15, #1.0e+1
+ 358 0080 B4EEE77A 		vcmpe.f32	s14, s15
+ 359 0084 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 360 0088 2AD4     		bmi	.L36
+ 361              	.LVL25:
+ 362              	.L19:
  291:project/src/freertos_app.c ****     {
- 351              		.loc 1 291 5 is_stmt 1 view .LVU51
+ 363              		.loc 1 291 5 is_stmt 1 view .LVU51
  291:project/src/freertos_app.c ****     {
- 352              		.loc 1 291 8 is_stmt 0 view .LVU52
- 353 008a 9DED107A 		vldr.32	s14, [sp, #64]
- 354 008e DFED757A 		vldr.32	s15, .L39+16
- 355 0092 B4EEE77A 		vcmpe.f32	s14, s15
- 356 0096 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 357 009a 2EDC     		bgt	.L37
- 358              	.LVL26:
- 359              	.L21:
+ 364              		.loc 1 291 8 is_stmt 0 view .LVU52
+ 365 008a 9DED137A 		vldr.32	s14, [sp, #76]
+ 366 008e DFED907A 		vldr.32	s15, .L39+16
+ 367 0092 B4EEE77A 		vcmpe.f32	s14, s15
+ 368 0096 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 369 009a 2EDC     		bgt	.L37
+ 370              	.LVL26:
+ 371              	.L21:
  300:project/src/freertos_app.c ****     if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
- 360              		.loc 1 300 5 is_stmt 1 view .LVU53
- 300:project/src/freertos_app.c ****     if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
- 361              		.loc 1 300 29 is_stmt 0 view .LVU54
- 362 009c FFF7FEFF 		bl	xTaskGetTickCount
- 363              	.LVL27:
- 364 00a0 0446     		mov	r4, r0
- 365              	.LVL28:
- 301:project/src/freertos_app.c ****     {
- 366              		.loc 1 301 5 is_stmt 1 view .LVU55
- 301:project/src/freertos_app.c ****     {
- 367              		.loc 1 301 23 is_stmt 0 view .LVU56
- 368 00a2 831B     		subs	r3, r0, r6
- 301:project/src/freertos_app.c ****     {
- 369              		.loc 1 301 8 view .LVU57
- 370 00a4 B3F57A7F 		cmp	r3, #1000
- 371 00a8 34D8     		bhi	.L38
- 372              	.LVL29:
- 373              	.L23:
- 361:project/src/freertos_app.c ****     {
- 374              		.loc 1 361 5 is_stmt 1 view .LVU58
- 361:project/src/freertos_app.c ****     {
- 375              		.loc 1 361 8 is_stmt 0 view .LVU59
- 376 00aa 15B1     		cbz	r5, .L25
- 364:project/src/freertos_app.c ****       /* Example: motor_stop(&motor); */
- 377              		.loc 1 364 7 is_stmt 1 view .LVU60
- 378 00ac 6E48     		ldr	r0, .L39+20
- 379 00ae FFF7FEFF 		bl	usb_send_string
- 380              	.LVL30:
- 381              	.L25:
- 368:project/src/freertos_app.c **** 
- 382              		.loc 1 368 5 view .LVU61
- 383 00b2 4FF4FA70 		mov	r0, #500
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 17
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 17
 
 
- 384 00b6 FFF7FEFF 		bl	vTaskDelay
- 385              	.LVL31:
- 386              	.LBE2:
+ 372              		.loc 1 300 5 is_stmt 1 view .LVU53
+ 300:project/src/freertos_app.c ****     if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
+ 373              		.loc 1 300 29 is_stmt 0 view .LVU54
+ 374 009c FFF7FEFF 		bl	xTaskGetTickCount
+ 375              	.LVL27:
+ 376 00a0 0446     		mov	r4, r0
+ 377              	.LVL28:
+ 301:project/src/freertos_app.c ****     {
+ 378              		.loc 1 301 5 is_stmt 1 view .LVU55
+ 301:project/src/freertos_app.c ****     {
+ 379              		.loc 1 301 23 is_stmt 0 view .LVU56
+ 380 00a2 431B     		subs	r3, r0, r5
+ 301:project/src/freertos_app.c ****     {
+ 381              		.loc 1 301 8 view .LVU57
+ 382 00a4 B3F57A7F 		cmp	r3, #1000
+ 383 00a8 34D8     		bhi	.L38
+ 384              	.LVL29:
+ 385              	.L23:
+ 376:project/src/freertos_app.c ****     {
+ 386              		.loc 1 376 5 is_stmt 1 view .LVU58
+ 376:project/src/freertos_app.c ****     {
+ 387              		.loc 1 376 8 is_stmt 0 view .LVU59
+ 388 00aa 17B1     		cbz	r7, .L25
+ 379:project/src/freertos_app.c ****       /* Example: motor_stop(&motor); */
+ 389              		.loc 1 379 7 is_stmt 1 view .LVU60
+ 390 00ac 8948     		ldr	r0, .L39+20
+ 391 00ae FFF7FEFF 		bl	usb_send_string
+ 392              	.LVL30:
+ 393              	.L25:
+ 383:project/src/freertos_app.c **** 
+ 394              		.loc 1 383 5 view .LVU61
+ 395 00b2 4FF4FA70 		mov	r0, #500
+ 396 00b6 FFF7FEFF 		bl	vTaskDelay
+ 397              	.LVL31:
+ 398              	.LBE2:
  248:project/src/freertos_app.c ****   {
- 387              		.loc 1 248 8 view .LVU62
- 388              	.L26:
+ 399              		.loc 1 248 8 view .LVU62
+ 400              	.L26:
  248:project/src/freertos_app.c ****   {
- 389              		.loc 1 248 3 view .LVU63
- 390              	.LBB8:
+ 401              		.loc 1 248 3 view .LVU63
+ 402              	.LBB8:
  252:project/src/freertos_app.c ****     
- 391              		.loc 1 252 5 view .LVU64
- 392 00ba 09A8     		add	r0, sp, #36
- 393 00bc FFF7FEFF 		bl	monitor_update
- 394              	.LVL32:
+ 403              		.loc 1 252 5 view .LVU64
+ 404 00ba 0CA8     		add	r0, sp, #48
+ 405 00bc FFF7FEFF 		bl	monitor_update
+ 406              	.LVL32:
  255:project/src/freertos_app.c ****     
- 395              		.loc 1 255 5 view .LVU65
+ 407              		.loc 1 255 5 view .LVU65
  258:project/src/freertos_app.c ****     {
- 396              		.loc 1 258 5 view .LVU66
- 397              	.LBB5:
+ 408              		.loc 1 258 5 view .LVU66
+ 409              	.LBB5:
  258:project/src/freertos_app.c ****     {
- 398              		.loc 1 258 10 view .LVU67
+ 410              		.loc 1 258 10 view .LVU67
  258:project/src/freertos_app.c ****     {
- 399              		.loc 1 258 14 is_stmt 0 view .LVU68
- 400 00c0 0024     		movs	r4, #0
- 401              	.LBE5:
+ 411              		.loc 1 258 14 is_stmt 0 view .LVU68
+ 412 00c0 0024     		movs	r4, #0
+ 413              	.LBE5:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 18
+
+
  255:project/src/freertos_app.c ****     
- 402              		.loc 1 255 13 view .LVU69
- 403 00c2 2546     		mov	r5, r4
- 404              	.LBB6:
+ 414              		.loc 1 255 13 view .LVU69
+ 415 00c2 2746     		mov	r7, r4
+ 416              	.LBB6:
  258:project/src/freertos_app.c ****     {
- 405              		.loc 1 258 5 view .LVU70
- 406 00c4 C0E7     		b	.L13
- 407              	.LVL33:
- 408              	.L35:
+ 417              		.loc 1 258 5 view .LVU70
+ 418 00c4 C0E7     		b	.L13
+ 419              	.LVL33:
+ 420              	.L35:
  258:project/src/freertos_app.c ****     {
- 409              		.loc 1 258 5 view .LVU71
- 410              	.LBE6:
+ 421              		.loc 1 258 5 view .LVU71
+ 422              	.LBE6:
  275:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
- 411              		.loc 1 275 7 is_stmt 1 view .LVU72
- 412 00c6 6948     		ldr	r0, .L39+24
- 413 00c8 FFF7FEFF 		bl	usb_send_string
- 414              	.LVL34:
+ 423              		.loc 1 275 7 is_stmt 1 view .LVU72
+ 424 00c6 8448     		ldr	r0, .L39+24
+ 425 00c8 FFF7FEFF 		bl	usb_send_string
+ 426              	.LVL34:
  276:project/src/freertos_app.c ****       usb_send_string(" V\n");
- 415              		.loc 1 276 7 view .LVU73
- 416 00cc 0220     		movs	r0, #2
- 417 00ce 9DED0F0A 		vldr.32	s0, [sp, #60]
- 418 00d2 FFF7FEFF 		bl	usb_send_float
- 419              	.LVL35:
+ 427              		.loc 1 276 7 view .LVU73
+ 428 00cc 0220     		movs	r0, #2
+ 429 00ce 9DED120A 		vldr.32	s0, [sp, #72]
+ 430 00d2 FFF7FEFF 		bl	usb_send_float
+ 431              	.LVL35:
  277:project/src/freertos_app.c ****       error_flag = 1;
- 420              		.loc 1 277 7 view .LVU74
- 421 00d6 6648     		ldr	r0, .L39+28
- 422 00d8 FFF7FEFF 		bl	usb_send_string
- 423              	.LVL36:
+ 432              		.loc 1 277 7 view .LVU74
+ 433 00d6 8148     		ldr	r0, .L39+28
+ 434 00d8 FFF7FEFF 		bl	usb_send_string
+ 435              	.LVL36:
  278:project/src/freertos_app.c ****     }
- 424              		.loc 1 278 7 view .LVU75
+ 436              		.loc 1 278 7 view .LVU75
  278:project/src/freertos_app.c ****     }
- 425              		.loc 1 278 18 is_stmt 0 view .LVU76
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 18
-
-
- 426 00dc 0125     		movs	r5, #1
- 427 00de CBE7     		b	.L17
- 428              	.LVL37:
- 429              	.L36:
+ 437              		.loc 1 278 18 is_stmt 0 view .LVU76
+ 438 00dc 0127     		movs	r7, #1
+ 439 00de CBE7     		b	.L17
+ 440              	.LVL37:
+ 441              	.L36:
  284:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
- 430              		.loc 1 284 7 is_stmt 1 view .LVU77
- 431 00e0 6448     		ldr	r0, .L39+32
- 432 00e2 FFF7FEFF 		bl	usb_send_string
- 433              	.LVL38:
+ 442              		.loc 1 284 7 is_stmt 1 view .LVU77
+ 443 00e0 7F48     		ldr	r0, .L39+32
+ 444 00e2 FFF7FEFF 		bl	usb_send_string
+ 445              	.LVL38:
  285:project/src/freertos_app.c ****       usb_send_string(" V\n");
- 434              		.loc 1 285 7 view .LVU78
- 435 00e6 0220     		movs	r0, #2
- 436 00e8 9DED0F0A 		vldr.32	s0, [sp, #60]
- 437 00ec FFF7FEFF 		bl	usb_send_float
- 438              	.LVL39:
+ 446              		.loc 1 285 7 view .LVU78
+ 447 00e6 0220     		movs	r0, #2
+ 448 00e8 9DED120A 		vldr.32	s0, [sp, #72]
+ 449 00ec FFF7FEFF 		bl	usb_send_float
+ 450              	.LVL39:
  286:project/src/freertos_app.c ****       error_flag = 1;
- 439              		.loc 1 286 7 view .LVU79
- 440 00f0 5F48     		ldr	r0, .L39+28
- 441 00f2 FFF7FEFF 		bl	usb_send_string
- 442              	.LVL40:
+ 451              		.loc 1 286 7 view .LVU79
+ 452 00f0 7A48     		ldr	r0, .L39+28
+ 453 00f2 FFF7FEFF 		bl	usb_send_string
+ 454              	.LVL40:
  287:project/src/freertos_app.c ****     }
- 443              		.loc 1 287 7 view .LVU80
+ 455              		.loc 1 287 7 view .LVU80
  287:project/src/freertos_app.c ****     }
- 444              		.loc 1 287 18 is_stmt 0 view .LVU81
- 445 00f6 0125     		movs	r5, #1
- 446 00f8 C7E7     		b	.L19
- 447              	.LVL41:
- 448              	.L37:
+ 456              		.loc 1 287 18 is_stmt 0 view .LVU81
+ 457 00f6 0127     		movs	r7, #1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 19
+
+
+ 458 00f8 C7E7     		b	.L19
+ 459              	.LVL41:
+ 460              	.L37:
  293:project/src/freertos_app.c ****       usb_send_float(monitor_data.mos_temperature, 2);
- 449              		.loc 1 293 7 is_stmt 1 view .LVU82
- 450 00fa 5F48     		ldr	r0, .L39+36
- 451 00fc FFF7FEFF 		bl	usb_send_string
- 452              	.LVL42:
+ 461              		.loc 1 293 7 is_stmt 1 view .LVU82
+ 462 00fa 7A48     		ldr	r0, .L39+36
+ 463 00fc FFF7FEFF 		bl	usb_send_string
+ 464              	.LVL42:
  294:project/src/freertos_app.c ****       usb_send_string(" °C\n");
- 453              		.loc 1 294 7 view .LVU83
- 454 0100 0220     		movs	r0, #2
- 455 0102 9DED100A 		vldr.32	s0, [sp, #64]
- 456 0106 FFF7FEFF 		bl	usb_send_float
- 457              	.LVL43:
+ 465              		.loc 1 294 7 view .LVU83
+ 466 0100 0220     		movs	r0, #2
+ 467 0102 9DED130A 		vldr.32	s0, [sp, #76]
+ 468 0106 FFF7FEFF 		bl	usb_send_float
+ 469              	.LVL43:
  295:project/src/freertos_app.c ****       error_flag = 1;
- 458              		.loc 1 295 7 view .LVU84
- 459 010a 5C48     		ldr	r0, .L39+40
- 460 010c FFF7FEFF 		bl	usb_send_string
- 461              	.LVL44:
+ 470              		.loc 1 295 7 view .LVU84
+ 471 010a 7748     		ldr	r0, .L39+40
+ 472 010c FFF7FEFF 		bl	usb_send_string
+ 473              	.LVL44:
  296:project/src/freertos_app.c ****     }
- 462              		.loc 1 296 7 view .LVU85
+ 474              		.loc 1 296 7 view .LVU85
  296:project/src/freertos_app.c ****     }
- 463              		.loc 1 296 18 is_stmt 0 view .LVU86
- 464 0110 0125     		movs	r5, #1
- 465 0112 C3E7     		b	.L21
- 466              	.LVL45:
- 467              	.L38:
- 468              	.LBB7:
- 303:project/src/freertos_app.c ****       
- 469              		.loc 1 303 7 is_stmt 1 view .LVU87
- 470 0114 5A48     		ldr	r0, .L39+44
- 471              	.LVL46:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 19
+ 475              		.loc 1 296 18 is_stmt 0 view .LVU86
+ 476 0110 0127     		movs	r7, #1
+ 477 0112 C3E7     		b	.L21
+ 478              	.LVL45:
+ 479              	.L38:
+ 480              	.LBB7:
+ 303:project/src/freertos_app.c ****            
+ 481              		.loc 1 303 7 is_stmt 1 view .LVU87
+ 482 0114 7548     		ldr	r0, .L39+44
+ 483              	.LVL46:
+ 303:project/src/freertos_app.c ****            
+ 484              		.loc 1 303 7 is_stmt 0 view .LVU88
+ 485 0116 FFF7FEFF 		bl	usb_send_string
+ 486              	.LVL47:
+ 305:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[0], 2);
+ 487              		.loc 1 305 7 is_stmt 1 view .LVU89
+ 488 011a 7548     		ldr	r0, .L39+48
+ 489 011c FFF7FEFF 		bl	usb_send_string
+ 490              	.LVL48:
+ 306:project/src/freertos_app.c ****       usb_send_string(" A, B=");
+ 491              		.loc 1 306 7 view .LVU90
+ 492 0120 0220     		movs	r0, #2
+ 493 0122 9DED0C0A 		vldr.32	s0, [sp, #48]
+ 494 0126 FFF7FEFF 		bl	usb_send_float
+ 495              	.LVL49:
+ 307:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[1], 2);
+ 496              		.loc 1 307 7 view .LVU91
+ 497 012a 7248     		ldr	r0, .L39+52
+ 498 012c FFF7FEFF 		bl	usb_send_string
+ 499              	.LVL50:
+ 308:project/src/freertos_app.c ****       usb_send_string(" A, C=");
+ 500              		.loc 1 308 7 view .LVU92
+ 501 0130 0220     		movs	r0, #2
+ 502 0132 9DED0D0A 		vldr.32	s0, [sp, #52]
+ 503 0136 FFF7FEFF 		bl	usb_send_float
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 20
 
 
- 303:project/src/freertos_app.c ****       
- 472              		.loc 1 303 7 is_stmt 0 view .LVU88
- 473 0116 FFF7FEFF 		bl	usb_send_string
- 474              	.LVL47:
- 305:project/src/freertos_app.c ****       usb_send_float(3.14159, 2);
- 475              		.loc 1 305 7 is_stmt 1 view .LVU89
- 476 011a 5A48     		ldr	r0, .L39+48
- 477 011c FFF7FEFF 		bl	usb_send_string
- 478              	.LVL48:
- 306:project/src/freertos_app.c ****       usb_send_string(" A\n");
- 479              		.loc 1 306 7 view .LVU90
- 480 0120 0220     		movs	r0, #2
- 481 0122 9FED590A 		vldr.32	s0, .L39+52
- 482 0126 FFF7FEFF 		bl	usb_send_float
- 483              	.LVL49:
- 307:project/src/freertos_app.c ****       
- 484              		.loc 1 307 7 view .LVU91
- 485 012a 4C4E     		ldr	r6, .L39+8
- 486              	.LVL50:
- 307:project/src/freertos_app.c ****       
- 487              		.loc 1 307 7 is_stmt 0 view .LVU92
- 488 012c 3046     		mov	r0, r6
- 489 012e FFF7FEFF 		bl	usb_send_string
- 490              	.LVL51:
- 309:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[0], 2);
- 491              		.loc 1 309 7 is_stmt 1 view .LVU93
- 492 0132 5648     		ldr	r0, .L39+56
- 493 0134 FFF7FEFF 		bl	usb_send_string
- 494              	.LVL52:
- 310:project/src/freertos_app.c ****       usb_send_string(" A, B=");
- 495              		.loc 1 310 7 view .LVU94
- 496 0138 0220     		movs	r0, #2
- 497 013a 9DED090A 		vldr.32	s0, [sp, #36]
- 498 013e FFF7FEFF 		bl	usb_send_float
- 499              	.LVL53:
- 311:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[1], 2);
- 500              		.loc 1 311 7 view .LVU95
- 501 0142 5348     		ldr	r0, .L39+60
- 502 0144 FFF7FEFF 		bl	usb_send_string
- 503              	.LVL54:
- 312:project/src/freertos_app.c ****       usb_send_string(" A, C=");
- 504              		.loc 1 312 7 view .LVU96
- 505 0148 0220     		movs	r0, #2
- 506 014a 9DED0A0A 		vldr.32	s0, [sp, #40]
- 507 014e FFF7FEFF 		bl	usb_send_float
- 508              	.LVL55:
- 313:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[2], 2);
- 509              		.loc 1 313 7 view .LVU97
- 510 0152 5048     		ldr	r0, .L39+64
- 511 0154 FFF7FEFF 		bl	usb_send_string
- 512              	.LVL56:
- 314:project/src/freertos_app.c ****       usb_send_string(" A\n");
- 513              		.loc 1 314 7 view .LVU98
- 514 0158 0220     		movs	r0, #2
- 515 015a 9DED0B0A 		vldr.32	s0, [sp, #44]
- 516 015e FFF7FEFF 		bl	usb_send_float
- 517              	.LVL57:
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 20
+ 504              	.LVL51:
+ 309:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_current[2], 2);
+ 505              		.loc 1 309 7 view .LVU93
+ 506 013a 6F48     		ldr	r0, .L39+56
+ 507 013c FFF7FEFF 		bl	usb_send_string
+ 508              	.LVL52:
+ 310:project/src/freertos_app.c ****       usb_send_string(" A\n");
+ 509              		.loc 1 310 7 view .LVU94
+ 510 0140 0220     		movs	r0, #2
+ 511 0142 9DED0E0A 		vldr.32	s0, [sp, #56]
+ 512 0146 FFF7FEFF 		bl	usb_send_float
+ 513              	.LVL53:
+ 311:project/src/freertos_app.c ****       
+ 514              		.loc 1 311 7 view .LVU95
+ 515 014a 5F48     		ldr	r0, .L39+8
+ 516 014c FFF7FEFF 		bl	usb_send_string
+ 517              	.LVL54:
+ 313:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[0], 2);
+ 518              		.loc 1 313 7 view .LVU96
+ 519 0150 6A48     		ldr	r0, .L39+60
+ 520 0152 FFF7FEFF 		bl	usb_send_string
+ 521              	.LVL55:
+ 314:project/src/freertos_app.c ****       usb_send_string(" V, B=");
+ 522              		.loc 1 314 7 view .LVU97
+ 523 0156 0220     		movs	r0, #2
+ 524 0158 9DED0F0A 		vldr.32	s0, [sp, #60]
+ 525 015c FFF7FEFF 		bl	usb_send_float
+ 526              	.LVL56:
+ 315:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[1], 2);
+ 527              		.loc 1 315 7 view .LVU98
+ 528 0160 6748     		ldr	r0, .L39+64
+ 529 0162 FFF7FEFF 		bl	usb_send_string
+ 530              	.LVL57:
+ 316:project/src/freertos_app.c ****       usb_send_string(" V, C=");
+ 531              		.loc 1 316 7 view .LVU99
+ 532 0166 0220     		movs	r0, #2
+ 533 0168 9DED100A 		vldr.32	s0, [sp, #64]
+ 534 016c FFF7FEFF 		bl	usb_send_float
+ 535              	.LVL58:
+ 317:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[2], 2);
+ 536              		.loc 1 317 7 view .LVU100
+ 537 0170 6448     		ldr	r0, .L39+68
+ 538 0172 FFF7FEFF 		bl	usb_send_string
+ 539              	.LVL59:
+ 318:project/src/freertos_app.c ****       usb_send_string(" V\n");
+ 540              		.loc 1 318 7 view .LVU101
+ 541 0176 0220     		movs	r0, #2
+ 542 0178 9DED110A 		vldr.32	s0, [sp, #68]
+ 543 017c FFF7FEFF 		bl	usb_send_float
+ 544              	.LVL60:
+ 319:project/src/freertos_app.c ****       
+ 545              		.loc 1 319 7 view .LVU102
+ 546 0180 564D     		ldr	r5, .L39+28
+ 547              	.LVL61:
+ 319:project/src/freertos_app.c ****       
+ 548              		.loc 1 319 7 is_stmt 0 view .LVU103
+ 549 0182 2846     		mov	r0, r5
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 21
 
 
- 315:project/src/freertos_app.c ****       
- 518              		.loc 1 315 7 view .LVU99
- 519 0162 3046     		mov	r0, r6
- 520 0164 FFF7FEFF 		bl	usb_send_string
- 521              	.LVL58:
- 317:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[0], 2);
- 522              		.loc 1 317 7 view .LVU100
- 523 0168 4B48     		ldr	r0, .L39+68
- 524 016a FFF7FEFF 		bl	usb_send_string
- 525              	.LVL59:
- 318:project/src/freertos_app.c ****       usb_send_string(" V, B=");
- 526              		.loc 1 318 7 view .LVU101
- 527 016e 0220     		movs	r0, #2
- 528 0170 9DED0C0A 		vldr.32	s0, [sp, #48]
- 529 0174 FFF7FEFF 		bl	usb_send_float
- 530              	.LVL60:
- 319:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[1], 2);
- 531              		.loc 1 319 7 view .LVU102
- 532 0178 4848     		ldr	r0, .L39+72
- 533 017a FFF7FEFF 		bl	usb_send_string
- 534              	.LVL61:
- 320:project/src/freertos_app.c ****       usb_send_string(" V, C=");
- 535              		.loc 1 320 7 view .LVU103
- 536 017e 0220     		movs	r0, #2
- 537 0180 9DED0D0A 		vldr.32	s0, [sp, #52]
- 538 0184 FFF7FEFF 		bl	usb_send_float
- 539              	.LVL62:
- 321:project/src/freertos_app.c ****       usb_send_float(monitor_data.phase_voltage[2], 2);
- 540              		.loc 1 321 7 view .LVU104
- 541 0188 4548     		ldr	r0, .L39+76
- 542 018a FFF7FEFF 		bl	usb_send_string
- 543              	.LVL63:
+ 550 0184 FFF7FEFF 		bl	usb_send_string
+ 551              	.LVL62:
+ 321:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
+ 552              		.loc 1 321 7 is_stmt 1 view .LVU104
+ 553 0188 5F48     		ldr	r0, .L39+72
+ 554 018a FFF7FEFF 		bl	usb_send_string
+ 555              	.LVL63:
  322:project/src/freertos_app.c ****       usb_send_string(" V\n");
- 544              		.loc 1 322 7 view .LVU105
- 545 018e 0220     		movs	r0, #2
- 546 0190 9DED0E0A 		vldr.32	s0, [sp, #56]
- 547 0194 FFF7FEFF 		bl	usb_send_float
- 548              	.LVL64:
+ 556              		.loc 1 322 7 view .LVU105
+ 557 018e 0220     		movs	r0, #2
+ 558 0190 9DED120A 		vldr.32	s0, [sp, #72]
+ 559 0194 FFF7FEFF 		bl	usb_send_float
+ 560              	.LVL64:
  323:project/src/freertos_app.c ****       
- 549              		.loc 1 323 7 view .LVU106
- 550 0198 354E     		ldr	r6, .L39+28
- 551 019a 3046     		mov	r0, r6
- 552 019c FFF7FEFF 		bl	usb_send_string
- 553              	.LVL65:
- 325:project/src/freertos_app.c ****       usb_send_float(monitor_data.dc_link_voltage, 2);
- 554              		.loc 1 325 7 view .LVU107
- 555 01a0 4048     		ldr	r0, .L39+80
- 556 01a2 FFF7FEFF 		bl	usb_send_string
- 557              	.LVL66:
- 326:project/src/freertos_app.c ****       usb_send_string(" V\n");
- 558              		.loc 1 326 7 view .LVU108
- 559 01a6 0220     		movs	r0, #2
- 560 01a8 9DED0F0A 		vldr.32	s0, [sp, #60]
- 561 01ac FFF7FEFF 		bl	usb_send_float
- 562              	.LVL67:
+ 561              		.loc 1 323 7 view .LVU106
+ 562 0198 2846     		mov	r0, r5
+ 563 019a FFF7FEFF 		bl	usb_send_string
+ 564              	.LVL65:
+ 325:project/src/freertos_app.c ****       usb_send_float(monitor_data.mos_temperature, 2);
+ 565              		.loc 1 325 7 view .LVU107
+ 566 019e 5B48     		ldr	r0, .L39+76
+ 567 01a0 FFF7FEFF 		bl	usb_send_string
+ 568              	.LVL66:
+ 326:project/src/freertos_app.c ****       usb_send_string(" °C\n");
+ 569              		.loc 1 326 7 view .LVU108
+ 570 01a4 0220     		movs	r0, #2
+ 571 01a6 9DED130A 		vldr.32	s0, [sp, #76]
+ 572 01aa FFF7FEFF 		bl	usb_send_float
+ 573              	.LVL67:
  327:project/src/freertos_app.c ****       
- 563              		.loc 1 327 7 view .LVU109
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 21
+ 574              		.loc 1 327 7 view .LVU109
+ 575 01ae 4E48     		ldr	r0, .L39+40
+ 576 01b0 FFF7FEFF 		bl	usb_send_string
+ 577              	.LVL68:
+ 329:project/src/freertos_app.c ****       char speed_buf[10];
+ 578              		.loc 1 329 7 view .LVU110
+ 579 01b4 5648     		ldr	r0, .L39+80
+ 580 01b6 FFF7FEFF 		bl	usb_send_string
+ 581              	.LVL69:
+ 330:project/src/freertos_app.c ****       sprintf(speed_buf, "%d", motor.speed);
+ 582              		.loc 1 330 7 view .LVU111
+ 331:project/src/freertos_app.c ****       usb_send_string(speed_buf);
+ 583              		.loc 1 331 7 view .LVU112
+ 331:project/src/freertos_app.c ****       usb_send_string(speed_buf);
+ 584              		.loc 1 331 37 is_stmt 0 view .LVU113
+ 585 01ba 564D     		ldr	r5, .L39+84
+ 331:project/src/freertos_app.c ****       usb_send_string(speed_buf);
+ 586              		.loc 1 331 7 view .LVU114
+ 587 01bc DFF87081 		ldr	r8, .L39+112
+ 588 01c0 AA88     		ldrh	r2, [r5, #4]
+ 589 01c2 4146     		mov	r1, r8
+ 590 01c4 6846     		mov	r0, sp
+ 591 01c6 FFF7FEFF 		bl	sprintf
+ 592              	.LVL70:
+ 332:project/src/freertos_app.c ****       usb_send_string(" RPM\n");
+ 593              		.loc 1 332 7 is_stmt 1 view .LVU115
+ 594 01ca 6846     		mov	r0, sp
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 22
 
 
- 564 01b0 3046     		mov	r0, r6
- 565 01b2 FFF7FEFF 		bl	usb_send_string
- 566              	.LVL68:
- 329:project/src/freertos_app.c ****       usb_send_float(monitor_data.mos_temperature, 2);
- 567              		.loc 1 329 7 view .LVU110
- 568 01b6 3C48     		ldr	r0, .L39+84
- 569 01b8 FFF7FEFF 		bl	usb_send_string
- 570              	.LVL69:
- 330:project/src/freertos_app.c ****       usb_send_string(" °C\n");
- 571              		.loc 1 330 7 view .LVU111
- 572 01bc 0220     		movs	r0, #2
- 573 01be 9DED100A 		vldr.32	s0, [sp, #64]
- 574 01c2 FFF7FEFF 		bl	usb_send_float
- 575              	.LVL70:
- 331:project/src/freertos_app.c ****       
- 576              		.loc 1 331 7 view .LVU112
- 577 01c6 2D48     		ldr	r0, .L39+40
- 578 01c8 FFF7FEFF 		bl	usb_send_string
- 579              	.LVL71:
- 333:project/src/freertos_app.c ****       char speed_buf[10];
- 580              		.loc 1 333 7 view .LVU113
- 581 01cc 3748     		ldr	r0, .L39+88
- 582 01ce FFF7FEFF 		bl	usb_send_string
- 583              	.LVL72:
- 334:project/src/freertos_app.c ****       sprintf(speed_buf, "%d", motor.speed);
- 584              		.loc 1 334 7 view .LVU114
- 335:project/src/freertos_app.c ****       usb_send_string(speed_buf);
- 585              		.loc 1 335 7 view .LVU115
- 335:project/src/freertos_app.c ****       usb_send_string(speed_buf);
- 586              		.loc 1 335 37 is_stmt 0 view .LVU116
- 587 01d2 374E     		ldr	r6, .L39+92
- 335:project/src/freertos_app.c ****       usb_send_string(speed_buf);
- 588              		.loc 1 335 7 view .LVU117
- 589 01d4 DFF8F480 		ldr	r8, .L39+120
- 590 01d8 B288     		ldrh	r2, [r6, #4]
- 591 01da 4146     		mov	r1, r8
- 592 01dc 6846     		mov	r0, sp
- 593 01de FFF7FEFF 		bl	sprintf
- 594              	.LVL73:
- 336:project/src/freertos_app.c ****       usb_send_string(" RPM\n");
- 595              		.loc 1 336 7 is_stmt 1 view .LVU118
- 596 01e2 6846     		mov	r0, sp
- 597 01e4 FFF7FEFF 		bl	usb_send_string
- 598              	.LVL74:
- 337:project/src/freertos_app.c ****       
- 599              		.loc 1 337 7 view .LVU119
- 600 01e8 3248     		ldr	r0, .L39+96
- 601 01ea FFF7FEFF 		bl	usb_send_string
- 602              	.LVL75:
- 339:project/src/freertos_app.c ****       char comm_buf[10];
- 603              		.loc 1 339 7 view .LVU120
- 604 01ee 3248     		ldr	r0, .L39+100
- 605 01f0 FFF7FEFF 		bl	usb_send_string
- 606              	.LVL76:
- 340:project/src/freertos_app.c ****       sprintf(comm_buf, "%d", motor.comm_state);
- 607              		.loc 1 340 7 view .LVU121
- 341:project/src/freertos_app.c ****       usb_send_string(comm_buf);
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 22
-
-
- 608              		.loc 1 341 7 view .LVU122
- 609 01f4 03AF     		add	r7, sp, #12
- 610 01f6 B278     		ldrb	r2, [r6, #2]	@ zero_extendqisi2
- 611 01f8 4146     		mov	r1, r8
- 612 01fa 3846     		mov	r0, r7
- 613 01fc FFF7FEFF 		bl	sprintf
- 614              	.LVL77:
+ 595 01cc FFF7FEFF 		bl	usb_send_string
+ 596              	.LVL71:
+ 333:project/src/freertos_app.c ****       
+ 597              		.loc 1 333 7 view .LVU116
+ 598 01d0 5148     		ldr	r0, .L39+88
+ 599 01d2 FFF7FEFF 		bl	usb_send_string
+ 600              	.LVL72:
+ 335:project/src/freertos_app.c ****       char comm_buf[10];
+ 601              		.loc 1 335 7 view .LVU117
+ 602 01d6 5148     		ldr	r0, .L39+92
+ 603 01d8 FFF7FEFF 		bl	usb_send_string
+ 604              	.LVL73:
+ 336:project/src/freertos_app.c ****       sprintf(comm_buf, "%d", motor.comm_state);
+ 605              		.loc 1 336 7 view .LVU118
+ 337:project/src/freertos_app.c ****       usb_send_string(comm_buf);
+ 606              		.loc 1 337 7 view .LVU119
+ 607 01dc 03AE     		add	r6, sp, #12
+ 608 01de AA78     		ldrb	r2, [r5, #2]	@ zero_extendqisi2
+ 609 01e0 4146     		mov	r1, r8
+ 610 01e2 3046     		mov	r0, r6
+ 611 01e4 FFF7FEFF 		bl	sprintf
+ 612              	.LVL74:
+ 338:project/src/freertos_app.c ****       usb_send_string("\n");
+ 613              		.loc 1 338 7 view .LVU120
+ 614 01e8 3046     		mov	r0, r6
+ 615 01ea FFF7FEFF 		bl	usb_send_string
+ 616              	.LVL75:
+ 339:project/src/freertos_app.c ****       
+ 617              		.loc 1 339 7 view .LVU121
+ 618 01ee 4C48     		ldr	r0, .L39+96
+ 619 01f0 FFF7FEFF 		bl	usb_send_string
+ 620              	.LVL76:
+ 341:project/src/freertos_app.c ****       usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
+ 621              		.loc 1 341 7 view .LVU122
+ 622 01f4 4B48     		ldr	r0, .L39+100
+ 623 01f6 FFF7FEFF 		bl	usb_send_string
+ 624              	.LVL77:
  342:project/src/freertos_app.c ****       usb_send_string("\n");
- 615              		.loc 1 342 7 view .LVU123
- 616 0200 3846     		mov	r0, r7
- 617 0202 FFF7FEFF 		bl	usb_send_string
- 618              	.LVL78:
+ 625              		.loc 1 342 7 view .LVU123
+ 342:project/src/freertos_app.c ****       usb_send_string("\n");
+ 626              		.loc 1 342 28 is_stmt 0 view .LVU124
+ 627 01fa 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 342:project/src/freertos_app.c ****       usb_send_string("\n");
+ 628              		.loc 1 342 7 view .LVU125
+ 629 01fc 002B     		cmp	r3, #0
+ 630 01fe 5DD1     		bne	.L27
+ 342:project/src/freertos_app.c ****       usb_send_string("\n");
+ 631              		.loc 1 342 7 discriminator 1 view .LVU126
+ 632 0200 4948     		ldr	r0, .L39+104
+ 633              	.L24:
+ 342:project/src/freertos_app.c ****       usb_send_string("\n");
+ 634              		.loc 1 342 7 discriminator 4 view .LVU127
+ 635 0202 FFF7FEFF 		bl	usb_send_string
+ 636              	.LVL78:
  343:project/src/freertos_app.c ****       
- 619              		.loc 1 343 7 view .LVU124
- 620 0206 2D48     		ldr	r0, .L39+104
- 621 0208 FFF7FEFF 		bl	usb_send_string
- 622              	.LVL79:
- 345:project/src/freertos_app.c ****       usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
- 623              		.loc 1 345 7 view .LVU125
- 624 020c 2C48     		ldr	r0, .L39+108
- 625 020e FFF7FEFF 		bl	usb_send_string
- 626              	.LVL80:
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 627              		.loc 1 346 7 view .LVU126
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 628              		.loc 1 346 28 is_stmt 0 view .LVU127
- 629 0212 7378     		ldrb	r3, [r6, #1]	@ zero_extendqisi2
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 630              		.loc 1 346 7 view .LVU128
- 631 0214 DBB9     		cbnz	r3, .L27
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 632              		.loc 1 346 7 discriminator 1 view .LVU129
- 633 0216 2B48     		ldr	r0, .L39+112
- 634              	.L24:
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 635              		.loc 1 346 7 discriminator 4 view .LVU130
- 636 0218 FFF7FEFF 		bl	usb_send_string
- 637              	.LVL81:
- 347:project/src/freertos_app.c ****       
- 638              		.loc 1 347 7 is_stmt 1 view .LVU131
- 639 021c 274E     		ldr	r6, .L39+104
- 640 021e 3046     		mov	r0, r6
- 641 0220 FFF7FEFF 		bl	usb_send_string
- 642              	.LVL82:
- 349:project/src/freertos_app.c ****       char state_buf[10];
- 643              		.loc 1 349 7 view .LVU132
- 644 0224 2848     		ldr	r0, .L39+116
- 645 0226 FFF7FEFF 		bl	usb_send_string
- 646              	.LVL83:
- 350:project/src/freertos_app.c ****       sprintf(state_buf, "%d", motor.state);
- 647              		.loc 1 350 7 view .LVU133
- 351:project/src/freertos_app.c ****       usb_send_string(state_buf);
- 648              		.loc 1 351 7 view .LVU134
- 649 022a 06AF     		add	r7, sp, #24
- 650 022c 204B     		ldr	r3, .L39+92
- 651 022e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 652 0230 2649     		ldr	r1, .L39+120
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 23
+ 637              		.loc 1 343 7 is_stmt 1 view .LVU128
+ 638 0206 DFF81881 		ldr	r8, .L39+96
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 23
 
 
- 653 0232 3846     		mov	r0, r7
- 654 0234 FFF7FEFF 		bl	sprintf
- 655              	.LVL84:
- 352:project/src/freertos_app.c ****       usb_send_string("\n");
- 656              		.loc 1 352 7 view .LVU135
- 657 0238 3846     		mov	r0, r7
- 658 023a FFF7FEFF 		bl	usb_send_string
- 659              	.LVL85:
- 353:project/src/freertos_app.c ****       
- 660              		.loc 1 353 7 view .LVU136
- 661 023e 3046     		mov	r0, r6
- 662 0240 FFF7FEFF 		bl	usb_send_string
- 663              	.LVL86:
- 355:project/src/freertos_app.c ****       
- 664              		.loc 1 355 7 view .LVU137
- 665 0244 2248     		ldr	r0, .L39+124
- 666 0246 FFF7FEFF 		bl	usb_send_string
- 667              	.LVL87:
- 357:project/src/freertos_app.c ****     }
- 668              		.loc 1 357 7 view .LVU138
- 357:project/src/freertos_app.c ****     }
- 669              		.loc 1 357 23 is_stmt 0 view .LVU139
- 670 024a 2646     		mov	r6, r4
- 671 024c 2DE7     		b	.L23
- 672              	.LVL88:
- 673              	.L27:
- 346:project/src/freertos_app.c ****       usb_send_string("\n");
- 674              		.loc 1 346 7 discriminator 2 view .LVU140
- 675 024e 2148     		ldr	r0, .L39+128
- 676 0250 E2E7     		b	.L24
- 677              	.L40:
- 678 0252 00BF     		.align	2
- 679              	.L39:
- 680 0254 08000000 		.word	.LC2
- 681 0258 18000000 		.word	.LC3
- 682 025c 28000000 		.word	.LC4
- 683 0260 00001042 		.word	1108344832
- 684 0264 0000A042 		.word	1117782016
- 685 0268 B0010000 		.word	.LC28
- 686 026c 2C000000 		.word	.LC5
- 687 0270 4C000000 		.word	.LC6
- 688 0274 50000000 		.word	.LC7
- 689 0278 70000000 		.word	.LC8
- 690 027c 90000000 		.word	.LC9
- 691 0280 98000000 		.word	.LC10
- 692 0284 B8000000 		.word	.LC11
- 693 0288 D00F4940 		.word	1078530000
- 694 028c C8000000 		.word	.LC12
- 695 0290 DC000000 		.word	.LC13
- 696 0294 E4000000 		.word	.LC14
- 697 0298 EC000000 		.word	.LC15
- 698 029c 00010000 		.word	.LC16
- 699 02a0 08010000 		.word	.LC17
- 700 02a4 10010000 		.word	.LC18
- 701 02a8 24010000 		.word	.LC19
- 702 02ac 38010000 		.word	.LC20
- 703 02b0 00000000 		.word	motor
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 24
+ 639 020a 4046     		mov	r0, r8
+ 640 020c FFF7FEFF 		bl	usb_send_string
+ 641              	.LVL79:
+ 345:project/src/freertos_app.c ****       char state_buf[10];
+ 642              		.loc 1 345 7 view .LVU129
+ 643 0210 4648     		ldr	r0, .L39+108
+ 644 0212 FFF7FEFF 		bl	usb_send_string
+ 645              	.LVL80:
+ 346:project/src/freertos_app.c ****       sprintf(state_buf, "%d", motor.state);
+ 646              		.loc 1 346 7 view .LVU130
+ 347:project/src/freertos_app.c ****       usb_send_string(state_buf);
+ 647              		.loc 1 347 7 view .LVU131
+ 648 0216 464E     		ldr	r6, .L39+112
+ 649 0218 06AD     		add	r5, sp, #24
+ 650 021a 3E4B     		ldr	r3, .L39+84
+ 651 021c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 652 021e 3146     		mov	r1, r6
+ 653 0220 2846     		mov	r0, r5
+ 654 0222 FFF7FEFF 		bl	sprintf
+ 655              	.LVL81:
+ 348:project/src/freertos_app.c ****       usb_send_string("\n");
+ 656              		.loc 1 348 7 view .LVU132
+ 657 0226 2846     		mov	r0, r5
+ 658 0228 FFF7FEFF 		bl	usb_send_string
+ 659              	.LVL82:
+ 349:project/src/freertos_app.c ****       
+ 660              		.loc 1 349 7 view .LVU133
+ 661 022c 4046     		mov	r0, r8
+ 662 022e FFF7FEFF 		bl	usb_send_string
+ 663              	.LVL83:
+ 352:project/src/freertos_app.c ****       char adc_buf[10];
+ 664              		.loc 1 352 7 view .LVU134
+ 665 0232 4048     		ldr	r0, .L39+116
+ 666 0234 FFF7FEFF 		bl	usb_send_string
+ 667              	.LVL84:
+ 353:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[0]);
+ 668              		.loc 1 353 7 view .LVU135
+ 354:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 669              		.loc 1 354 7 view .LVU136
+ 670 0238 09AD     		add	r5, sp, #36
+ 671 023a BDF85020 		ldrh	r2, [sp, #80]
+ 672 023e 3146     		mov	r1, r6
+ 673 0240 2846     		mov	r0, r5
+ 674 0242 FFF7FEFF 		bl	sprintf
+ 675              	.LVL85:
+ 355:project/src/freertos_app.c ****       usb_send_string(", B=");
+ 676              		.loc 1 355 7 view .LVU137
+ 677 0246 2846     		mov	r0, r5
+ 678 0248 FFF7FEFF 		bl	usb_send_string
+ 679              	.LVL86:
+ 356:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[1]);
+ 680              		.loc 1 356 7 view .LVU138
+ 681 024c 3A48     		ldr	r0, .L39+120
+ 682 024e FFF7FEFF 		bl	usb_send_string
+ 683              	.LVL87:
+ 357:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 684              		.loc 1 357 7 view .LVU139
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 24
 
 
- 704 02b4 4C010000 		.word	.LC22
- 705 02b8 54010000 		.word	.LC23
- 706 02bc 68010000 		.word	.LC24
- 707 02c0 6C010000 		.word	.LC25
- 708 02c4 00000000 		.word	.LC0
- 709 02c8 80010000 		.word	.LC26
- 710 02cc 48010000 		.word	.LC21
- 711 02d0 90010000 		.word	.LC27
- 712 02d4 04000000 		.word	.LC1
- 713              	.LBE7:
- 714              	.LBE8:
- 715              		.cfi_endproc
- 716              	.LFE146:
- 718              		.section	.text.vApplicationGetIdleTaskMemory,"ax",%progbits
- 719              		.align	1
- 720              		.global	vApplicationGetIdleTaskMemory
- 721              		.syntax unified
- 722              		.thumb
- 723              		.thumb_func
- 725              	vApplicationGetIdleTaskMemory:
- 726              	.LVL89:
- 727              	.LFB141:
+ 685 0252 BDF85220 		ldrh	r2, [sp, #82]
+ 686 0256 3146     		mov	r1, r6
+ 687 0258 2846     		mov	r0, r5
+ 688 025a FFF7FEFF 		bl	sprintf
+ 689              	.LVL88:
+ 358:project/src/freertos_app.c ****       usb_send_string(", C=");
+ 690              		.loc 1 358 7 view .LVU140
+ 691 025e 2846     		mov	r0, r5
+ 692 0260 FFF7FEFF 		bl	usb_send_string
+ 693              	.LVL89:
+ 359:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[2]);
+ 694              		.loc 1 359 7 view .LVU141
+ 695 0264 3548     		ldr	r0, .L39+124
+ 696 0266 FFF7FEFF 		bl	usb_send_string
+ 697              	.LVL90:
+ 360:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 698              		.loc 1 360 7 view .LVU142
+ 699 026a BDF85420 		ldrh	r2, [sp, #84]
+ 700 026e 3146     		mov	r1, r6
+ 701 0270 2846     		mov	r0, r5
+ 702 0272 FFF7FEFF 		bl	sprintf
+ 703              	.LVL91:
+ 361:project/src/freertos_app.c ****       usb_send_string(", Vbus=");
+ 704              		.loc 1 361 7 view .LVU143
+ 705 0276 2846     		mov	r0, r5
+ 706 0278 FFF7FEFF 		bl	usb_send_string
+ 707              	.LVL92:
+ 362:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[3]);
+ 708              		.loc 1 362 7 view .LVU144
+ 709 027c 3048     		ldr	r0, .L39+128
+ 710 027e FFF7FEFF 		bl	usb_send_string
+ 711              	.LVL93:
+ 363:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 712              		.loc 1 363 7 view .LVU145
+ 713 0282 BDF85620 		ldrh	r2, [sp, #86]
+ 714 0286 3146     		mov	r1, r6
+ 715 0288 2846     		mov	r0, r5
+ 716 028a FFF7FEFF 		bl	sprintf
+ 717              	.LVL94:
+ 364:project/src/freertos_app.c ****       usb_send_string(", Temp=");
+ 718              		.loc 1 364 7 view .LVU146
+ 719 028e 2846     		mov	r0, r5
+ 720 0290 FFF7FEFF 		bl	usb_send_string
+ 721              	.LVL95:
+ 365:project/src/freertos_app.c ****       sprintf(adc_buf, "%d", monitor_data.adc_raw[4]);
+ 722              		.loc 1 365 7 view .LVU147
+ 723 0294 2B48     		ldr	r0, .L39+132
+ 724 0296 FFF7FEFF 		bl	usb_send_string
+ 725              	.LVL96:
+ 366:project/src/freertos_app.c ****       usb_send_string(adc_buf);
+ 726              		.loc 1 366 7 view .LVU148
+ 727 029a BDF85820 		ldrh	r2, [sp, #88]
+ 728 029e 3146     		mov	r1, r6
+ 729 02a0 2846     		mov	r0, r5
+ 730 02a2 FFF7FEFF 		bl	sprintf
+ 731              	.LVL97:
+ 367:project/src/freertos_app.c ****       usb_send_string("\n");
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 25
+
+
+ 732              		.loc 1 367 7 view .LVU149
+ 733 02a6 2846     		mov	r0, r5
+ 734 02a8 FFF7FEFF 		bl	usb_send_string
+ 735              	.LVL98:
+ 368:project/src/freertos_app.c ****       
+ 736              		.loc 1 368 7 view .LVU150
+ 737 02ac 4046     		mov	r0, r8
+ 738 02ae FFF7FEFF 		bl	usb_send_string
+ 739              	.LVL99:
+ 370:project/src/freertos_app.c ****       
+ 740              		.loc 1 370 7 view .LVU151
+ 741 02b2 2548     		ldr	r0, .L39+136
+ 742 02b4 FFF7FEFF 		bl	usb_send_string
+ 743              	.LVL100:
+ 372:project/src/freertos_app.c ****     }
+ 744              		.loc 1 372 7 view .LVU152
+ 372:project/src/freertos_app.c ****     }
+ 745              		.loc 1 372 23 is_stmt 0 view .LVU153
+ 746 02b8 2546     		mov	r5, r4
+ 747 02ba F6E6     		b	.L23
+ 748              	.LVL101:
+ 749              	.L27:
+ 342:project/src/freertos_app.c ****       usb_send_string("\n");
+ 750              		.loc 1 342 7 discriminator 2 view .LVU154
+ 751 02bc 2348     		ldr	r0, .L39+140
+ 752 02be A0E7     		b	.L24
+ 753              	.L40:
+ 754              		.align	2
+ 755              	.L39:
+ 756 02c0 08000000 		.word	.LC2
+ 757 02c4 18000000 		.word	.LC3
+ 758 02c8 28000000 		.word	.LC4
+ 759 02cc 00001042 		.word	1108344832
+ 760 02d0 0000A042 		.word	1117782016
+ 761 02d4 D4010000 		.word	.LC32
+ 762 02d8 2C000000 		.word	.LC5
+ 763 02dc 4C000000 		.word	.LC6
+ 764 02e0 50000000 		.word	.LC7
+ 765 02e4 70000000 		.word	.LC8
+ 766 02e8 90000000 		.word	.LC9
+ 767 02ec 98000000 		.word	.LC10
+ 768 02f0 B8000000 		.word	.LC11
+ 769 02f4 CC000000 		.word	.LC12
+ 770 02f8 D4000000 		.word	.LC13
+ 771 02fc DC000000 		.word	.LC14
+ 772 0300 F0000000 		.word	.LC15
+ 773 0304 F8000000 		.word	.LC16
+ 774 0308 00010000 		.word	.LC17
+ 775 030c 14010000 		.word	.LC18
+ 776 0310 28010000 		.word	.LC19
+ 777 0314 00000000 		.word	motor
+ 778 0318 3C010000 		.word	.LC21
+ 779 031c 44010000 		.word	.LC22
+ 780 0320 58010000 		.word	.LC23
+ 781 0324 5C010000 		.word	.LC24
+ 782 0328 00000000 		.word	.LC0
+ 783 032c 70010000 		.word	.LC25
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 26
+
+
+ 784 0330 38010000 		.word	.LC20
+ 785 0334 80010000 		.word	.LC26
+ 786 0338 94010000 		.word	.LC27
+ 787 033c 9C010000 		.word	.LC28
+ 788 0340 A4010000 		.word	.LC29
+ 789 0344 AC010000 		.word	.LC30
+ 790 0348 B4010000 		.word	.LC31
+ 791 034c 04000000 		.word	.LC1
+ 792              	.LBE7:
+ 793              	.LBE8:
+ 794              		.cfi_endproc
+ 795              	.LFE146:
+ 797              		.section	.text.vApplicationGetIdleTaskMemory,"ax",%progbits
+ 798              		.align	1
+ 799              		.global	vApplicationGetIdleTaskMemory
+ 800              		.syntax unified
+ 801              		.thumb
+ 802              		.thumb_func
+ 804              	vApplicationGetIdleTaskMemory:
+ 805              	.LVL102:
+ 806              	.LFB141:
   96:project/src/freertos_app.c ****   *ppxIdleTaskTCBBuffer = &idle_task_tcb;
- 728              		.loc 1 96 1 is_stmt 1 view -0
- 729              		.cfi_startproc
- 730              		@ args = 0, pretend = 0, frame = 0
- 731              		@ frame_needed = 0, uses_anonymous_args = 0
- 732              		@ link register save eliminated.
+ 807              		.loc 1 96 1 is_stmt 1 view -0
+ 808              		.cfi_startproc
+ 809              		@ args = 0, pretend = 0, frame = 0
+ 810              		@ frame_needed = 0, uses_anonymous_args = 0
+ 811              		@ link register save eliminated.
   97:project/src/freertos_app.c ****   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
- 733              		.loc 1 97 3 view .LVU142
+ 812              		.loc 1 97 3 view .LVU156
   97:project/src/freertos_app.c ****   *ppxIdleTaskStackBuffer = &idle_task_stack[0];
- 734              		.loc 1 97 25 is_stmt 0 view .LVU143
- 735 0000 034B     		ldr	r3, .L42
- 736 0002 0360     		str	r3, [r0]
+ 813              		.loc 1 97 25 is_stmt 0 view .LVU157
+ 814 0000 034B     		ldr	r3, .L42
+ 815 0002 0360     		str	r3, [r0]
   98:project/src/freertos_app.c ****   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
- 737              		.loc 1 98 3 is_stmt 1 view .LVU144
+ 816              		.loc 1 98 3 is_stmt 1 view .LVU158
   98:project/src/freertos_app.c ****   *pulIdleTaskStackSize = (uint32_t)configMINIMAL_STACK_SIZE;
- 738              		.loc 1 98 27 is_stmt 0 view .LVU145
- 739 0004 034B     		ldr	r3, .L42+4
- 740 0006 0B60     		str	r3, [r1]
+ 817              		.loc 1 98 27 is_stmt 0 view .LVU159
+ 818 0004 034B     		ldr	r3, .L42+4
+ 819 0006 0B60     		str	r3, [r1]
   99:project/src/freertos_app.c **** }
- 741              		.loc 1 99 3 is_stmt 1 view .LVU146
+ 820              		.loc 1 99 3 is_stmt 1 view .LVU160
   99:project/src/freertos_app.c **** }
- 742              		.loc 1 99 25 is_stmt 0 view .LVU147
- 743 0008 8023     		movs	r3, #128
- 744 000a 1360     		str	r3, [r2]
+ 821              		.loc 1 99 25 is_stmt 0 view .LVU161
+ 822 0008 8023     		movs	r3, #128
+ 823 000a 1360     		str	r3, [r2]
  100:project/src/freertos_app.c **** /*
- 745              		.loc 1 100 1 view .LVU148
- 746 000c 7047     		bx	lr
- 747              	.L43:
- 748 000e 00BF     		.align	2
- 749              	.L42:
- 750 0010 00000000 		.word	idle_task_tcb
- 751 0014 00000000 		.word	idle_task_stack
- 752              		.cfi_endproc
- 753              	.LFE141:
- 755              		.section	.text.vApplicationGetTimerTaskMemory,"ax",%progbits
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 25
+ 824              		.loc 1 100 1 view .LVU162
+ 825 000c 7047     		bx	lr
+ 826              	.L43:
+ 827 000e 00BF     		.align	2
+ 828              	.L42:
+ 829 0010 00000000 		.word	idle_task_tcb
+ 830 0014 00000000 		.word	idle_task_stack
+ 831              		.cfi_endproc
+ 832              	.LFE141:
+ 834              		.section	.text.vApplicationGetTimerTaskMemory,"ax",%progbits
+ 835              		.align	1
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 27
 
 
- 756              		.align	1
- 757              		.global	vApplicationGetTimerTaskMemory
- 758              		.syntax unified
- 759              		.thumb
- 760              		.thumb_func
- 762              	vApplicationGetTimerTaskMemory:
- 763              	.LVL90:
- 764              	.LFB142:
+ 836              		.global	vApplicationGetTimerTaskMemory
+ 837              		.syntax unified
+ 838              		.thumb
+ 839              		.thumb_func
+ 841              	vApplicationGetTimerTaskMemory:
+ 842              	.LVL103:
+ 843              	.LFB142:
  106:project/src/freertos_app.c ****   *ppxTimerTaskTCBBuffer = &timer_task_tcb;
- 765              		.loc 1 106 1 is_stmt 1 view -0
- 766              		.cfi_startproc
- 767              		@ args = 0, pretend = 0, frame = 0
- 768              		@ frame_needed = 0, uses_anonymous_args = 0
- 769              		@ link register save eliminated.
+ 844              		.loc 1 106 1 is_stmt 1 view -0
+ 845              		.cfi_startproc
+ 846              		@ args = 0, pretend = 0, frame = 0
+ 847              		@ frame_needed = 0, uses_anonymous_args = 0
+ 848              		@ link register save eliminated.
  107:project/src/freertos_app.c ****   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
- 770              		.loc 1 107 3 view .LVU150
+ 849              		.loc 1 107 3 view .LVU164
  107:project/src/freertos_app.c ****   *ppxTimerTaskStackBuffer = &timer_task_stack[0];
- 771              		.loc 1 107 26 is_stmt 0 view .LVU151
- 772 0000 034B     		ldr	r3, .L45
- 773 0002 0360     		str	r3, [r0]
+ 850              		.loc 1 107 26 is_stmt 0 view .LVU165
+ 851 0000 034B     		ldr	r3, .L45
+ 852 0002 0360     		str	r3, [r0]
  108:project/src/freertos_app.c ****   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
- 774              		.loc 1 108 3 is_stmt 1 view .LVU152
+ 853              		.loc 1 108 3 is_stmt 1 view .LVU166
  108:project/src/freertos_app.c ****   *pulTimerTaskStackSize = (uint32_t)configTIMER_TASK_STACK_DEPTH;
- 775              		.loc 1 108 28 is_stmt 0 view .LVU153
- 776 0004 034B     		ldr	r3, .L45+4
- 777 0006 0B60     		str	r3, [r1]
+ 854              		.loc 1 108 28 is_stmt 0 view .LVU167
+ 855 0004 034B     		ldr	r3, .L45+4
+ 856 0006 0B60     		str	r3, [r1]
  109:project/src/freertos_app.c **** }
- 778              		.loc 1 109 3 is_stmt 1 view .LVU154
+ 857              		.loc 1 109 3 is_stmt 1 view .LVU168
  109:project/src/freertos_app.c **** }
- 779              		.loc 1 109 26 is_stmt 0 view .LVU155
- 780 0008 4FF48073 		mov	r3, #256
- 781 000c 1360     		str	r3, [r2]
+ 858              		.loc 1 109 26 is_stmt 0 view .LVU169
+ 859 0008 4FF48073 		mov	r3, #256
+ 860 000c 1360     		str	r3, [r2]
  110:project/src/freertos_app.c **** 
- 782              		.loc 1 110 1 view .LVU156
- 783 000e 7047     		bx	lr
- 784              	.L46:
- 785              		.align	2
- 786              	.L45:
- 787 0010 00000000 		.word	timer_task_tcb
- 788 0014 00000000 		.word	timer_task_stack
- 789              		.cfi_endproc
- 790              	.LFE142:
- 792              		.section	.rodata.freertos_task_create.str1.4,"aMS",%progbits,1
- 793              		.align	2
- 794              	.LC29:
- 795 0000 4D435F54 		.ascii	"MC_Task\000"
- 795      61736B00 
- 796              		.align	2
- 797              	.LC30:
- 798 0008 4D6F6E69 		.ascii	"Monitor_Task\000"
- 798      746F725F 
- 798      5461736B 
- 798      00
- 799 0015 000000   		.align	2
- 800              	.LC31:
- 801 0018 436F6D6D 		.ascii	"Community_Task\000"
- 801      756E6974 
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 26
+ 861              		.loc 1 110 1 view .LVU170
+ 862 000e 7047     		bx	lr
+ 863              	.L46:
+ 864              		.align	2
+ 865              	.L45:
+ 866 0010 00000000 		.word	timer_task_tcb
+ 867 0014 00000000 		.word	timer_task_stack
+ 868              		.cfi_endproc
+ 869              	.LFE142:
+ 871              		.section	.rodata.freertos_task_create.str1.4,"aMS",%progbits,1
+ 872              		.align	2
+ 873              	.LC33:
+ 874 0000 4D435F54 		.ascii	"MC_Task\000"
+ 874      61736B00 
+ 875              		.align	2
+ 876              	.LC34:
+ 877 0008 4D6F6E69 		.ascii	"Monitor_Task\000"
+ 877      746F725F 
+ 877      5461736B 
+ 877      00
+ 878 0015 000000   		.align	2
+ 879              	.LC35:
+ 880 0018 436F6D6D 		.ascii	"Community_Task\000"
+ 880      756E6974 
+ 880      795F5461 
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 28
 
 
- 801      795F5461 
- 801      736B00
- 802 0027 00       		.align	2
- 803              	.LC32:
- 804 0028 44656275 		.ascii	"Debug_Task\000"
- 804      675F5461 
- 804      736B00
- 805              		.section	.text.freertos_task_create,"ax",%progbits
- 806              		.align	1
- 807              		.global	freertos_task_create
- 808              		.syntax unified
- 809              		.thumb
- 810              		.thumb_func
- 812              	freertos_task_create:
- 813              	.LFB143:
+ 880      736B00
+ 881 0027 00       		.align	2
+ 882              	.LC36:
+ 883 0028 44656275 		.ascii	"Debug_Task\000"
+ 883      675F5461 
+ 883      736B00
+ 884              		.section	.text.freertos_task_create,"ax",%progbits
+ 885              		.align	1
+ 886              		.global	freertos_task_create
+ 887              		.syntax unified
+ 888              		.thumb
+ 889              		.thumb_func
+ 891              	freertos_task_create:
+ 892              	.LFB143:
  122:project/src/freertos_app.c ****   /* create MC_Task task */
- 814              		.loc 1 122 1 is_stmt 1 view -0
- 815              		.cfi_startproc
- 816              		@ args = 0, pretend = 0, frame = 0
- 817              		@ frame_needed = 0, uses_anonymous_args = 0
- 818 0000 10B5     		push	{r4, lr}
- 819              	.LCFI5:
- 820              		.cfi_def_cfa_offset 8
- 821              		.cfi_offset 4, -8
- 822              		.cfi_offset 14, -4
- 823 0002 82B0     		sub	sp, sp, #8
- 824              	.LCFI6:
- 825              		.cfi_def_cfa_offset 16
+ 893              		.loc 1 122 1 is_stmt 1 view -0
+ 894              		.cfi_startproc
+ 895              		@ args = 0, pretend = 0, frame = 0
+ 896              		@ frame_needed = 0, uses_anonymous_args = 0
+ 897 0000 10B5     		push	{r4, lr}
+ 898              	.LCFI5:
+ 899              		.cfi_def_cfa_offset 8
+ 900              		.cfi_offset 4, -8
+ 901              		.cfi_offset 14, -4
+ 902 0002 82B0     		sub	sp, sp, #8
+ 903              	.LCFI6:
+ 904              		.cfi_def_cfa_offset 16
  124:project/src/freertos_app.c ****               "MC_Task",
- 826              		.loc 1 124 3 view .LVU158
- 827 0004 154B     		ldr	r3, .L49
- 828 0006 0193     		str	r3, [sp, #4]
- 829 0008 0024     		movs	r4, #0
- 830 000a 0094     		str	r4, [sp]
- 831 000c 2346     		mov	r3, r4
- 832 000e 4FF40072 		mov	r2, #512
- 833 0012 1349     		ldr	r1, .L49+4
- 834 0014 1348     		ldr	r0, .L49+8
- 835 0016 FFF7FEFF 		bl	xTaskCreate
- 836              	.LVL91:
+ 905              		.loc 1 124 3 view .LVU172
+ 906 0004 154B     		ldr	r3, .L49
+ 907 0006 0193     		str	r3, [sp, #4]
+ 908 0008 0024     		movs	r4, #0
+ 909 000a 0094     		str	r4, [sp]
+ 910 000c 2346     		mov	r3, r4
+ 911 000e 4FF40072 		mov	r2, #512
+ 912 0012 1349     		ldr	r1, .L49+4
+ 913 0014 1348     		ldr	r0, .L49+8
+ 914 0016 FFF7FEFF 		bl	xTaskCreate
+ 915              	.LVL104:
  132:project/src/freertos_app.c ****               "Monitor_Task",
- 837              		.loc 1 132 3 view .LVU159
- 838 001a 134B     		ldr	r3, .L49+12
- 839 001c 0193     		str	r3, [sp, #4]
- 840 001e 0094     		str	r4, [sp]
- 841 0020 2346     		mov	r3, r4
- 842 0022 4FF40072 		mov	r2, #512
- 843 0026 1149     		ldr	r1, .L49+16
- 844 0028 1148     		ldr	r0, .L49+20
- 845 002a FFF7FEFF 		bl	xTaskCreate
- 846              	.LVL92:
+ 916              		.loc 1 132 3 view .LVU173
+ 917 001a 134B     		ldr	r3, .L49+12
+ 918 001c 0193     		str	r3, [sp, #4]
+ 919 001e 0094     		str	r4, [sp]
+ 920 0020 2346     		mov	r3, r4
+ 921 0022 4FF40072 		mov	r2, #512
+ 922 0026 1149     		ldr	r1, .L49+16
+ 923 0028 1148     		ldr	r0, .L49+20
+ 924 002a FFF7FEFF 		bl	xTaskCreate
+ 925              	.LVL105:
  140:project/src/freertos_app.c ****               "Community_Task",
- 847              		.loc 1 140 3 view .LVU160
- 848 002e 114B     		ldr	r3, .L49+24
- 849 0030 0193     		str	r3, [sp, #4]
- 850 0032 0094     		str	r4, [sp]
- 851 0034 2346     		mov	r3, r4
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 27
+ 926              		.loc 1 140 3 view .LVU174
+ 927 002e 114B     		ldr	r3, .L49+24
+ 928 0030 0193     		str	r3, [sp, #4]
+ 929 0032 0094     		str	r4, [sp]
+ 930 0034 2346     		mov	r3, r4
+ 931 0036 4FF40072 		mov	r2, #512
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 29
 
 
- 852 0036 4FF40072 		mov	r2, #512
- 853 003a 0F49     		ldr	r1, .L49+28
- 854 003c 0F48     		ldr	r0, .L49+32
- 855 003e FFF7FEFF 		bl	xTaskCreate
- 856              	.LVL93:
+ 932 003a 0F49     		ldr	r1, .L49+28
+ 933 003c 0F48     		ldr	r0, .L49+32
+ 934 003e FFF7FEFF 		bl	xTaskCreate
+ 935              	.LVL106:
  148:project/src/freertos_app.c ****               "Debug_Task",
- 857              		.loc 1 148 3 view .LVU161
- 858 0042 0F4B     		ldr	r3, .L49+36
- 859 0044 0193     		str	r3, [sp, #4]
- 860 0046 0094     		str	r4, [sp]
- 861 0048 2346     		mov	r3, r4
- 862 004a 4FF40072 		mov	r2, #512
- 863 004e 0D49     		ldr	r1, .L49+40
- 864 0050 0D48     		ldr	r0, .L49+44
- 865 0052 FFF7FEFF 		bl	xTaskCreate
- 866              	.LVL94:
+ 936              		.loc 1 148 3 view .LVU175
+ 937 0042 0F4B     		ldr	r3, .L49+36
+ 938 0044 0193     		str	r3, [sp, #4]
+ 939 0046 0094     		str	r4, [sp]
+ 940 0048 2346     		mov	r3, r4
+ 941 004a 4FF40072 		mov	r2, #512
+ 942 004e 0D49     		ldr	r1, .L49+40
+ 943 0050 0D48     		ldr	r0, .L49+44
+ 944 0052 FFF7FEFF 		bl	xTaskCreate
+ 945              	.LVL107:
  154:project/src/freertos_app.c **** 
- 867              		.loc 1 154 1 is_stmt 0 view .LVU162
- 868 0056 02B0     		add	sp, sp, #8
- 869              	.LCFI7:
- 870              		.cfi_def_cfa_offset 8
- 871              		@ sp needed
- 872 0058 10BD     		pop	{r4, pc}
- 873              	.L50:
- 874 005a 00BF     		.align	2
- 875              	.L49:
- 876 005c 00000000 		.word	MC_Task_handle
- 877 0060 00000000 		.word	.LC29
- 878 0064 00000000 		.word	MC_Task_Func
- 879 0068 00000000 		.word	Monitor_Task_handle
- 880 006c 08000000 		.word	.LC30
- 881 0070 00000000 		.word	Monitor_Task_Func
- 882 0074 00000000 		.word	Community_Task_handle
- 883 0078 18000000 		.word	.LC31
- 884 007c 00000000 		.word	Community_Task_Func
- 885 0080 00000000 		.word	Debug_Task_handle
- 886 0084 28000000 		.word	.LC32
- 887 0088 00000000 		.word	Debug_Task_Func
- 888              		.cfi_endproc
- 889              	.LFE143:
- 891              		.section	.text.wk_freertos_init,"ax",%progbits
- 892              		.align	1
- 893              		.global	wk_freertos_init
- 894              		.syntax unified
- 895              		.thumb
- 896              		.thumb_func
- 898              	wk_freertos_init:
- 899              	.LFB144:
+ 946              		.loc 1 154 1 is_stmt 0 view .LVU176
+ 947 0056 02B0     		add	sp, sp, #8
+ 948              	.LCFI7:
+ 949              		.cfi_def_cfa_offset 8
+ 950              		@ sp needed
+ 951 0058 10BD     		pop	{r4, pc}
+ 952              	.L50:
+ 953 005a 00BF     		.align	2
+ 954              	.L49:
+ 955 005c 00000000 		.word	MC_Task_handle
+ 956 0060 00000000 		.word	.LC33
+ 957 0064 00000000 		.word	MC_Task_Func
+ 958 0068 00000000 		.word	Monitor_Task_handle
+ 959 006c 08000000 		.word	.LC34
+ 960 0070 00000000 		.word	Monitor_Task_Func
+ 961 0074 00000000 		.word	Community_Task_handle
+ 962 0078 18000000 		.word	.LC35
+ 963 007c 00000000 		.word	Community_Task_Func
+ 964 0080 00000000 		.word	Debug_Task_handle
+ 965 0084 28000000 		.word	.LC36
+ 966 0088 00000000 		.word	Debug_Task_Func
+ 967              		.cfi_endproc
+ 968              	.LFE143:
+ 970              		.section	.text.wk_freertos_init,"ax",%progbits
+ 971              		.align	1
+ 972              		.global	wk_freertos_init
+ 973              		.syntax unified
+ 974              		.thumb
+ 975              		.thumb_func
+ 977              	wk_freertos_init:
+ 978              	.LFB144:
  162:project/src/freertos_app.c ****   /* add user code begin freertos_init 0 */
- 900              		.loc 1 162 1 is_stmt 1 view -0
- 901              		.cfi_startproc
- 902              		@ args = 0, pretend = 0, frame = 0
- 903              		@ frame_needed = 0, uses_anonymous_args = 0
- 904 0000 08B5     		push	{r3, lr}
- 905              	.LCFI8:
- 906              		.cfi_def_cfa_offset 8
- 907              		.cfi_offset 3, -8
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 28
+ 979              		.loc 1 162 1 is_stmt 1 view -0
+ 980              		.cfi_startproc
+ 981              		@ args = 0, pretend = 0, frame = 0
+ 982              		@ frame_needed = 0, uses_anonymous_args = 0
+ 983 0000 08B5     		push	{r3, lr}
+ 984              	.LCFI8:
+ 985              		.cfi_def_cfa_offset 8
+ 986              		.cfi_offset 3, -8
+ 987              		.cfi_offset 14, -4
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 30
 
 
- 908              		.cfi_offset 14, -4
  168:project/src/freertos_app.c **** 
- 909              		.loc 1 168 3 view .LVU164
- 910 0002 FFF7FEFF 		bl	vPortEnterCritical
- 911              	.LVL95:
+ 988              		.loc 1 168 3 view .LVU178
+ 989 0002 FFF7FEFF 		bl	vPortEnterCritical
+ 990              	.LVL108:
  170:project/src/freertos_app.c **** 	
- 912              		.loc 1 170 3 view .LVU165
- 913 0006 FFF7FEFF 		bl	freertos_task_create
- 914              	.LVL96:
+ 991              		.loc 1 170 3 view .LVU179
+ 992 0006 FFF7FEFF 		bl	freertos_task_create
+ 993              	.LVL109:
  177:project/src/freertos_app.c **** 
- 915              		.loc 1 177 3 view .LVU166
- 916 000a FFF7FEFF 		bl	vPortExitCritical
- 917              	.LVL97:
+ 994              		.loc 1 177 3 view .LVU180
+ 995 000a FFF7FEFF 		bl	vPortExitCritical
+ 996              	.LVL110:
  180:project/src/freertos_app.c **** }
- 918              		.loc 1 180 3 view .LVU167
- 919 000e FFF7FEFF 		bl	vTaskStartScheduler
- 920              	.LVL98:
+ 997              		.loc 1 180 3 view .LVU181
+ 998 000e FFF7FEFF 		bl	vTaskStartScheduler
+ 999              	.LVL111:
  181:project/src/freertos_app.c **** 
- 921              		.loc 1 181 1 is_stmt 0 view .LVU168
- 922 0012 08BD     		pop	{r3, pc}
- 923              		.cfi_endproc
- 924              	.LFE144:
- 926              		.section	.bss.timer_task_tcb,"aw",%nobits
- 927              		.align	2
- 930              	timer_task_tcb:
- 931 0000 00000000 		.space	92
- 931      00000000 
- 931      00000000 
- 931      00000000 
- 931      00000000 
- 932              		.section	.bss.idle_task_tcb,"aw",%nobits
- 933              		.align	2
- 936              	idle_task_tcb:
- 937 0000 00000000 		.space	92
- 937      00000000 
- 937      00000000 
- 937      00000000 
- 937      00000000 
- 938              		.section	.bss.timer_task_stack,"aw",%nobits
- 939              		.align	2
- 942              	timer_task_stack:
- 943 0000 00000000 		.space	1024
- 943      00000000 
- 943      00000000 
- 943      00000000 
- 943      00000000 
- 944              		.section	.bss.idle_task_stack,"aw",%nobits
- 945              		.align	2
- 948              	idle_task_stack:
- 949 0000 00000000 		.space	512
- 949      00000000 
- 949      00000000 
- 949      00000000 
- 949      00000000 
- 950              		.global	Debug_Task_handle
- 951              		.section	.bss.Debug_Task_handle,"aw",%nobits
- 952              		.align	2
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 29
+ 1000              		.loc 1 181 1 is_stmt 0 view .LVU182
+ 1001 0012 08BD     		pop	{r3, pc}
+ 1002              		.cfi_endproc
+ 1003              	.LFE144:
+ 1005              		.section	.bss.timer_task_tcb,"aw",%nobits
+ 1006              		.align	2
+ 1009              	timer_task_tcb:
+ 1010 0000 00000000 		.space	92
+ 1010      00000000 
+ 1010      00000000 
+ 1010      00000000 
+ 1010      00000000 
+ 1011              		.section	.bss.idle_task_tcb,"aw",%nobits
+ 1012              		.align	2
+ 1015              	idle_task_tcb:
+ 1016 0000 00000000 		.space	92
+ 1016      00000000 
+ 1016      00000000 
+ 1016      00000000 
+ 1016      00000000 
+ 1017              		.section	.bss.timer_task_stack,"aw",%nobits
+ 1018              		.align	2
+ 1021              	timer_task_stack:
+ 1022 0000 00000000 		.space	1024
+ 1022      00000000 
+ 1022      00000000 
+ 1022      00000000 
+ 1022      00000000 
+ 1023              		.section	.bss.idle_task_stack,"aw",%nobits
+ 1024              		.align	2
+ 1027              	idle_task_stack:
+ 1028 0000 00000000 		.space	512
+ 1028      00000000 
+ 1028      00000000 
+ 1028      00000000 
+ 1028      00000000 
+ 1029              		.global	Debug_Task_handle
+ 1030              		.section	.bss.Debug_Task_handle,"aw",%nobits
+ 1031              		.align	2
+ 1034              	Debug_Task_handle:
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 31
 
 
- 955              	Debug_Task_handle:
- 956 0000 00000000 		.space	4
- 957              		.global	Community_Task_handle
- 958              		.section	.bss.Community_Task_handle,"aw",%nobits
- 959              		.align	2
- 962              	Community_Task_handle:
- 963 0000 00000000 		.space	4
- 964              		.global	Monitor_Task_handle
- 965              		.section	.bss.Monitor_Task_handle,"aw",%nobits
- 966              		.align	2
- 969              	Monitor_Task_handle:
- 970 0000 00000000 		.space	4
- 971              		.global	MC_Task_handle
- 972              		.section	.bss.MC_Task_handle,"aw",%nobits
- 973              		.align	2
- 976              	MC_Task_handle:
- 977 0000 00000000 		.space	4
- 978              		.text
- 979              	.Letext0:
- 980              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 981              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
- 982              		.file 4 "middlewares/freertos/source/include/projdefs.h"
- 983              		.file 5 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
- 984              		.file 6 "middlewares/freertos/source/include/FreeRTOS.h"
- 985              		.file 7 "middlewares/freertos/source/include/task.h"
- 986              		.file 8 "libraries/drivers/inc/at32f403a_407_tmr.h"
- 987              		.file 9 "project/inc/freertos_app.h"
- 988              		.file 10 "../Motor_Control/inc/motor_params.h"
- 989              		.file 11 "../Monitor/inc/monitor.h"
- 990              		.file 12 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/incl
- 991              		.file 13 "../USB_Debug/inc/usb_printf.h"
- 992              		.file 14 "../Motor_Control/inc/motor_control.h"
- 993              		.file 15 "project/inc/usb_app.h"
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 30
+ 1035 0000 00000000 		.space	4
+ 1036              		.global	Community_Task_handle
+ 1037              		.section	.bss.Community_Task_handle,"aw",%nobits
+ 1038              		.align	2
+ 1041              	Community_Task_handle:
+ 1042 0000 00000000 		.space	4
+ 1043              		.global	Monitor_Task_handle
+ 1044              		.section	.bss.Monitor_Task_handle,"aw",%nobits
+ 1045              		.align	2
+ 1048              	Monitor_Task_handle:
+ 1049 0000 00000000 		.space	4
+ 1050              		.global	MC_Task_handle
+ 1051              		.section	.bss.MC_Task_handle,"aw",%nobits
+ 1052              		.align	2
+ 1055              	MC_Task_handle:
+ 1056 0000 00000000 		.space	4
+ 1057              		.text
+ 1058              	.Letext0:
+ 1059              		.file 2 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1060              		.file 3 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/inclu
+ 1061              		.file 4 "middlewares/freertos/source/include/projdefs.h"
+ 1062              		.file 5 "middlewares/freertos/source/portable/GCC/ARM_CM4F/portmacro.h"
+ 1063              		.file 6 "middlewares/freertos/source/include/FreeRTOS.h"
+ 1064              		.file 7 "middlewares/freertos/source/include/task.h"
+ 1065              		.file 8 "libraries/drivers/inc/at32f403a_407_tmr.h"
+ 1066              		.file 9 "project/inc/freertos_app.h"
+ 1067              		.file 10 "../Motor_Control/inc/motor_params.h"
+ 1068              		.file 11 "../Monitor/inc/monitor.h"
+ 1069              		.file 12 "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/arm-none-eabi/incl
+ 1070              		.file 13 "../USB_Debug/inc/usb_printf.h"
+ 1071              		.file 14 "../Motor_Control/inc/motor_control.h"
+ 1072              		.file 15 "project/inc/usb_app.h"
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 32
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 freertos_app.c
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:21     .text.MC_Task_Func:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:27     .text.MC_Task_Func:00000000 MC_Task_Func
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:72     .text.MC_Task_Func:00000028 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:77     .text.Community_Task_Func:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:83     .text.Community_Task_Func:00000000 Community_Task_Func
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:110    .text.Debug_Task_Func:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:116    .text.Debug_Task_Func:00000000 Debug_Task_Func
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:143    .rodata.Monitor_Task_Func.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:231    .text.Monitor_Task_Func:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:237    .text.Monitor_Task_Func:00000000 Monitor_Task_Func
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:680    .text.Monitor_Task_Func:00000254 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:719    .text.vApplicationGetIdleTaskMemory:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:725    .text.vApplicationGetIdleTaskMemory:00000000 vApplicationGetIdleTaskMemory
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:750    .text.vApplicationGetIdleTaskMemory:00000010 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:936    .bss.idle_task_tcb:00000000 idle_task_tcb
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:948    .bss.idle_task_stack:00000000 idle_task_stack
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:756    .text.vApplicationGetTimerTaskMemory:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:762    .text.vApplicationGetTimerTaskMemory:00000000 vApplicationGetTimerTaskMemory
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:787    .text.vApplicationGetTimerTaskMemory:00000010 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:930    .bss.timer_task_tcb:00000000 timer_task_tcb
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:942    .bss.timer_task_stack:00000000 timer_task_stack
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:793    .rodata.freertos_task_create.str1.4:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:806    .text.freertos_task_create:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:812    .text.freertos_task_create:00000000 freertos_task_create
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:876    .text.freertos_task_create:0000005c $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:976    .bss.MC_Task_handle:00000000 MC_Task_handle
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:969    .bss.Monitor_Task_handle:00000000 Monitor_Task_handle
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:962    .bss.Community_Task_handle:00000000 Community_Task_handle
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:955    .bss.Debug_Task_handle:00000000 Debug_Task_handle
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:892    .text.wk_freertos_init:00000000 $t
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:898    .text.wk_freertos_init:00000000 wk_freertos_init
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:927    .bss.timer_task_tcb:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:933    .bss.idle_task_tcb:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:939    .bss.timer_task_stack:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:945    .bss.idle_task_stack:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:952    .bss.Debug_Task_handle:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:959    .bss.Community_Task_handle:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:966    .bss.Monitor_Task_handle:00000000 $d
-C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s:973    .bss.MC_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:21     .text.MC_Task_Func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:27     .text.MC_Task_Func:00000000 MC_Task_Func
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:72     .text.MC_Task_Func:00000028 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:77     .text.Community_Task_Func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:83     .text.Community_Task_Func:00000000 Community_Task_Func
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:110    .text.Debug_Task_Func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:116    .text.Debug_Task_Func:00000000 Debug_Task_Func
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:143    .rodata.Monitor_Task_Func.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:243    .text.Monitor_Task_Func:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:249    .text.Monitor_Task_Func:00000000 Monitor_Task_Func
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:756    .text.Monitor_Task_Func:000002c0 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:798    .text.vApplicationGetIdleTaskMemory:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:804    .text.vApplicationGetIdleTaskMemory:00000000 vApplicationGetIdleTaskMemory
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:829    .text.vApplicationGetIdleTaskMemory:00000010 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1015   .bss.idle_task_tcb:00000000 idle_task_tcb
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1027   .bss.idle_task_stack:00000000 idle_task_stack
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:835    .text.vApplicationGetTimerTaskMemory:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:841    .text.vApplicationGetTimerTaskMemory:00000000 vApplicationGetTimerTaskMemory
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:866    .text.vApplicationGetTimerTaskMemory:00000010 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1009   .bss.timer_task_tcb:00000000 timer_task_tcb
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1021   .bss.timer_task_stack:00000000 timer_task_stack
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:872    .rodata.freertos_task_create.str1.4:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:885    .text.freertos_task_create:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:891    .text.freertos_task_create:00000000 freertos_task_create
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:955    .text.freertos_task_create:0000005c $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1055   .bss.MC_Task_handle:00000000 MC_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1048   .bss.Monitor_Task_handle:00000000 Monitor_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1041   .bss.Community_Task_handle:00000000 Community_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1034   .bss.Debug_Task_handle:00000000 Debug_Task_handle
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:971    .text.wk_freertos_init:00000000 $t
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:977    .text.wk_freertos_init:00000000 wk_freertos_init
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1006   .bss.timer_task_tcb:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1012   .bss.idle_task_tcb:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1018   .bss.timer_task_stack:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1024   .bss.idle_task_stack:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1031   .bss.Debug_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1038   .bss.Community_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1045   .bss.Monitor_Task_handle:00000000 $d
+C:\Users\10963\AppData\Local\Temp\ccBPZSci.s:1052   .bss.MC_Task_handle:00000000 $d
 
 UNDEFINED SYMBOLS
 motor_control_init
@@ -1774,7 +1893,7 @@ monitor_update
 sprintf
 xTaskCreate
 vPortEnterCritical
-ARM GAS  C:\Users\10963\AppData\Local\Temp\ccUdG9K4.s 			page 31
+ARM GAS  C:\Users\10963\AppData\Local\Temp\ccBPZSci.s 			page 33
 
 
 vPortExitCritical
