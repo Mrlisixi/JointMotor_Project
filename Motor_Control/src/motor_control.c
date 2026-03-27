@@ -33,6 +33,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include <stdlib.h>
+#include <math.h>
 
 
 
@@ -63,7 +64,7 @@ void motor_control_init(motor_params_t *motor)
   motor->duty_cycle = 0;
   motor->commutation_interval = 0;
   motor->last_commutation_time = 0;
-  motor->control_mode = 0; /* Default to six-step control */
+  motor->control_mode = JointParam_Read(2000); /* Control mode from params */
   motor->foc_state = NULL;
   
   /* set all outputs to low */
@@ -90,6 +91,14 @@ void motor_foc_init(motor_params_t *motor)
     foc_init((foc_state_t *)motor->foc_state);
     /* Set control mode to FOC */
     motor->control_mode = 1;
+    
+    /* Set PWM channels to PWM mode for FOC control */
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_1C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_2C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
+    tmr_output_channel_mode_select(TMR1, TMR_SELECT_CHANNEL_3C, TMR_OUTPUT_CONTROL_PWM_MODE_A);
   }
 }
 
@@ -106,6 +115,53 @@ void motor_foc_control(motor_params_t *motor, float *phase_current, float angle)
   {
     /* Execute FOC control */
     foc_control((foc_state_t *)motor->foc_state, phase_current, angle);
+  }
+}
+
+/**
+  * @brief  Start motor with sensorless FOC control
+  * @param  motor: motor parameters structure
+  * @param  speed: target speed (RPM)
+  * @retval none
+  */
+void motor_foc_sensorless_start(motor_params_t *motor, uint16_t speed)
+{
+  /* Initialize FOC if not already initialized */
+  if (motor->foc_state == NULL)
+  {
+    motor_foc_init(motor);
+  }
+  
+  if (motor->foc_state != NULL)
+  {
+    /* Set control mode to FOC */
+    motor->control_mode = 1;
+    
+    /* Reset start state to begin startup sequence */
+    ((foc_state_t *)motor->foc_state)->start_state = 0;
+    
+    /* Set target speed */
+    float target_speed_rad = (float)speed * 2.0f * M_PI / 60.0f;
+    ((foc_state_t *)motor->foc_state)->target_speed = target_speed_rad;
+    
+    /* Set motor state to running */
+    motor->state = MOTOR_STATE_RUNNING;
+  }
+}
+
+/**
+  * @brief  Sensorless FOC control process
+  * @param  motor: motor parameters structure
+  * @param  phase_current: Phase currents (A)
+  * @param  phase_voltage: Phase voltages (V)
+  * @retval none
+  */
+void motor_foc_sensorless_control(motor_params_t *motor, float *phase_current, float *phase_voltage)
+{
+  if (motor->foc_state != NULL && motor->control_mode == 1)
+  {
+    /* Execute sensorless FOC control */
+    foc_sensorless_control((foc_state_t *)motor->foc_state, phase_current, phase_voltage);
   }
 }
 
@@ -158,7 +214,6 @@ void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direct
   /* set motor parameters */
   motor->speed = speed;
   motor->direction = direction;
-  motor->duty_cycle = 250; /* Set initial duty cycle to 250 */
   motor->commutation_interval = calculate_commutation_interval(speed);
   motor->last_commutation_time = wk_timebase_get();
   motor->state = MOTOR_STATE_RUNNING;
@@ -171,7 +226,7 @@ void motor_start(motor_params_t *motor, uint16_t speed, motor_direction_t direct
   vTaskDelay(pdMS_TO_TICKS(50));
   
   /* increase duty cycle to desired value */
-  motor->duty_cycle = 250;
+  motor->duty_cycle = 400; /* Increase duty cycle for better torque */
   motor_set_commutation_state(motor, motor->comm_state);
 }
 
@@ -214,13 +269,19 @@ void motor_set_speed(motor_params_t *motor, uint16_t speed)
 void motor_set_duty_cycle(motor_params_t *motor, uint16_t duty_cycle)
 {
   /* limit duty cycle */
-  if (duty_cycle > MAX_DUTY_CYCLE)
+  uint16_t max_duty = JointParam_Read(2002); /* Max duty cycle from params */
+  if (max_duty == 0) max_duty = 1400; /* Default value */
+  
+  uint16_t min_duty = JointParam_Read(2003); /* Min duty cycle from params */
+  if (min_duty == 0) min_duty = 100; /* Default value */
+  
+  if (duty_cycle > max_duty)
   {
-    duty_cycle = MAX_DUTY_CYCLE;
+    duty_cycle = max_duty;
   }
-  else if (duty_cycle < MIN_DUTY_CYCLE)
+  else if (duty_cycle < min_duty)
   {
-    duty_cycle = MIN_DUTY_CYCLE;
+    duty_cycle = min_duty;
   }
   
   motor->duty_cycle = duty_cycle;
@@ -350,7 +411,9 @@ static uint32_t calculate_commutation_interval(uint16_t speed)
   
   /* calculate commutation interval in milliseconds */
   /* formula: interval = 60,000 / (speed * pole_pairs * 6) */
-  float interval = 60000.0f / (speed * MOTOR_POLE_PAIRS * 6.0f);
+  uint16_t pole_pairs = JointParam_Read(2001); /* Pole pairs from params */
+  if (pole_pairs == 0) pole_pairs = 21; /* Default value */
+  float interval = 60000.0f / (speed * pole_pairs * 6.0f);
   
   /* ensure minimum interval of 1ms */
   if (interval < 1.0f)

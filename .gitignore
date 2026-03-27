@@ -1,15 +1,17 @@
-# dot files
-/.vscode/launch.json
-/.settings
-/.eide/log
-/.eide.usr.ctx.json
+# Build directories
+build/
 
-# project out
-/build
-/bin
-/obj
-/out
+# IDE files
+.vscode/
 
-# eide template
-*.ept
-*.eide-template
+# Backup files
+*.bak
+
+# Generated files
+*.d
+*.o
+*.lst
+*.elf
+*.hex
+*.bin
+*.map

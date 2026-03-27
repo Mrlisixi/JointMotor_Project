@@ -42,7 +42,8 @@
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 #include "motor_control.h"
-
+#include "joint_params.h"
+#include "flash_param.h"
 /* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
@@ -119,7 +120,7 @@ int main(void)
      and DMAx_CHANNELy_BUFFER_SIZE in at32xxx_wk_config.h */
   wk_dma_channel_config(DMA1_CHANNEL1, 
                         (uint32_t)&ADC1->odt, 
-                        (uint32_t)&adc_data_buffer, 
+                        (uint32_t)adc_data_buffer, 
                         DMA1_CHANNEL1_BUFFER_SIZE);
   dma_channel_enable(DMA1_CHANNEL1, TRUE);
 
@@ -145,7 +146,11 @@ int main(void)
   wk_usb_app_init();
 
   /* add user code begin 2 */
+  // 参数初始化
+  JointParam_Init();
 
+  // 从Flash加载
+  Flash_LoadParamsFromFlash();
 
   /* add user code end 2 */
 

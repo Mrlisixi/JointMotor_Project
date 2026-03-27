@@ -27,7 +27,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "foc.h"
 #include "wk_tmr.h"
+#include "wk_system.h"
 #include <math.h>
+
+/* forward declaration */
+uint32_t wk_timebase_get(void);
 
 /* private function prototypes -----------------------------------------------*/
 static uint8_t svpwm_calculate_sector(float v_alpha, float v_beta);
@@ -71,6 +75,19 @@ void foc_init(foc_state_t *foc)
   foc->t2 = 0.0f;
   foc->t0 = 0.0f;
   foc->sector = 0;
+  
+  /* Initialize back-EMF observer variables */
+  foc->emf_alpha = 0.0f;
+  foc->emf_beta = 0.0f;
+  foc->i_alpha_est = 0.0f;
+  foc->i_beta_est = 0.0f;
+  foc->angle_est = 0.0f;
+  foc->speed_est = 0.0f;
+  
+  /* Initialize motor start variables */
+  foc->start_state = 0;
+  foc->start_time = 0;
+  foc->start_angle = 0.0f;
 }
 
 /**
@@ -147,9 +164,9 @@ void foc_control(foc_state_t *foc, float *phase_current, float angle)
   svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
   
   /* Update phase voltages */
-  foc->phase_voltage[0] = (float)duty_a * 3.3f / (float)PWM_PERIOD;
-  foc->phase_voltage[1] = (float)duty_b * 3.3f / (float)PWM_PERIOD;
-  foc->phase_voltage[2] = (float)duty_c * 3.3f / (float)PWM_PERIOD;
+  foc->phase_voltage[0] = (float)duty_a * 24.0f / (float)PWM_PERIOD;
+  foc->phase_voltage[1] = (float)duty_b * 24.0f / (float)PWM_PERIOD;
+  foc->phase_voltage[2] = (float)duty_c * 24.0f / (float)PWM_PERIOD;
   
   /* Set PWM duty cycles */
   tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
@@ -240,7 +257,7 @@ static uint8_t svpwm_calculate_sector(float v_alpha, float v_beta)
   */
 void svpwm_calculate(float v_alpha, float v_beta, uint16_t *duty_a, uint16_t *duty_b, uint16_t *duty_c)
 {
-  float vdc = 3.3f; /* DC link voltage */
+  float vdc = 24.0f; /* DC link voltage */
   float Ts = 1.0f / PWM_FREQUENCY; /* PWM period */
   
   /* Calculate normalized voltages */
@@ -357,4 +374,284 @@ void svpwm_calculate(float v_alpha, float v_beta, uint16_t *duty_a, uint16_t *du
     *duty_c = PWM_PERIOD;
   if (*duty_c < 0)
     *duty_c = 0;
+}
+
+/**
+  * @brief  Sensorless FOC control process
+  * @param  foc: FOC state structure
+  * @param  phase_current: Phase currents (A)
+  * @param  phase_voltage: Phase voltages (V)
+  * @retval none
+  */
+void foc_sensorless_control(foc_state_t *foc, float *phase_current, float *phase_voltage)
+{
+  /* Update phase currents */
+  foc->phase_current[0] = phase_current[0];
+  foc->phase_current[1] = phase_current[1];
+  foc->phase_current[2] = phase_current[2];
+  
+  /* Execute motor start sequence if not running */
+  if (foc->start_state < 4)
+  {
+    motor_start_sequence(foc);
+  }
+  else
+  {
+    /* Clark transform: 3-phase current to alpha-beta */
+    clark_transform(foc->phase_current[0], foc->phase_current[1], foc->phase_current[2], &foc->i_alpha, &foc->i_beta);
+    
+    /* Back-EMF observer for sensorless control */
+    back_emf_observer(foc);
+    
+    /* Use estimated angle from observer */
+    foc->angle = foc->angle_est;
+    foc->speed = foc->speed_est;
+    
+    /* Park transform: alpha-beta to d-q */
+    park_transform(foc->i_alpha, foc->i_beta, foc->angle, &foc->i_d, &foc->i_q);
+    
+    /* Speed controller */
+    foc->speed_error = foc->target_speed - foc->speed;
+    foc->speed_integral += foc->speed_error * (1.0f / FOC_CONTROL_FREQUENCY);
+    
+    /* Limit integral windup */
+    if (foc->speed_integral > 10.0f)
+      foc->speed_integral = 10.0f;
+    if (foc->speed_integral < -10.0f)
+      foc->speed_integral = -10.0f;
+    
+    /* Calculate q-axis current reference */
+    float i_q_ref = FOC_SPEED_KP * foc->speed_error + FOC_SPEED_KI * foc->speed_integral;
+    
+    /* Limit q-axis current */
+    if (i_q_ref > MOTOR_PEAK_CURRENT)
+      i_q_ref = MOTOR_PEAK_CURRENT;
+    if (i_q_ref < -MOTOR_PEAK_CURRENT)
+      i_q_ref = -MOTOR_PEAK_CURRENT;
+    
+    /* d-axis current reference (usually 0 for surface mount PMSM) */
+    float i_d_ref = 0.0f;
+    
+    /* Current controllers */
+    foc->i_d_error = i_d_ref - foc->i_d;
+    foc->i_q_error = i_q_ref - foc->i_q;
+    
+    foc->i_d_integral += foc->i_d_error * (1.0f / FOC_CONTROL_FREQUENCY);
+    foc->i_q_integral += foc->i_q_error * (1.0f / FOC_CONTROL_FREQUENCY);
+    
+    /* Limit integral windup */
+    if (foc->i_d_integral > 10.0f)
+      foc->i_d_integral = 10.0f;
+    if (foc->i_d_integral < -10.0f)
+      foc->i_d_integral = -10.0f;
+    if (foc->i_q_integral > 10.0f)
+      foc->i_q_integral = 10.0f;
+    if (foc->i_q_integral < -10.0f)
+      foc->i_q_integral = -10.0f;
+    
+    /* Calculate d-q voltages */
+    foc->v_d = FOC_CURRENT_KP * foc->i_d_error + FOC_CURRENT_KI * foc->i_d_integral;
+    foc->v_q = FOC_CURRENT_KP * foc->i_q_error + FOC_CURRENT_KI * foc->i_q_integral;
+    
+    /* Inverse Park transform: d-q to alpha-beta */
+    inverse_park_transform(foc->v_d, foc->v_q, foc->angle, &foc->v_alpha, &foc->v_beta);
+    
+    /* SVPWM calculation */
+    uint16_t duty_a, duty_b, duty_c;
+    svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+    
+    /* Update phase voltages */
+    foc->phase_voltage[0] = (float)duty_a * 24.0f / (float)PWM_PERIOD;
+    foc->phase_voltage[1] = (float)duty_b * 24.0f / (float)PWM_PERIOD;
+    foc->phase_voltage[2] = (float)duty_c * 24.0f / (float)PWM_PERIOD;
+    
+    /* Set PWM duty cycles */
+    tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
+    tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+    tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+  }
+}
+
+/**
+  * @brief  Back-EMF observer
+  * @param  foc: FOC state structure
+  * @retval none
+  */
+void back_emf_observer(foc_state_t *foc)
+{
+  float R = MOTOR_INTERPHASE_RESISTANCE; /* Motor resistance */
+  float L = MOTOR_INTERPHASE_INDUCTANCE / 1000.0f; /* Motor inductance in H */
+  float Ts = 1.0f / FOC_CONTROL_FREQUENCY; /* Sampling time */
+  
+  /* Current error */
+  float i_alpha_error = foc->i_alpha - foc->i_alpha_est;
+  float i_beta_error = foc->i_beta - foc->i_beta_est;
+  
+  /* Update back-EMF estimates */
+  foc->emf_alpha += Ts * (-OBSERVER_K1 * i_alpha_error - OBSERVER_K2 * foc->emf_alpha);
+  foc->emf_beta += Ts * (-OBSERVER_K1 * i_beta_error - OBSERVER_K2 * foc->emf_beta);
+  
+  /* Update current estimates */
+  foc->i_alpha_est += Ts * ((foc->v_alpha - R * foc->i_alpha_est - foc->emf_alpha) / L);
+  foc->i_beta_est += Ts * ((foc->v_beta - R * foc->i_beta_est - foc->emf_beta) / L);
+  
+  /* Calculate estimated speed and angle */
+  static float angle_prev = 0.0f;
+  
+  /* Always calculate angle from back-EMF */
+  foc->angle_est = atan2f(foc->emf_beta, foc->emf_alpha);
+  
+  /* Calculate estimated speed */
+  float angle_diff = foc->angle_est - angle_prev;
+  if (angle_diff > M_PI)
+    angle_diff -= 2.0f * M_PI;
+  if (angle_diff < -M_PI)
+    angle_diff += 2.0f * M_PI;
+  foc->speed_est = angle_diff / Ts;
+  
+  /* Update previous angle */
+  angle_prev = foc->angle_est;
+}
+
+/**
+  * @brief  Motor start sequence for sensorless FOC
+  * @param  foc: FOC state structure
+  * @retval none
+  */
+void motor_start_sequence(foc_state_t *foc)
+{
+  static uint32_t start_time = 0;
+  
+  switch (foc->start_state)
+  {
+    case 0: /* Idle state */
+      /* Initialize start time */
+      start_time = wk_timebase_get();
+      foc->start_time = start_time;
+      foc->start_angle = 0.0f;
+      foc->start_state = 1;
+      break;
+      
+    case 1: /* Alignment state */
+      /* Align rotor to known position */
+      if (wk_timebase_get() - start_time < 500) /* 500ms alignment */
+      {
+        /* Set d-axis current to start current */
+        float i_d_ref = START_CURRENT;
+        float i_q_ref = 0.0f;
+        
+        /* Set angle to fixed position */
+        foc->angle = 0.0f;
+        
+        /* Inverse Park transform: d-q to alpha-beta */
+        inverse_park_transform(i_d_ref, i_q_ref, foc->angle, &foc->v_alpha, &foc->v_beta);
+        
+        /* SVPWM calculation */
+        uint16_t duty_a, duty_b, duty_c;
+        svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+        
+        /* Update phase voltages */
+        foc->phase_voltage[0] = (float)duty_a * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[1] = (float)duty_b * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[2] = (float)duty_c * 24.0f / (float)PWM_PERIOD;
+        
+        /* Set PWM duty cycles */
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+      }
+      else
+      {
+        /* Alignment complete, move to ramp up */
+        start_time = wk_timebase_get();
+        foc->start_state = 2;
+      }
+      break;
+      
+    case 2: /* Ramp up state */
+      /* Ramp up speed to minimum operating speed */
+      if (wk_timebase_get() - start_time < START_DURATION)
+      {
+        /* Calculate ramped speed */
+        float ramp_factor = (float)(wk_timebase_get() - start_time) / START_DURATION;
+        foc->speed = START_SPEED * ramp_factor;
+        foc->angle += foc->speed * (1.0f / FOC_CONTROL_FREQUENCY);
+        
+        /* Keep angle within 0-2pi */
+        if (foc->angle > 2.0f * M_PI)
+          foc->angle -= 2.0f * M_PI;
+        
+        /* Set q-axis current for torque */
+        float i_d_ref = 0.0f;
+        float i_q_ref = START_CURRENT * 0.5f; /* Use q-axis current for torque */
+        
+        /* Inverse Park transform: d-q to alpha-beta */
+        inverse_park_transform(i_d_ref, i_q_ref, foc->angle, &foc->v_alpha, &foc->v_beta);
+        
+        /* SVPWM calculation */
+        uint16_t duty_a, duty_b, duty_c;
+        svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+        
+        /* Update phase voltages */
+        foc->phase_voltage[0] = (float)duty_a * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[1] = (float)duty_b * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[2] = (float)duty_c * 24.0f / (float)PWM_PERIOD;
+        
+        /* Set PWM duty cycles */
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+      }
+      else
+      {
+        /* Ramp up complete, move to transition state */
+        start_time = wk_timebase_get();
+        foc->start_state = 3;
+      }
+      break;
+      
+    case 3: /* Transition state */
+      /* Transition from open-loop to closed-loop control */
+      if (wk_timebase_get() - start_time < 1000) /* 1000ms transition */
+      {
+        /* Use ramped speed for angle calculation */
+        foc->speed = START_SPEED;
+        foc->angle += foc->speed * (1.0f / FOC_CONTROL_FREQUENCY);
+        
+        /* Keep angle within 0-2pi */
+        if (foc->angle > 2.0f * M_PI)
+          foc->angle -= 2.0f * M_PI;
+        
+        /* Set q-axis current for torque */
+        float i_d_ref = 0.0f;
+        float i_q_ref = START_CURRENT * 0.5f;
+        
+        /* Inverse Park transform: d-q to alpha-beta */
+        inverse_park_transform(i_d_ref, i_q_ref, foc->angle, &foc->v_alpha, &foc->v_beta);
+        
+        /* SVPWM calculation */
+        uint16_t duty_a, duty_b, duty_c;
+        svpwm_calculate(foc->v_alpha, foc->v_beta, &duty_a, &duty_b, &duty_c);
+        
+        /* Update phase voltages */
+        foc->phase_voltage[0] = (float)duty_a * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[1] = (float)duty_b * 24.0f / (float)PWM_PERIOD;
+        foc->phase_voltage[2] = (float)duty_c * 24.0f / (float)PWM_PERIOD;
+        
+        /* Set PWM duty cycles */
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_1, duty_a);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_2, duty_b);
+        tmr_channel_value_set(TMR1, TMR_SELECT_CHANNEL_3, duty_c);
+      }
+      else
+      {
+        /* Transition complete, move to running */
+        foc->start_state = 4;
+      }
+      break;
+      
+    case 4: /* Running state */
+      /* Sensorless FOC control */
+      break;
+  }
 }

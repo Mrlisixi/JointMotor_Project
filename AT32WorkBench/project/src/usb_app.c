@@ -33,7 +33,7 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
-
+#include "modbus_slave.h"
 /* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
@@ -100,10 +100,10 @@ void wk_usb_app_init(void)
 void wk_usb_app_task(void)
 {
   /* add user code begin usb_app_task 0 */
-
+  
   /* add user code end usb_app_task 0 */
 
-  uint32_t length = 0;
+  uint16_t length = 0;
 
   uint32_t timeout = 5000000;
   static uint8_t send_zero_packet = 0;
@@ -117,19 +117,24 @@ void wk_usb_app_task(void)
   if(length > 0 || send_zero_packet == 1)
   {
     if(length > 0)
-      send_zero_packet = 1;
-
-    if(length == 0)
-      send_zero_packet = 0;
-    
-    do
     {
-      /* send data to host */
-      if(usb_vcp_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length) == SUCCESS)
-      {
-        break;
-      }
-    }while(timeout --);
+      send_zero_packet = 1;
+      Modbus_FeedData((uint8_t *)usbd_app_buffer_fs1, length);
+      Modbus_ParseFrame();
+    }
+    // if(length == 0)
+    // {
+    //   send_zero_packet = 0;
+    // }
+    
+    // do
+    // {
+    //   /* send data to host */
+    //   if(usb_vcp_send_data(&usb_core_dev, (uint8_t *)usbd_app_buffer_fs1, length) == SUCCESS)
+    //   {
+    //     break;
+    //   }
+    // }while(timeout --);
   }
 
   /* add user code begin usb_app_task 2 */

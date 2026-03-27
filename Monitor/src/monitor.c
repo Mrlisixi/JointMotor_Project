@@ -43,6 +43,14 @@ static void hal_adc_read(void);
 static float hal_adc_convert(uint16_t raw_value, float gain, float offset, float vref);
 static float hal_adc_convert_temperature(uint16_t raw_value);
 
+/* temperature sensor constants */
+#define ADC_MAX 4095.0f
+#define VREF 3.3f
+#define VCC 3.3f
+#define R0 10000.0f   // 10kΩ NTC at 25°C
+#define B 3950.0f     // B value of NTC
+#define T0 298.15f    // 25°C in Kelvin
+
 /* hardware abstraction layer functions --------------------------------------*/
 
 /**
@@ -104,14 +112,14 @@ static float hal_adc_convert(uint16_t raw_value, float gain, float offset, float
   */
 static float hal_adc_convert_temperature(uint16_t raw_value)
 {
-  // 1. ADC值转电压
-    float v_out = (raw_value / ADC_MAX) * VREF;
-    // 2. 计算NTC阻值
-    float r_ntc = R17 * (VCC / v_out - 1.0f);
-    // 3. B值公式计算温度
-    float inv_t = 1.0f / T0 + logf(r_ntc / R0) / B;
-    float t_k = 1.0f / inv_t;
-    return t_k - 273.15f; // 转成℃
+  // 1. Convert ADC value to voltage
+  float v_out = (raw_value / ADC_MAX) * VREF;
+  // 2. Calculate NTC resistance
+  float r_ntc = R17 * (VCC / v_out - 1.0f);
+  // 3. Calculate temperature using B-value equation
+  float inv_t = 1.0f / T0 + logf(r_ntc / R0) / B;
+  float t_k = 1.0f / inv_t;
+  return t_k - 273.15f; // Convert to °C
 }
 
 /* monitor functions -------------------------------------------------------*/
@@ -146,10 +154,11 @@ void monitor_update(monitor_data_t *data)
   /* Convert DC link voltage using 3.3V reference */
   data->dc_link_voltage = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
   
-  /* Use DC link voltage for all phases */
-  data->phase_voltage[0] = data->dc_link_voltage;
-  data->phase_voltage[1] = data->dc_link_voltage;
-  data->phase_voltage[2] = data->dc_link_voltage;
+  /* Phase voltages are calculated in FOC control */
+  /* For now, set to 0, they will be updated by FOC control */
+  data->phase_voltage[0] = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
+  data->phase_voltage[1] = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
+  data->phase_voltage[2] = hal_adc_convert(adc_raw_data[3], VOLTAGE_SENSOR_GAIN, 0.0f, 0.0f);
   
   /* Convert MOS temperature using Steinhart-Hart equation */
   data->mos_temperature = hal_adc_convert_temperature(adc_raw_data[5]);

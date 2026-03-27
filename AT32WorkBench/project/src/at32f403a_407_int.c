@@ -32,7 +32,8 @@
 
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
-
+#include "motor_control.h"
+#include "monitor.h"
 /* add user code end private includes */
 
 /* private typedef -----------------------------------------------------------*/
@@ -264,6 +265,16 @@ void TMR5_GLOBAL_IRQHandler(void)
     /* add user code begin TMR5_TMR_OVF_FLAG */
     /* clear flag */
     tmr_flag_clear(TMR5, TMR_OVF_FLAG);
+    
+    /* Execute FOC control at fixed frequency */
+    extern motor_params_t motor;
+    
+    /* Get current sensor data */
+    monitor_data_t monitor_data;
+    monitor_update(&monitor_data);
+    
+    /* Run FOC sensorless control */
+    motor_foc_sensorless_control(&motor, monitor_data.phase_current, monitor_data.phase_voltage);
     /* add user code end TMR5_TMR_OVF_FLAG */
   }
 

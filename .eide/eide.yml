@@ -8,6 +8,8 @@ srcDirs:
   - Motor_Control
   - Monitor
   - USB_Debug
+  - Params
+  - Modbus_RTU
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -33,6 +35,8 @@ targets:
         - Motor_Control/inc
         - Monitor/inc
         - USB_Debug/inc
+        - Modbus_RTU/inc
+        - Params/inc
       libList: []
     excludeList:
       - AT32WorkBench/middlewares/freertos/source/portable/IAR

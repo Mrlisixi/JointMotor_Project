@@ -37,7 +37,7 @@
 /* Op-amp output: Vout = Gain * (SL_C - PGND) = 30.3 * I * 0.001 = I * 0.0303 */
 /* So I = Vout / 0.0303 ≈ Vout * 33 */
 #define CURRENT_SENSOR_GAIN_A     31.3f      /* Current sensor gain for phase A (A/V) */
-#define CURRENT_SENSOR_GAIN_B     15.6f      /* Current sensor gain for phase B (A/V) - reduced due to overcurrent */
+#define CURRENT_SENSOR_GAIN_B     31.3f      /* Current sensor gain for phase B (A/V) - reduced due to overcurrent */
 #define CURRENT_SENSOR_GAIN_C     31.3f      /* Current sensor gain for phase C (A/V) */
 #define CURRENT_SENSOR_OFFSET_A   0.0f       /* Current sensor offset for phase A (A) */
 #define CURRENT_SENSOR_OFFSET_B   0.0f       /* Current sensor offset for phase B (A) */

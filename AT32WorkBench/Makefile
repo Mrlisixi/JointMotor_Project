@@ -71,6 +71,9 @@ libraries/drivers/src/at32f403a_407_debug.c \
 ../Monitor/src/monitor.c \
 ../USB_Debug/src/usb_printf.c \
 ../USB_Debug/src/wk_stubs.c \
+../Params/src/flash_param.c \
+../Params/src/joint_params.c \
+../Modbus_RTU/src/modbus_slave.c \
 middlewares/usbd_drivers/src/usbd_core.c \
 middlewares/usbd_drivers/src/usbd_int.c \
 middlewares/usbd_drivers/src/usbd_sdr.c \
@@ -150,6 +153,8 @@ C_INCLUDES = \
 -I../Motor_Control/inc \
 -I../Monitor/inc \
 -I../USB_Debug/inc \
+-I../Params/inc \
+-I../Modbus_RTU/inc \
 -Imiddlewares/freertos/source/include \
 -Imiddlewares/freertos/source/portable/memmang \
 -Imiddlewares/freertos/source/portable/GCC/ARM_CM4F \

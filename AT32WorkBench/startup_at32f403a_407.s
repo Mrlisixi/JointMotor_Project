@@ -13,7 +13,7 @@
   *           after reset the cortex-m4 processor is in thread mode,
   *           priority is privileged, and the stack is set to main.
   ******************************************************************************
-  */
+*/
 
   .syntax unified
   .cpu cortex-m4

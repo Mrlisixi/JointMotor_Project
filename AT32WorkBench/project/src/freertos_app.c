@@ -13,9 +13,11 @@
 /* private includes ----------------------------------------------------------*/
 /* add user code begin private includes */
 #include "motor_control.h"
+#include "foc.h"
 #include "usb_printf.h"
 #include "monitor.h"
 #include <stdio.h>
+#include "modbus_slave.h"
 
 /* add user code end private includes */
 
@@ -188,16 +190,20 @@ void wk_freertos_init(void)
 void MC_Task_Func(void *pvParameters)
 {
   /* add user code begin MC_Task_Func 0 */
+  Modbus_Init(1);
   /* initialize motor */
   motor_control_init(&motor);
   
-  /* start motor with default speed and direction */
-  motor_start(&motor, 50, MOTOR_DIR_CCW);
+  /* initialize FOC control */
+  motor_foc_init(&motor);
+  
+  /* start motor with FOC sensorless control */
+  motor_foc_sensorless_start(&motor, 50);
 
   /* add user code end MC_Task_Func 0 */
 
   /* add user code begin MC_Task_Func 2 */
-
+  
   /* add user code end MC_Task_Func 2 */
 
   /* Infinite loop */
@@ -206,11 +212,10 @@ void MC_Task_Func(void *pvParameters)
     /* when use usb,the function wk_usb_app_task() will be generated,
        which is the usb application layer code that users can improve themselves */
     wk_usb_app_task();
-    motor_control_process(&motor);
 
   /* add user code begin MC_Task_Func 1 */
-
-    vTaskDelay(1);
+    // Modbus_Process();
+    vTaskDelay(10);  // Longer delay since FOC control is handled in interrupt
 
   /* add user code end MC_Task_Func 1 */
   }
@@ -252,133 +257,149 @@ void Monitor_Task_Func(void *pvParameters)
     monitor_update(&monitor_data);
     
     /* Check for异常 conditions */
-    uint8_t error_flag = 0;
+    // uint8_t error_flag = 0;
     
-    /* Check overcurrent */
-    for (int i = 0; i < 3; i++)
-    {
-      if (monitor_data.phase_current[i] > OVERCURRENT_THRESHOLD)
-      {
-        usb_send_string("ERROR: Phase ");
-        char phase_buf[2] = {'A' + i, 0};
-        usb_send_string(phase_buf);
-        usb_send_string(" overcurrent: ");
-        usb_send_float(monitor_data.phase_current[i], 2);
-        usb_send_string(" A\n");
-        error_flag = 1;
-      }
-    }
     
-    /* Check overvoltage */
-    if (monitor_data.dc_link_voltage > OVERVOLTAGE_THRESHOLD)
-    {
-      usb_send_string("ERROR: DC link overvoltage: ");
-      usb_send_float(monitor_data.dc_link_voltage, 2);
-      usb_send_string(" V\n");
-      error_flag = 1;
-    }
+    // /* Check overcurrent */
+    // for (int i = 0; i < 3; i++)
+    // {
+    //   if (monitor_data.phase_current[i] > OVERCURRENT_THRESHOLD)
+    //   {
+    //     usb_send_string("ERROR: Phase ");
+    //     char phase_buf[2] = {'A' + i, 0};
+    //     usb_send_string(phase_buf);
+    //     usb_send_string(" overcurrent: ");
+    //     usb_send_float(monitor_data.phase_current[i], 2);
+    //     usb_send_string(" A\n");
+    //     error_flag = 1;
+    //   }
+    // }
     
-    /* Check undervoltage */
-    if (monitor_data.dc_link_voltage < UNDERVOLTAGE_THRESHOLD)
-    {
-      usb_send_string("ERROR: DC link undervoltage: ");
-      usb_send_float(monitor_data.dc_link_voltage, 2);
-      usb_send_string(" V\n");
-      error_flag = 1;
-    }
+    // /* Check overvoltage */
+    // if (monitor_data.dc_link_voltage > OVERVOLTAGE_THRESHOLD)
+    // {
+    //   usb_send_string("ERROR: DC link overvoltage: ");
+    //   usb_send_float(monitor_data.dc_link_voltage, 2);
+    //   usb_send_string(" V\n");
+    //   error_flag = 1;
+    // }
     
-    /* Check overtemperature */
-    if (monitor_data.mos_temperature > OVERTEMP_THRESHOLD)
-    {
-      usb_send_string("ERROR: MOS overtemperature: ");
-      usb_send_float(monitor_data.mos_temperature, 2);
-      usb_send_string(" °C\n");
-      error_flag = 1;
-    }
+    // /* Check undervoltage */
+    // if (monitor_data.dc_link_voltage < UNDERVOLTAGE_THRESHOLD)
+    // {
+    //   usb_send_string("ERROR: DC link undervoltage: ");
+    //   usb_send_float(monitor_data.dc_link_voltage, 2);
+    //   usb_send_string(" V\n");
+    //   error_flag = 1;
+    // }
     
-    /* Print monitoring data periodically */
-    uint32_t current_time = xTaskGetTickCount();
-    if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
-    {
-      usb_send_string("=== Motor Monitoring Data ===\n");
+    // /* Check overtemperature */
+    // if (monitor_data.mos_temperature > OVERTEMP_THRESHOLD)
+    // {
+    //   usb_send_string("ERROR: MOS overtemperature: ");
+    //   usb_send_float(monitor_data.mos_temperature, 2);
+    //   usb_send_string(" °C\n");
+    //   error_flag = 1;
+    // }
+    
+    // /* Print monitoring data periodically */
+    // uint32_t current_time = xTaskGetTickCount();
+    // if ((current_time - last_print_time) > (print_interval / portTICK_PERIOD_MS))
+    // {
+    //   usb_send_string("=== Motor Monitoring Data ===\n");
            
-      usb_send_string("Phase Currents: A=");
-      usb_send_float(monitor_data.phase_current[0], 2);
-      usb_send_string(" A, B=");
-      usb_send_float(monitor_data.phase_current[1], 2);
-      usb_send_string(" A, C=");
-      usb_send_float(monitor_data.phase_current[2], 2);
-      usb_send_string(" A\n");
+    //   usb_send_string("Phase Currents: A=");
+    //   usb_send_float(monitor_data.phase_current[0], 2);
+    //   usb_send_string(" A, B=");
+    //   usb_send_float(monitor_data.phase_current[1], 2);
+    //   usb_send_string(" A, C=");
+    //   usb_send_float(monitor_data.phase_current[2], 2);
+    //   usb_send_string(" A\n");
       
-      usb_send_string("Phase Voltages: A=");
-      usb_send_float(monitor_data.phase_voltage[0], 2);
-      usb_send_string(" V, B=");
-      usb_send_float(monitor_data.phase_voltage[1], 2);
-      usb_send_string(" V, C=");
-      usb_send_float(monitor_data.phase_voltage[2], 2);
-      usb_send_string(" V\n");
+    //   usb_send_string("Phase Voltages: A=");
+    //   usb_send_float(monitor_data.phase_voltage[0], 2);
+    //   usb_send_string(" V, B=");
+    //   usb_send_float(monitor_data.phase_voltage[1], 2);
+    //   usb_send_string(" V, C=");
+    //   usb_send_float(monitor_data.phase_voltage[2], 2);
+    //   usb_send_string(" V\n");
       
-      usb_send_string("DC Link Voltage: ");
-      usb_send_float(monitor_data.dc_link_voltage, 2);
-      usb_send_string(" V\n");
+    //   usb_send_string("DC Link Voltage: ");
+    //   usb_send_float(monitor_data.dc_link_voltage, 2);
+    //   usb_send_string(" V\n");
       
-      usb_send_string("MOS Temperature: ");
-      usb_send_float(monitor_data.mos_temperature, 2);
-      usb_send_string(" °C\n");
+    //   usb_send_string("MOS Temperature: ");
+    //   usb_send_float(monitor_data.mos_temperature, 2);
+    //   usb_send_string(" °C\n");
       
-      usb_send_string("Motor Speed: ");
-      char speed_buf[10];
-      sprintf(speed_buf, "%d", motor.speed);
-      usb_send_string(speed_buf);
-      usb_send_string(" RPM\n");
+    //   usb_send_string("Motor Speed: ");
+    //   char speed_buf[10];
+    //   sprintf(speed_buf, "%d", motor.speed);
+    //   usb_send_string(speed_buf);
+    //   usb_send_string(" RPM\n");
       
-      usb_send_string("Commutation State: ");
-      char comm_buf[10];
-      sprintf(comm_buf, "%d", motor.comm_state);
-      usb_send_string(comm_buf);
-      usb_send_string("\n");
+    //   usb_send_string("Commutation State: ");
+    //   char comm_buf[10];
+    //   sprintf(comm_buf, "%d", motor.comm_state);
+    //   usb_send_string(comm_buf);
+    //   usb_send_string("\n");
       
-      usb_send_string("Motor Direction: ");
-      usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
-      usb_send_string("\n");
+    //   usb_send_string("Motor Direction: ");
+    //   usb_send_string(motor.direction == MOTOR_DIR_CW ? "CW" : "CCW");
+    //   usb_send_string("\n");
       
-      usb_send_string("Motor State: ");
-      char state_buf[10];
-      sprintf(state_buf, "%d", motor.state);
-      usb_send_string(state_buf);
-      usb_send_string("\n");
+    //   usb_send_string("Motor State: ");
+    //   char state_buf[10];
+    //   sprintf(state_buf, "%d", motor.state);
+    //   usb_send_string(state_buf);
+    //   usb_send_string("\n");
       
-      /* Print raw ADC values for debugging */
-      usb_send_string("Raw ADC Values: A=");
-      char adc_buf[10];
-      sprintf(adc_buf, "%d", monitor_data.adc_raw[0]);
-      usb_send_string(adc_buf);
-      usb_send_string(", B=");
-      sprintf(adc_buf, "%d", monitor_data.adc_raw[1]);
-      usb_send_string(adc_buf);
-      usb_send_string(", C=");
-      sprintf(adc_buf, "%d", monitor_data.adc_raw[2]);
-      usb_send_string(adc_buf);
-      usb_send_string(", Vbus=");
-      sprintf(adc_buf, "%d", monitor_data.adc_raw[3]);
-      usb_send_string(adc_buf);
-      usb_send_string(", Temp=");
-      sprintf(adc_buf, "%d", monitor_data.adc_raw[4]);
-      usb_send_string(adc_buf);
-      usb_send_string("\n");
+    //   /* Print raw ADC values for debugging */
+    //   usb_send_string("Raw ADC Values: A=");
+    //   char adc_buf[10];
+    //   sprintf(adc_buf, "%d", monitor_data.adc_raw[0]);
+    //   usb_send_string(adc_buf);
+    //   usb_send_string(", B=");
+    //   sprintf(adc_buf, "%d", monitor_data.adc_raw[1]);
+    //   usb_send_string(adc_buf);
+    //   usb_send_string(", C=");
+    //   sprintf(adc_buf, "%d", monitor_data.adc_raw[2]);
+    //   usb_send_string(adc_buf);
+    //   usb_send_string(", Vbus=");
+    //   sprintf(adc_buf, "%d", monitor_data.adc_raw[3]);
+    //   usb_send_string(adc_buf);
+    //   usb_send_string(", Temp=");
+    //   sprintf(adc_buf, "%d", monitor_data.adc_raw[4]);
+    //   usb_send_string(adc_buf);
+    //   usb_send_string("\n");
       
-      usb_send_string("============================\n\n");
+    //   usb_send_string("============================\n\n");
       
-      last_print_time = current_time;
-    }
+    //   last_print_time = current_time;
+    // }
     
-    /* If error detected, take action */
-    if (error_flag)
-    {
-      /* For now, just print error messages, can add more actions later */
-      usb_send_string("Taking protective action...\n");
-      /* Example: motor_stop(&motor); */
-    }
+    // /* If error detected, take action */
+    // if (error_flag)
+    // {
+    //   /* For now, just print error messages, can add more actions later */
+    //   usb_send_string("Taking protective action...\n");
+    //   /* Example: motor_stop(&motor); */
+    // }
+
+    // /* Print additional debug information */
+    // usb_send_string("FOC State: ");
+    // char foc_state_buf[10];
+    // sprintf(foc_state_buf, "%d", motor.foc_state ? ((foc_state_t *)motor.foc_state)->start_state : -1);
+    // usb_send_string(foc_state_buf);
+    // usb_send_string("\n");
+    
+    // usb_send_string("Control Mode: ");
+    // char mode_buf[10];
+    // sprintf(mode_buf, "%d", motor.control_mode);
+    // usb_send_string(mode_buf);
+    // usb_send_string("\n");
+
+    
 
     vTaskDelay(500); /* 100ms delay for monitoring */
 
@@ -395,7 +416,7 @@ void Monitor_Task_Func(void *pvParameters)
 void Community_Task_Func(void *pvParameters)
 {
   /* add user code begin Community_Task_Func 0 */
-
+  
   /* add user code end Community_Task_Func 0 */
 
   /* add user code begin Community_Task_Func 2 */
@@ -408,7 +429,7 @@ void Community_Task_Func(void *pvParameters)
   /* add user code begin Community_Task_Func 1 */
 
     vTaskDelay(1);
-
+    
   /* add user code end Community_Task_Func 1 */
   }
 }
